@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My AngularJS App</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
+  <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="app.css">
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/html5-boilerplate/dist/js/main.js"></script>
+  <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
+
+</head>
+<div id="slide" class="carousel slide" data-ride="carousel" >
+    <ol class="carousel-indicators">
+    <li data-target="#slide" data-slide-to="0" class="active"></li>
+    <li data-target="#slide" data-slide-to="1"></li>
+    <li data-target="#slide" data-slide-to="2"></li>
+  </ol>
+
+<div class="carousel-inner" role="listbox">
+  <div class="item active">
+    <img src="bower_components/html5-boilerplate/dist/css/fotos/fundo-home-1.jpg" >
+   </div>
+  <div class="item">
+    <img src="bower_components/html5-boilerplate/dist/css/fotos/fundo-home-2.jpg" >
+  </div>
+  <div class="item">
+    <img src="bower_components/html5-boilerplate/dist/css/fotos/fundo-home-3.jpg" >
+  </div>
+  </div>
+</div>
+<body>
+<div class="row">
+  <div class="navbar">
+    <header>
+      <div class="col-md-1 col-lg-1">
+        <img src="bower_components/html5-boilerplate/dist/css/fotos/Concept2-logo-branco.png">
+      </div>
+
+      <menu>
+        <ul>
+          <li><a href="#">Produtos</a></li>
+            <li><a href="#">Comunidade</a></li>
+            <li><a href="#">Eventos</a></li>
+            <li><a href="#">Notícias</a></li>
+            <li><a href="#">Suporte</a></li>
+            <li><a href="#">Contato</a></li>
+         </ul>
+        </menu>
+     </header>
+</div>
+</div>
+
+
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+  <div ng-view></div>
+
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="app.js"></script>
+  <script src="components/version/version.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="components/version/version-directive.js"></script>
+  <script src="components/version/interpolate-filter.js"></script>
+
+</body>
+</html>
