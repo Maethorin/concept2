@@ -8,6 +8,7 @@ angular.module('concept.eventos', ['ngRoute'])
             controller: 'EventosController'
           })
     }])
- .controller('EventosController', ['$scope', '$http', function($scope, $http) {
-
+ .controller('EventosController', ['$rootScope','$scope', '$http', function($rootScope,$scope, $http) {
+        $rootScope.cssPagina = "pagina-eventos";
+        $rootScope.titulo = "Eventos"
     }]);

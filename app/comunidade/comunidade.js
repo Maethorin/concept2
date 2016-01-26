@@ -7,6 +7,7 @@ angular.module('concept.comunidade', ['ngRoute'])
             controller: 'ComunidadeController'
           })
     }])
- .controller('ComunidadeController', ['$scope', '$http', function($scope, $http) {
-
+ .controller('ComunidadeController', ['$rootScope','$scope', '$http', function($rootScope, $scope, $http) {
+            $rootScope.cssPagina="pagina-comunidade"
+            $rootScope.titulo="Comunidade"
     }]);

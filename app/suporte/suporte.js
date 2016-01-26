@@ -8,6 +8,7 @@ angular.module('concept.suporte', ['ngRoute'])
             controller: 'SuporteController'
           })
     }])
- .controller('SuporteController', ['$scope', '$http', function($scope, $http) {
-
+ .controller('SuporteController', ['$rootScope','$scope', '$http', function($rootScope, $scope, $http) {
+     $rootScope.cssPagina = "pagina-suporte";
+        $rootScope.titulo = "Suporte"
     }]);

@@ -8,6 +8,7 @@ angular.module('concept.noticias', ['ngRoute'])
             controller: 'NoticiasController'
           })
     }])
- .controller('NoticiasController', ['$scope', '$http', function($scope, $http) {
-
+ .controller('NoticiasController', ['$rootScope','$scope', '$http', function($rootScope,$scope, $http) {
+     $rootScope.cssPagina = "pagina-noticias";
+        $rootScope.titulo = "Noticias"
     }]);
