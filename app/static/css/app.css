@@ -1,106 +1,117 @@
-/* app css stylesheet */
-
-/*.slide-foto{*/
-  /*background-repeat: no-repeat;*/
-/*}*/
-/*.slide-foto-1{*/
-  /*background-image: url(fotos/fundo-home-1.jpg);*/
-
-/*}*/
-
-#logo{
-  width: 282px;
-  height: 39px;
-  background-image: url(Concept2-logo-branco.png) ;
-  background-size: contain;
-  background-repeat: no-repeat;
-  text-indent: -1000px;
+#logo {
+    width: 282px;
+    height: 39px;
+    background-image: url(../img/logo-branco.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    text-indent: -1000px;
 }
 
 #social {
     float: right;
     display: inline-flex;
 }
-#social a{
+
+#social a {
     text-decoration: none;
 }
-#social a h5{
+
+#social a h5 {
     text-transform: uppercase;
-     font-family: Calibri;
+    font-family: Calibri;
     font-size: 115%;
     color: white;
 }
-#social i{
+
+#social i {
     color: white;
     padding-top: 10px;
     margin-right: 155px;
 }
-header .container{
-    background-color: rgba( 0,0,0,0.6);
+
+header .container {
+    background-color: rgba(0, 0, 0, .35);
     padding: 15px;
-    /*position: relative;*/
+    margin-top: 10px;
 }
-#menu ul{
-    list-style:none;
+
+#menu ul {
+    list-style: none;
     text-transform: uppercase;
 
 }
-#menu ul li{
-    display:inline;
+
+#menu ul li {
+    display: inline;
     font-family: Calibri;
     font-size: 120%;
 }
-#menu ul li a{
+
+#menu ul li a {
     text-decoration: none;
     color: white;
 }
-#menu ul li a:hover{
+
+#menu ul li a:hover {
     background-color: #233340;
 }
-#menu a{
+
+#menu a {
     padding: 10px;
 }
-#menu a:hover{
+
+#menu a:hover {
     transition: 0.5s;
     color: gainsboro;
 }
-#slide{
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  margin: 0 auto;
-  position: absolute;
 
-}
-#slide img{
-  width: 100%;
-  height: 100%;
-  padding: 0px;
-  margin: 0px;
+#slideshow {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -999;
 }
 
+#slide img {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.pagina-home {
+}
 
 .pagina-produtos {
     background: radial-gradient(#0f3d5e ,#020e1c);
     min-height: 100%;
     background-repeat: no-repeat;
 }
+
 .pagina-comunidade{
     background: radial-gradient(#253940,#070c0f);
     background-repeat: no-repeat;
 }
+
 .pagina-eventos{
     background: radial-gradient( #6d7520, #30340f);
     background-repeat: no-repeat;
 }
+
 .pagina-noticias{
     background: radial-gradient(#3d4246,#28292e);
     background-repeat: no-repeat;
 }
+
 .pagina-suporte{
     background: radial-gradient(#6a8ea8, #436072);
     background-repeat: no-repeat;
 }
+
 .pagina-contato{
     background: radial-gradient(#8a8a8a,#616161);
     background-repeat: no-repeat;
