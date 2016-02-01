@@ -36,7 +36,7 @@
     margin-right: 155px;
 }
 header .container{
-    background-color: rgba( 0,0,0,0.6);
+    background-color: rgba( 0,0,0,0.3);
     padding: 15px;
     /*position: relative;*/
 }
@@ -92,6 +92,27 @@ header .container{
 .pagina-eventos{
     background: radial-gradient( #6d7520, #30340f);
     background-repeat: no-repeat;
+}
+.pagina-eventos .borda-evento{
+    border: 5px solid white;
+    font-size: large;
+    font-family: Calibri;
+    text-align: center;
+    color: white;
+    min-height: 395px;
+}
+.pagina-eventos .borda-evento a{
+    text-decoration: none;
+    font-size: 1em;
+    color: rgba(255, 255, 255, 0.4);
+}
+.pagina-eventos .conteudo{
+    width: 240px;
+    height: 155px;
+    float: right;
+}
+.pagina-eventos p{
+    color: rgba(255, 255, 255, 0.8);
 }
 .pagina-noticias{
     background: radial-gradient(#3d4246,#28292e);

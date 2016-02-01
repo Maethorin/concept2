@@ -1,12 +1,24 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-9">MonstarGames 2015-Goiania </div>
-        <div class="col-md-3">Cursos <a href="#">Próximos Cursos</a></div>
+        <div ng-repeat="evento in eventos">
+            <div ng-if="evento.destaque" class="col-md-9 borda-evento" style="background:radial-gradient({{evento.fundo}})">
+                <div class="conteudo">
+                <h3>{{evento.titulo}}</h3>
+                <p style="text-align: left">{{evento.descricao}}</p>
+                </div>
+                <img style="margin-left: -53px"ng-src="{{evento.imageUrl}}">
+            </div>
+            <div ng-if="!evento.destaque" class="col-md-3 borda-evento" style="background:radial-gradient({{evento.fundo}})">
+                <div class="cont">
+                <h3>{{evento.titulo}}</h3>
+                <p style="text-align: left">{{evento.descricao}}</p>
+                 </div>
+                <img ng-src="{{evento.imageUrl}}">
+                <div class="link">
+                <a ng-href="{{evento.link}}">{{evento.nomelink}}</a>
+                </div>
+            </div>
+
+        </div>
     </div>
-   <div class="row">
-       <div class="col-md-3">Remo Indoor <a href="#">Próximos Eventos</a></div>
-       <div class="col-md-3">CaBra-RI <a href="#">CaBra-RI 2016 </a></div>
-       <div class="col-md-3">Torneios de CrossFit <a href="#">Próximo Torneio</a></div>
-       <div class="col-md-3">Feiras <a href="#">Próxima Feira</a></div>
-   </div>
 </div>

@@ -10,5 +10,9 @@ angular.module('concept.eventos', ['ngRoute'])
     }])
  .controller('EventosController', ['$rootScope','$scope', '$http', function($rootScope,$scope, $http) {
         $rootScope.cssPagina = "pagina-eventos";
-        $rootScope.titulo = "Eventos"
+        $rootScope.titulo = "Eventos";
+        $scope.eventos = []
+        $http.get('/eventos/eventos.json').then(function(response){
+            $scope.eventos = response.data;''
+        });
     }]);
