@@ -1,14 +1,37 @@
 <div class="container">
     <div class="row">
-        <div class="col-md-6">Dupla Kiwi bate novo récorde</div>
-        <div class="col-md-6">CRASH-B tem mais um récorde</div>
+      <div ng-repeat="noticia in noticias">
+           <div ng-if="noticia.id" class="col-md-6 camponot" style="background-color:{{noticia.fundo}}">
+              <div class="conteudo">
+              <h4 style="font-size: 1.6em">{{noticia.titulo}}</h4>
+              <p style="font-size: 1.1em">{{noticia.descricao}}</p>
+              </div>
+              <img style="padding: 5px; margin-left: -12px; margin-bottom: -10px"ng-src="{{noticia.imageUrl}}">
+           </div>
+        </div>
+         <div class="mais" style="text-align: center; background: rgba(75, 82, 90, 0.4)">
+        <nav>
+            <ul class="pagination pagination-sm" style="margin:  11px">
+                <li>
+                     <a href="" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                     </a>
+                 </li>
+                <li class="active"><a href="">1</a></li>
+                <li class="active"><a href="">2</a></li>
+                <li class="active"><a href="">3</a></li>
+                <li class="active"><a href="">4</a></li>
+                <li class="active"><a href="">5</a></li>
+                <li>
+                    <a href="" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        </div>
+      </div>
     </div>
-    <div class="row">
-        <div class="col-md-6">CrossFit Games terminam hoje</div>
-        <div class="col-md-6">CABRA-RI 2015</div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">Arnold Schwarzenegger no Rio</div>
-        <div class="col-md-6">Aulas de remo pelo mundo</div>
-    </div>
-</div>
+
+

@@ -129,8 +129,31 @@ header .container{
 }
 
 .pagina-noticias{
-    background: radial-gradient(#3d4246,#28292e);
+    background: radial-gradient(#4b525a,#28292e);
     background-repeat: no-repeat;
+}
+.pagina-noticias .camponot{
+    min-height: 164px;
+    color: white;
+    font-family: Calibri;
+    background: rgba(75, 82, 90, 0);
+}
+.pagina-noticias .conteudo{
+    width: 300px;
+    height: 100px;
+    float:right;
+    padding: 5px;
+}
+.pagina-noticias .mais ul li a{
+    background-color:#3d414a;
+    color: white;
+    border-color: darkgray;
+}
+
+.pagina-noticias .mais ul li a:hover{
+    background-color:gray;
+    color: white;
+    border-color: darkgray;
 }
 
 .pagina-suporte{

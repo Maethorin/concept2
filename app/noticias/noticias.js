@@ -11,4 +11,8 @@ angular.module('concept.noticias', ['ngRoute'])
  .controller('NoticiasController', ['$rootScope','$scope', '$http', function($rootScope,$scope, $http) {
      $rootScope.cssPagina = "pagina-noticias";
         $rootScope.titulo = "Noticias"
+        $scope.noticias = []
+        $http.get('/noticias/noticias.json').then(function(response){
+            $scope.noticias = response.data;
+        });
     }]);

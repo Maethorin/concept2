@@ -1,0 +1,9 @@
+[
+  {"id":1, "titulo":"Dupla Kiwi bate novo récorde", "descricao":"Os neolandezes Eric Murray e Hamish Bond quebram mais um récorde na raia de Bosbaan, em Amsterdam...","imageUrl":"/static/img/1dupla.jpg", "fundo":"#757881"},
+  {"id":2, "titulo":"CRASH-B tem mais um récorde", "descricao":"o jovem Power Guido de 18 anos da Finlândia é o mais novo recordista da prova de 2000m na categoria peso leve...","imageUrl":"/static/img/4.jpg"},
+  {"id":3, "titulo":"CrossFit Games terminam hoje", "descricao":"Enquanto metade dos competidores choram na máquina de remo, o filipino Joseph Washer compete sorrindo e ainda sai com a vitória...","imageUrl":"/static/img/2crosfitgames.jpg"},
+  {"id":4, "titulo":"CABRA-RI 2015", "descricao":"O Campeonato Brasileiro de Remo Indoor contou com vários atletas de clubes deremo, além de cada vez mais atletas de CrossFit...","imageUrl":"/static/img/5.jpg","fundo":"#757881"},
+  {"id":5, "titulo":"Arnold Schwarzenegger no Rio", "descricao":"O ator e ex-governador da Califórnia, Arnold Schwarzenegger, fez sua ronda e foi no estande da Concept2 durante esse Festival Arnold Classic...","imageUrl":"/static/img/3arnold.jpg","fundo":"#757881"},
+  {"id":6, "titulo":"Aulas de remo pelo mundo", "descricao":"Mais uma nova academia inaugura suas aulas de Remo Indoor. Em Nova York, estúdio Rowbot já conta com mais de 200 alunos...","imageUrl":"/static/img/6.jpg"}
+
+]
