@@ -158,6 +158,10 @@ header .container{
     background: radial-gradient(#253940,#070c0f);
     background-repeat: no-repeat;
 }
+.pagina-comunidade .titulo h1{
+    text-align: center;
+    color: white;
+}
 /*Página Eventos*/
 .pagina-eventos{
     background: radial-gradient( #6d7520, #30340f);
