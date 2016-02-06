@@ -162,6 +162,11 @@ header .container{
     text-align: center;
     color: white;
 }
+.pagina-comunidade p{
+    color:white;
+    font-size: smaller;
+}
+
 /*Página Eventos*/
 .pagina-eventos{
     background: radial-gradient( #6d7520, #30340f);

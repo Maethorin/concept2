@@ -1,33 +1,37 @@
-function initialize() {
+var map;
+function initMap() {
+    var mylatlng = {lat: -14.235004, lng: -51.92528};
+    map = new google.maps.Map(document.getElementById('mapa'), {
+        center: mylatlng,
+        zoom: 4,
+        zoomControl: false,
+        mapTypeControl: false,
+        streetViewControl: false
+    });
 
-// Exibir mapa;
-  var myLatlng = new google.maps.LatLng(-22.9068467, -43.1728965);
-  var mapOptions = {
-  zoom: 4,
-  center: myLatlng,
-  streetViewControl: false,
-  mapTypeControl: false,
-  zoomControl: false,
-  mapTypeId: google.maps.MapTypeId.ROADMAP
+
+
+
+    var image = 'static/concept2-amarelo.png';
+       function carregarPontos(){
+           $.getJSON('/comunidade/comunidade.json', function(pontos){
+               $.each(pontos, function(index, ponto){
+                   var marker= new google.maps.Marker({
+                       position: new google.maps.LatLng(ponto.Latitude, ponto.Longitude),
+                       title:"pontos!!",
+                       map:map,
+                       icon: ponto.icone
+                   })
+               });
+            });
+
+       }
+     carregarPontos();
 }
 
-// Exibir o mapa na div #mapa;
-  var map = new google.maps.Map(document.getElementById("mapa"), mapOptions);
 
-}
-function loadScript() {
-  var script = document.createElement("script");
-  script.type = "text/javascript";
-  script.src ="http://maps.googleapis.com/maps/api/js?key=AIzaSyAPtVcOptYSliotWo2NfjRYgUXc0RgNjgc&callback=initialize";
 
-  document.body.appendChild(script);
-}
 
-  window.onload = loadScript;
-// Marcador personalizado;
-  var image = "material-design/concept2-onde-remae-amarelo.png";
-  var marcadorpersonalizado = new google.maps.Marker({
-  position: (-22.9068467, -43.1728965),
-  icon: image,
-  animation: google.maps.Animation.DROP
-});
+
+
+
