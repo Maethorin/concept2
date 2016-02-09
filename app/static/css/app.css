@@ -162,11 +162,98 @@ header .container{
     text-align: center;
     color: white;
 }
-.pagina-comunidade p{
+.pagina-comunidade h5{
     color:white;
-    font-size: smaller;
+    width: 100px;
+    height: 6px;
+    padding-bottom: 12px;
+    margin-left: 10px;
+}
+.pagina-comunidade #mapa{
+    height: 500px;
+    width: 700px;
+    margin-left: 225px;
+    border: 2px solid white;
+}
+.pagina-comunidade .controls{
+  margin-top: 10px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 32px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+#pac-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 300;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 300px;
+}
+#pac-input:focus {
+  border-color: #4d90fe;
 }
 
+.pac-container {
+  font-family: Roboto;
+}
+
+#type-selector {
+  color: #fff;
+  background-color: #4d90fe;
+  padding: 5px 11px 0px 11px;
+}
+
+#type-selector label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+.pagina-comunidade .botoes-mapa{
+    width: 120px;
+    height: 106px;
+    border-radius: 155px;
+    border: none;
+    background-color: transparent;
+
+}
+.pagina-comunidade .botoes-mapa:focus, .botoes-mapa.focus, .botoes-mapa.active, .botoes-mapa:active, .btn.active{
+    border: none;
+}
+.pagina-comunidade .botoes-mapa.active:hover{
+    background-color: transparent;
+}
+.pagina-comunidade .onde-remar{
+    background-image: url(../img/concept2-onde-remae-verde.png);
+
+}
+.pagina-comunidade .onde1{
+    background-image: url("../img/concept2-onde-remae-vermelho.png");
+}
+.pagina-comunidade .onde2{
+    background-image: url("../img/concept2-onde-remae-amarelo.png");
+}
+.pagina-comunidade .onde3{
+    background-image: url("../img/concept2-onde-remae-azul.png");
+}
+.pagina-comunidade .onde-remar.active {
+    background-image: url(../img/desablepng.png);
+    text-decoration: none;
+}
+
+.pagina-comunidade .botoes-mapa:focus, input:focus, select:focus {
+    box-shadow: 0 0 0 0;
+    border: 0 none;
+    outline: 0;
+}
+.pagina-comunidade .botoes-mapa:focus, input:focus, select:focus:hover {
+    background-color: transparent;
+}
 /*Página Eventos*/
 .pagina-eventos{
     background: radial-gradient( #6d7520, #30340f);
