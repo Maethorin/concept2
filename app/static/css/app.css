@@ -90,7 +90,7 @@ header .container{
 
 .pagina-home {
 }
-/* Página produto */
+/* Pagina produto */
 .pagina-produtos {
     background: radial-gradient(#0f3d5e ,#020e1c);
     min-height: 100%;
@@ -153,7 +153,7 @@ header .container{
     margin-top: -76px;
 }
 
-/* Página Comunidade*/
+/* Pagina Comunidade*/
 .pagina-comunidade{
     background: radial-gradient(#253940,#070c0f);
     background-repeat: no-repeat;
@@ -278,7 +278,7 @@ header .container{
 .pagina-comunidade .botoes-mapa:focus, input:focus, select:focus:hover {
     background-color: transparent;
 }
-/*Página Eventos*/
+/*Pagina Eventos*/
 .pagina-eventos{
     background: radial-gradient( #6d7520, #30340f);
     background-repeat: no-repeat;
@@ -304,7 +304,7 @@ header .container{
 .pagina-eventos p{
     color: rgba(255, 255, 255, 0.8);
 }
-/*P´gina Noticias*/
+/*Pagina Noticias*/
 .pagina-noticias{
     background: radial-gradient(#4b525a,#28292e);
     background-repeat: no-repeat;
@@ -332,7 +332,7 @@ header .container{
     color: white;
     border-color: darkgray;
 }
-/*página suporte*/
+/*pagina suporte*/
 .pagina-suporte{
     background: radial-gradient(#6a8ea8, #436072);
     background-repeat: no-repeat;
