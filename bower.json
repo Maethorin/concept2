@@ -12,6 +12,7 @@
     "angular-mocks": "~1.4.0",
     "html5-boilerplate": "~5.2.0",
     "bootstrap":"~3.3.6",
-    "fontawesome":"~4.5.0"
+    "fontawesome":"~4.5.0",
+    "angular-google-maps":"~2.3.1"
   }
 }

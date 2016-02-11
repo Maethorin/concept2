@@ -1,23 +1,28 @@
+
 <div class="container">
     <div class="row" style="background: radial-gradient(#34505b, #132026)">
         <div class="col-md-12 titulo">
             <h1 style="text-align: center">Onde Remar ?</h1>
         </div>
          <div class="col-md-8">
-             <input id="pac-input" class="controls" type="text" placeholder="Buscar Locais">
-             <div id="mapa">
+             <div class="carregando" loading=".mapa-container"><h3>Carregando</h3><img src="static/img/spinner.gif"></div>
+                <!--<div id="mapa"></div>-->
             </div>
+
+             <!--<input id="pac-input" class="controls" type="text" placeholder="Buscar Locais" >-->
+
+             </div>
          </div>
          <div class="modalidades" style=" position: relative; margin-left: 980px; margin-bottom: 20px">
               <div class="col-md-3">
-                <button type="button" class="btn btn-info onde-remar botoes-mapa" data-toggle="button" aria-pressed="false" autocomplete="off" ></button>
-                  <h5>Clube de Remo</h5>
+                <button type="button"  class="btn btn-info onde-remar botoes-mapa" data-toggle="button" aria-pressed="false" autocomplete="off" ></button>
+                  <h5 style="margin-left: 0px">Clube de Remo</h5>
                 <button type="button" class="btn btn-info onde-remar onde1 botoes-mapa" data-toggle="button" aria-pressed="false" autocomplete="off" ></button>
-                  <h5 style="margin-left: 30px">CrossFit</h5>
+                  <h5 style="margin-left: 24px">CrossFit</h5>
                  <button type="button" class="btn btn-info onde-remar onde2 botoes-mapa" data-toggle="button" aria-pressed="false" autocomplete="off" ></button>
-                  <h5 style="margin-left: 23px">Musculação</h5>
+                  <h5 style="margin-left: 14px">Musculação</h5>
                  <button type="button" class="btn btn-info onde-remar onde3 botoes-mapa" data-toggle="button" aria-pressed="false" autocomplete="off" ></button>
-                  <h5 style="margin-left: 20px">Aula Coletiva</h5>
+                  <h5 style="margin-left: 12px">Aula Coletiva</h5>
 
                   </div>
               </div>

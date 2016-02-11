@@ -1,8 +1,8 @@
 [
-  {"nome":"Manaus","Latitude":-3.1189228, "Longitude":-60.0215183, "icone":"static/img/concept2-verde.png"},
-  {"nome":"Rio de Janeiro","Latitude":-22.9068467, "Longitude":-43.1728965, "icone":"static/img/concept2-vermelho.png"},
-  {"nome":"Belém","Latitude":-1.4557794, "Longitude":-48.4901968, "icone":"static/img/concept2-verde.png"},
-  {"nome":"Ceará","Latitude":-5.4983977, "Longitude":-39.3206241, "icone":"static/img/concept2-verde.png"},
-  {"nome":"Distrito Federal","Latitude":-15.826691, "Longitude":-47.9218204, "icone":"static/img/concept2-azul.png"}
+  {"nome":"Manaus", "position": {"lat": -3.2323, "lng": -60.6565}, "icone":"static/img/concept2-verde.png", "titulo":"Clube de Remo"},
+  {"nome":"Rio de Janeiro","Latitude":-22.9068467, "Longitude":-43.1728965, "icone":"static/img/concept2-vermelho.png", "titulo":"CrossFit"},
+  {"nome":"Belém","Latitude":-1.4557794, "Longitude":-48.4901968, "icone":"static/img/concept2-verde.png", "titulo":"Clube de Remo"},
+  {"nome":"Ceará","Latitude":-5.4983977, "Longitude":-39.3206241, "icone":"static/img/concept2-verde.png", "titulo":"Clube de Remo"},
+  {"nome":"Distrito Federal","Latitude":-15.826691, "Longitude":-47.9218204, "icone":"static/img/concept2-azul.png", "titulo":"Aula Coletiva"}
 
 ]

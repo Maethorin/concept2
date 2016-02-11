@@ -13,6 +13,6 @@ angular.module('concept.eventos', ['ngRoute'])
         $rootScope.titulo = "Eventos";
         $scope.eventos = []
         $http.get('/eventos/eventos.json').then(function(response){
-            $scope.eventos = response.data;
+        $scope.eventos = response.data;
         });
     }]);

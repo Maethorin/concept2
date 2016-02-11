@@ -174,6 +174,7 @@ header .container{
     width: 700px;
     margin-left: 225px;
     border: 2px solid white;
+    animation: fadeIn 0.5s;
 }
 .pagina-comunidade .controls{
   margin-top: 10px;
@@ -185,6 +186,23 @@ header .container{
   outline: none;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
+.pagina-comunidade .carregando{
+    color:white;
+    text-align: center;
+    margin-top: 250px;
+    margin-left: 376px;
+    animation: fadeIn 0.5s;
+}
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+.pagina-comunidade img{
+    margin-left: -10px;
+    margin-top: -190px;
+    width: 150px;
+    height: 190px;
+}
 #pac-input {
   background-color: #fff;
   font-family: Roboto;
@@ -194,6 +212,7 @@ header .container{
   padding: 0 11px 0 13px;
   text-overflow: ellipsis;
   width: 300px;
+  display: none;
 }
 #pac-input:focus {
   border-color: #4d90fe;
@@ -215,8 +234,8 @@ header .container{
   font-weight: 300;
 }
 .pagina-comunidade .botoes-mapa{
-    width: 120px;
-    height: 106px;
+    width: 100px;
+    height: 88px;
     border-radius: 155px;
     border: none;
     background-color: transparent;
@@ -224,6 +243,7 @@ header .container{
 }
 .pagina-comunidade .botoes-mapa:focus, .botoes-mapa.focus, .botoes-mapa.active, .botoes-mapa:active, .btn.active{
     border: none;
+    width: 100px;
 }
 .pagina-comunidade .botoes-mapa.active:hover{
     background-color: transparent;
@@ -244,6 +264,10 @@ header .container{
 .pagina-comunidade .onde-remar.active {
     background-image: url(../img/desablepng.png);
     text-decoration: none;
+}
+
+.pagina-comunidade .mapa-container {
+    display: none;
 }
 
 .pagina-comunidade .botoes-mapa:focus, input:focus, select:focus {
@@ -318,6 +342,29 @@ header .container{
     background: radial-gradient(#8a8a8a,#616161);
     background-repeat: no-repeat;
 }
+.rodape{
+    height: 350px;
+    background: radial-gradient(#414141, #040404)
+}
+.rodape p {
+    color:white;
+}
+.left {
+float: left;
+/*margin-left: 90px;*/
+margin-top: 20px;
+
+}
+.right{
+  float: right;
+  /*margin-right: 90px;*/
+margin-top: 20px;
+}
+
+.left a{
+    text-decoration: none;
+}
+
 footer{
     color: rgba( 255, 255, 255, 0.5);
     text-align: center;
