@@ -10,6 +10,15 @@
     <title>Conte2 Brasil: {{titulo}}</title>
 </head>
 <body class="{{cssPagina}}">
+<div id="fb-root"></div>
+<script>(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.5&appId=1745932382309577";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 <header>
     <div class="container">
         <a href="#/">
@@ -65,46 +74,62 @@
 </header>
 <div ng-view></div>
 <div class="rodape">
+
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-            <div class="left">
-                <a href="."><p>VISITE A LOJA</p></a>
-                <a href="."><p>PERGUNTAS FREQUENTES</p></a>
-                <a href="."><p>MAPA DO SITE</p></a>
+                <div class="left">
+                    <a href="."><p class="link">VISITE A LOJA</p></a>
+                    <a href="."><p class="link">PERGUNTAS FREQUENTES</p></a>
+                    <a href="."><p class="link">MAPA DO SITE</p></a>
 
-                <p>Christal Company Importação e Exportação Ltda.<br>
-                    Rua Carlos Machado, 197<br>
-                    PoloRio de Cine & Vídeo- Barra da Tijuca<br>
-                    Rio de Janeiro, RJ 22775-042<br>
-                    Tel:(21)2421-1418<br>
-                    info@concept2.com.br
-                </p>
+                    <p class="local">Christal Company Importação e Exportação Ltda.<br>
+                        Rua Carlos Machado, 197<br>
+                        PoloRio de Cine & Vídeo- Barra da Tijuca<br>
+                        Rio de Janeiro, RJ 22775-042<br>
+                        Tel:(21)2421-1418<br>
+                        info@concept2.com.br
+                    </p>
+                </div>
             </div>
+            <div class="col-md-5" style="width: 372px; height: 272px">
+                <div class="fb-page" data-href="https://www.facebook.com/concept2-brasil/" data-tabs="e.g"
+                     data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"
+                     data-show-facepile="true">
+                    <div class="fb-xfbml-parse-ignore">
+                        <blockquote cite="https://www.facebook.com/concept2-brasil/"><a
+                                href="https://www.facebook.com/concept2-brasil/">Concept2 Brasil</a></blockquote>
+                    </div>
+                </div>
             </div>
             <div class="col-md-3" style="float: right">
                 <div class="form">
-                    <p>RECEBA NOSSAS NOTÍCIAS!</p>
-
+                    <p style="font-weight: bold">RECEBA NOSSAS NOTÍCIAS!</p>
                     <div class="input-group input-group-sm">
-                        <input type="text" class="form-control" placeholder="E-mail" aria-describedby="sizing-addon3">
+                        <input type="text" class="form-control" placeholder="e-mail" aria-describedby="sizing-addon3">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">ASSINAR</button>
+                        </span>
                     </div>
                 </div>
             </div>
 
-            <div class="col-md-3" style="float: right">
-                <p>A nossa missão na Concept2 Brasil é promover a saúde pelo remo. Trabalhamos com os equipamentos
+            <div class=" descricao2 col-md-3">
+                <img src="static/img/c2logo.png">
+
+                <p style="font-size: small; text-align: justify">A nossa missão na Concept2 Brasil é promover a saúde
+                    pelo remo. Trabalhamos com os equipamentos
                     da mais alta qualidade, líderes em vendas e de desempenho por todo o mundo. Nossa preocupação é
                     de satisfazer o cliente pela excelência.</p>
             </div>
+
         </div>
 
-
     </div>
+    <footer><p class="line1">Concept2, Remo Indoor e CaBra-RI são marcas registradas da Christal Company Importação e Exportação Ltda. Qualquer uso ou comercialização não autorizada dos termos são expressamente proibidos sob jurisdição da lei.</p>
+    <p>Copyright Christal Company Importação e Exportação Ltda. CNPJ: 08.717.004/0001-05. Todos os direitos reservados 2016</p></footer>
 </div>
 
-
-<footer><p>Copyright Concept2 &copy. All Rights Reserved.</p></footer>
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
 <script src="bower_components/jquery/dist/jquery.min.js"></script>

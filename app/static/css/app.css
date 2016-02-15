@@ -270,12 +270,12 @@ header .container{
     display: none;
 }
 
-.pagina-comunidade .botoes-mapa:focus, input:focus, select:focus {
+.pagina-comunidade .botoes-mapa:focus, .botoes-mapa.input:focus, .botoes-mapa.select:focus {
     box-shadow: 0 0 0 0;
     border: 0 none;
     outline: 0;
 }
-.pagina-comunidade .botoes-mapa:focus, input:focus, select:focus:hover {
+.pagina-comunidade .botoes-mapa:focus, .botoes-mapa.input:focus, .botoes-mapa.select:focus:hover {
     background-color: transparent;
 }
 /*Pagina Eventos*/
@@ -343,8 +343,8 @@ header .container{
     background-repeat: no-repeat;
 }
 .rodape{
-    height: 350px;
-    background: radial-gradient(#414141, #040404)
+    height: 400px;
+    background: radial-gradient(#292929, #040404)
 }
 .rodape p {
     color:white;
@@ -352,20 +352,63 @@ header .container{
 .left {
 float: left;
 /*margin-left: 90px;*/
-margin-top: 20px;
+margin-top: 40px;
 
 }
 .right{
   float: right;
   /*margin-right: 90px;*/
-margin-top: 20px;
+margin-top: 40px;
 }
-
+.link{
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+.local{
+  font-size: small;
+  margin-top: 30px;
+}
 .left a{
     text-decoration: none;
 }
+.descricao2{
+    float: right;
+    margin-top: 50px
+}
+.descricao2 img{
+    height: 80px;
+    float: left;
+    margin-left: -110px
+}
 
+.input-group .form-control:first-child{
+     height: 23px;
+    width: 233px;
+    text-align: center;
+}
+.input-group-btn:last-child > .btn{
+    width: 86px;
+    height: 26px;
+    padding: 0px;
+    background-color: #eefd00;
+    color: #5e5a69;
+    font-weight: 800;
+}
+.form{
+    margin-left: -100px;
+    margin-top: 40px;
+}
+.fb-page{
+    width: 372px;
+    height: 272px;
+    padding-top: 40px;
+}
 footer{
     color: rgba( 255, 255, 255, 0.5);
     text-align: center;
+    font-size: x-small
+}
+.line1{
+    margin-bottom: 0px;
+    margin-top: 50px
 }
