@@ -241,7 +241,7 @@ header .container{
     background-color: transparent;
 
 }
-.pagina-comunidade .botoes-mapa:focus, .botoes-mapa.focus, .botoes-mapa.active, .botoes-mapa:active, .btn.active{
+.pagina-comunidade .botoes-mapa:focus, .botoes-mapa.focus, .botoes-mapa.active, .botoes-mapa:active, .botoes-mapa.btn.active{
     border: none;
     width: 100px;
 }
