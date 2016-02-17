@@ -304,6 +304,7 @@ header .container{
 .pagina-eventos p{
     color: rgba(255, 255, 255, 0.8);
 }
+
 /*Pagina Noticias*/
 .pagina-noticias{
     background: radial-gradient(#4b525a,#28292e);
@@ -381,12 +382,12 @@ margin-top: 40px;
     margin-left: -110px
 }
 
-.input-group .form-control:first-child{
+.form .input-group .form-control:first-child{
      height: 23px;
     width: 233px;
     text-align: center;
 }
-.input-group-btn:last-child > .btn{
+.form .input-group-btn:last-child > .btn{
     width: 86px;
     height: 26px;
     padding: 0px;
@@ -394,6 +395,7 @@ margin-top: 40px;
     color: #5e5a69;
     font-weight: 800;
 }
+
 .form{
     margin-left: -100px;
     margin-top: 40px;

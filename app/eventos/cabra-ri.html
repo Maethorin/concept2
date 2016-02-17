@@ -1,0 +1,75 @@
+<div class="container" style="background-color: white; border: 2px solid black; height: 500px">
+    <div class="row">
+        <h1 style="color:black; text-align: center; margin-bottom: 30px">Cadastro CaBra-RI</h1>
+
+        <div class="campos" style="margin-left: 200px">
+            <div ng-controller="CampoController">
+                DAR NOME AOS BOIS!!!!
+                <form novalidate name="formInscricao" class="css-form">
+                    <div class="col-md-4">
+                        <h4>Nome:</h4>
+                        <div form-group>
+                             <div ng-show="formInscricao.$submitted || formInscricao.nome.$touched">
+                            <div ng-show="formInscricao.nome.$error.required"><span
+                                    class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                            </div>
+                            </div>
+                        <input type="text" class="form-control" name="nome" placeholder="Primeiro Nome"
+                               ng-model="dadosInscricao.nome" required=""/>
+                        </div>
+                        <h4>Afiliação</h4>
+                        <input type="text" class="form-control" name="afiliacao"
+                               placeholder="Clube, Academia, Box de CF ou Independente"
+                               ng-model="dadosInscricao.afiliacao"/>
+
+                        <h4>CPF:</h4>
+                        <input type="text" class="form-control" name="cpf" ui-mask="??999.999.999-99"
+                               ng-model="dadosInscricao.cpf" required/>
+
+                        <h4>Telefone:</h4>
+                        <input type="text" class="form-control" name="telefone" placeholder="(xx)xxxx-xxxx"
+                               ui-mask="(99)9999-9999" ng-model="dadosInscricao.telefone"/>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Sobrenome:</h4>
+                        <input type="text" class="form-control" name="sobrenome" placeholder="Segundo Nome"
+                               ng-model="dadosInscricao.sobrenome"
+                               required/>
+
+                        <h4>Nome do Time</h4>
+                        <input type="text" class="form-control" name="time" placeholder="Nome do Time"
+                               ng-model="dadosInscricao.time"/>
+
+                    </div>
+
+                    <h4 style="margin-top: 10px">Data de Nascimento</h4>
+
+                    <div class="col-md-2">
+                        <input style='margin-bottom: 20px' type="text" class="form-control" name="data"
+                               placeholder="dd/mm/aaaa" ui-mask="Dd/Mm/9999"
+                               ng-model="dadosInscricao.data" required ui-options="maskDef"/>
+                    </div>
+                    <div class="col-md-4">
+                        <h4>Sexo:</h4>
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                            Masculino
+                        </label>
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                            Feminino
+                        </label>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h4>E-mail</h4>
+                        <input type="email" class="form-control" name="email" placeholder="Gmail ou Hotmail"
+                               ng-model="dadosInscricao.email"/>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+</div>
