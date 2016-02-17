@@ -414,3 +414,17 @@ footer{
     margin-bottom: 0px;
     margin-top: 50px
 }
+.formInput .form-control-feedback{
+    margin-top:10px;
+}
+.form-group{
+   margin-top: 10px;
+}
+.form-group .help-block{
+  margin-bottom: 0px;
+  margin-top: 0px;
+  font-size: x-small;
+}
+.css-form .col-md-4{
+    min-height: 100px
+}
