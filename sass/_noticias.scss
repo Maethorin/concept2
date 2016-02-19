@@ -1,0 +1,25 @@
+
+.camponot {
+    min-height: 164px;
+    color: white;
+    font-family: Calibri;
+    background: rgba(75, 82, 90, 0);
+}
+
+ .conteudo {
+    width: 300px;
+    height: 100px;
+    float: right;
+    padding: 5px;
+}
+
+ .mais ul li a {
+    background-color: #3d414a;
+    color: white;
+    border-color: darkgray;
+    &:hover {
+    background-color: gray;
+    color: white;
+    border-color: darkgray;
+}
+}

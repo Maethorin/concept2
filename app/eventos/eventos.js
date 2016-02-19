@@ -14,12 +14,14 @@ angular.module('concept.eventos', ['ngRoute'])
     .controller('EventosController', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
         $rootScope.cssPagina = "pagina-eventos";
         $rootScope.titulo = "Eventos";
-        $scope.eventos = []
+        $scope.eventos = [];
         $http.get('/eventos/eventos.json').then(function (response) {
             $scope.eventos = response.data;
         });
     }])
-    .controller('CampoController', ['$scope', function ($scope) {
+    .controller('CampoController', ['$rootScope', '$scope', function ($rootScope, $scope) {
+        $rootScope.cssPagina = "pagina-eventos";
+        $rootScope.titulo = "Eventos";
         $scope.dadosInscricao = {
             "nome": null,
             "sobrenome": null,
@@ -31,7 +33,7 @@ angular.module('concept.eventos', ['ngRoute'])
             "email": null
             //adicionar os outros campos
         };
-        $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-1]/, 'M': /[0-1]/, 'm': /[0-2]/}};
+        $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-9]/, 'M': /[0-1]/, 'm': /[0-2]/}};
         $scope.campoEstaValido = function (campo) {
             return campo.$touched && !campo.$error.required
 
@@ -39,9 +41,10 @@ angular.module('concept.eventos', ['ngRoute'])
         $scope.campoEstaInvalido = function (campo) {
             return campo.$touched && campo.$error.required
 
-        } ;
+        };
         $scope.campoNaoTocado = function (campo) {
             return !campo.$touched
 
         };
+
     }]);

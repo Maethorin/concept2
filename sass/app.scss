@@ -1,0 +1,251 @@
+$imageUrl: "/static/img/";
+@mixin image-background($imageFile) {
+    background-image: url($imageUrl + $imageFile);
+}
+
+#logo {
+    width: 282px;
+    height: 39px;
+    @include image-background("logo-branco.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    text-indent: -1000px;
+}
+
+#social {
+    float: right;
+    display: inline-flex;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    a {
+        text-decoration: none;
+        h5 {
+            text-transform: uppercase;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 115%;
+            color: white;
+        }
+    }
+    i {
+        color: white;
+        padding-top: 10px;
+        margin-right: 155px;
+    }
+    img {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        margin-left: 220px;
+        margin-top: -28px;
+    }
+}
+
+header .container {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 15px;
+    margin-top: 10px;
+}
+
+#menu {
+    ul {
+        list-style: none;
+        text-transform: uppercase;
+        li {
+            display: inline;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 120%;
+
+            a {
+                text-decoration: none;
+                color: white;
+                padding: 10px;
+            }
+
+        }
+    }
+
+}
+.menu:hover {
+
+    background-color: #233340;
+    transition: 0.5s;
+    color: gainsboro;
+
+}
+.buscar {
+    margin-right: -200px;
+    margin-top: 10px;
+    margin-left: 100px;
+    &.input-group .form-control:last-child {
+        height: 25px;
+    }
+}
+
+.slideshow {
+    overflow: hidden;
+    z-index: -999;
+    padding: 0;
+    margin: -120px 0 0;
+}
+
+#slide img {
+    padding: 0;
+    margin: 0;
+}
+
+.fundo-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -999;
+    @include image-background("fundo-home-1.jpg");
+    background-repeat: no-repeat;
+    background-size: contain;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.pagina-home {
+
+}
+
+.pagina-produtos {
+    background: radial-gradient(circle, #0f3d5e, #020e1c);
+    min-height: 100%;
+    background-repeat: no-repeat;
+    @import "produtos";
+}
+
+.pagina-eventos {
+    background: radial-gradient(circle, #6d7520, #30340f);
+    background-repeat: no-repeat;
+    @import "eventos";
+}
+
+.pagina-comunidade {
+    background: radial-gradient(circle, #253940, #070c0f);
+    background-repeat: no-repeat;
+    @import "comunidade";
+}
+
+.pagina-noticias {
+    background: radial-gradient(circle, #4b525a, #28292e);
+    background-repeat: no-repeat;
+    @import "noticias";
+}
+
+.pagina-suporte {
+    background: radial-gradient(circle, #6a8ea8, #436072);
+    background-repeat: no-repeat;
+    @import "suporte";
+}
+
+.pagina-contato {
+    background: radial-gradient(circle, #8a8a8a, #616161);
+    background-repeat: no-repeat;
+    @import "contato";
+}
+
+.rodape {
+    height: 400px;
+    background: radial-gradient(circle, #292929, #040404);
+    p {
+        color: white;
+    }
+}
+
+.left {
+    float: left;
+    margin-top: 40px;
+    a {
+        text-decoration: none;
+    }
+
+}
+
+.right {
+    float: right;
+    /*margin-right: 90px;*/
+    margin-top: 40px;
+}
+
+.link {
+    padding-bottom: 10px;
+    font-weight: bold;
+}
+
+.local {
+    font-size: small;
+    margin-top: 30px;
+}
+
+.descricao2 {
+    float: right;
+    margin-top: 50px;
+    font-family: 'Open Sans', sans-serif;
+    img {
+        height: 80px;
+        float: left;
+        margin-left: -110px
+
+    }
+}
+
+.form {
+    margin-left: -100px;
+    margin-top: 40px;
+    .input-group .form-control:first-child {
+        height: 23px;
+        width: 233px;
+        text-align: center;
+    }
+    .input-group{
+            margin-right: 30px;
+
+    }
+    .input-group-btn {
+        &:last-child > .btn {
+            width: 86px;
+            height: 23px;
+            padding: 0px;
+            background-color: #eefd00;
+            color: #5e5a69;
+            font-weight: 800;
+        }
+    }
+
+}
+
+.fb-page {
+    width: 372px;
+    height: 272px;
+    padding-top: 40px;
+}
+
+footer {
+    color: rgba(255, 255, 255, 0.5);
+    text-align: center;
+    font-size: x-small
+}
+
+.line1 {
+    margin-bottom: 0px;
+    margin-top: 50px
+}
+
+.formInput .form-control-feedback {
+    margin-top: 10px;
+}
+
+.form-group {
+    margin-top: 10px;
+    .help-block {
+        margin-bottom: 0px;
+        margin-top: 0px;
+        font-size: x-small;
+    }
+}
+
+.css-form .col-md-4 {
+    min-height: 100px
+}

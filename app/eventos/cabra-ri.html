@@ -1,6 +1,6 @@
 <div class="container" style="background-color: white; border: 2px solid black; height: 500px">
     <div class="row">
-        <h1 style="color:black; text-align: center; margin-bottom: 30px; border-bottom: 1px dashed black">Cadastro CaBra-RI</h1>
+        <h1 style="color:black; text-align: center; margin-bottom: 30px; border-bottom: 1px dashed black; font-family: 'Cabin', sans-serif">Cadastro CaBra-RI</h1>
 
         <div class="campos" style="margin-left: 100px; margin-right: 100px">
             <form  novalidate name="formInscricao" class="css-form">
@@ -29,9 +29,8 @@
                 <div class="col-md-4">
                     <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricao.data), 'has-error': campoEstaInvalido(formInscricao.data)}">
                         <label class="control-label" for="data">Data de Nascimento</label>
-                        <input type="text" class="form-control" name="data" id="data"
-                               placeholder="dd/mm/aaaa" ui-mask="99/99/9999"
-                               ng-model="dadosInscricao.data" aria-describedby="campodata" required ui-options="maskDef"/>
+                        <input data-format="dd/MM/yyyy" data-type="" class="form-control" name="data" id="data"
+                               placeholder="dd/mm/aaaa" ui-mask="Dd/Mm/9999" ng-model="dadosInscricao.data" aria-describedby="campodata" required ui-options="maskDef"/>
                         <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-asterisk': campoNaoTocado(formInscricao.data), 'fa-check': campoEstaValido(formInscricao.data), 'fa-close': campoEstaInvalido(formInscricao.data)} "></span>
                         <span id="campodata" class="help-block" ng-show="formInscricao.data.$touched && formInscricao.data.$error.required">* O campo é obrigatório *</span>
                     </div>
@@ -98,18 +97,20 @@
                     </div>
 
                     </div>
+                <div class="col-md-4">
+                     <div class="form-group">
+                         <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricao.celular), 'has-error': campoEstaInvalido(formInscricao.celular)}">
+                        <label for="celular">Celular:</label>
+                        <input type="text" class="form-control" name="celular" id="celular" placeholder="(xx)xxxxx-xxxx"
+                               ui-mask="(99)99999-9999" ng-model="dadosInscricao.celular" aria-describedby="campocelular" required/>
+                              <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-asterisk': campoNaoTocado(formInscricao.celular), 'fa-check': campoEstaValido(formInscricao.celular), 'fa-close': campoEstaInvalido(formInscricao.celular)} "></span>
+                        <span id="campocelular" class="help-block" ng-show="formInscricao.celular.$touched && formInscricao.celular.$error.required">* O campo é obrigatório *</span>
 
+                    </div>
 
-                <!--<div class="col-md-4">-->
+                </div>
+            </div>
 
-                    <!--<div class="form-group">-->
-                        <!--<label for="celular">Celular:</label>-->
-                        <!--<input type="text" class="form-control" name="celular" id="celular" placeholder="(xx)xxxx-xxxx"-->
-                               <!--ui-mask="(99)9999-9999" ng-model="dadosInscricao.celular"/>-->
-                    <!--</div>-->
-
-
-                        <!--</div>-->
             </form>
         </div>
 

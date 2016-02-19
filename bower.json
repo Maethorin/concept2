@@ -11,9 +11,10 @@
     "angular-loader": "~1.4.0",
     "angular-mocks": "~1.4.0",
     "html5-boilerplate": "~5.2.0",
-    "bootstrap":"~3.3.6",
-    "fontawesome":"~4.5.0",
-    "angular-google-maps":"~2.3.1",
-    "angular-ui-mask":"~1.7.2"
+    "bootstrap": "~3.3.6",
+    "fontawesome": "~4.5.0",
+    "angular-google-maps": "~2.3.1",
+    "angular-ui-mask": "~1.7.2",
+    "ngMask": "angular-mask#^3.0.16"
   }
 }
