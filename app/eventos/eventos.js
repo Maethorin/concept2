@@ -6,8 +6,12 @@ angular.module('concept.eventos', ['ngRoute'])
                 templateUrl: 'eventos/eventos.html',
                 controller: 'EventosController'
             })
-            .when('/eventos/cabra', {
+             .when('/eventos/cabra-ri', {
                 templateUrl: 'eventos/cabra-ri.html',
+                controller:'CabraController'
+            })
+            .when('/eventos/inscricao', {
+                templateUrl: 'eventos/formulariocabrari.html',
                 controller: 'CampoController'
             })
     }])
@@ -19,6 +23,11 @@ angular.module('concept.eventos', ['ngRoute'])
             $scope.eventos = response.data;
         });
     }])
+     .controller('CabraController', ['$rootScope', '$scope', function ($rootScope, $scope) {
+        $rootScope.cssPagina = "pagina-eventos";
+        $rootScope.titulo = "Eventos";
+    }])
+
     .controller('CampoController', ['$rootScope', '$scope', function ($rootScope, $scope) {
         $rootScope.cssPagina = "pagina-eventos";
         $rootScope.titulo = "Eventos";

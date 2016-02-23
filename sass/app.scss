@@ -2,6 +2,7 @@ $imageUrl: "/static/img/";
 @mixin image-background($imageFile) {
     background-image: url($imageUrl + $imageFile);
 }
+@import "cabra-ri";
 
 #logo {
     width: 282px;

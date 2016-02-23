@@ -1,0 +1,27 @@
+.borda-cabra{
+     border: 5px solid white;
+   &.col1 img{
+        width: 873px;
+        height: 383px;
+        margin-left: -20px
+    }
+     a{
+          text-decoration: none;
+          color: white;
+     }
+}
+#menucabra{
+    .menuri{
+          margin-right: 25px;
+     }
+     ul{
+         list-style: none;
+          margin-left: 55px;
+     }
+      li {
+           display: inline;
+           font-family: 'Open Sans', sans-serif;
+           font-size: 140%;
+           color: white;
+      }
+}
