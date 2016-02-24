@@ -6,11 +6,11 @@ angular.module('concept.eventos', ['ngRoute'])
                 templateUrl: 'eventos/eventos.html',
                 controller: 'EventosController'
             })
-             .when('/eventos/cabra-ri', {
-                templateUrl: 'eventos/cabra-ri.html',
-                controller:'CabraController'
+             .when('/eventos/:slug', {
+                templateUrl: 'eventos/evento.html',
+                controller:'EventoController'
             })
-            .when('/eventos/inscricao', {
+            .when('/eventos/:slug/inscricao', {
                 templateUrl: 'eventos/formulariocabrari.html',
                 controller: 'CampoController'
             })
@@ -21,11 +21,18 @@ angular.module('concept.eventos', ['ngRoute'])
         $scope.eventos = [];
         $http.get('/eventos/eventos.json').then(function (response) {
             $scope.eventos = response.data;
+
         });
     }])
-     .controller('CabraController', ['$rootScope', '$scope', function ($rootScope, $scope) {
+
+     .controller('EventoController', ['$rootScope', '$scope', '$routeParams', '$http', function ($rootScope, $scope, $routeParams, $http) {
+        var slug = $routeParams.slug;
         $rootScope.cssPagina = "pagina-eventos";
-        $rootScope.titulo = "Eventos";
+        $rootScope.titulo = "Cabra-RI";
+        $scope.evento = {};
+        $http.get('eventos/' + slug + '.json').then(function (response){
+            $scope.evento = response.data;
+        });
     }])
 
     .controller('CampoController', ['$rootScope', '$scope', function ($rootScope, $scope) {

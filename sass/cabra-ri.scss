@@ -1,16 +1,47 @@
-.borda-cabra{
+.borda-eventos{
      border: 5px solid white;
-   &.col1 img{
-        width: 873px;
-        height: 383px;
-        margin-left: -20px
-    }
+     &.destaque img{
+          margin-left: -20px;
+     }
+     &.prop {
+          margin-top: -50px;
+
+          }
+          img{
+          margin-left: -15px;
+     }
+     &.menuevento{
+          min-height: 200px;
+           background-color: #34360f;
+     }
+     &.descricaoevento{
+          h4{
+          color: black;
+          font-weight: bold;
+          text-align: center
+     }
+          h5{
+               color: black;
+               font-weight: bold;
+               text-align: center
+          }
+          p{
+               color: black;
+               text-align: justify;
+               font-size: small
+          }
+          button{
+               background: radial-gradient(#962156, #7a224a);
+               border: 2px solid black;
+               margin-left: 70px
+          }
+     }
      a{
           text-decoration: none;
           color: white;
      }
 }
-#menucabra{
+#menuevento{
     .menuri{
           margin-right: 25px;
      }

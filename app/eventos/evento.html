@@ -1,0 +1,34 @@
+<div class="container">
+    <div class="row">
+        <div></div>
+            <div class="col-md-9 borda-eventos destaque">
+             <img ng-src="/static/img/eventos/{{evento.imagemDestaque}}.jpg">
+            </div>
+            <div  class="col-md-3 borda-eventos descricaoevento" style="background-color: white; height: 393px">
+                <h4>{{evento.titulo}}</h4>
+                <img ng-src="/static/img/eventos/{{evento.imagemLogo}}.jpg"/>
+                <h5>{{evento.subtitulo}}</h5>
+                <p>{{evento.descricao}}</p>
+                <button type="button" class="btn btn-default"><a href="#/eventos/{{slug}}/inscricao">Inscreva-se!</a></button>
+            </div>
+        <div class="col-md-9 borda-eventos">
+            <nav id="menuevento">
+                <ul>
+                    <div class="col-md-2"><li>Categorias</li></div>
+                    <div class="col-md-2"> <li>Horários</li></div>
+                     <div class="col-md-2"><li>Regulamento</li></div>
+                     <div class="col-md-2"><li>Resultados</li></div>
+                     <div class="col-md-2"><li>?</li></div>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="col-md-9 borda-eventos menuevento">
+        </div>
+        <div class="col-md-3 borda-eventos prop">
+            <img ng-src="/static/img/eventos/{{evento.imagemPropaganda}}.jpg" />
+        </div>
+
+
+        </div>
+    </div>
