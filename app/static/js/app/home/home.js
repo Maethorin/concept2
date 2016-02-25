@@ -4,7 +4,7 @@ angular.module('concept.home', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
       $routeProvider
           .when('/', {
-            templateUrl: 'home/home.html',
+            templateUrl: '/angular/home.html',
             controller: 'HomeController'
           })
     }])

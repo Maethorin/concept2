@@ -3,7 +3,7 @@ angular.module('concept.produtos', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
       $routeProvider
           .when('/produtos', {
-            templateUrl: 'produtos/produtos.html',
+            templateUrl: '/angular/produtos.html',
             controller: 'ProdutosController'
           })
     }])

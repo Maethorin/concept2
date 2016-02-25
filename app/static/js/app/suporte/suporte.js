@@ -4,7 +4,7 @@ angular.module('concept.suporte', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
       $routeProvider
           .when('/suporte', {
-            templateUrl: 'suporte/suporte.html',
+            templateUrl: '/angular/suporte.html',
             controller: 'SuporteController'
           })
     }])

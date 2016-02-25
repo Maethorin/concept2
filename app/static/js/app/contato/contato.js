@@ -4,7 +4,7 @@ angular.module('concept.contato', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
       $routeProvider
           .when('/contato', {
-            templateUrl: 'contato/contato.html',
+            templateUrl: '/angular/contato.html',
             controller: 'ContatoController'
           })
     }])

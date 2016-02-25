@@ -3,15 +3,15 @@ angular.module('concept.eventos', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/eventos', {
-                templateUrl: 'eventos/eventos.html',
+                templateUrl: '/angular/eventos.html',
                 controller: 'EventosController'
             })
              .when('/eventos/:slug', {
-                templateUrl: 'eventos/evento.html',
+                templateUrl: '/angular/evento.html',
                 controller:'EventoController'
             })
             .when('/eventos/:slug/inscricao', {
-                templateUrl: 'eventos/formulariocabrari.html',
+                templateUrl: '/angular/formulariocabrari.html',
                 controller: 'CampoController'
             })
     }])
