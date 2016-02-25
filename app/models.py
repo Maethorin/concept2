@@ -45,6 +45,7 @@ class Evento(db.Model):
     __tablename__ = 'eventos'
     id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String())
+    subtitulo = db.Column(db.String())
     imagem_lista = db.Column(db.String())
     imagem_destaque = db.Column(db.String())
     imagem_logo = db.Column(db.String())
@@ -59,14 +60,14 @@ class Evento(db.Model):
         return {
             "id": self.id,
             "titulo": self.titulo,
+            "subtitulo": self.subtitulo,
             "imagemLista": self.imagem_lista,
-            "imagemDestaque": "cabradestaque",
-            "imagemLogo": "cabralogo",
-            "imagemPropaganda": "cabrapequeno",
+            "imagemDestaque": self.imagem_destaque,
+            "imagemLogo": self.imagem_logo,
+            "imagemPropaganda": self.imagem_propaganda,
             "descricao": self.descricao,
             "fundo": self.fundo,
-            "link": self.href_link,
+            "hrefLink": self.href_link,
             "nomeLink": self.nome_link,
             "destaque": self.em_destaque,
-            "subtitulo": "1 e 2 de Abril",
         }
