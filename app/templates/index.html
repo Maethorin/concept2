@@ -2,18 +2,14 @@
 <html lang="pt-BR" ng-app="concept">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
-    <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
-    <link rel="stylesheet" href="bower_components/fontawesome/css/font-awesome.css">
-    <link rel="stylesheet" href="static/css/app.css">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <link rel="icon" href="static/img/c2-logo.png" sizes="16x16"/>
+    <link rel="stylesheet" href="/static/css/app.css">
+    <link rel="icon" href="/static/img/c2-logo.png" sizes="16x16"/>
     <title>Concept2 Brasil: {{titulo}}</title>
 </head>
 <body class="{{cssPagina}}">
 <div id="fb-root"></div>
-<script>(function (d, s, id) {
+<script>(function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
     js = d.createElement(s);
@@ -44,7 +40,7 @@
                 </div>
                 <div class="input-group input-group-sm buscar">
                     <input type="text" class="form-control" placeholder="BUSCA"/>
-                 </div>
+                </div>
                 <img src="static/img/carticon.png" style="width: 30px; height: 30px">
 
             </div>
@@ -112,6 +108,7 @@
             <div class="col-md-3" style="float: right">
                 <div class="form">
                     <p style="font-weight: bold">RECEBA NOSSAS NOTÍCIAS!</p>
+
                     <div class="input-group input-group-sm">
                         <input type="text" class="form-control" placeholder="e-mail" aria-describedby="sizing-addon3">
                         <span class="input-group-btn">
@@ -134,21 +131,22 @@
 
     </div>
     <footer><p class="line1">Concept2, Remo Indoor e CaBra-RI são marcas registradas da Christal Company Importação e Exportação Ltda. Qualquer uso ou comercialização não autorizada dos termos são expressamente proibidos sob jurisdição da lei.</p>
-    <p>Copyright Christal Company Importação e Exportação Ltda. CNPJ: 08.717.004/0001-05. Todos os direitos reservados 2016</p></footer>
+
+        <p>Copyright Christal Company Importação e Exportação Ltda. CNPJ: 08.717.004/0001-05. Todos os direitos reservados 2016</p></footer>
 </div>
 
-<script src="bower_components/angular/angular.js"></script>
-<script src="bower_components/angular-ui-mask/dist/mask.js"></script>
-<script src="bower_components/angular-route/angular-route.js"></script>
-<script src="bower_components/jquery/dist/jquery.min.js"></script>
-<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-<script src="static/js/app.js"></script>
-<script src="home/home.js"></script>
-<script src="produtos/produtos.js"></script>
-<script src="comunidade/comunidade.js"></script>
-<script src="eventos/eventos.js"></script>
-<script src="noticias/noticias.js"></script>
-<script src="suporte/suporte.js"></script>
-<script src="contato/contato.js"></script>
+<script src="/static/js/bower_components/angular/angular.js"></script>
+<script src="/static/js/bower_components/angular-ui-mask/dist/mask.js"></script>
+<script src="/static/js/bower_components/angular-route/angular-route.js"></script>
+<script src="/static/js/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/static/js/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"></script>
+<script src="/static/js/app/app.js"></script>
+<script src="/static/js/app/home/home.js"></script>
+<script src="/static/js/app/produtos/produtos.js"></script>
+<script src="/static/js/app/comunidade/comunidade.js"></script>
+<script src="/static/js/app/eventos/eventos.js"></script>
+<script src="/static/js/app/noticias/noticias.js"></script>
+<script src="/static/js/app/suporte/suporte.js"></script>
+<script src="/static/js/app/contato/contato.js"></script>
 </body>
 </html>
