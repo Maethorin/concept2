@@ -15,5 +15,5 @@ class Produtos(Resource):
 
     def get(self, produto_id=None):
         if not produto_id:
-            return self._obter_musicas()
-        return self._obter_musica(produto_id)
+            return self._obter_produtos()
+        return self._obter_produto(produto_id)
