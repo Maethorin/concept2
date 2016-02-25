@@ -26,11 +26,11 @@ angular.module('concept.eventos', ['ngRoute'])
     }])
 
      .controller('EventoController', ['$rootScope', '$scope', '$routeParams', '$http', function ($rootScope, $scope, $routeParams, $http) {
-        var slug = $routeParams.slug;
+        $scope.slug = $routeParams.slug;
         $rootScope.cssPagina = "pagina-eventos";
         $rootScope.titulo = "Cabra-RI";
         $scope.evento = {};
-        $http.get('/json/' + slug + '.json').then(function (response){
+        $http.get('/json/' + $scope.slug + '.json').then(function (response){
             $scope.evento = response.data;
         });
     }])
