@@ -26,7 +26,7 @@ def angular_template(template_name):
 
 @web_app.route('/json/<json_name>', methods=['GET', 'POST'])
 def angular_json(json_name):
-    return web_app.send_static_file("musicas/json/{}".format(json_name))
+    return web_app.send_static_file("js/app/jsons/{}".format(json_name))
 
 
 @web_app.route('/favicon.ico', methods=['GET'])

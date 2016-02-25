@@ -19,7 +19,7 @@ angular.module('concept.eventos', ['ngRoute'])
         $rootScope.cssPagina = "pagina-eventos";
         $rootScope.titulo = "Eventos";
         $scope.eventos = [];
-        $http.get('/eventos/eventos.json').then(function (response) {
+        $http.get('/json/eventos.json').then(function (response) {
             $scope.eventos = response.data;
 
         });
@@ -30,7 +30,7 @@ angular.module('concept.eventos', ['ngRoute'])
         $rootScope.cssPagina = "pagina-eventos";
         $rootScope.titulo = "Cabra-RI";
         $scope.evento = {};
-        $http.get('eventos/' + slug + '.json').then(function (response){
+        $http.get('/json/' + slug + '.json').then(function (response){
             $scope.evento = response.data;
         });
     }])
