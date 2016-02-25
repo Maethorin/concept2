@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from sqlalchemy.orm import relationship
+from sqlalchemy_utils.types import choice
 from database import AppRepository
 
 db = AppRepository.db
@@ -71,3 +72,60 @@ class Evento(db.Model):
             "nomeLink": self.nome_link,
             "destaque": self.em_destaque,
         }
+
+
+class Atleta(db.Model):
+    __tablename__ = 'atletas'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String())
+    nome = db.Column(db.String())
+    sobrenome = db.Column(db.String())
+    sexo = db.Column(db.String(1))
+    cpf = db.Column(db.String(11))
+    telefone = db.Column(db.String(10))
+    celular = db.Column(db.String(11))
+    nascimento = db.Column(db.Date())
+    inscricoes = relationship("Inscricao", back_populates="atleta")
+
+
+class Inscricao(db.Model):
+    __tablename__ = 'inscricoes'
+    id = db.Column(db.Integer, primary_key=True)
+    atleta_id = db.Column(db.Integer, db.ForeignKey('atletas.id'))
+    atleta = relationship("Atleta", back_populates="inscricoes")
+    afiliacao = db.Column(db.String(15))
+    nome_time = db.Column(db.String(10))
+
+
+class Categoria(db.Model):
+    __tablename__ = 'categorias'
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String())
+    sub_categorias = relationship("SubCategoria", back_populates="categoria")
+
+
+class SubCategoria(db.Model):
+    __tablename__ = 'sub_categorias'
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String())
+    categoria_id = db.Column(db.Integer, db.ForeignKey('categorias.id'))
+    categoria = relationship("Categoria", back_populates="sub_categorias")
+    provas = relationship("Prova", back_populates="sub_categoria")
+
+
+class Prova(db.Model):
+    __tablename__ = 'provas'
+    TIPOS = [
+        ('I', 'Individual'),
+        ('D', 'Dupla'),
+        ('Q', 'Quadra'),
+        ('8', '8'),
+        ('R', 'Revezamento'),
+        ('B', 'Biathlon'),
+    ]
+    id = db.Column(db.Integer, primary_key=True)
+    sexo = db.Column(db.String(2))
+    tipo = db.Column(choice.ChoiceType(TIPOS))
+    sub_categoria_id = db.Column(db.Integer, db.ForeignKey('sub_categorias.id'))
+    sub_categoria = relationship("SubCategoria", back_populates="provas")
+

@@ -2,3 +2,4 @@ Flask-RESTful
 Flask-SQLAlchemy
 alembic
 Flask-Migrate
+sqlalchemy-utils
