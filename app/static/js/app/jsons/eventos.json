@@ -1,8 +1,8 @@
 [
-  {"id":1, "titulo":"MonstarGames 2015 - Goiania", "imageUrl":"/static/img/eventos/destaque.jpg", "descricao":"A última etapa do Torneio Monstar Games reuniu mais de700 atletas para disputar nos 3 dias em categorias individuais com equipes... ","fundo":"#b0bc36, #7d8425", "link":"","nomelink":"","destaque":true},
-  {"id":2, "titulo":"Cursos","imageUrl":"/static/img/eventos/cursos.jpg", "descricao":"Seja certificado pela Concept2 e aprenda a remar e a entender a máquina de uma maneira mais especializada.","fundo":"#aa4775, #6f2c4b","link":"http://concept2.com.br","nomelink":"Próximos Cursos", "destaque":false},
-  {"id":3, "titulo":"Remo Indoor","imageUrl":"/static/img/eventos/indoor.jpg","descricao":"","fundo":"#7e214d, #461028","link":"", "nomelink":"Próximos Eventos","destaque":false },
-  {"id":4, "titulo":"CaBra-RI", "imageUrl":"/static/img/eventos/cabra.jpg","descricao":"","fundo":"#4e1b5e, #3a1445","link":"/#/eventos/cabra-ri","nomelink":"CaBra-RI 2016", "destaque":false },
-  {"id":5, "titulo":"Torneios de CrossFit","imageUrl":"/static/img/eventos/crosfit.jpg","descricao":"","fundo":"#81568e, #65416f", "link":"","nomelink":"Próximo Torneio","destaque":false},
-  {"id":6, "titulo":"Feiras","imageUrl":"/static/img/eventos/feiras.jpg","descricao":"","fundo":"#638c26, #3e5819", "link":"","nomelink":"Próxima Feira", "destaque":false}
+  {"id":1, "titulo":"MonstarGames 2015 - Goiania", "imagemLista":"/static/img/eventos/destaque.jpg", "descricao":"A última etapa do Torneio Monstar Games reuniu mais de700 atletas para disputar nos 3 dias em categorias individuais com equipes... ","fundo":"#b0bc36, #7d8425", "link":"","nomeLink":"","destaque":true},
+  {"id":2, "titulo":"Cursos","imagemLista":"/static/img/eventos/cursos.jpg", "descricao":"Seja certificado pela Concept2 e aprenda a remar e a entender a máquina de uma maneira mais especializada.","fundo":"#aa4775, #6f2c4b","link":"http://concept2.com.br","nomeLink":"Próximos Cursos", "destaque":false},
+  {"id":3, "titulo":"Remo Indoor","imagemLista":"/static/img/eventos/indoor.jpg","descricao":"","fundo":"#7e214d, #461028","link":"", "nomeLink":"Próximos Eventos","destaque":false },
+  {"id":4, "titulo":"CaBra-RI", "imagemLista":"/static/img/eventos/cabra.jpg","descricao":"","fundo":"#4e1b5e, #3a1445","link":"/#/eventos/cabra-ri","nomeLink":"CaBra-RI 2016", "destaque":false },
+  {"id":5, "titulo":"Torneios de CrossFit","imagemLista":"/static/img/eventos/crosfit.jpg","descricao":"","fundo":"#81568e, #65416f", "link":"","nomeLink":"Próximo Torneio","destaque":false},
+  {"id":6, "titulo":"Feiras","imagemLista":"/static/img/eventos/feiras.jpg","descricao":"","fundo":"#638c26, #3e5819", "link":"","nomeLink":"Próxima Feira", "destaque":false}
 ]

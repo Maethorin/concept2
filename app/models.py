@@ -6,7 +6,7 @@ db = AppRepository.db
 
 
 class Produto(db.Model):
-    __tablename__ = 'produtoe'
+    __tablename__ = 'produtos'
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String())
     imagem = db.Column(db.String())
@@ -32,10 +32,41 @@ class Produto(db.Model):
         db.session.commit()
         return produto
 
-    def to_dict(self, lista=False):
+    def to_dict(self):
         return {
             'id': self.id,
             'nome': self.nome,
             'imagem': self.imagem,
             'descricao': self.descricao
+        }
+
+
+class Evento(db.Model):
+    __tablename__ = 'eventos'
+    id = db.Column(db.Integer, primary_key=True)
+    titulo = db.Column(db.String())
+    imagem_lista = db.Column(db.String())
+    imagem_destaque = db.Column(db.String())
+    imagem_logo = db.Column(db.String())
+    imagem_propaganda = db.Column(db.String())
+    descricao = db.Column(db.String())
+    fundo = db.Column(db.String())
+    href_link = db.Column(db.String())
+    nome_link = db.Column(db.String())
+    em_destaque = db.Column(db.Boolean())
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "titulo": self.titulo,
+            "imagemLista": self.imagem_lista,
+            "imagemDestaque": "cabradestaque",
+            "imagemLogo": "cabralogo",
+            "imagemPropaganda": "cabrapequeno",
+            "descricao": self.descricao,
+            "fundo": self.fundo,
+            "link": self.href_link,
+            "nomeLink": self.nome_link,
+            "destaque": self.em_destaque,
+            "subtitulo": "1 e 2 de Abril",
         }

@@ -6,16 +6,16 @@
                 <h3>{{evento.titulo}}</h3>
                 <p style="text-align: left">{{evento.descricao}}</p>
                 </div>
-                <img style="margin-left: -53px"ng-src="{{evento.imageUrl}}">
+                <img style="margin-left: -53px"ng-src="{{evento.imagemLista}}">
             </div>
             <div ng-if="!evento.destaque" class="col-md-3 borda-evento" style="background:radial-gradient({{evento.fundo}})">
                 <div class="cont">
                 <h3>{{evento.titulo}}</h3>
                 <p style="text-align: left">{{evento.descricao}}</p>
                  </div>
-                <img ng-src="{{evento.imageUrl}}">
+                <img ng-src="{{evento.imagemLista}}">
                 <div class="link">
-                <a ng-href="{{evento.link}}">{{evento.nomelink}}</a>
+                <a ng-href="{{evento.link}}">{{evento.nomeLink}}</a>
                 </div>
             </div>
 
