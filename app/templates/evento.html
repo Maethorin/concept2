@@ -15,7 +15,7 @@
             <nav id="menuevento">
                 <ul>
                     <div class="col-md-2"><li>Categorias</li></div>
-                    <div class="col-md-2"> <li>Horários</li></div>
+                    <div class="col-md-2"><li>Horários</li></div>
                      <div class="col-md-2"><li>Regulamento</li></div>
                      <div class="col-md-2"><li>Resultados</li></div>
                      <div class="col-md-2"><li>?</li></div>
@@ -24,6 +24,7 @@
         </div>
 
         <div class="col-md-9 borda-eventos menuevento">
+            <div ng-include="template.url"></div>
         </div>
         <div class="col-md-3 borda-eventos prop">
             <img ng-src="/static/img/eventos/{{evento.imagemPropaganda}}.jpg" />

@@ -21,15 +21,15 @@ angular.module('concept.eventos', ['ngRoute'])
         $scope.eventos = [];
         $http.get('/json/eventos.json').then(function (response) {
             $scope.eventos = response.data;
-
         });
     }])
-
      .controller('EventoController', ['$rootScope', '$scope', '$routeParams', '$http', function ($rootScope, $scope, $routeParams, $http) {
         $scope.slug = $routeParams.slug;
         $rootScope.cssPagina = "pagina-eventos";
         $rootScope.titulo = "Cabra-RI";
         $scope.evento = {};
+        $scope.templates = [{name: 'angular/categorias.html', url: '/angular/categorias.html'} ,{ name: '/angular/horario.html', url:'/angular.horario.html'}];
+        $scope.template = $scope.templates[0];
         $http.get('/json/' + $scope.slug + '.json').then(function (response){
             $scope.evento = response.data;
         });
