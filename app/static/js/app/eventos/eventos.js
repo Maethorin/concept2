@@ -10,9 +10,9 @@ angular.module('concept.eventos', ['ngRoute'])
                 templateUrl: '/angular/evento.html',
                 controller:'EventoController'
             })
-            .when('/eventos/:slug/inscricao', {
-                templateUrl: '/angular/formulariocabrari.html',
-                controller: 'CampoController'
+            .when('/eventos/:slug/:itemMenu', {
+                templateUrl: '/angular/evento/evento.html',
+                controller:'EventoController'
             })
     }])
     .controller('EventosController', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
@@ -23,24 +23,17 @@ angular.module('concept.eventos', ['ngRoute'])
             $scope.eventos = response.data;
         });
     }])
-     .controller('EventoController', ['$rootScope', '$scope', '$routeParams', '$http', function ($rootScope, $scope, $routeParams, $http) {
+    .controller('EventoController', ['$rootScope', '$scope', '$routeParams', '$http', '$location', function ($rootScope, $scope, $routeParams, $http, $location) {
         $scope.slug = $routeParams.slug;
+        $scope.itemMenu = $routeParams.itemMenu;
+        $scope.template = '/angular/evento/{0}.html'.format([$scope.itemMenu]);
         $rootScope.cssPagina = "pagina-eventos";
-        $rootScope.titulo = "Cabra-RI";
         $scope.evento = {};
-        $scope.carregaTemplate = function(template) {
-            $scope.template = '/angular/' + template + '.html';
-        };
-        //$scope.templates = [{name: 'angular/categorias.html', url: '/angular/categorias.html'} ,{ name: '/angular/horario.html', url:'/angular.horario.html'}];
-        //$scope.template = $scope.templates[0];
-        $http.get('/json/' + $scope.slug + '.json').then(function (response){
+        $http.get('/json/' + $scope.slug + '.json').then(function(response) {
             $scope.evento = response.data;
+            $rootScope.titulo = $scope.evento.titulo;
         });
-    }])
 
-    .controller('CampoController', ['$rootScope', '$scope', function ($rootScope, $scope) {
-        $rootScope.cssPagina = "pagina-eventos";
-        $rootScope.titulo = "Eventos";
         $scope.dadosInscricao = {
             "nome": null,
             "sobrenome": null,

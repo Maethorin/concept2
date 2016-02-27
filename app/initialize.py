@@ -31,9 +31,9 @@ def index():
     return send_from_directory('templates', 'index.html')
 
 
-@web_app.route('/angular/<template_name>', methods=['GET', 'POST'])
-def angular_template(template_name):
-    return send_from_directory('templates', template_name)
+@web_app.route('/angular/<path:template_path>', methods=['GET', 'POST'])
+def angular_template(template_path):
+    return send_from_directory('templates', template_path)
 
 
 @web_app.route('/json/<json_name>', methods=['GET', 'POST'])
