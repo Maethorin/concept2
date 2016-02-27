@@ -7,7 +7,7 @@ angular.module('concept.eventos', ['ngRoute'])
                 controller: 'EventosController'
             })
              .when('/eventos/:slug', {
-                templateUrl: '/angular/evento.html',
+                templateUrl: '/angular/evento/evento.html',
                 controller:'EventoController'
             })
             .when('/eventos/:slug/:itemMenu', {
@@ -25,7 +25,7 @@ angular.module('concept.eventos', ['ngRoute'])
     }])
     .controller('EventoController', ['$rootScope', '$scope', '$routeParams', '$http', '$location', function ($rootScope, $scope, $routeParams, $http, $location) {
         $scope.slug = $routeParams.slug;
-        $scope.itemMenu = $routeParams.itemMenu;
+        $scope.itemMenu = $routeParams.itemMenu || 'categorias';
         $scope.template = '/angular/evento/{0}.html'.format([$scope.itemMenu]);
         $rootScope.cssPagina = "pagina-eventos";
         $scope.evento = {};

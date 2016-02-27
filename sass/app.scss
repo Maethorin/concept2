@@ -7,6 +7,10 @@ $imageUrl: "/static/img/";
 }
 @import "evento";
 
+body {
+    background-color: #0096C0;
+}
+
 #logo {
     width: 282px;
     height: 39px;
@@ -17,79 +21,37 @@ $imageUrl: "/static/img/";
 }
 
 #social {
-    float: right;
-    display: inline-flex;
-    margin-top: -10px;
-    margin-bottom: 10px;
-    a {
-        text-decoration: none;
-        h5 {
-            text-transform: uppercase;
-            font-family: 'Open Sans', sans-serif;
-            font-size: 115%;
-            color: white;
-        }
-    }
-    i {
-        color: white;
-        padding-top: 10px;
-        margin-right: 155px;
-    }
-    img {
-        width: 30px;
-        height: 30px;
-        position: absolute;
-        margin-left: 220px;
-        margin-top: -28px;
-    }
+    color: white;
+    text-transform: uppercase;
 }
 
-header .container {
-    background-color: rgba(0, 0, 0, 0.3);
-    padding: 15px;
-    margin-top: 10px;
-}
-
-#menu {
-    ul {
-        list-style: none;
-        text-transform: uppercase;
-        li {
-            display: inline;
-            font-family: 'Open Sans', sans-serif;
-            font-size: 120%;
-
-            a {
-                text-decoration: none;
-                color: white;
-                padding: 10px;
+header {
+    .topo {
+        background-color: rgba(0, 0, 0, 0.3);
+        padding: 15px;
+        margin-top: 20px;
+    }
+    .navegacao {
+        .form-busca {
+            margin: 0;
+            .form-group {
+                margin-top: 8px;
             }
-
+            i {
+                font-size: 18px;
+            }
         }
     }
-
 }
-.menu:hover {
 
-    background-color: #233340;
-    transition: 0.5s;
-    color: gainsboro;
-
-}
-.buscar {
-    margin-right: -200px;
-    margin-top: 10px;
-    margin-left: 100px;
-    &.input-group .form-control:last-child {
-        height: 25px;
-    }
+.slide-home {
+    margin-top: -20px;
 }
 
 .slideshow {
     overflow: hidden;
     z-index: -999;
     padding: 0;
-    margin: -120px 0 0;
 }
 
 #slide img {
@@ -156,21 +118,6 @@ header .container {
     p {
         color: white;
     }
-}
-
-.left {
-    float: left;
-    margin-top: 40px;
-    a {
-        text-decoration: none;
-    }
-
-}
-
-.right {
-    float: right;
-    /*margin-right: 90px;*/
-    margin-top: 40px;
 }
 
 .link {
