@@ -1,5 +1,11 @@
 
 @media (max-width: $screen-xs-max) {
+    header {
+        background-color: rgba(0, 0, 0, 0.45);
+        .topo {
+            border-bottom: 1px inset #444;
+        }
+    }
     #logo {
         width: 170px;
         height: 20px;

@@ -8,7 +8,7 @@ $imageUrl: "/static/img/";
 @import "evento";
 
 body {
-    background-color: #0096C0;
+    @include image-background("fundo2.png");
 }
 
 #logo {
@@ -20,19 +20,26 @@ body {
 }
 
 #social {
-    color: white;
+    a {
+        color: white;
+        margin-left: 25px;
+    }
+    text-align: right;
+    overflow: hidden;
+    margin-top: 8px;
     text-transform: uppercase;
 }
 
+
 header {
+    background-color: rgba(0, 0, 0, 0.45);
     .topo {
-        background-color: rgba(0, 0, 0, 0.3);
         margin-top: 10px;
         padding-top: 10px;
     }
     .navegacao {
         &.navbar-default {
-            background-color: rgba(0, 0, 0, .45);
+            background-color: rgba(0, 0, 0, 0);
             border-color: #555;
             .navbar-nav {
                 a {
@@ -78,26 +85,11 @@ header {
     margin: 0;
 }
 
-.fundo-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -999;
-    @include image-background("fundo-home-1.jpg");
-    background-repeat: no-repeat;
-    background-size: contain;
-    min-width: 100%;
-    min-height: 100%;
-}
-
 .pagina-home {
 
 }
 
 .pagina-produtos {
-    background: radial-gradient(circle, #0f3d5e, #020e1c);
-    min-height: 100%;
-    background-repeat: no-repeat;
     @import "produtos";
 }
 
@@ -131,14 +123,6 @@ header {
     @import "contato";
 }
 
-.rodape {
-    height: 400px;
-    background: radial-gradient(circle, #292929, #040404);
-    p {
-        color: white;
-    }
-}
-
 .link {
     padding-bottom: 10px;
     font-weight: bold;
@@ -149,75 +133,58 @@ header {
     margin-top: 30px;
 }
 
-.descricao2 {
-    float: right;
-    margin-top: 50px;
-    font-family: 'Open Sans', sans-serif;
-    img {
-        height: 80px;
-        float: left;
-        margin-left: -110px
-
-    }
-}
-
-.form {
-    margin-left: -100px;
-    margin-top: 40px;
-    .input-group .form-control:first-child {
-        height: 23px;
-        width: 233px;
-        text-align: center;
-    }
-    .input-group{
-            margin-right: 30px;
-
-    }
-    .input-group-btn {
-        &:last-child > .btn {
-            width: 86px;
-            height: 23px;
-            padding: 0px;
-            background-color: #eefd00;
-            color: #5e5a69;
-            font-weight: 800;
+footer {
+    text-align: center;
+    font-size: x-small;
+    .links {
+        padding-left: 0;
+        list-style: none;
+        li {
+            margin-bottom: 5px;
+            font-size: 12px;
+            text-transform: uppercase;
+            text-align: left;
         }
     }
 
+    .christal {
+        text-align: left;
+        font-size: 12px;
+    }
+
+    &.rodape {
+        padding-top: 20px;
+        border-top: 5px solid rgba(0, 0, 0, .3);
+        background-color: rgba(0, 0, 0, .85);
+        color: white;
+    }
+    .missao {
+        font-size: small;
+        text-align: justify;
+        img{
+            height: 80px;
+        }
+    }
+    .newsletter {
+        text-align: left;
+        label {
+            font-size: 12px;
+            color: #EEE;
+        }
+        .input-group-btn {
+            &:last-child > .btn {
+                background-color: #eefd00;
+                color: #5e5a69;
+                font-weight: 800;
+            }
+        }
+    }
 }
 
 .fb-page {
     width: 372px;
     height: 272px;
     padding-top: 40px;
-}
-
-footer {
-    color: rgba(255, 255, 255, 0.5);
-    text-align: center;
-    font-size: x-small
-}
-
-.line1 {
-    margin-bottom: 0px;
-    margin-top: 50px
-}
-
-.formInput .form-control-feedback {
-    margin-top: 10px;
-}
-
-.form-group {
-    margin-top: 10px;
-    .help-block {
-        margin-bottom: 0px;
-        margin-top: 0px;
-        font-size: x-small;
-    }
-}
-
-.css-form .col-md-4 {
-    min-height: 100px
 }
 
 @import "media-max";

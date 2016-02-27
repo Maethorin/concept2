@@ -21,22 +21,14 @@
 <header>
     <div class="container topo">
         <div class="row">
-            <div class="col-md-9 col-xs-6">
+            <div class="col-md-9 col-xs-3">
                 <a class="navbar-brand" id="logo" href="/#/">Concept2</a>
             </div>
-            <div class="col-md-3 col-xs-6">
+            <div class="col-md-3 col-xs-9">
                 <div id="social">
-                    <div class="col-md-4 col-xs-4">
-                        <a href="#"><h5>Login</h5></a>
-                    </div>
-                    <div class=" col-md-4 col-xs-4">
-                        <a href="https://www.facebook.com/Concept2Brasil/?fref=ts" title="Facebook" target="_blank"><i
-                                class="fa fa-facebook-official fa-2x"></i></a>
-                    </div>
-                    <div class="col-md-4 col-xs-4">
-                        <a href="https://www.instagram.com/concept2brasil/" title="Instagram" target="_blank"><i
-                                class="fa fa-instagram fa-2x"></i></a>
-                    </div>
+                    <a href="#">Login</a>
+                    <a href="https://www.facebook.com/Concept2Brasil/?fref=ts" title="Facebook" target="_blank"><i class="fa fa-facebook-official fa-2x"></i></a>
+                    <a href="https://www.instagram.com/concept2brasil/" title="Instagram" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>
                 </div>
             </div>
         </div>
@@ -79,64 +71,80 @@
     </nav>
 </header>
 <div ng-view></div>
-<div class="rodape">
-
+<footer class="rodape">
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <div class="left">
-                    <a href="."><p class="link">VISITE A LOJA</p></a>
-                    <a href="."><p class="link">PERGUNTAS FREQUENTES</p></a>
-                    <a href="."><p class="link">MAPA DO SITE</p></a>
+                <ul class="links">
+                    <li>
+                        <a href="https://concept2.com.br/shop">visite a loja</a>
+                    </li>
+                    <li>
+                        <a href="/#/faq">perguntas frequentes</a>
+                    </li>
+                    <li>
+                        <a href="/sitemap">mapa do site</a>
+                    </li>
+                </ul>
 
-                    <p class="local">Christal Company Importação e Exportação Ltda.<br>
-                        Rua Carlos Machado, 197<br>
-                        PoloRio de Cine & Vídeo- Barra da Tijuca<br>
-                        Rio de Janeiro, RJ 22775-042<br>
-                        Tel:(21)2421-1418<br>
-                        info@concept2.com.br
-                    </p>
+                <div class="vcard christal">
+                    <span class="org">Christal Company Importação e Exportação Ltda.</span> (<a class="url" href="https://concept2.com.br">web site</a>)
+                    <div class="adr">
+                        <div class="street-address">Rua Carlos Machado, 197</div>
+                        <div class="extended-address">Polo Rio de Cine & Vídeo - Barra da Tijuca</div>
+                        <span class="locality">Rio de Janerio</span>,
+                        <abbr class="region" title="California">RJ</abbr>,
+                        CEP <span class="postal-code">22775-042</span> -
+                        <span class="country-name">Brasil</span>
+                    </div>
+                    <div class="tel">Tel:(21)2421-1418</div>
+                    <a class="email" href="mailto:info@concept2.com.br">info@concept2.com.br</a>
                 </div>
             </div>
-            <div class="col-md-5" style="width: 372px; height: 272px">
+            <div class="col-md-4">
+                <div class="row">
+                    <div class="col-md-12 form-group newsletter">
+                        <label for="newsletter">receba nossas notícias!</label>
+                        <div class="input-group input-group-sm">
+                            <input type="text" id="newsletter" name="newsletter" class="form-control" placeholder="e-mail" aria-describedby="sizing-addon3">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button">ASSINAR</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row missao">
+                    <div class="col-md-3">
+                        <img src="static/img/c2logo.png" />
+                    </div>
+                    <div class="col-md-9">
+                        A nossa missão na Concept2 Brasil é promover a saúde
+                        pelo remo. Trabalhamos com os equipamentos
+                        da mais alta qualidade, líderes em vendas e de desempenho por todo o mundo. Nossa preocupação é
+                        de satisfazer o cliente pela excelência.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
                 <div class="fb-page" data-href="https://www.facebook.com/concept2-brasil/" data-tabs="e.g"
                      data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"
                      data-show-facepile="true">
                     <div class="fb-xfbml-parse-ignore">
-                        <blockquote cite="https://www.facebook.com/concept2-brasil/"><a
-                                href="https://www.facebook.com/concept2-brasil/">Concept2 Brasil</a></blockquote>
+                        <blockquote cite="https://www.facebook.com/concept2-brasil/">
+                            <a href="https://www.facebook.com/concept2-brasil/">Concept2 Brasil</a>
+                        </blockquote>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3" style="float: right">
-                <div class="form">
-                    <p style="font-weight: bold">RECEBA NOSSAS NOTÍCIAS!</p>
-
-                    <div class="input-group input-group-sm">
-                        <input type="text" class="form-control" placeholder="e-mail" aria-describedby="sizing-addon3">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">ASSINAR</button>
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class=" descricao2 col-md-3">
-                <img src="static/img/c2logo.png">
-
-                <p style="font-size: small; text-align: justify">A nossa missão na Concept2 Brasil é promover a saúde
-                    pelo remo. Trabalhamos com os equipamentos
-                    da mais alta qualidade, líderes em vendas e de desempenho por todo o mundo. Nossa preocupação é
-                    de satisfazer o cliente pela excelência.</p>
-            </div>
-
         </div>
-
+        <div class="row">
+            <div class="col-md-12">
+                <p class="line1">Concept2, Remo Indoor e CaBra-RI são marcas registradas da Christal Company Importação e Exportação Ltda. Qualquer uso ou comercialização não autorizada dos termos são expressamente proibidos sob jurisdição da lei.</p>
+                <p>Copyright Christal Company Importação e Exportação Ltda. CNPJ: 08.717.004/0001-05. Todos os direitos reservados 2016</p>
+            </div>
+        </div>
     </div>
-    <footer><p class="line1">Concept2, Remo Indoor e CaBra-RI são marcas registradas da Christal Company Importação e Exportação Ltda. Qualquer uso ou comercialização não autorizada dos termos são expressamente proibidos sob jurisdição da lei.</p>
-
-        <p>Copyright Christal Company Importação e Exportação Ltda. CNPJ: 08.717.004/0001-05. Todos os direitos reservados 2016</p></footer>
-</div>
+</footer>
 
 <script src="/static/js/bower_components/angular/angular.js"></script>
 <script src="/static/js/bower_components/angular-ui-mask/dist/mask.js"></script>
