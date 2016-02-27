@@ -95,6 +95,8 @@ class Inscricao(db.Model):
     atleta = relationship("Atleta", back_populates="inscricoes")
     afiliacao = db.Column(db.String(15))
     nome_time = db.Column(db.String(10))
+    prova_id = db.Column(db.Integer, db.ForeignKey('provas.id'))
+    prova = relationship("Prova", back_populates="inscricoes")
 
 
 class Categoria(db.Model):
@@ -102,6 +104,9 @@ class Categoria(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String())
     sub_categorias = relationship("SubCategoria", back_populates="categoria")
+
+    def codigo(self):
+        return self.nome.upper()[:3]
 
 
 class SubCategoria(db.Model):
@@ -112,9 +117,15 @@ class SubCategoria(db.Model):
     categoria = relationship("Categoria", back_populates="sub_categorias")
     provas = relationship("Prova", back_populates="sub_categoria")
 
+    def codigo(self):
+        return '{}{}'.format(self.categoria.codigo, self.nome.upper()[:3])
+
 
 class Prova(db.Model):
     __tablename__ = 'provas'
+    DISTANCIA = [
+        (500, 500)
+    ]
     TIPOS = [
         ('I', 'Individual'),
         ('D', 'Dupla'),
@@ -123,9 +134,21 @@ class Prova(db.Model):
         ('R', 'Revezamento'),
         ('B', 'Biathlon'),
     ]
+    SEXO = [('MA', 'Masculino'), ('FE', 'Feminino'), ('MI', 'Misto')]
     id = db.Column(db.Integer, primary_key=True)
-    sexo = db.Column(db.String(2))
+    distancia = db.Column(db.Integer)
+    sexo = db.Column(choice.ChoiceType(SEXO))
     tipo = db.Column(choice.ChoiceType(TIPOS))
     sub_categoria_id = db.Column(db.Integer, db.ForeignKey('sub_categorias.id'))
     sub_categoria = relationship("SubCategoria", back_populates="provas")
 
+    def codigo(self):
+        return '{}{}{}{}'.format(
+            self.sexo, self.distancia, self.tipo, self.sub_categoria.codigo
+        )
+
+# prova pode ter uma ou mais... perguntar o tempo e agrupar na bateria quem não sabe fica por último
+# provas vem primeiro e as inscrições são feitas em cima das provas... filtrar provas de acordo com os dados
+# quantidade de maq na prova (vai definir as baterias)
+# Prova: TIPO, DISTANCIA, CATEGORIA, SEXO
+# maquina recebe um nr da prova e mostra quem tá competindo junto.
