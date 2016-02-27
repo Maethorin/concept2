@@ -11,15 +11,8 @@ body {
     background-color: #0096C0;
 }
 
-@media (max-width: $screen-xs-max) {
-#logo {
-    display: none;
-}
-}
-
 #logo {
     width: 282px;
-    height: 39px;
     @include image-background("logo-branco.png");
     background-size: contain;
     background-repeat: no-repeat;
@@ -34,8 +27,8 @@ body {
 header {
     .topo {
         background-color: rgba(0, 0, 0, 0.3);
-        padding: 15px;
-        margin-top: 20px;
+        margin-top: 10px;
+        padding-top: 10px;
     }
     .navegacao {
         &.navbar-default {
@@ -226,3 +219,5 @@ footer {
 .css-form .col-md-4 {
     min-height: 100px
 }
+
+@import "media-max";

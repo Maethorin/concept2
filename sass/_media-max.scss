@@ -1,0 +1,11 @@
+
+@media (max-width: $screen-xs-max) {
+    #logo {
+        width: 170px;
+        height: 20px;
+        @include image-background("logo-branco.png");
+        background-size: contain;
+        background-repeat: no-repeat;
+        text-indent: -1000px;
+    }
+}
