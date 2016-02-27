@@ -8,7 +8,7 @@ angular.module('concept.comunidade',['ngRoute'])
             })
     }])
     .controller('ComunidadeController', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
-        $rootScope.cssPagina = "pagina-comunidade";
+        $rootScope.pagina = "comunidade";
         $rootScope.titulo = "Comunidade";
         $scope.comunidade = [];
         $http.get('/json/comunidade.json').then(function (response) {

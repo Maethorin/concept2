@@ -9,6 +9,6 @@ angular.module('concept.suporte', ['ngRoute'])
           })
     }])
  .controller('SuporteController', ['$rootScope','$scope', '$http', function($rootScope, $scope, $http) {
-     $rootScope.cssPagina = "pagina-suporte";
+     $rootScope.pagina = "suporte";
         $rootScope.titulo = "Suporte"
     }]);

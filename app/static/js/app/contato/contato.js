@@ -9,6 +9,6 @@ angular.module('concept.contato', ['ngRoute'])
           })
     }])
  .controller('ContatoController', ['$rootScope','$scope', '$http', function($rootScope, $scope, $http) {
-        $rootScope.cssPagina = "pagina-contato ";
+        $rootScope.pagina = "contato";
         $rootScope.titulo = "Contato"
     }]);

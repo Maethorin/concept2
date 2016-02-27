@@ -9,7 +9,7 @@ angular.module('concept.noticias', ['ngRoute'])
           })
     }])
  .controller('NoticiasController', ['$rootScope','$scope', '$http', function($rootScope,$scope, $http) {
-     $rootScope.cssPagina = "pagina-noticias";
+     $rootScope.pagina = "noticias";
         $rootScope.titulo = "Noticias";
         $scope.noticias = [];
         $http.get('/json/noticias.json').then(function(response){

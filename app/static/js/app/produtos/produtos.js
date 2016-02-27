@@ -8,6 +8,6 @@ angular.module('concept.produtos', ['ngRoute'])
           })
     }])
  .controller('ProdutosController', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
-        $rootScope.cssPagina = "pagina-produtos";
+        $rootScope.pagina = "produtos";
         $rootScope.titulo = "Produtos"
     }]);

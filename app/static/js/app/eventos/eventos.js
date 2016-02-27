@@ -16,7 +16,7 @@ angular.module('concept.eventos', ['ngRoute'])
             })
     }])
     .controller('EventosController', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
-        $rootScope.cssPagina = "pagina-eventos";
+        $rootScope.pagina = "eventos";
         $rootScope.titulo = "Eventos";
         $scope.eventos = [];
         $http.get('/json/eventos.json').then(function (response) {
@@ -27,7 +27,7 @@ angular.module('concept.eventos', ['ngRoute'])
         $scope.slug = $routeParams.slug;
         $scope.itemMenu = $routeParams.itemMenu || 'categorias';
         $scope.template = '/angular/evento/{0}.html'.format([$scope.itemMenu]);
-        $rootScope.cssPagina = "pagina-eventos";
+        $rootScope.pagina = "eventos";
         $scope.evento = {};
         $http.get('/json/' + $scope.slug + '.json').then(function(response) {
             $scope.evento = response.data;

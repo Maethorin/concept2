@@ -9,6 +9,6 @@ angular.module('concept.home', ['ngRoute'])
           })
     }])
     .controller("HomeController", ['$rootScope', function($rootScope) {
-        $rootScope.cssPagina = "pagina-home";
+        $rootScope.pagina = "home";
         $rootScope.titulo = "Inicial"
     }]);

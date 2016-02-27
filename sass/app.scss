@@ -11,6 +11,12 @@ body {
     background-color: #0096C0;
 }
 
+@media (max-width: $screen-xs-max) {
+#logo {
+    display: none;
+}
+}
+
 #logo {
     width: 282px;
     height: 39px;
@@ -32,6 +38,26 @@ header {
         margin-top: 20px;
     }
     .navegacao {
+        &.navbar-default {
+            background-color: rgba(0, 0, 0, .45);
+            border-color: #555;
+            .navbar-nav {
+                a {
+                    color: #DDD;
+                    font-weight: bold;
+                    &:hover {
+                        color: #FFF;
+                        background-color: rgba(0, 0, 0, .5);
+                    }
+                }
+                .active {
+                    a {
+                        color: #EEE;
+                        background-color: rgba(0, 0, 0, .6);
+                    }
+                }
+            }
+        }
         .form-busca {
             margin: 0;
             .form-group {
