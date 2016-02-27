@@ -14,17 +14,17 @@
         <div class="col-md-9 borda-eventos">
             <nav id="menuevento">
                 <ul>
-                    <div class="col-md-2"><a href ng-click="value = template.url"><li>Categorias</li></a></div>
-                    <div class="col-md-2"><a href ng-click="value = template.url"><li>Horários</li></a></div>
-                     <div class="col-md-2"><li>Regulamento</li></div>
-                     <div class="col-md-2"><li>Resultados</li></div>
-                     <div class="col-md-2"><li>?</li></div>
+                    <li><div class="col-md-2"><a ng-click="carregaTemplate('categorias')">Categorias</a></div></li>
+                    <li><div class="col-md-2"><a ng-click="carregaTemplate('horario')">Horários</a></div></li>
+                     <li><div class="col-md-2">Regulamento</div></li>
+                     <li><div class="col-md-2">Resultados</div></li>
+                     <li><div class="col-md-2">?</div></li>
                 </ul>
             </nav>
         </div>
 
         <div class="col-md-9 borda-eventos menuevento">
-            <div ng-include="value"></div>
+            <div ng-include="template"></div>
           </div>
         <div class="col-md-3 borda-eventos prop">
             <img ng-src="/static/img/eventos/{{evento.imagemPropaganda}}.jpg" />
