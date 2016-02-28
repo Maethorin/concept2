@@ -5,10 +5,17 @@ $imageUrl: "/static/img/";
 @mixin image-background($imageFile) {
     background-image: url($imageUrl + $imageFile);
 }
-@import "evento";
 
 body {
     @include image-background("fundo2.png");
+}
+
+.col-left {
+    padding-left: 0;
+}
+
+.col-right {
+    padding-right: 0;
 }
 
 #logo {
@@ -70,23 +77,8 @@ header {
     }
 }
 
-.slide-home {
-    margin-top: -20px;
-}
-
-.slideshow {
-    overflow: hidden;
-    z-index: -999;
-    padding: 0;
-}
-
-#slide img {
-    padding: 0;
-    margin: 0;
-}
-
 .pagina-home {
-
+    @import "home";
 }
 
 .pagina-produtos {
@@ -94,46 +86,28 @@ header {
 }
 
 .pagina-eventos {
-    background: radial-gradient(circle, #6d7520, #30340f);
-    background-repeat: no-repeat;
     @import "eventos";
+    @import "evento";
 }
 
 .pagina-comunidade {
-    background: radial-gradient(circle, #253940, #070c0f);
-    background-repeat: no-repeat;
     @import "comunidade";
 }
 
 .pagina-noticias {
-    background: radial-gradient(circle, #4b525a, #28292e);
-    background-repeat: no-repeat;
     @import "noticias";
 }
 
 .pagina-suporte {
-    background: radial-gradient(circle, #6a8ea8, #436072);
-    background-repeat: no-repeat;
     @import "suporte";
 }
 
 .pagina-contato {
-    background: radial-gradient(circle, #8a8a8a, #616161);
-    background-repeat: no-repeat;
     @import "contato";
 }
 
-.link {
-    padding-bottom: 10px;
-    font-weight: bold;
-}
-
-.local {
-    font-size: small;
-    margin-top: 30px;
-}
-
 footer {
+    margin-top: 20px;
     text-align: center;
     font-size: x-small;
     .links {
@@ -148,12 +122,12 @@ footer {
     }
 
     .christal {
-        text-align: left;
         font-size: 12px;
+        margin-bottom: 10px;
     }
 
     &.rodape {
-        padding-top: 20px;
+        padding-top: 10px;
         border-top: 5px solid rgba(0, 0, 0, .3);
         background-color: rgba(0, 0, 0, .85);
         color: white;
@@ -161,8 +135,10 @@ footer {
     .missao {
         font-size: small;
         text-align: justify;
+        margin-top: 10px;
         img{
             height: 80px;
+            margin-top: 15%;
         }
     }
     .newsletter {
@@ -179,12 +155,12 @@ footer {
             }
         }
     }
-}
-
-.fb-page {
-    width: 372px;
-    height: 272px;
-    padding-top: 40px;
+    .facebook {
+        margin-top: 10px;
+    }
+    .copyright {
+        margin-top: 10px;
+    }
 }
 
 @import "media-max";
