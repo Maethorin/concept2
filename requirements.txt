@@ -3,3 +3,4 @@ Flask-SQLAlchemy
 alembic
 Flask-Migrate
 sqlalchemy-utils
+gunicorn
