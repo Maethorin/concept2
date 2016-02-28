@@ -16,6 +16,7 @@ static_directory = os.path.join(app_directory, 'static')
 import api
 api.create_api(web_app)
 
+
 @web_app.after_request
 def add_header(r):
     """
