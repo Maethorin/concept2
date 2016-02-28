@@ -6,12 +6,7 @@
   "repository": "https://github.com/maethorin/concept2",
   "license": "MIT",
   "devDependencies": {
-    "bower": null,
-    "http-server": null,
-    "grunt": null,
-    "grunt-cli":null,
-    "grunt-contrib-sass":null,
-    "grunt-contrib-watch": null
+    "bower": null
   },
   "scripts": {
     "start": "http-server ./app -a localhost -p 8000 -c-1"
