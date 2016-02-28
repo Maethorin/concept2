@@ -1,5 +1,13 @@
 
 @media (max-width: $screen-xs-max) {
+    .col-left {
+        padding-left: ($grid-gutter-width / 2);
+    }
+
+    .col-right {
+        padding-right: ($grid-gutter-width / 2);
+    }
+
     header {
         background-color: rgba(0, 0, 0, 0.45);
         .topo {
@@ -14,4 +22,16 @@
         background-repeat: no-repeat;
         text-indent: -1000px;
     }
+    footer {
+        .missao {
+            font-size: small;
+            text-align: justify;
+            margin-top: 10px;
+            img{
+                height: 74px;
+                margin-top: 20%;
+            }
+        }
+    }
 }
+
