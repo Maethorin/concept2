@@ -6,6 +6,7 @@ $imageUrl: "/static/img/";
     background-image: url($imageUrl + $imageFile);
 }
 
+
 body {
     @include image-background("fundo2.png");
 }
