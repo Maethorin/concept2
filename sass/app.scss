@@ -78,10 +78,22 @@ header {
     }
 }
 
+.lista-caixa {
+    padding: 10px;
+}
+
+.caixa-conteudo {
+    border: 2px solid #DDD;
+    border-radius: 4px;
+    min-height: 310px;
+    padding: 10px;
+}
+
 .pagina-home {
     @import "home";
 }
 
+$bg-lista: radial-gradient(#1e71a3, #0f3d5e);
 .pagina-produtos {
     @import "produtos";
 }
