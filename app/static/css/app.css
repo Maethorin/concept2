@@ -10281,10 +10281,21 @@ header .navegacao .form-busca i {
   margin-left: 122px;
 }
 .pagina-eventos .campo .form-group {
-  min-height: 78px;
+  min-height: 77px;
 }
 .pagina-eventos .campo .help-block {
   font-size: smaller;
+}
+.pagina-eventos #regulamento {
+  width: 857px;
+  height: 193px;
+  overflow: auto;
+}
+.pagina-eventos #regulamento h4 {
+  font-weight: bold;
+}
+.pagina-eventos .line1 td {
+  padding: 0px;
 }
 
 .pagina-comunidade .lista-caixa {
@@ -10437,6 +10448,40 @@ header .navegacao .form-busca i {
   background-color: gray;
   color: white;
   border-color: darkgray;
+}
+
+.pagina-suporte .suporte {
+  background: radial-gradient(#2285be, #082640);
+  min-height: 500px;
+}
+.pagina-suporte .suporte a {
+  position: absolute;
+  margin-top: 72px;
+}
+.pagina-suporte .suporte .row {
+  margin-left: 48px;
+  margin-right: -109px;
+}
+.pagina-suporte .suporte img {
+  margin-top: 55px;
+}
+.pagina-suporte .suporte .perguntas img {
+  margin-left: 27px;
+}
+.pagina-suporte .suporte .quem-somos a {
+  margin-left: 28px;
+}
+.pagina-suporte .suporte .manutencao a {
+  margin-left: 3px;
+}
+.pagina-suporte .suporte .download a {
+  margin-left: 7px;
+}
+.pagina-suporte .suporte .col-md-3 {
+  margin-top: 30px;
+}
+.pagina-suporte .suporte .regulagem img {
+  margin-left: 49px;
 }
 
 footer {
