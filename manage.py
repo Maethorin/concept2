@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import os
@@ -6,14 +7,14 @@ from flask.ext.script import Manager
 from flask.ext.migrate import Migrate, MigrateCommand
 import sys
 
-from initialize import web_app
+from app import initialize
 
-manager = Manager(web_app)
+manager = Manager(initialize.web_app)
 
 
 def register_migrate(manager):
-    from models import db, Cantor, Musica, Estrofe, Verso
-    migrate = Migrate(web_app, db)
+    from app.models import db, Produto, Evento, Categoria, SubCategoria, Prova, Atleta, Inscricao
+    migrate = Migrate(initialize.web_app, db)
     manager.add_command('db', MigrateCommand)
     return migrate
 

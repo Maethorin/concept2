@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 from sqlalchemy.orm import relationship
-from sqlalchemy_utils.types import choice
-from database import AppRepository
+import database
 
-db = AppRepository.db
+db = database.AppRepository.db
 
 
 class Produto(db.Model):
@@ -125,36 +124,10 @@ class SubCategoria(db.Model):
 
 class Prova(db.Model):
     __tablename__ = 'provas'
-    DISTANCIA = [
-        (100, 100),
-        (250, 250),
-        (500, 500),
-        (1000, 1000),
-        (1500, 1500),
-        (2000, 2000),
-        (2500, 2500),
-        (3000, 3000),
-        (4000, 4000),
-        (5000, 5000),
-        (6000, 6000),
-        (8000, 8000),
-        (10000, 10000),
-        (20000, 20000),
-        (42195, 42195),
-    ]
-    TIPOS = [
-        ('I', 'Individual'),
-        ('D', 'Dupla'),
-        ('Q', 'Quadra'),
-        ('8', '8'),
-        ('R', 'Revezamento'),
-        ('B', 'Biathlon'),
-    ]
-    SEXO = [('MA', 'Masculino'), ('FE', 'Feminino'), ('MI', 'Misto')]
     id = db.Column(db.Integer, primary_key=True)
-    distancia = db.Column(db.Integer)
-    sexo = db.Column(choice.ChoiceType(SEXO))
-    tipo = db.Column(choice.ChoiceType(TIPOS))
+    distancia = db.Column(database.DistanciaTipo())
+    sexo = db.Column(database.SexoTipo())
+    tipo = db.Column(database.ProvaTipo())
     sub_categoria_id = db.Column(db.Integer, db.ForeignKey('sub_categorias.id'))
     sub_categoria = relationship("SubCategoria", back_populates="provas")
 

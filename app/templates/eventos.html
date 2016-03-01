@@ -9,7 +9,7 @@
                         </div>
                         <div class="panel-body destaque">
                             <div class="col-md-4 descricao-destaque">
-                                <p style="text-align: left">{{evento.descricao}}</p>
+                                <p style="text-align: left" ng-bind-html="trataHtml(evento.descricao)"></p>
                             </div>
                             <img ng-src="/static/img/{{evento.imagemLista}}">
                         </div>

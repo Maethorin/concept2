@@ -4,3 +4,4 @@ alembic
 Flask-Migrate
 sqlalchemy-utils
 gunicorn
+psycopg2

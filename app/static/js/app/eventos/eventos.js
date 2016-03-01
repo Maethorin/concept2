@@ -15,10 +15,13 @@ angular.module('concept.eventos', ['ngRoute'])
                 controller:'EventoController'
             })
     }])
-    .controller('EventosController', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
+    .controller('EventosController', ['$rootScope', '$scope', '$http', '$sce', function ($rootScope, $scope, $http, $sce) {
         $rootScope.pagina = "eventos";
         $rootScope.titulo = "Eventos";
         $scope.eventos = [];
+        $scope.trataHtml = function(linha) {
+            return $sce.trustAsHtml(linha);
+        };
         $http.get('/json/eventos.json').then(function (response) {
             $scope.eventos = response.data;
         });
