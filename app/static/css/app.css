@@ -10057,7 +10057,7 @@ button.close {
   }
 }
 body {
-  background-image: url("/static/img/fundo2.png");
+  background: linear-gradient(#1e71a3, #0f3d5e);
 }
 
 .col-left {
@@ -10487,13 +10487,18 @@ footer .copyright {
     border-bottom: 1px inset #444;
   }
 
+  #social {
+    margin-top: 0;
+  }
+
   #logo {
-    width: 170px;
-    height: 20px;
-    background-image: url("/static/img/logo-branco.png");
+    width: 77px;
+    height: 36px;
+    background-image: url("/static/img/c2logo.png");
     background-size: contain;
     background-repeat: no-repeat;
     text-indent: -1000px;
+    margin: -5px 0 5px;
   }
 
   footer .missao {

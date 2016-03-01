@@ -8,7 +8,7 @@ $imageUrl: "/static/img/";
 
 
 body {
-    @include image-background("fundo2.png");
+ background: linear-gradient(#1e71a3, #0f3d5e);
 }
 
 .col-left {

@@ -14,13 +14,17 @@
             border-bottom: 1px inset #444;
         }
     }
+    #social {
+        margin-top: 0;
+    }
     #logo {
-        width: 170px;
-        height: 20px;
-        @include image-background("logo-branco.png");
+        width: 77px;
+        height: 36px;
+        @include image-background("c2logo.png");
         background-size: contain;
         background-repeat: no-repeat;
         text-indent: -1000px;
+        margin: -5px 0 5px;
     }
     footer {
         .missao {
