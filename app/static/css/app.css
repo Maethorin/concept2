@@ -10123,12 +10123,17 @@ header .navegacao .form-busca i {
 .lista-caixa {
   padding: 10px;
 }
+.lista-caixa h3 {
+  font-size: x-large;
+  font-weight: bold;
+  color: white;
+}
 
 .caixa-conteudo {
-  border: 2px solid #DDD;
-  border-radius: 4px;
-  min-height: 310px;
-  padding: 10px;
+  min-height: 380px;
+}
+.caixa-conteudo h3 {
+  margin: 0;
 }
 
 .pagina-home .slide-home {
@@ -10144,24 +10149,35 @@ header .navegacao .form-busca i {
   margin: 0;
 }
 
-.pagina-produtos h3 {
-  font-size: x-large;
-  font-weight: bold;
-  color: #666;
-}
 .pagina-produtos .lista-caixa {
   background: radial-gradient(#1e71a3, #0f3d5e);
 }
-
-.pagina-eventos .borda-evento {
-  border: 5px solid white;
-  font-size: large;
-  font-family: 'Cabin', sans-serif;
-  text-align: center;
-  color: white;
-  min-height: 395px;
+.pagina-produtos .caixa-conteudo .panel-heading {
+  background-color: rgba(0, 0, 0, 0.4);
 }
-.pagina-eventos .borda-evento a {
+.pagina-produtos .caixa-conteudo.panel-default {
+  background-color: transparent;
+}
+.pagina-produtos .linha2 img {
+  margin-top: -20px;
+}
+.pagina-produtos .linha1 img {
+  margin-top: 7px;
+}
+
+.pagina-eventos .lista-caixa {
+  background: radial-gradient(#81568e, #65416f);
+}
+.pagina-eventos .caixa-conteudo .panel-heading {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.pagina-eventos .caixa-conteudo.panel-default {
+  background-color: transparent;
+}
+.pagina-eventos .borda-evento {
+  min-height: 300px;
+}
+.pagina-eventos .panel-body .link a {
   text-decoration: none;
   font-size: 1em;
   color: rgba(255, 255, 255, 0.4);
@@ -10174,21 +10190,39 @@ header .navegacao .form-busca i {
 .pagina-eventos .pagina-eventos p {
   color: rgba(255, 255, 255, 0.8);
 }
+.pagina-eventos .descricao-destaque {
+  float: right;
+  margin-right: 20px;
+}
+.pagina-eventos .destaque img {
+  margin-top: -10px;
+  height: 310px;
+}
+.pagina-eventos .caixa-conteudo h3 {
+  text-align: center;
+}
+.pagina-eventos .conteudo-menor {
+  text-align: center;
+}
 .pagina-eventos .borda-eventos {
   border: 5px solid white;
 }
-.pagina-eventos .borda-eventos.destaque img {
-  margin-left: -20px;
+.pagina-eventos .borda-eventos.sub-menu {
+  background: radial-gradient(#2384bb, #092942);
 }
-.pagina-eventos .borda-eventos.prop {
-  margin-top: -50px;
+.pagina-eventos .borda-eventos.destaque img {
+  margin-left: -17px;
+  height: 376px;
+  margin-top: 5px;
+}
+.pagina-eventos .borda-eventos.prop img {
+  margin-top: -70px;
 }
 .pagina-eventos .borda-eventos img {
   margin-left: -15px;
 }
 .pagina-eventos .borda-eventos.menuevento {
   min-height: 200px;
-  background-color: #34360f;
 }
 .pagina-eventos .borda-eventos.descricaoevento h4 {
   color: black;
@@ -10219,7 +10253,8 @@ header .navegacao .form-busca i {
 }
 .pagina-eventos #menuevento ul {
   list-style: none;
-  margin-left: 55px;
+  margin-left: 2px;
+  padding-bottom: 50px;
 }
 .pagina-eventos #menuevento li {
   display: inline;
@@ -10227,7 +10262,13 @@ header .navegacao .form-busca i {
   font-size: 140%;
   color: white;
 }
+.pagina-eventos .conteudo-cabra {
+  background-color: white;
+}
 
+.pagina-comunidade .lista-caixa {
+  padding-bottom: 70px;
+}
 .pagina-comunidade .titulo h1 {
   text-align: center;
   color: white;
@@ -10274,8 +10315,8 @@ header .navegacao .form-busca i {
 .pagina-comunidade img {
   margin-left: -10px;
   margin-top: -190px;
-  width: 150px;
-  height: 190px;
+  width: 75px;
+  height: 75px;
 }
 .pagina-comunidade #pac-input {
   background-color: #fff;
@@ -10318,7 +10359,20 @@ header .navegacao .form-busca i {
 .pagina-comunidade .botoes-mapa.active:hover {
   background-color: transparent;
 }
+.pagina-comunidade .onde-remar {
+  background-image: url(/static/img/comunidade/concept2-onde-remae-verde.png);
+}
+.pagina-comunidade .onde1 {
+  background-image: url(/static/img/comunidade/concept2-onde-remae-vermelho.png);
+}
+.pagina-comunidade .onde2 {
+  background-image: url(/static/img/comunidade/concept2-onde-remae-amarelo.png);
+}
+.pagina-comunidade .onde3 {
+  background-image: url(/static/img/comunidade/concept2-onde-remae-azul.png);
+}
 .pagina-comunidade .onde-remar.active {
+  background-image: url(/static/img/comunidade/desablepng.png);
   text-decoration: none;
 }
 .pagina-comunidade .mapa-container {
@@ -10332,12 +10386,20 @@ header .navegacao .form-busca i {
 .pagina-comunidade .botoes-mapa:focus, .pagina-comunidade .botoes-mapa.input:focus, .pagina-comunidade .botoes-mapa.select:focus:hover {
   background-color: transparent;
 }
+.pagina-comunidade .lista-caixa {
+  background: radial-gradient(#34505b, #132026);
+}
+.pagina-comunidade .caixa-conteudo .panel-heading {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.pagina-comunidade .caixa-conteudo.panel-default {
+  background-color: transparent;
+}
 
 .pagina-noticias .camponot {
   min-height: 164px;
   color: white;
-  font-family: Calibri;
-  background: rgba(75, 82, 90, 0);
+  background: rgba(75, 82, 90, 0.8);
 }
 .pagina-noticias .conteudo {
   width: 300px;

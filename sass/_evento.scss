@@ -1,10 +1,16 @@
 .borda-eventos{
      border: 5px solid white;
+     &.sub-menu{
+       background: radial-gradient(#2384bb, #092942);
+     }
      &.destaque img{
-          margin-left: -20px;
+          margin-left: -17px;
+          height: 376px;
+          margin-top: 5px;
      }
      &.prop {
-          margin-top: -50px;
+          img{margin-top: -70px;}
+
 
           }
           img{
@@ -12,7 +18,6 @@
      }
      &.menuevento{
           min-height: 200px;
-           background-color: #34360f;
      }
      &.descricaoevento{
           h4{
@@ -42,12 +47,15 @@
      }
 }
 #menuevento{
+
     .menuri{
           margin-right: 25px;
      }
      ul{
          list-style: none;
-          margin-left: 55px;
+          margin-left: 2px;
+          padding-bottom: 50px;
+
      }
       li {
            display: inline;
@@ -55,4 +63,7 @@
            font-size: 140%;
            color: white;
       }
+}
+.conteudo-cabra{
+     background-color: white;
 }

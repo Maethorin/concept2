@@ -1,21 +1,36 @@
 <div class="container">
     <div class="row">
         <div ng-repeat="evento in eventos">
-            <div ng-if="evento.destaque" class="col-md-9 borda-evento" style="background:radial-gradient({{evento.fundo}})">
-                <div class="conteudo">
-                <h3>{{evento.titulo}}</h3>
-                <p style="text-align: left">{{evento.descricao}}</p>
+            <div ng-if="evento.destaque" class="col-md-9 lista-caixa">
+                <div class=" borda-evento">
+                    <div class="panel panel-default caixa-conteudo">
+                        <div class="panel-heading">
+                            <h3>{{evento.titulo}}</h3>
+                        </div>
+                        <div class="panel-body destaque">
+                            <div class="col-md-4 descricao-destaque">
+                                <p style="text-align: left">{{evento.descricao}}</p>
+                            </div>
+                            <img ng-src="/static/img/{{evento.imagemLista}}">
+                        </div>
+                    </div>
                 </div>
-                <img style="margin-left: -53px" ng-src="/static/img/{{evento.imagemLista}}">
             </div>
-            <div ng-if="!evento.destaque" class="col-md-3 borda-evento" style="background:radial-gradient({{evento.fundo}})">
-                <div class="cont">
-                <h3>{{evento.titulo}}</h3>
-                <p style="text-align: left">{{evento.descricao}}</p>
-                 </div>
-                <img ng-src="{{evento.imagemLista}}">
-                <div class="link">
-                <a ng-href="{{evento.hrefLink}}">{{evento.nomeLink}}</a>
+            <div ng-if="!evento.destaque" class="col-md-3 lista-caixa">
+                <div class="caixa-conteudo">
+                    <div class="panel panel-default caixa-conteudo">
+                        <div class="panel-heading">
+                            <h3>{{evento.titulo}}</h3>
+                        </div>
+                        <div class="panel-body conteudo-menor">
+                            <p style="text-align: left">{{evento.descricao}}</p>
+                            <img ng-src="{{evento.imagemLista}}">
+
+                            <div class="link">
+                                <a ng-href="{{evento.hrefLink}}">{{evento.nomeLink}}</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

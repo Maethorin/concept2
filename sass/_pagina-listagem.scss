@@ -1,0 +1,12 @@
+.lista-caixa {
+    background: $bg-lista;
+
+}
+.caixa-conteudo{
+    .panel-heading{
+        background-color: $bg-panel-heading;
+    }
+    &.panel-default{
+        background-color: $bg-panel-default;
+    }
+}

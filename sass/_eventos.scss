@@ -1,22 +1,44 @@
 
-.borda-evento{
-    border: 5px solid white;
-    font-size: large;
-    font-family: 'Cabin', sans-serif;
-    text-align: center;
-    color: white;
-    min-height: 395px;
+.borda-evento {
+    min-height: 300px;
+
 }
-.borda-evento a{
-    text-decoration: none;
-    font-size: 1em;
-    color: rgba(255, 255, 255, 0.4);
+
+.panel-body .link {
+
+    a {
+        text-decoration: none;
+        font-size: 1em;
+        color: rgba(255, 255, 255, 0.4);
+    }
+
 }
-.conteudo{
+
+.conteudo {
     width: 240px;
     height: 155px;
     float: right;
 }
-.pagina-eventos p{
+
+.pagina-eventos p {
     color: rgba(255, 255, 255, 0.8);
+}
+
+.descricao-destaque {
+    float: right;
+    margin-right: 20px;
+
+}
+.destaque{
+    img{
+    margin-top: -10px;
+    height: 310px;
+    }
+}
+.caixa-conteudo h3{
+    text-align: center;
+}
+.conteudo-menor{
+    text-align: center;
+
 }

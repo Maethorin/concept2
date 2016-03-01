@@ -80,13 +80,20 @@ header {
 
 .lista-caixa {
     padding: 10px;
+
+    h3 {
+    font-size: x-large;
+    font-weight: bold;
+    color: white;
+}
+
 }
 
 .caixa-conteudo {
-    border: 2px solid #DDD;
-    border-radius: 4px;
-    min-height: 310px;
-    padding: 10px;
+    min-height: 380px;
+    h3{
+        margin: 0;
+    }
 }
 
 .pagina-home {
@@ -94,19 +101,27 @@ header {
 }
 
 $bg-lista: radial-gradient(#1e71a3, #0f3d5e);
+$bg-panel-heading: rgba(0,0,0, 0.4);
+$bg-panel-default: transparent;
 .pagina-produtos {
+    @import "pagina-listagem";
     @import "produtos";
 }
 
+$bg-lista: radial-gradient(#81568e, #65416f);
+$bg-panel-heading: rgba(0,0,0, 0.4);
+$bg-panel-default: transparent;
 .pagina-eventos {
+    @import "pagina-listagem";
     @import "eventos";
     @import "evento";
 }
 
+$bg-lista: radial_gradient(#34505b, #132026);
 .pagina-comunidade {
     @import "comunidade";
+    @import "pagina-listagem";
 }
-
 .pagina-noticias {
     @import "noticias";
 }

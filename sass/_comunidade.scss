@@ -1,4 +1,6 @@
-
+.lista-caixa{
+  padding-bottom: 70px;
+}
 
  .titulo h1 {
     text-align: center;
@@ -52,8 +54,8 @@
  img {
     margin-left: -10px;
     margin-top: -190px;
-    width: 150px;
-    height: 190px;
+    width: 75px;
+    height: 75px;
 }
 
 #pac-input {
@@ -106,24 +108,24 @@
 }
 
  .onde-remar {
-    //background-image: url(../img/concept2-onde-remae-verde.png);
+    background-image: url(/static/img/comunidade/concept2-onde-remae-verde.png);
 
 }
 
  .onde1 {
-    //background-image: url("../img/concept2-onde-remae-vermelho.png");
+    background-image: url(/static/img/comunidade/concept2-onde-remae-vermelho.png);
 }
 
  .onde2 {
-    //background-image: url("../img/concept2-onde-remae-amarelo.png");
+    background-image: url(/static/img/comunidade/concept2-onde-remae-amarelo.png);
 }
 
  .onde3 {
-    //background-image: url("../img/concept2-onde-remae-azul.png");
+    background-image: url(/static/img/comunidade/concept2-onde-remae-azul.png);
 }
 
  .onde-remar.active {
-    //background-image: url(../img/desablepng.png);
+    background-image: url(/static/img/comunidade/desablepng.png);
     text-decoration: none;
 }
 
