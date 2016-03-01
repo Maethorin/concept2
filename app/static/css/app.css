@@ -10244,12 +10244,13 @@ header .navegacao .form-busca i {
   border: 2px solid black;
   margin-left: 70px;
 }
-.pagina-eventos .borda-eventos a {
+.pagina-eventos .borda-eventos.descricaoevento a {
   text-decoration: none;
   color: white;
 }
 .pagina-eventos #menuevento .menuri {
   margin-right: 25px;
+  margin-top: 12px;
 }
 .pagina-eventos #menuevento ul {
   list-style: none;
@@ -10262,8 +10263,28 @@ header .navegacao .form-busca i {
   font-size: 140%;
   color: white;
 }
+.pagina-eventos #menuevento li a {
+  text-decoration: none;
+  color: white;
+}
 .pagina-eventos .conteudo-cabra {
   background-color: white;
+}
+.pagina-eventos .formulario-data {
+  padding-bottom: 35px;
+}
+.pagina-eventos .form-afiliacao {
+  width: 118px;
+}
+.pagina-eventos .afiliacao input {
+  margin-top: -30px;
+  margin-left: 122px;
+}
+.pagina-eventos .campo .form-group {
+  min-height: 78px;
+}
+.pagina-eventos .campo .help-block {
+  font-size: smaller;
 }
 
 .pagina-comunidade .lista-caixa {

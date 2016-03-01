@@ -14,5 +14,5 @@ angular.module('concept.comunidade',['ngRoute'])
         $http.get('/json/comunidade.json').then(function (response) {
             $scope.comunidade = response.data;
         });
-        //$http.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyAPtVcOptYSliotWo2NfjRYgUXc0RgNjgc&libraries=places&callback=initAutocomplete')
+        $http.jsonp('https://maps.googleapis.com/maps/api/js?key=AIzaSyAPtVcOptYSliotWo2NfjRYgUXc0RgNjgc&libraries=places&callback=initAutocomplete')
     }]);

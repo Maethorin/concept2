@@ -1,69 +1,104 @@
-.borda-eventos{
-     border: 5px solid white;
-     &.sub-menu{
-       background: radial-gradient(#2384bb, #092942);
-     }
-     &.destaque img{
-          margin-left: -17px;
-          height: 376px;
-          margin-top: 5px;
-     }
-     &.prop {
-          img{margin-top: -70px;}
+.borda-eventos {
+    border: 5px solid white;
+    &.sub-menu {
+        background: radial-gradient(#2384bb, #092942);
+    }
+    &.destaque img {
+        margin-left: -17px;
+        height: 376px;
+        margin-top: 5px;
+    }
+    &.prop {
+        img {
+            margin-top: -70px;
+        }
 
+    }
+    img {
+        margin-left: -15px;
+    }
+    &.menuevento {
+        min-height: 200px;
 
-          }
-          img{
-          margin-left: -15px;
-     }
-     &.menuevento{
-          min-height: 200px;
-     }
-     &.descricaoevento{
-          h4{
-          color: black;
-          font-weight: bold;
-          text-align: center
-     }
-          h5{
-               color: black;
-               font-weight: bold;
-               text-align: center
-          }
-          p{
-               color: black;
-               text-align: justify;
-               font-size: small
-          }
-          button{
-               background: radial-gradient(#962156, #7a224a);
-               border: 2px solid black;
-               margin-left: 70px
-          }
-     }
-     a{
-          text-decoration: none;
-          color: white;
-     }
+    }
+    &.descricaoevento {
+        h4 {
+            color: black;
+            font-weight: bold;
+            text-align: center
+        }
+        h5 {
+            color: black;
+            font-weight: bold;
+            text-align: center
+        }
+        p {
+            color: black;
+            text-align: justify;
+            font-size: small
+        }
+        button {
+            background: radial-gradient(#962156, #7a224a);
+            border: 2px solid black;
+            margin-left: 70px;
+
+        }
+        a {
+            text-decoration: none;
+            color: white;
+        }
+
+    }
+
 }
-#menuevento{
 
-    .menuri{
-          margin-right: 25px;
-     }
-     ul{
-         list-style: none;
-          margin-left: 2px;
-          padding-bottom: 50px;
+#menuevento {
 
-     }
-      li {
-           display: inline;
-           font-family: 'Open Sans', sans-serif;
-           font-size: 140%;
-           color: white;
-      }
+    .menuri {
+        margin-right: 25px;
+        margin-top: 12px;
+    }
+    ul {
+        list-style: none;
+        margin-left: 2px;
+        padding-bottom: 50px;
+
+    }
+    li {
+        display: inline;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 140%;
+        color: white;
+        a {
+            text-decoration: none;
+            color: white;
+        }
+    }
 }
-.conteudo-cabra{
-     background-color: white;
+
+.conteudo-cabra {
+    background-color: white;
+}
+
+.formulario-data {
+    padding-bottom: 35px;
+}
+
+.form-afiliacao {
+    width: 118px;
+}
+
+.afiliacao {
+    input {
+        margin-top: -30px;
+        margin-left: 122px;
+    }
+}
+.campo{
+    .form-group{
+        min-height: 77px;
+    }
+    .help-block{
+        font-size: smaller;
+    }
 }
