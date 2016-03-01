@@ -10,16 +10,14 @@ function initAutocomplete() {
         mapTypeId: google.maps.MapTypeId.TERRAIN
     });
 
-    var image = 'static/concept2-amarelo.png';
-
     function carregarPontos() {
-        $.getJSON('/comunidade/comunidade.json', function (pontos) {
+        $.getJSON('/json/comunidade.json', function (pontos) {
             $.each(pontos, function (index, ponto) {
                 var marker = new google.maps.Marker({
                     position: new google.maps.LatLng(ponto.Latitude, ponto.Longitude),
-                    title: "pontos!!",
+                    title: ponto.titulo,
                     map: map,
-                    icon: ponto.icone
+                    icon: '/static/img/comunidade/mini/' + ponto.icone
 
                 })
             });

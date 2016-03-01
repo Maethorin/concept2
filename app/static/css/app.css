@@ -10370,7 +10370,7 @@ header .navegacao .form-busca i {
 .pagina-comunidade #type-selector {
   color: #fff;
   background-color: #4d90fe;
-  padding: 5px 11px 0px 11px;
+  padding: 5px 11px 0 11px;
 }
 .pagina-comunidade #type-selector label {
   font-family: Roboto;
@@ -10392,19 +10392,19 @@ header .navegacao .form-busca i {
   background-color: transparent;
 }
 .pagina-comunidade .onde-remar {
-  background-image: url(/static/img/comunidade/concept2-onde-remae-verde.png);
+  background-image: url("/static/img/comunidade/onde-remar-verde.png");
 }
 .pagina-comunidade .onde1 {
-  background-image: url(/static/img/comunidade/concept2-onde-remae-vermelho.png);
+  background-image: url("/static/img/comunidade/onde-remar-vermelho.png");
 }
 .pagina-comunidade .onde2 {
-  background-image: url(/static/img/comunidade/concept2-onde-remae-amarelo.png);
+  background-image: url("/static/img/comunidade/onde-remar-amarelo.png");
 }
 .pagina-comunidade .onde3 {
-  background-image: url(/static/img/comunidade/concept2-onde-remae-azul.png);
+  background-image: url("/static/img/comunidade/onde-remar-azul.png");
 }
 .pagina-comunidade .onde-remar.active {
-  background-image: url(/static/img/comunidade/desablepng.png);
+  background-image: url("/static/img/comunidade/desablepng.png");
   text-decoration: none;
 }
 .pagina-comunidade .mapa-container {
