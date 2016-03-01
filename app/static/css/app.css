@@ -10366,35 +10366,33 @@ header .navegacao .form-busca i {
   font-size: 13px;
   font-weight: 300;
 }
-.pagina-comunidade .botoes-mapa {
-  width: 100px;
-  height: 88px;
+.pagina-comunidade .botoes-mapa button {
+  width: 85px;
+  height: 75px;
   border-radius: 155px;
   border: none;
   background-color: transparent;
+  background-repeat: no-repeat;
+  background-image: url("/static/img/comunidade/desabilitado.png");
 }
-.pagina-comunidade .botoes-mapa:focus, .pagina-comunidade .botoes-mapa.focus, .pagina-comunidade .botoes-mapa.active, .pagina-comunidade .botoes-mapa:active, .pagina-comunidade .botoes-mapa.btn.active {
+.pagina-comunidade .botoes-mapa button:focus, .pagina-comunidade .botoes-mapa button.focus, .pagina-comunidade .botoes-mapa button.active, .pagina-comunidade .botoes-mapa button:active, .pagina-comunidade .botoes-mapa button.btn.active {
+  text-decoration: none;
   border: none;
-  width: 100px;
-}
-.pagina-comunidade .botoes-mapa.active:hover {
+  outline: none;
+  outline-offset: 0;
   background-color: transparent;
 }
-.pagina-comunidade .onde-remar {
-  background-image: url("/static/img/comunidade/onde-remar-verde.png");
+.pagina-comunidade .botoes-mapa.clube-remo button.active {
+  background-image: url("/static/img/comunidade/clube-remo.png");
 }
-.pagina-comunidade .onde1 {
-  background-image: url("/static/img/comunidade/onde-remar-vermelho.png");
+.pagina-comunidade .botoes-mapa.crossfit button.active {
+  background-image: url("/static/img/comunidade/crossfit.png");
 }
-.pagina-comunidade .onde2 {
-  background-image: url("/static/img/comunidade/onde-remar-amarelo.png");
+.pagina-comunidade .botoes-mapa.musculacao button.active {
+  background-image: url("/static/img/comunidade/musculacao.png");
 }
-.pagina-comunidade .onde3 {
-  background-image: url("/static/img/comunidade/onde-remar-azul.png");
-}
-.pagina-comunidade .onde-remar.active {
-  background-image: url("/static/img/comunidade/desablepng.png");
-  text-decoration: none;
+.pagina-comunidade .botoes-mapa.aula-coletiva button.active {
+  background-image: url("/static/img/comunidade/aula-coletiva.png");
 }
 .pagina-comunidade .mapa-container {
   display: none;

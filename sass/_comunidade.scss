@@ -1,13 +1,13 @@
-.lista-caixa{
-  padding-bottom: 70px;
+.lista-caixa {
+    padding-bottom: 70px;
 }
 
- .titulo h1 {
+.titulo h1 {
     text-align: center;
     color: white;
 }
 
- h5 {
+h5 {
     color: white;
     width: 100px;
     height: 6px;
@@ -15,7 +15,7 @@
     margin-left: 10px;
 }
 
- #mapa {
+#mapa {
     height: 500px;
     width: 700px;
     margin-left: 225px;
@@ -23,7 +23,7 @@
     animation: fadeIn 0.5s;
 }
 
- .controls {
+.controls {
     margin-top: 10px;
     border: 1px solid transparent;
     border-radius: 2px 0 0 2px;
@@ -34,7 +34,7 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
- .carregando {
+.carregando {
     color: white;
     text-align: center;
     margin-top: 250px;
@@ -51,7 +51,7 @@
     }
 }
 
- img {
+img {
     margin-left: -10px;
     margin-top: -190px;
     width: 75px;
@@ -69,8 +69,8 @@
     width: 300px;
     display: none;
     &:focus {
-    border-color: #4d90fe;
-}
+        border-color: #4d90fe;
+    }
 }
 
 .pac-container {
@@ -82,62 +82,73 @@
     background-color: #4d90fe;
     padding: 5px 11px 0 11px;
     label {
-    font-family: Roboto;
-    font-size: 13px;
-    font-weight: 300;
-}
-}
-
-
- .botoes-mapa {
-    width: 100px;
-    height: 88px;
-    border-radius: 155px;
-    border: none;
-    background-color: transparent;
-
+        font-family: Roboto;
+        font-size: 13px;
+        font-weight: 300;
+    }
 }
 
- .botoes-mapa:focus, .botoes-mapa.focus, .botoes-mapa.active, .botoes-mapa:active, .botoes-mapa.btn.active {
-    border: none;
-    width: 100px;
+.botoes-mapa {
+    button {
+        width: 85px;
+        height: 75px;
+        border-radius: 155px;
+        border: none;
+        background-color: transparent;
+        background-repeat: no-repeat;
+        @include image-background("comunidade/desabilitado.png");
+        &:focus, &.focus, &.active, &:active, &.btn.active {
+            text-decoration: none;
+            border: none;
+            outline: none;
+            outline-offset: 0;
+            background-color: transparent;
+        }
+    }
+
+    &.clube-remo {
+        button {
+            &.active {
+                @include image-background("comunidade/clube-remo.png");
+            }
+        }
+    }
+
+    &.crossfit {
+        button {
+            &.active {
+                @include image-background("comunidade/crossfit.png");
+            }
+        }
+    }
+
+    &.musculacao {
+        button {
+            &.active {
+                @include image-background("comunidade/musculacao.png");
+            }
+        }
+    }
+
+    &.aula-coletiva {
+        button {
+            &.active {
+                @include image-background("comunidade/aula-coletiva.png");
+            }
+        }
+    }
 }
 
- .botoes-mapa.active:hover {
-    background-color: transparent;
-}
-
- .onde-remar {
-    @include image-background("comunidade/onde-remar-verde.png");
-}
-
- .onde1 {
-    @include image-background("comunidade/onde-remar-vermelho.png");
-}
-
- .onde2 {
-    @include image-background("comunidade/onde-remar-amarelo.png");
-}
-
- .onde3 {
-    @include image-background("comunidade/onde-remar-azul.png");
-}
-
- .onde-remar.active {
-    @include image-background("comunidade/desablepng.png");
-    text-decoration: none;
-}
-
- .mapa-container {
+.mapa-container {
     display: none;
 }
 
- .botoes-mapa:focus, .botoes-mapa.input:focus, .botoes-mapa.select:focus {
+.botoes-mapa:focus, .botoes-mapa.input:focus, .botoes-mapa.select:focus {
     box-shadow: 0 0 0 0;
     border: 0 none;
     outline: 0;
 }
 
- .botoes-mapa:focus, .botoes-mapa.input:focus, .botoes-mapa.select:focus:hover {
+.botoes-mapa:focus, .botoes-mapa.input:focus, .botoes-mapa.select:focus:hover {
     background-color: transparent;
 }

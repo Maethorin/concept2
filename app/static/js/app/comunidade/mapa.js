@@ -1,7 +1,7 @@
 var map;
 function initAutocomplete() {
     var mylatlng = {lat: -14.235004, lng: -51.92528};
-    var map = new google.maps.Map(document.getElementById('mapa'), {
+    var map = new google.maps.Map($('#mapa')[0], {
         center: mylatlng,
         zoom: 4,
         zoomControl: false,
@@ -17,13 +17,10 @@ function initAutocomplete() {
                     position: new google.maps.LatLng(ponto.Latitude, ponto.Longitude),
                     title: ponto.titulo,
                     map: map,
-                    icon: '/static/img/comunidade/mini/' + ponto.icone
-
+                    icon: '/static/img/comunidade/mini/{0}.png'.format([ponto.tipo])
                 })
             });
         });
-
-
     }
 
     carregarPontos();
@@ -68,10 +65,7 @@ function initAutocomplete() {
             }
         });
         map.fitBounds(bounds);
-
-
-    })
-}
+    });}
 
 
 
