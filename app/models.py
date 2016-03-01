@@ -55,7 +55,7 @@ class Evento(db.Model):
     fundo = db.Column(db.String())
     href_link = db.Column(db.String())
     nome_link = db.Column(db.String())
-    em_destaque = db.Column(db.Boolean())
+    em_destaque = db.Column(db.Boolean)
 
     def to_dict(self):
         return {
@@ -97,6 +97,8 @@ class Inscricao(db.Model):
     nome_time = db.Column(db.String(10))
     prova_id = db.Column(db.Integer, db.ForeignKey('provas.id'))
     prova = relationship("Prova", back_populates="inscricoes")
+    pedido_numero = db.Column(db.String(10))
+    comprovante_pagamento = db.Column(db.String())
 
 
 class Categoria(db.Model):
