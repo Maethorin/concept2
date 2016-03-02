@@ -108,9 +108,6 @@ $bg-panel-default: transparent;
     @import "produtos";
 }
 
-$bg-lista: radial-gradient(#81568e, #65416f);
-$bg-panel-heading: rgba(0,0,0, 0.4);
-$bg-panel-default: transparent;
 .pagina-eventos {
     @import "pagina-listagem";
     @import "eventos";

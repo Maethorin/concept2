@@ -9,9 +9,10 @@
                         </div>
                         <div class="panel-body destaque">
                             <div class="col-md-4 descricao-destaque">
-                                <p style="text-align: left" ng-bind-html="trataHtml(evento.descricao)"></p>
+                                <p ng-bind-html="trataHtml(evento.descricao)"></p>
+                                <div class="right"><a ng-href="/#/eventos/{{evento.slug}}">Saiba mais...</a></div>
                             </div>
-                            <img ng-src="/static/img/{{evento.imagemLista}}">
+                            <img ng-src="/static/img/eventos/{{evento.imagemLista}}">
                         </div>
                     </div>
                 </div>

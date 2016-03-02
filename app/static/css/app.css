@@ -10166,7 +10166,7 @@ header .navegacao .form-busca i {
 }
 
 .pagina-eventos .lista-caixa {
-  background: radial-gradient(#81568e, #65416f);
+  background: radial-gradient(#1e71a3, #0f3d5e);
 }
 .pagina-eventos .caixa-conteudo .panel-heading {
   background-color: rgba(0, 0, 0, 0.4);
@@ -10208,7 +10208,19 @@ header .navegacao .form-busca i {
   border: 5px solid white;
 }
 .pagina-eventos .borda-eventos.sub-menu {
-  background: radial-gradient(#2384bb, #092942);
+  background: linear-gradient(#2384bb, #092942, #092942, #2384bb);
+}
+.pagina-eventos .borda-eventos.sub-menu li {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  color: white;
+}
+.pagina-eventos .borda-eventos.sub-menu li a {
+  text-decoration: none;
+  color: white;
+}
+.pagina-eventos .borda-eventos.sub-menu li a:hover {
+  background-color: rgba(0, 0, 0, 0.4);
 }
 .pagina-eventos .borda-eventos.destaque img {
   margin-left: -17px;
@@ -10220,9 +10232,6 @@ header .navegacao .form-busca i {
 }
 .pagina-eventos .borda-eventos img {
   margin-left: -15px;
-}
-.pagina-eventos .borda-eventos.menuevento {
-  min-height: 200px;
 }
 .pagina-eventos .borda-eventos.descricaoevento h4 {
   color: black;
@@ -10248,25 +10257,6 @@ header .navegacao .form-busca i {
   text-decoration: none;
   color: white;
 }
-.pagina-eventos #menuevento .menuri {
-  margin-right: 25px;
-  margin-top: 12px;
-}
-.pagina-eventos #menuevento ul {
-  list-style: none;
-  margin-left: 2px;
-  padding-bottom: 50px;
-}
-.pagina-eventos #menuevento li {
-  display: inline;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 140%;
-  color: white;
-}
-.pagina-eventos #menuevento li a {
-  text-decoration: none;
-  color: white;
-}
 .pagina-eventos .conteudo-cabra {
   background-color: white;
 }
@@ -10285,11 +10275,6 @@ header .navegacao .form-busca i {
 }
 .pagina-eventos .campo .help-block {
   font-size: smaller;
-}
-.pagina-eventos #regulamento {
-  width: 857px;
-  height: 193px;
-  overflow: auto;
 }
 .pagina-eventos #regulamento h4 {
   font-weight: bold;

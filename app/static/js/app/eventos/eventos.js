@@ -15,32 +15,38 @@ angular.module('concept2.eventos', ['ngRoute'])
                 controller:'EventoController'
             })
     }])
-    .controller('EventosController', ['$rootScope', '$scope', '$http', '$sce', function ($rootScope, $scope, $http, $sce) {
+    .controller('EventosController', function ($rootScope, $scope, $http, $sce, Evento) {
         $rootScope.pagina = "eventos";
         $rootScope.titulo = "Eventos";
         $scope.eventos = [];
         $scope.trataHtml = function(linha) {
             return $sce.trustAsHtml(linha);
         };
-        $http.get('/json/eventos.json').then(function (response) {
-            $scope.eventos = response.data;
-        });
-    }])
-    .controller('EventoController', ['$rootScope', '$scope', '$routeParams', '$http', '$location', function ($rootScope, $scope, $routeParams, $http, $location) {
+        $scope.eventos = Evento.query();
+    })
+    .controller('EventoController', function ($rootScope, $scope, $routeParams, $http, $sce, Evento) {
         $scope.slug = $routeParams.slug;
-        $scope.itemMenu = $routeParams.itemMenu || 'categorias';
+        $scope.itemMenu = $routeParams.itemMenu || 'sobre';
         $scope.template = '/angular/evento/{0}.html'.format([$scope.itemMenu]);
         $rootScope.pagina = "eventos";
-        $scope.evento = {};
-        $http.get('/json/' + $scope.slug + '.json').then(function(response) {
-            $scope.evento = response.data;
+        $scope.itensMenu = [
+            {"slug": "sobre", "nome": "Sobre"},
+            {"slug": "categorias", "nome": "Categorias"},
+            {"slug": "horarios", "nome": "Horários"},
+            {"slug": "regulamento", "nome": "Regulamento"},
+            {"slug": "resultados", "nome": "Resultados"},
+            {"slug": "inscricao", "nome": "Inscreva-se"}
+        ];
+        $scope.evento = Evento.get({"id": $scope.slug}, function() {
             $rootScope.titulo = $scope.evento.titulo;
         });
-
-         $scope.regulamentos =[];
-         $http.get('/static/js/app/jsons/regulamento.json').then(function(response) {
+        $scope.regulamentos =[];
+        $scope.trataHtml = function(html) {
+            return $sce.trustAsHtml(html);
+        };
+        $http.get('/static/js/app/jsons/regulamento.json').then(function(response) {
             $scope.regulamentos = response.data;
-         });
+        });
         $scope.dadosInscricao = {
             "nome": null,
             "sobrenome": null,
@@ -65,5 +71,4 @@ angular.module('concept2.eventos', ['ngRoute'])
             return !campo.$touched
 
         };
-
-    }]);
+    });

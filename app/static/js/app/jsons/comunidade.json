@@ -1,7 +1,0 @@
-[
-  {"nome":"Manaus", "Latitude": -3.2323, "Longitude": -60.6565, "tipo":"clube-remo", "titulo":"Clube de Remo"},
-  {"nome":"Rio de Janeiro","Latitude":-22.9068467, "Longitude":-43.1728965, "tipo":"crossfit", "titulo":"CrossFit"},
-  {"nome":"Belém","Latitude":-1.4557794, "Longitude":-48.4901968, "tipo":"clube-remo", "titulo":"Clube de Remo"},
-  {"nome":"Ceará","Latitude":-5.4983977, "Longitude":-39.3206241, "tipo":"musculacao", "titulo":"Musculação"},
-  {"nome":"Distrito Federal","Latitude":-15.826691, "Longitude":-47.9218204, "tipo":"aula-coletiva", "titulo":"Aula Coletiva"}
-]
