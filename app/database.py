@@ -43,6 +43,7 @@ MODALIDADES = [
     ('crossfit', 'CrossFit')
 ]
 
+
 class DistanciaTipo(choice.ChoiceType):
     def __init__(self):
         super(DistanciaTipo, self).__init__(DISTANCIAS)

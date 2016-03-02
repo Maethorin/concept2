@@ -32,3 +32,8 @@ class OndeRemar(ResourceBase):
         if 'modalidade' in request.args:
             return [item.to_dict() for item in self.model.apenas_modalidades(request.args.getlist('modalidade'))]
         return super(OndeRemar, self).obter_lista()
+
+    def post(self):
+        if 'csv' in request.args:
+            self.model.adiciona_do_csv()
+            return {'created': True}

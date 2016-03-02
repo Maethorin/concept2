@@ -9,7 +9,7 @@ angular.module('concept2.comunidade', [])
     }])
     .config(function(uiGmapGoogleMapApiProvider) {
         uiGmapGoogleMapApiProvider.configure({
-            key: 'AIzaSyAPtVcOptYSliotWo2NfjRYgUXc0RgNjgc',
+            key: 'AIzaSyDzcLVVah4PjogAqerQdBcYowwzJcsKjv0',
             v: '3.20',
             language: 'pt-br',
             libraries: 'places'
