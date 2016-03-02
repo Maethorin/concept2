@@ -1,5 +1,5 @@
 'use strict';
-angular.module('concept.eventos', ['ngRoute'])
+angular.module('concept2.eventos', ['ngRoute'])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/eventos', {

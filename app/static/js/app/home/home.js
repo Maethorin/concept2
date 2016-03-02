@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('concept.home', ['ngRoute'])
+angular.module('concept2.home', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
       $routeProvider
           .when('/', {

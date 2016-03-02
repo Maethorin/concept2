@@ -29,14 +29,17 @@ String.prototype.format = function(data) {
   return format(this, data);
 };
 
-angular.module('concept', [
+angular.module('concept2', [
     'ngRoute',
+    'ngResource',
+    'uiGmapgoogle-maps',
     'ui.mask',
-    'concept.home',
-    'concept.produtos',
-    'concept.noticias',
-    'concept.comunidade',
-    'concept.eventos',
-    'concept.suporte',
-    'concept.contato'
+    'concept2.services',
+    'concept2.home',
+    'concept2.produtos',
+    'concept2.noticias',
+    'concept2.comunidade',
+    'concept2.eventos',
+    'concept2.suporte',
+    'concept2.contato'
 ]);

@@ -1,5 +1,5 @@
 'use strict';
-angular.module('concept.produtos', ['ngRoute'])
+angular.module('concept2.produtos', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
       $routeProvider
           .when('/produtos', {

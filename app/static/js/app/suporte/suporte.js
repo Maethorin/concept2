@@ -1,6 +1,6 @@
 
 'use strict';
-angular.module('concept.suporte', ['ngRoute'])
+angular.module('concept2.suporte', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
       $routeProvider
           .when('/suporte', {

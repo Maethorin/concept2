@@ -1,6 +1,6 @@
 
 'use strict';
-angular.module('concept.contato', ['ngRoute'])
+angular.module('concept2.contato', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
       $routeProvider
           .when('/contato', {

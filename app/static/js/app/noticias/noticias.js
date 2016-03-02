@@ -1,6 +1,6 @@
 
 'use strict';
-angular.module('concept.noticias', ['ngRoute'])
+angular.module('concept2.noticias', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
       $routeProvider
           .when('/noticias', {
