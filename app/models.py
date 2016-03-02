@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import csv
+import os
 from sqlalchemy.orm import relationship
 import database
 
@@ -14,6 +16,29 @@ class OndeRemar(db.Model):
     latitude = db.Column(db.Float())
     longitude = db.Column(db.Float())
     modalidade = db.Column(database.ModalidadeTipo())
+
+    @classmethod
+    def adiciona_do_csv(cls):
+        csv_file = '{}/onde_remar.csv'.format(os.path.join(os.getcwd(), 'dados'))
+        with open(csv_file) as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                modalidade = OndeRemar.obter_codigo_modalidade(row)
+                endereco = '{}, {}, {}, Brasil'.format(row['ENDEREÇO'], row['CIDADE'], row['UF'])
+                onde_remar = OndeRemar(
+                    nome=row['ENTIDADE'],
+                    endereco=endereco,
+                    telefone=row['CONTATO'],
+                    modalidade=''
+                )
+
+    @classmethod
+    def obter_codigo_modalidade(cls, row):
+        try:
+            return [modalidade[0] for modalidade in database.MODALIDADES if
+                    modalidade[1].lower() == row['TIPO'].lower()][0]
+        except IndexError:
+            return 'musculacao'
 
     @classmethod
     def apenas_modalidades(cls, modalidades):
