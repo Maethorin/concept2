@@ -6,14 +6,29 @@ from flask_restful import Resource
 import models
 
 
-class Produtos(Resource):
-    def _obter_produtos(self):
-        return [produto.to_dict(lista=True) for produto in models.Produto.query.all()]
+class ResourceBase(Resource):
+    model = None
 
-    def _obter_produto(self, produto_id):
-        return models.Produto.query.get(produto_id).to_dict()
+    def obter_lista(self):
+        return [item.to_dict() for item in self.model.query.all()]
 
-    def get(self, produto_id=None):
-        if not produto_id:
-            return self._obter_produtos()
-        return self._obter_produto(produto_id)
+    def obter_item(self, item_id):
+        return self.model.query.get(item_id).to_dict()
+
+    def get(self, item_id=None):
+        if not item_id:
+            return self.obter_lista()
+        return self.obter_item(item_id)
+
+
+class Produtos(ResourceBase):
+    model = models.Produto
+
+
+class OndeRemar(ResourceBase):
+    model = models.OndeRemar
+
+    def obter_lista(self):
+        if 'modalidade' in request.args:
+            return [item.to_dict() for item in self.model.apenas_modalidades(request.args.getlist('modalidade'))]
+        return super(OndeRemar, self).obter_lista()

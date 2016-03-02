@@ -36,6 +36,12 @@ PROVAS = [
 
 SEXO = [('MA', 'Masculino'), ('FE', 'Feminino'), ('MI', 'Misto')]
 
+MODALIDADES = [
+    ('clube-remo', 'Clube de Remo'),
+    ('aula-coletiva', 'Aula Coletiva'),
+    ('musculacao', 'Musculação'),
+    ('crossfit', 'CrossFit')
+]
 
 class DistanciaTipo(choice.ChoiceType):
     def __init__(self):
@@ -59,3 +65,11 @@ class SexoTipo(choice.ChoiceType):
 
     def __repr__(self):
         return "SexoTipo()"
+
+
+class ModalidadeTipo(choice.ChoiceType):
+    def __init__(self):
+        super(ModalidadeTipo, self).__init__(MODALIDADES)
+
+    def __repr__(self):
+        return "ModalidadeTipo()"

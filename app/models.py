@@ -5,6 +5,27 @@ import database
 db = database.AppRepository.db
 
 
+class OndeRemar(db.Model):
+    __tablename__ = 'onde_remar'
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String())
+    latitude = db.Column(db.Float())
+    longitude = db.Column(db.Float())
+    modalidade = db.Column(database.ModalidadeTipo())
+
+    @classmethod
+    def apenas_modalidades(cls, modalidades):
+        return OndeRemar.query.filter(OndeRemar.modalidade.in_(modalidades)).all()
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'nome': self.nome,
+            'modalidade': self.modalidade.code,
+            'coordenadas': {'latitude': self.latitude, 'longitude': self.longitude}
+        }
+
+
 class Produto(db.Model):
     __tablename__ = 'produtos'
     id = db.Column(db.Integer, primary_key=True)
@@ -130,6 +151,7 @@ class Prova(db.Model):
     tipo = db.Column(database.ProvaTipo())
     sub_categoria_id = db.Column(db.Integer, db.ForeignKey('sub_categorias.id'))
     sub_categoria = relationship("SubCategoria", back_populates="provas")
+    inscricoes = relationship("Inscricao", back_populates="prova")
 
     def codigo(self):
         return '{}{}{}{}'.format(
