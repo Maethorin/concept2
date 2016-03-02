@@ -10297,6 +10297,9 @@ header .navegacao .form-busca i {
 .pagina-eventos .line1 td {
   padding: 0px;
 }
+.pagina-eventos .tabela table {
+  margin-left: 110px;
+}
 
 .pagina-comunidade .titulo h1 {
   text-align: center;
@@ -10411,16 +10414,16 @@ header .navegacao .form-busca i {
 }
 
 .pagina-suporte .suporte {
-  background: radial-gradient(#2285be, #082640);
+  background-image: url("/static/img/Site-Concept2-V-4-fundo-azul.jpg");
   min-height: 500px;
 }
 .pagina-suporte .suporte a {
   position: absolute;
-  margin-top: 72px;
+  margin-top: 85px;
 }
 .pagina-suporte .suporte .row {
-  margin-left: 48px;
-  margin-right: -109px;
+  margin-left: 95px;
+  margin-right: -45px;
 }
 .pagina-suporte .suporte img {
   margin-top: 55px;

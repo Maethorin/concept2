@@ -37,6 +37,10 @@ angular.module('concept2.eventos', ['ngRoute'])
             $rootScope.titulo = $scope.evento.titulo;
         });
 
+         $scope.regulamentos =[];
+         $http.get('/static/js/app/jsons/regulamento.json').then(function(response) {
+            $scope.regulamentos = response.data;
+         });
         $scope.dadosInscricao = {
             "nome": null,
             "sobrenome": null,
