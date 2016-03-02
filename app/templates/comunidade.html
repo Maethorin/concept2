@@ -1,24 +1,26 @@
-<div class="container">
-    <div class="row lista-caixa caixa-comunidade">
+<div class="container lista-caixa">
+    <div class="row">
         <div class="col-md-12 titulo">
             <h1 style="text-align: center">Onde Remar ?</h1>
         </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
         <div class="col-md-8">
-            <div class="carregando" loading=".mapa-container"><h3>Carregando</h3><img src="static/img/comunidade/spinner.png"></div>
-            <div id="mapa"></div>
+            <div id="mapa">
+                <ui-gmap-google-map center='map.center' zoom='map.zoom'>
+                    <ui-gmap-search-box template="searchbox.template" events="searchbox.events"></ui-gmap-search-box>
+                    <ui-gmap-markers models="ondeRemar" coords="'coordenadas'" icon="'icone'" title="'nome'"></ui-gmap-markers>
+                </ui-gmap-google-map>
+            </div>
         </div>
-
-        <input id="pac-input" class="controls" type="text" placeholder="Buscar Locais">
-
-        <div class="modalidades" style=" position: relative; margin-left: 980px; margin-bottom: 20px">
-            <div class="col-md-3">
+        <div class="col-md-2">
+            <div class="modalidades">
                   <div class="botoes-mapa {{modalidade.slug}}" ng-repeat="modalidade in modalidades">
                     <button type="button" ng-click="alternaTipo(modalidade)" ng-class="{'active': modalidade.ativo}" class="btn btn-info" autocomplete="off"></button>
                     <h5>{{modalidade.nome}}</h5>
                   </div>
             </div>
         </div>
-
-
     </div>
 </div>

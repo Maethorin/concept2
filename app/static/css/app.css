@@ -10287,9 +10287,6 @@ header .navegacao .form-busca i {
   font-size: smaller;
 }
 
-.pagina-comunidade .lista-caixa {
-  padding-bottom: 70px;
-}
 .pagina-comunidade .titulo h1 {
   text-align: center;
   color: white;
@@ -10301,70 +10298,38 @@ header .navegacao .form-busca i {
   padding-bottom: 12px;
   margin-left: 10px;
 }
+.pagina-comunidade .angular-google-map-container {
+  height: 500px;
+}
 .pagina-comunidade #mapa {
   height: 500px;
-  width: 700px;
-  margin-left: 225px;
+  border-radius: 4px;
   border: 2px solid white;
   animation: fadeIn 0.5s;
 }
-.pagina-comunidade .controls {
-  margin-top: 10px;
-  border: 1px solid transparent;
-  border-radius: 2px 0 0 2px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  height: 32px;
-  outline: none;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
 .pagina-comunidade .carregando {
+  background-image: url("/static/img/comunidade/spinner.png");
   color: white;
   text-align: center;
-  margin-top: 250px;
-  margin-left: 376px;
+  margin-top: 55px;
   animation: fadeIn 0.5s;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-.pagina-comunidade img {
-  margin-left: -10px;
-  margin-top: -190px;
-  width: 75px;
-  height: 75px;
+  height: 275px;
+  background-size: 150px;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .pagina-comunidade #pac-input {
   background-color: #fff;
-  font-family: Roboto;
   font-size: 15px;
   font-weight: 300;
+  margin-top: 10px;
   margin-left: 12px;
   padding: 0 11px 0 13px;
   text-overflow: ellipsis;
   width: 300px;
-  display: none;
 }
 .pagina-comunidade #pac-input:focus {
   border-color: #4d90fe;
-}
-.pagina-comunidade .pac-container {
-  font-family: Roboto;
-}
-.pagina-comunidade #type-selector {
-  color: #fff;
-  background-color: #4d90fe;
-  padding: 5px 11px 0 11px;
-}
-.pagina-comunidade #type-selector label {
-  font-family: Roboto;
-  font-size: 13px;
-  font-weight: 300;
 }
 .pagina-comunidade .botoes-mapa button {
   width: 85px;
@@ -10393,9 +10358,6 @@ header .navegacao .form-busca i {
 }
 .pagina-comunidade .botoes-mapa.aula-coletiva button.active {
   background-image: url("/static/img/comunidade/aula-coletiva.png");
-}
-.pagina-comunidade .mapa-container {
-  display: none;
 }
 .pagina-comunidade .botoes-mapa:focus, .pagina-comunidade .botoes-mapa.input:focus, .pagina-comunidade .botoes-mapa.select:focus {
   box-shadow: 0 0 0 0;
