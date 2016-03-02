@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from importlib import import_module
+import os
 
 from sqlalchemy_utils.types import choice
 
@@ -6,6 +8,9 @@ from sqlalchemy_utils.types import choice
 class AppRepository(object):
     db = None
 
+config_module = os.environ['APP_SETTINGS'].split(".")
+module = import_module('.'.join(config_module[:-1]))
+config = getattr(module, config_module[-1])
 
 DISTANCIAS = [
     (100, 100),

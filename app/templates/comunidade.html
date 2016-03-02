@@ -10,7 +10,15 @@
             <div id="mapa">
                 <ui-gmap-google-map center='map.center' zoom='map.zoom'>
                     <ui-gmap-search-box template="searchbox.template" events="searchbox.events"></ui-gmap-search-box>
-                    <ui-gmap-markers models="ondeRemar" coords="'coordenadas'" icon="'icone'" title="'nome'"></ui-gmap-markers>
+                    <ui-gmap-markers models="ondeRemar" coords="'coordenadas'" icon="'icone'" options="'options'">
+                        <ui-gmap-windows>
+                            <div class="marker">
+                                <div ng-non-bindable class="nome">{{nome}}</div>
+                                <div ng-non-bindable class="endereco">{{endereco}}</div>
+                                <div ng-non-bindable class="telefone">{{telefone}}</div>
+                            </div>
+                        </ui-gmap-windows>
+                    </ui-gmap-markers>
                 </ui-gmap-google-map>
             </div>
         </div>

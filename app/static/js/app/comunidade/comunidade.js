@@ -27,7 +27,11 @@ angular.module('concept2.comunidade', [])
         $scope.map = { center: {latitude: -14.235004, longitude: -51.92528}, zoom: 4 };
         var adicionaIcone = function() {
             angular.forEach($scope.ondeRemar, function(local) {
-                local.icone = '/static/img/comunidade/mini/{0}.png'.format([local.modalidade]);
+                local.icone = '/static/img/comunidade/mini/{0}.png'.format([local.modalidade.codigo]);
+                local.options = {
+                    "title": local.modalidade.nome
+                };
+                local.exibeInfo = false;
             });
         };
         $scope.ondeRemar = OndeRemar.query(adicionaIcone);
@@ -43,6 +47,7 @@ angular.module('concept2.comunidade', [])
             }
         };
         $scope.searchbox = { template: '/angular/comunidade/search-box.html', events:events};
+        $scope.ponto = {};
         $scope.alternaTipo = function(modalidade) {
             modalidade.ativo = !modalidade.ativo;
             var modalidadesAtivas = [];
@@ -57,5 +62,5 @@ angular.module('concept2.comunidade', [])
             else {
                 $scope.ondeRemar = OndeRemar.query({'modalidade': modalidadesAtivas}, adicionaIcone);
             }
-        }
+        };
     });

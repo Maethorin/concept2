@@ -10381,6 +10381,16 @@ header .navegacao .form-busca i {
 .pagina-comunidade .botoes-mapa:focus, .pagina-comunidade .botoes-mapa.input:focus, .pagina-comunidade .botoes-mapa.select:focus:hover {
   background-color: transparent;
 }
+.pagina-comunidade .marker {
+  max-width: 200px;
+}
+.pagina-comunidade .marker .nome {
+  font-size: 12px;
+  font-weight: bold;
+}
+.pagina-comunidade .marker .endereco {
+  font-size: 10px;
+}
 .pagina-comunidade .lista-caixa {
   background: radial-gradient(#34505b, #132026);
 }

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import csv
 import os
+import googlemaps
 from sqlalchemy.orm import relationship
 import database
 
@@ -19,18 +20,23 @@ class OndeRemar(db.Model):
 
     @classmethod
     def adiciona_do_csv(cls):
-        csv_file = '{}/onde_remar.csv'.format(os.path.join(os.getcwd(), 'dados'))
+        csv_file = '{}/onde-remar.csv'.format(os.path.join(os.getcwd(), 'dados'))
         with open(csv_file) as csvfile:
             reader = csv.DictReader(csvfile)
             for row in reader:
                 modalidade = OndeRemar.obter_codigo_modalidade(row)
                 endereco = '{}, {}, {}, Brasil'.format(row['ENDEREÇO'], row['CIDADE'], row['UF'])
+                coordenadas = OndeRemar.obter_coordenadas(endereco)
                 onde_remar = OndeRemar(
                     nome=row['ENTIDADE'],
                     endereco=endereco,
                     telefone=row['CONTATO'],
-                    modalidade=''
+                    modalidade=modalidade,
+                    latitude=coordenadas['lat'],
+                    longitude=coordenadas['lng']
                 )
+                db.session.add(onde_remar)
+        db.session.commit()
 
     @classmethod
     def obter_codigo_modalidade(cls, row):
@@ -39,6 +45,15 @@ class OndeRemar(db.Model):
                     modalidade[1].lower() == row['TIPO'].lower()][0]
         except IndexError:
             return 'musculacao'
+
+    @classmethod
+    def obter_coordenadas(cls, endereco):
+        try:
+            gmaps = googlemaps.Client(key=database.config.GOOGLE_API_KEY)
+            geocode = gmaps.geocode(endereco)[0]
+            return geocode['geometry']['location']
+        except (KeyError, IndexError):
+            return {'lat': None, 'lng': None}
 
     @classmethod
     def apenas_modalidades(cls, modalidades):
@@ -50,7 +65,7 @@ class OndeRemar(db.Model):
             'nome': self.nome,
             'endereco': self.endereco,
             'telefone': self.telefone,
-            'modalidade': self.modalidade.code,
+            'modalidade': {'codigo': self.modalidade.code, 'nome': self.modalidade.value},
             'coordenadas': {'latitude': self.latitude, 'longitude': self.longitude}
         }
 

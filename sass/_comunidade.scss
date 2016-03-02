@@ -109,3 +109,14 @@ h5 {
 .botoes-mapa:focus, .botoes-mapa.input:focus, .botoes-mapa.select:focus:hover {
     background-color: transparent;
 }
+
+.marker {
+    max-width: 200px;
+    .nome {
+        font-size: 12px;
+        font-weight: bold;
+    }
+    .endereco {
+        font-size: 10px;
+    }
+}
