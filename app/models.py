@@ -9,6 +9,8 @@ class OndeRemar(db.Model):
     __tablename__ = 'onde_remar'
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String())
+    endereco = db.Column(db.String())
+    telefone = db.Column(db.String())
     latitude = db.Column(db.Float())
     longitude = db.Column(db.Float())
     modalidade = db.Column(database.ModalidadeTipo())
@@ -21,6 +23,8 @@ class OndeRemar(db.Model):
         return {
             'id': self.id,
             'nome': self.nome,
+            'endereco': self.endereco,
+            'telefone': self.telefone,
             'modalidade': self.modalidade.code,
             'coordenadas': {'latitude': self.latitude, 'longitude': self.longitude}
         }
