@@ -8,6 +8,7 @@
             <h4>{{evento.titulo}}</h4>
             <img ng-src="/static/img/eventos/{{evento.imagemLogo}}"/>
             <h5>{{evento.subtitulo}}</h5>
+            <div class="data-evento" ng-bind-html="trataHtml(evento.duracao)"></div>
             <button type="button" class="btn btn-default"><a href="#/eventos/{{slug}}/inscricao">Inscreva-se!</a></button>
         </div>
         <div class="col-md-9 borda-eventos sub-menu">

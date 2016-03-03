@@ -37,13 +37,22 @@ angular.module('concept2.eventos', ['ngRoute'])
             {"slug": "resultados", "nome": "Resultados"},
             {"slug": "inscricao", "nome": "Inscreva-se"}
         ];
-        $scope.evento = Evento.get({"id": $scope.slug}, function() {
-            $rootScope.titulo = $scope.evento.titulo;
-        });
-        $scope.regulamentos =[];
         $scope.trataHtml = function(html) {
             return $sce.trustAsHtml(html);
         };
+        $scope.evento = Evento.get({"id": $scope.slug}, function() {
+            $rootScope.titulo = $scope.evento.titulo;
+            var mesInicio = new Date($scope.evento.dataInicio.ano, $scope.evento.dataInicio.mes - 1, $scope.evento.dataInicio.dia);
+            var mesFim = new Date($scope.evento.dataFim.ano, $scope.evento.dataFim.mes - 1, $scope.evento.dataFim.dia);
+            if (mesFim.getMonth() == mesInicio.getMonth()) {
+                var mesNome = mesInicio.toLocaleString('pt-br', { month: "long"});
+                if (mesFim.getDay() == mesInicio.getDay()) {
+                    $scope.evento.duracao = 'dia {0} de {2}'.format([$scope.evento.dataInicio.dia, mesNome])
+                }
+                $scope.evento.duracao = 'de {0} a {1} de {2}'.format([$scope.evento.dataInicio.dia, $scope.evento.dataFim.dia, mesNome])
+            }
+        });
+        $scope.regulamentos =[];
         $http.get('/static/js/app/jsons/regulamento.json').then(function(response) {
             $scope.regulamentos = response.data;
         });

@@ -10230,6 +10230,12 @@ header .navegacao .form-busca i {
 .pagina-eventos .borda-eventos img {
   margin-left: -15px;
 }
+.pagina-eventos .borda-eventos.resumo-evento .data-evento {
+  text-align: center;
+  font-weight: bold;
+  font-size: 19px;
+  margin: 20px 0;
+}
 .pagina-eventos .borda-eventos.resumo-evento h4 {
   color: black;
   font-weight: bold;
