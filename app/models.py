@@ -140,6 +140,14 @@ class Evento(db.Model, QueryMixin):
     em_destaque = db.Column(db.Boolean)
     provas = relationship("Prova", back_populates="evento")
 
+    def lista_provas_dict(self):
+        provas_dict = []
+        for prova in self.provas:
+            provas_dict.append(
+                {'id': prova.id, 'codigo': prova.codigo, 'label': prova.label}
+            )
+        return provas_dict
+
     @classmethod
     def obter_item(cls, item_id):
         return cls.query.filter_by(slug=item_id).first()
@@ -158,6 +166,7 @@ class Evento(db.Model, QueryMixin):
             "imagemPropaganda": self.imagem_propaganda,
             "descricao": self.descricao,
             "destaque": self.em_destaque,
+            "provas": self.lista_provas_dict()
         }
 
 
@@ -167,6 +176,7 @@ class Categoria(db.Model, QueryMixin):
     nome = db.Column(db.String())
     sub_categorias = relationship("SubCategoria", back_populates="categoria")
 
+    @property
     def codigo(self):
         return self.nome.upper()[:3]
 
@@ -179,8 +189,13 @@ class SubCategoria(db.Model, QueryMixin):
     categoria = relationship("Categoria", back_populates="sub_categorias")
     provas = relationship("Prova", back_populates="sub_categoria")
 
+    @property
     def codigo(self):
         return '{}{}'.format(self.categoria.codigo, self.nome.upper()[:3])
+
+    @property
+    def label(self):
+        return '{} {}'.format(self.categoria.codigo, self.nome)
 
 
 class Prova(db.Model, QueryMixin):
@@ -189,16 +204,26 @@ class Prova(db.Model, QueryMixin):
     distancia = db.Column(database.DistanciaTipo())
     sexo = db.Column(database.SexoTipo())
     tipo = db.Column(database.ProvaTipo())
+    revezamento = db.Column(db.Integer)
+    ordem = db.Column(db.Integer)
+    tempo_execucao = db.Column(db.Integer)
+    data_inicio = db.Column(db.DateTime)
+    observacao = db.Column(db.String())
     evento_id = db.Column(db.Integer, db.ForeignKey('eventos.id'))
     evento = relationship("Evento", back_populates="provas")
     sub_categoria_id = db.Column(db.Integer, db.ForeignKey('sub_categorias.id'))
     sub_categoria = relationship("SubCategoria", back_populates="provas")
     inscricoes = relationship("Inscricao", back_populates="prova")
 
+    @property
     def codigo(self):
         return '{}{}{}{}'.format(
-            self.sexo, self.distancia, self.tipo, self.sub_categoria.codigo
+            self.sexo.code, self.distancia.code, self.tipo.code, self.sub_categoria.codigo
         )
+
+    @property
+    def label(self):
+        return '{}m {} {} {}'.format(self.distancia.code, self.tipo.value[:4], self.sexo.value, self.sub_categoria.label)
 
 
 class Inscricao(db.Model, QueryMixin):

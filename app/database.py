@@ -34,12 +34,12 @@ PROVAS = [
     ('I', 'Individual'),
     ('D', 'Dupla'),
     ('Q', 'Quadra'),
-    ('8', '8'),
+    ('8', 'Oito'),
     ('R', 'Revezamento'),
     ('B', 'Biathlon'),
 ]
 
-SEXO = [('MA', 'Masculino'), ('FE', 'Feminino'), ('MI', 'Misto')]
+SEXO = [('MA', 'Masc'), ('FE', 'Fem'), ('MI', 'Misto'), ('AB', 'Aberto')]
 
 MODALIDADES = [
     ('clube-remo', 'Clube de Remo'),
