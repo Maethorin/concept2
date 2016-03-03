@@ -70,14 +70,6 @@
     background-color: white;
 }
 
-.formulario-data {
-    padding-bottom: 35px;
-}
-
-.form-afiliacao {
-    width: 118px;
-}
-
 .afiliacao {
     input {
         margin-top: -30px;
@@ -85,12 +77,37 @@
     }
 }
 
-.campo{
-    .form-group{
-        min-height: 77px;
+.form-inscricao {
+    .campo{
+        .form-group{
+            min-height: 80px;
+        }
+        .help-block{
+            font-size: smaller;
+        }
+        &.sexo {
+            padding-top: 20px;
+            margin-bottom: -20px;
+        }
+        &.tipo-filiacao {
+            button {
+                min-width: 124px;
+                height: 34px;
+                text-align: left;
+                .caret {
+                    float: right;
+                    margin-top: 7px;
+                    display: inline-block;
+                }
+            }
+        }
     }
-    .help-block{
-        font-size: smaller;
+    .botoes {
+        text-align: center;
+        .btn-disabled {
+            background-color: #777;
+            color: #999;
+        }
     }
 }
 

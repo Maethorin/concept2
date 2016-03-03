@@ -10270,21 +10270,36 @@ header .navegacao .form-busca i {
 .pagina-eventos .conteudo-evento {
   background-color: white;
 }
-.pagina-eventos .formulario-data {
-  padding-bottom: 35px;
-}
-.pagina-eventos .form-afiliacao {
-  width: 118px;
-}
 .pagina-eventos .afiliacao input {
   margin-top: -30px;
   margin-left: 122px;
 }
-.pagina-eventos .campo .form-group {
-  min-height: 77px;
+.pagina-eventos .form-inscricao .campo .form-group {
+  min-height: 80px;
 }
-.pagina-eventos .campo .help-block {
+.pagina-eventos .form-inscricao .campo .help-block {
   font-size: smaller;
+}
+.pagina-eventos .form-inscricao .campo.sexo {
+  padding-top: 20px;
+  margin-bottom: -20px;
+}
+.pagina-eventos .form-inscricao .campo.tipo-filiacao button {
+  min-width: 124px;
+  height: 34px;
+  text-align: left;
+}
+.pagina-eventos .form-inscricao .campo.tipo-filiacao button .caret {
+  float: right;
+  margin-top: 7px;
+  display: inline-block;
+}
+.pagina-eventos .form-inscricao .botoes {
+  text-align: center;
+}
+.pagina-eventos .form-inscricao .botoes .btn-disabled {
+  background-color: #777;
+  color: #999;
 }
 .pagina-eventos #regulamento h4 {
   font-weight: bold;

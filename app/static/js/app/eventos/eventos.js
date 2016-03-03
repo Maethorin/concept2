@@ -56,28 +56,61 @@ angular.module('concept2.eventos', ['ngRoute'])
         $http.get('/static/js/app/jsons/regulamento.json').then(function(response) {
             $scope.regulamentos = response.data;
         });
-        $scope.dadosInscricao = {
-            "nome": null,
-            "sobrenome": null,
-            "afiliacao": null,
-            "cpf": null,
-            "telefone": null,
-            "time": null,
-            "data": null,
-            "email": null
-            //adicionar os outros campos
+
+        $scope.reset = function(formInscricao) {
+            $scope.dadosInscricao = {
+                "nome": null,
+                "sobrenome": null,
+                "sexo": null,
+                "data": null,
+                "cpf": null,
+                "email": null,
+                "telefone": null,
+                "celular": null,
+                "time": null,
+                "tipoAfiliacao": null,
+                "afiliacao": null,
+                "prova": null
+            };
+            if (formInscricao) {
+                formInscricao.$setPristine();
+                formInscricao.$setUntouched();
+            }
+        };
+        $scope.reset();
+        $scope.selecionaTipoAfiliacao = function(tipoFiliacao) {
+            $scope.dadosInscricao.tipoAfiliacao = tipoFiliacao;
         };
         $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-9]/, 'M': /[0-1]/, 'm': /[0-2]/}};
         $scope.campoEstaValido = function (campo) {
-            return campo.$touched && !campo.$error.required
+            if (campo.$name == 'email') {
+                return (campo.$touched || campo.$dirty) && !campo.$error.required && !campo.$error.email;
+            }
+            return (campo.$touched || campo.$dirty) && !campo.$error.required
 
         };
         $scope.campoEstaInvalido = function (campo) {
-            return campo.$touched && campo.$error.required
-
+            if (campo.$name == 'email') {
+                return (campo.$touched || campo.$dirty) && (campo.$error.required || campo.$error.email);
+            }
+            return (campo.$touched || campo.$dirty) && campo.$error.required;
         };
         $scope.campoNaoTocado = function (campo) {
             return !campo.$touched
-
         };
+        function exibeValidacoes(formInscricao) {
+            angular.forEach(formInscricao, function(field, fieldName) {
+                if (field !== undefined && field.$validate !== undefined) {
+                    field.$validate();
+                    field.$setDirty();
+                }
+            });
+        }
+        $scope.enviandoInscricao = function(formInscricao) {
+            if (formInscricao.$invalid) {
+                formInscricao.$setPristine();
+                exibeValidacoes(formInscricao);
+                return false;
+            }
+        }
     });
