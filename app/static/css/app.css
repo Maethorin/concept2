@@ -10274,6 +10274,9 @@ header .navegacao .form-busca i {
   margin-top: -30px;
   margin-left: 122px;
 }
+.pagina-eventos .form-inscricao .prova {
+  min-height: 89px;
+}
 .pagina-eventos .form-inscricao .campo .form-group {
   min-height: 80px;
 }
@@ -10283,6 +10286,9 @@ header .navegacao .form-busca i {
 .pagina-eventos .form-inscricao .campo.sexo {
   padding-top: 20px;
   margin-bottom: -20px;
+}
+.pagina-eventos .form-inscricao .campo .control-label i {
+  font-size: 12px;
 }
 .pagina-eventos .form-inscricao .campo.tipo-filiacao button {
   min-width: 124px;
@@ -10309,6 +10315,44 @@ header .navegacao .form-busca i {
 .pagina-eventos .form-inscricao .dropdown-provas li.dropdown-header {
   font-size: 13px;
   font-weight: bold;
+}
+.pagina-eventos .form-inscricao .provas-selecionadas {
+  box-sizing: border-box;
+  list-style: none;
+  padding: 0 5px 5px;
+  width: 100%;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  cursor: text;
+  outline: 0;
+  overflow: hidden;
+  min-height: 33px;
+  margin-bottom: 0;
+}
+.pagina-eventos .form-inscricao .provas-selecionadas.has-error {
+  color: #a94442;
+  border-color: #ebccd1;
+}
+.pagina-eventos .form-inscricao .provas-selecionadas.has-success {
+  color: #3c763d;
+  border-color: #d6e9c6;
+}
+.pagina-eventos .form-inscricao .provas-selecionadas li {
+  background-color: #e4e4e4;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  cursor: default;
+  float: left;
+  margin-right: 5px;
+  margin-top: 5px;
+  padding: 0 5px;
+}
+.pagina-eventos .form-inscricao .provas-selecionadas li span {
+  color: #999;
+  cursor: pointer;
+  display: inline-block;
+  font-weight: bold;
+  margin-right: 2px;
 }
 .pagina-eventos #regulamento h4 {
   font-weight: bold;

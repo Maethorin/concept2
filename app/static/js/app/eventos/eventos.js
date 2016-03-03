@@ -40,6 +40,12 @@ angular.module('concept2.eventos', ['ngRoute'])
         $scope.trataHtml = function(html) {
             return $sce.trustAsHtml(html);
         };
+
+        $scope.regulamentos = [];
+        $http.get('/static/js/app/jsons/regulamento.json').then(function(response) {
+            $scope.regulamentos = response.data;
+        });
+
         $scope.evento = Evento.get({"id": $scope.slug}, function() {
             $rootScope.titulo = $scope.evento.titulo;
             var mesInicio = new Date($scope.evento.dataInicio.ano, $scope.evento.dataInicio.mes - 1, $scope.evento.dataInicio.dia);
@@ -58,8 +64,43 @@ angular.module('concept2.eventos', ['ngRoute'])
                 }
             });
         });
+        $scope.campoProvaTocado = false;
+        $scope.obterProva = function(provaSelecionada) {
+            var provaCompleta = null;
+            angular.forEach($scope.evento.provas, function(prova) {
+                if (prova.id == provaSelecionada.id) {
+                    provaCompleta = prova;
+                    return false;
+                }
+            });
+            return provaCompleta;
+        };
+        $scope.removeProva = function(provaId) {
+            angular.forEach($scope.dadosInscricao.provas, function(prova, index) {
+                if (prova.id == provaId) {
+                    $scope.dadosInscricao.provas.splice(index, 1);
+                    return false;
+                }
+            });
+            if ($scope.dadosInscricao.provas.length == 0) {
+                $scope.dadosInscricao.provaSelecionada = null;
+            }
+            $scope.campoProvaTocado = true;
+        };
+        $scope.provasEventos = {
+            onItemSelect: function(prova) {
+                $scope.dadosInscricao.provaSelecionada = 1;
+                $scope.campoProvaTocado = true;
+            },
+            onItemDeselect: function(prova) {
+                if ($scope.dadosInscricao.provas.length == 0) {
+                    $scope.dadosInscricao.provaSelecionada = null;
+                }
+                $scope.campoProvaTocado = true;
+            }
+        };
         $scope.provasTexts = {
-            buttonDefaultText: 'Selecione a(s) prova(s)...'
+            buttonDefaultText: 'Selecione a(s) prova(s) que vai participar...'
         };
         $scope.provasSettings = {
             dynamicTitle: false,
@@ -68,11 +109,6 @@ angular.module('concept2.eventos', ['ngRoute'])
             scrollable: true,
             scrollableHeight: '300px'
         };
-        $scope.regulamentos = [];
-        $http.get('/static/js/app/jsons/regulamento.json').then(function(response) {
-            $scope.regulamentos = response.data;
-        });
-
         $scope.reset = function(formInscricao) {
             $scope.dadosInscricao = {
                 "nome": null,
@@ -86,12 +122,14 @@ angular.module('concept2.eventos', ['ngRoute'])
                 "time": null,
                 "tipoAfiliacao": null,
                 "afiliacao": null,
-                "provas": []
+                "provas": [],
+                "provaSelecionada": null
             };
             if (formInscricao) {
                 formInscricao.$setPristine();
                 formInscricao.$setUntouched();
             }
+            $scope.campoProvaTocado = false;
         };
         $scope.reset();
         $scope.selecionaTipoAfiliacao = function(tipoFiliacao) {
@@ -99,17 +137,27 @@ angular.module('concept2.eventos', ['ngRoute'])
         };
         $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-9]/, 'M': /[0-1]/, 'm': /[0-2]/}};
         $scope.campoEstaValido = function(campo) {
+            var extra = true;
             if (campo.$name == 'email') {
-                return (campo.$touched || campo.$dirty) && !campo.$error.required && !campo.$error.email;
+                extra = !campo.$error.email;
             }
-            return (campo.$touched || campo.$dirty) && !campo.$error.required
+            var statusCampo = (campo.$touched || campo.$dirty);
+            if (campo.$name == 'provas') {
+                statusCampo = $scope.campoProvaTocado || campo.$dirty;
+            }
+            return statusCampo && !campo.$error.required && extra;
 
         };
         $scope.campoEstaInvalido = function(campo) {
+            var temErro = campo.$error.required;
             if (campo.$name == 'email') {
-                return (campo.$touched || campo.$dirty) && (campo.$error.required || campo.$error.email);
+                temErro = (temErro || campo.$error.email);
             }
-            return (campo.$touched || campo.$dirty) && campo.$error.required;
+            var statusCampo = (campo.$touched || campo.$dirty);
+            if (campo.$name == 'provas') {
+                statusCampo = $scope.campoProvaTocado || campo.$dirty;
+            }
+            return statusCampo && temErro;
         };
         $scope.campoNaoTocado = function(campo) {
             return !campo.$touched

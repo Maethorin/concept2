@@ -197,8 +197,11 @@ class SubCategoria(db.Model, QueryMixin):
 
 class Prova(db.Model, QueryMixin):
     __tablename__ = 'provas'
+    __mapper_args__ = {
+        'order_by': 'distancia, tipo, sexo DESC'
+    }
     id = db.Column(db.Integer, primary_key=True)
-    distancia = db.Column(database.DistanciaTipo())
+    distancia = db.Column(db.Integer)
     sexo = db.Column(database.SexoTipo())
     tipo = db.Column(database.ProvaTipo())
     revezamento = db.Column(db.Integer)
@@ -215,7 +218,7 @@ class Prova(db.Model, QueryMixin):
     @property
     def codigo(self):
         return '{}{}{}{}'.format(
-            self.distancia.code if self.distancia else '',
+            self.distancia if self.distancia else '',
             self.tipo.code if self.tipo else '',
             self.sexo.code if self.sexo else '',
             self.sub_categoria.codigo if self.sub_categoria else ''
@@ -223,7 +226,7 @@ class Prova(db.Model, QueryMixin):
 
     @property
     def label(self):
-        distancia = '{}m '.format(self.distancia.code) if self.distancia and self.distancia.value > 0 else ''
+        distancia = '{}m '.format(self.distancia) if self.distancia and self.distancia > 0 else ''
         tipo = '{} '.format(self.tipo.value[:4]) if self.tipo else ''
         sexo = '{} '.format(self.sexo.value) if self.sexo else ''
         observacao = self.observacao if self.observacao else ''
@@ -235,7 +238,7 @@ class Prova(db.Model, QueryMixin):
         )
 
     def as_dict(self):
-        distancia = self.distancia.value
+        distancia = self.distancia
         tipo = self.tipo.value if self.tipo else ''
         sexo = self.sexo.value if self.sexo else ''
         sub_categoria = self.sub_categoria.label if self.sub_categoria else ''
