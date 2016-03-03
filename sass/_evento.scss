@@ -109,6 +109,17 @@
             color: #999;
         }
     }
+    .dropdown-provas {
+        li {
+            padding-left: 10px;
+            font-size: 11px;
+            cursor: pointer;
+            &.dropdown-header {
+                font-size: 13px;
+                font-weight: bold;
+            }
+        }
+    }
 }
 
 #regulamento{

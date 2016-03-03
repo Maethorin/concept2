@@ -99,10 +99,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3 campo prova">
+        </div>
+        <div class="row">
+            <div class="col-md-12 campo prova">
                 <div class="form-group">
                     <label for="afiliacao">Provas:</label>
-                    <select class="form-control form-control-sm form-afiliacao" ng-model="dadosInscricao.provas" multiple ng-options="prova.nome for prova in provas"></select>
+                    <div ng-dropdown-multiselect class="dropdown-provas" options="evento.provas" extra-settings="provasSettings" translation-texts="provasTexts" selected-model="dadosInscricao.provas" group-by="subCategoria"></div>
                 </div>
             </div>
         </div>

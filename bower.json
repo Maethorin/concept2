@@ -11,10 +11,11 @@
     "angular-resource": "~1.4.0",
     "angular-loader": "~1.4.0",
     "angular-mocks": "~1.4.0",
-    "bootstrap-sass": "~>3.3.6",
-    "fontawesome": "~4.5.0",
+    "angularjs-dropdown-multiselect": null,
     "angular-google-maps": "~2.3.1",
     "angular-ui-mask": "~1.7.2",
+    "bootstrap-sass": "~>3.3.6",
+    "fontawesome": "~4.5.0",
     "ngMask": "angular-mask#^3.0.16"
   }
 }

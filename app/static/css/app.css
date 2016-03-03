@@ -10301,6 +10301,15 @@ header .navegacao .form-busca i {
   background-color: #777;
   color: #999;
 }
+.pagina-eventos .form-inscricao .dropdown-provas li {
+  padding-left: 10px;
+  font-size: 11px;
+  cursor: pointer;
+}
+.pagina-eventos .form-inscricao .dropdown-provas li.dropdown-header {
+  font-size: 13px;
+  font-weight: bold;
+}
 .pagina-eventos #regulamento h4 {
   font-weight: bold;
 }

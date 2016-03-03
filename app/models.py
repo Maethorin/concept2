@@ -2,7 +2,6 @@
 import csv
 import os
 import googlemaps
-from sqlalchemy.ext.declarative import declared_attr, declarative_base
 from sqlalchemy.orm import relationship
 import database
 
@@ -143,9 +142,7 @@ class Evento(db.Model, QueryMixin):
     def lista_provas_dict(self):
         provas_dict = []
         for prova in self.provas:
-            provas_dict.append(
-                {'id': prova.id, 'codigo': prova.codigo, 'label': prova.label}
-            )
+            provas_dict.append(prova.as_dict())
         return provas_dict
 
     @classmethod
@@ -191,11 +188,11 @@ class SubCategoria(db.Model, QueryMixin):
 
     @property
     def codigo(self):
-        return '{}{}'.format(self.categoria.codigo, self.nome.upper()[:3])
+        return u'{}{}'.format(self.categoria.codigo, self.nome.upper()[:3])
 
     @property
     def label(self):
-        return '{} {}'.format(self.categoria.codigo, self.nome)
+        return u'{} {}'.format(self.categoria.nome, self.nome)
 
 
 class Prova(db.Model, QueryMixin):
@@ -218,12 +215,41 @@ class Prova(db.Model, QueryMixin):
     @property
     def codigo(self):
         return '{}{}{}{}'.format(
-            self.sexo.code, self.distancia.code, self.tipo.code, self.sub_categoria.codigo
+            self.distancia.code if self.distancia else '',
+            self.tipo.code if self.tipo else '',
+            self.sexo.code if self.sexo else '',
+            self.sub_categoria.codigo if self.sub_categoria else ''
         )
 
     @property
     def label(self):
-        return '{}m {} {} {}'.format(self.distancia.code, self.tipo.value[:4], self.sexo.value, self.sub_categoria.label)
+        distancia = '{}m '.format(self.distancia.code) if self.distancia and self.distancia.value > 0 else ''
+        tipo = '{} '.format(self.tipo.value[:4]) if self.tipo else ''
+        sexo = '{} '.format(self.sexo.value) if self.sexo else ''
+        observacao = self.observacao if self.observacao else ''
+        return '{}{}{}{}'.format(
+            distancia,
+            tipo,
+            sexo,
+            observacao
+        )
+
+    def as_dict(self):
+        distancia = self.distancia.value
+        tipo = self.tipo.value if self.tipo else ''
+        sexo = self.sexo.value if self.sexo else ''
+        sub_categoria = self.sub_categoria.label if self.sub_categoria else ''
+        observacao = self.observacao if self.observacao else ''
+        return {
+            'id': self.id,
+            'codigo': self.codigo,
+            'label': self.label,
+            'distancia': distancia,
+            'tipo': tipo,
+            'sexo': sexo,
+            'subCategoria': sub_categoria,
+            'observacao': observacao,
+        }
 
 
 class Inscricao(db.Model, QueryMixin):

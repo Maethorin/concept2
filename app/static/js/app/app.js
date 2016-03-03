@@ -34,6 +34,7 @@ angular.module('concept2', [
     'ngResource',
     'uiGmapgoogle-maps',
     'ui.mask',
+    'angularjs-dropdown-multiselect',
     'concept2.services',
     'concept2.home',
     'concept2.produtos',

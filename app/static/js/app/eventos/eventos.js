@@ -1,21 +1,21 @@
 'use strict';
 angular.module('concept2.eventos', ['ngRoute'])
-    .config(['$routeProvider', function ($routeProvider) {
+    .config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/eventos', {
                 templateUrl: '/angular/eventos.html',
                 controller: 'EventosController'
             })
-             .when('/eventos/:slug', {
+            .when('/eventos/:slug', {
                 templateUrl: '/angular/evento/evento.html',
-                controller:'EventoController'
+                controller: 'EventoController'
             })
             .when('/eventos/:slug/:itemMenu', {
                 templateUrl: '/angular/evento/evento.html',
-                controller:'EventoController'
+                controller: 'EventoController'
             })
     }])
-    .controller('EventosController', function ($rootScope, $scope, $http, $sce, Evento) {
+    .controller('EventosController', function($rootScope, $scope, $http, $sce, Evento) {
         $rootScope.pagina = "eventos";
         $rootScope.titulo = "Eventos";
         $scope.eventos = [];
@@ -24,7 +24,7 @@ angular.module('concept2.eventos', ['ngRoute'])
         };
         $scope.eventos = Evento.query();
     })
-    .controller('EventoController', function ($rootScope, $scope, $routeParams, $http, $sce, Evento) {
+    .controller('EventoController', function($rootScope, $scope, $routeParams, $http, $sce, Evento) {
         $scope.slug = $routeParams.slug;
         $scope.itemMenu = $routeParams.itemMenu || 'sobre';
         $scope.template = '/angular/evento/{0}.html'.format([$scope.itemMenu]);
@@ -45,14 +45,25 @@ angular.module('concept2.eventos', ['ngRoute'])
             var mesInicio = new Date($scope.evento.dataInicio.ano, $scope.evento.dataInicio.mes - 1, $scope.evento.dataInicio.dia);
             var mesFim = new Date($scope.evento.dataFim.ano, $scope.evento.dataFim.mes - 1, $scope.evento.dataFim.dia);
             if (mesFim.getMonth() == mesInicio.getMonth()) {
-                var mesNome = mesInicio.toLocaleString('pt-br', { month: "long"});
+                var mesNome = mesInicio.toLocaleString('pt-br', {month: "long"});
                 if (mesFim.getDay() == mesInicio.getDay()) {
                     $scope.evento.duracao = 'dia {0} de {2}'.format([$scope.evento.dataInicio.dia, mesNome])
                 }
                 $scope.evento.duracao = 'de {0} a {1} de {2}'.format([$scope.evento.dataInicio.dia, $scope.evento.dataFim.dia, mesNome])
             }
+
         });
-        $scope.regulamentos =[];
+        $scope.provasTexts = {
+            buttonDefaultText: 'Seleciona a(s) prova(s)...'
+        };
+        $scope.provasSettings = {
+            dynamicTitle: false,
+            showCheckAll: false,
+            showUncheckAll: false,
+            scrollable: true,
+            scrollableHeight: '400px'
+        };
+        $scope.regulamentos = [];
         $http.get('/static/js/app/jsons/regulamento.json').then(function(response) {
             $scope.regulamentos = response.data;
         });
@@ -70,7 +81,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                 "time": null,
                 "tipoAfiliacao": null,
                 "afiliacao": null,
-                "prova": null
+                "provas": []
             };
             if (formInscricao) {
                 formInscricao.$setPristine();
@@ -82,20 +93,20 @@ angular.module('concept2.eventos', ['ngRoute'])
             $scope.dadosInscricao.tipoAfiliacao = tipoFiliacao;
         };
         $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-9]/, 'M': /[0-1]/, 'm': /[0-2]/}};
-        $scope.campoEstaValido = function (campo) {
+        $scope.campoEstaValido = function(campo) {
             if (campo.$name == 'email') {
                 return (campo.$touched || campo.$dirty) && !campo.$error.required && !campo.$error.email;
             }
             return (campo.$touched || campo.$dirty) && !campo.$error.required
 
         };
-        $scope.campoEstaInvalido = function (campo) {
+        $scope.campoEstaInvalido = function(campo) {
             if (campo.$name == 'email') {
                 return (campo.$touched || campo.$dirty) && (campo.$error.required || campo.$error.email);
             }
             return (campo.$touched || campo.$dirty) && campo.$error.required;
         };
-        $scope.campoNaoTocado = function (campo) {
+        $scope.campoNaoTocado = function(campo) {
             return !campo.$touched
         };
         function exibeValidacoes(formInscricao) {
@@ -106,6 +117,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                 }
             });
         }
+
         $scope.enviandoInscricao = function(formInscricao) {
             if (formInscricao.$invalid) {
                 formInscricao.$setPristine();
