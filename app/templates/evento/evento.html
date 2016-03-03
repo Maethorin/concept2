@@ -1,10 +1,10 @@
 <div class="container">
-    <div class="row conteudo-cabra">
+    <div class="row conteudo-evento">
 
         <div class="col-md-9 borda-eventos destaque">
             <img ng-src="/static/img/eventos/{{evento.imagemDestaque}}">
         </div>
-        <div class="col-md-3 borda-eventos descricaoevento" style="background-color: white; height: 393px">
+        <div class="col-md-3 borda-eventos resumo-evento">
             <h4>{{evento.titulo}}</h4>
             <img ng-src="/static/img/eventos/{{evento.imagemLogo}}"/>
             <h5>{{evento.subtitulo}}</h5>
@@ -17,9 +17,9 @@
         </div>
 
         <div class="col-md-9 borda-eventos">
-            <div ng-include="template"></div>
+            <div ng-include="template" class="conteudo-interno"></div>
         </div>
-        <div class="col-md-3 borda-eventos prop">
+        <div class="col-md-3 borda-eventos">
             <img ng-src="/static/img/eventos/{{evento.imagemPropaganda}}"/>
         </div>
     </div>

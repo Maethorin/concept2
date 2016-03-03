@@ -10227,37 +10227,41 @@ header .navegacao .form-busca i {
   height: 376px;
   margin-top: 5px;
 }
-.pagina-eventos .borda-eventos.prop img {
-  margin-top: -70px;
-}
 .pagina-eventos .borda-eventos img {
   margin-left: -15px;
 }
-.pagina-eventos .borda-eventos.descricaoevento h4 {
+.pagina-eventos .borda-eventos.resumo-evento h4 {
   color: black;
   font-weight: bold;
   text-align: center;
 }
-.pagina-eventos .borda-eventos.descricaoevento h5 {
+.pagina-eventos .borda-eventos.resumo-evento h5 {
   color: black;
   font-weight: bold;
   text-align: center;
 }
-.pagina-eventos .borda-eventos.descricaoevento p {
+.pagina-eventos .borda-eventos.resumo-evento p {
   color: black;
   text-align: justify;
   font-size: small;
 }
-.pagina-eventos .borda-eventos.descricaoevento button {
+.pagina-eventos .borda-eventos.resumo-evento button {
   background: radial-gradient(#962156, #7a224a);
   border: 2px solid black;
   margin-left: 70px;
 }
-.pagina-eventos .borda-eventos.descricaoevento a {
+.pagina-eventos .borda-eventos.resumo-evento a {
   text-decoration: none;
   color: white;
 }
-.pagina-eventos .conteudo-cabra {
+.pagina-eventos .borda-eventos .conteudo-interno {
+  border: 2px solid #888;
+  margin-left: -15px;
+  margin-right: -15px;
+  padding: 15px;
+  min-height: 245px;
+}
+.pagina-eventos .conteudo-evento {
   background-color: white;
 }
 .pagina-eventos .formulario-data {

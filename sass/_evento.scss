@@ -20,16 +20,10 @@
         height: 376px;
         margin-top: 5px;
     }
-    &.prop {
-        img {
-            margin-top: -70px;
-        }
-
-    }
     img {
         margin-left: -15px;
     }
-    &.descricaoevento {
+    &.resumo-evento {
         h4 {
             color: black;
             font-weight: bold;
@@ -57,10 +51,16 @@
         }
 
     }
-
+    .conteudo-interno {
+        border: 2px solid #888;
+        margin-left: -($grid-gutter-width / 2);
+        margin-right: -($grid-gutter-width / 2);
+        padding: ($grid-gutter-width / 2);
+        min-height: 245px;
+    }
 }
 
-.conteudo-cabra {
+.conteudo-evento {
     background-color: white;
 }
 
