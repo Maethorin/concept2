@@ -51,17 +51,22 @@ angular.module('concept2.eventos', ['ngRoute'])
                 }
                 $scope.evento.duracao = 'de {0} a {1} de {2}'.format([$scope.evento.dataInicio.dia, $scope.evento.dataFim.dia, mesNome])
             }
-
+            $scope.provasDropdownList = [];
+            angular.forEach($scope.evento.provas, function(prova) {
+                if (prova.distancia > 0) {
+                    $scope.provasDropdownList.push(prova);
+                }
+            });
         });
         $scope.provasTexts = {
-            buttonDefaultText: 'Seleciona a(s) prova(s)...'
+            buttonDefaultText: 'Selecione a(s) prova(s)...'
         };
         $scope.provasSettings = {
             dynamicTitle: false,
             showCheckAll: false,
             showUncheckAll: false,
             scrollable: true,
-            scrollableHeight: '400px'
+            scrollableHeight: '300px'
         };
         $scope.regulamentos = [];
         $http.get('/static/js/app/jsons/regulamento.json').then(function(response) {
@@ -124,5 +129,5 @@ angular.module('concept2.eventos', ['ngRoute'])
                 exibeValidacoes(formInscricao);
                 return false;
             }
-        }
+        };
     });

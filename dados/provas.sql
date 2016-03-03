@@ -31,9 +31,9 @@ INSERT INTO public.provas (distancia, evento_id, tempo_execucao, data_inicio, or
 INSERT INTO public.provas (distancia, sexo, tipo, revezamento, sub_categoria_id, evento_id, tempo_execucao, data_inicio, ordem)
     SELECT 4000, 'AB', 'R', 8, id, 1, 30, '2016-04-01 17:20', 13 FROM sub_categorias WHERE categoria_id = 4 and nome = 'Aberto';
 INSERT INTO public.provas (distancia, sexo, tipo, revezamento, sub_categoria_id, evento_id, tempo_execucao, data_inicio, ordem, observacao)
-    SELECT 2000, 'AB', 'R', 30, id, 1, 20, '2016-04-01 17:50', 14, 'Ski Aberto - Duelo' FROM sub_categorias WHERE categoria_id = 4 and nome = 'Aberto';
-INSERT INTO public.provas (distancia, sexo, tipo, revezamento, sub_categoria_id, evento_id, tempo_execucao, data_inicio, ordem, observacao)
-    SELECT 2000, 'AB', 'R', 30, id, 1, 20, '2016-04-01 18:10', 15, 'Aberto' FROM sub_categorias WHERE categoria_id = 4 and nome = 'Aberto';
+    SELECT 2000, 'AB', 'R', 30, id, 1, 20, '2016-04-01 17:50', 14, 'Ski - Duelo' FROM sub_categorias WHERE categoria_id = 4 and nome = 'Aberto';
+INSERT INTO public.provas (distancia, sexo, tipo, revezamento, sub_categoria_id, evento_id, tempo_execucao, data_inicio, ordem)
+    SELECT 2000, 'AB', 'R', 30, id, 1, 20, '2016-04-01 18:10', 15 FROM sub_categorias WHERE categoria_id = 4 and nome = 'Aberto';
 
 
 INSERT INTO public.provas (distancia, sexo, tipo, sub_categoria_id, evento_id, tempo_execucao, data_inicio, ordem)
