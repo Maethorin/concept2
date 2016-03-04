@@ -10120,9 +10120,6 @@ header .navegacao .form-busca i {
   font-size: 18px;
 }
 
-.lista-caixa {
-  padding: 10px;
-}
 .lista-caixa h3 {
   font-size: x-large;
   font-weight: bold;
@@ -10150,6 +10147,7 @@ header .navegacao .form-busca i {
 }
 
 .pagina-produtos .lista-caixa {
+  border: 5px solid #092638;
   background: radial-gradient(#1e71a3, #0f3d5e);
 }
 .pagina-produtos .caixa-conteudo .panel-heading {
@@ -10158,21 +10156,18 @@ header .navegacao .form-busca i {
 .pagina-produtos .caixa-conteudo.panel-default {
   background-color: transparent;
 }
-.pagina-produtos .linha2 img {
-  margin-top: -20px;
-}
-.pagina-produtos .linha1 img {
-  margin-top: 7px;
-}
 .pagina-produtos .menu-produtos {
-  width: 174px;
-  height: 415px;
+  margin-left: -14px;
+  width: 176px;
+  height: 383px;
   position: absolute;
   background-color: rgba(3, 12, 21, 0.8);
 }
 .pagina-produtos .menu-produtos a {
   text-decoration: none;
   color: white;
+  padding-bottom: 9px;
+  padding-top: 8px;
 }
 .pagina-produtos .menu-produtos a:hover {
   color: black;
@@ -10180,27 +10175,28 @@ header .navegacao .form-busca i {
 .pagina-produtos .menu-produtos .nav-pills > li > a {
   border-radius: 0;
 }
-.pagina-produtos .destaque-panel {
-  padding-bottom: 30px;
+.pagina-produtos .destaque-caixa img {
+  margin-left: 162px;
+  width: 699px;
 }
-.pagina-produtos .panel-body.menor-destaque {
-  padding: 0;
+.pagina-produtos .skierg-caixa img {
+  margin-left: -15px;
 }
-.pagina-produtos .remos img {
-  width: 200px;
-  margin-top: 62px;
-  margin-left: 75px;
+.pagina-produtos .remos-caixa img {
+  margin-left: -17px;
+  width: 383px;
 }
-.pagina-produtos .modeloe img {
-  width: 358px;
-  margin-left: 35px;
+.pagina-produtos .modeloe-caixa img {
+  margin-left: -17px;
+  width: 487px;
 }
-.pagina-produtos .outros img {
-  width: 271px;
-  margin-top: 58px;
+.pagina-produtos .outros-caixa img {
+  margin-left: -15px;
+  width: 283px;
 }
 
 .pagina-eventos .lista-caixa {
+  border: 5px solid #092638;
   background: radial-gradient(#1e71a3, #0f3d5e);
 }
 .pagina-eventos .caixa-conteudo .panel-heading {
@@ -10512,6 +10508,7 @@ header .navegacao .form-busca i {
   font-size: 10px;
 }
 .pagina-comunidade .lista-caixa {
+  border: 5px solid #092638;
   background: radial-gradient(#34505b, #132026);
 }
 .pagina-comunidade .caixa-conteudo .panel-heading {
