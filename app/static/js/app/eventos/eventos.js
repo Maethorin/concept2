@@ -147,6 +147,13 @@ angular.module('concept2.eventos', ['ngRoute'])
             scrollable: true,
             scrollableHeight: '300px'
         };
+        var limpaSelecaoProvas = function() {
+            angular.forEach($scope.provasDropdownList, function(prova) {
+                prova.selecionada = false;
+            });
+            $scope.inscricao.provas = [];
+            $scope.inscricao.provaSelecionada = null;
+        };
         $scope.reset = function(formInscricao) {
             $scope.atletaLogado = false;
             $scope.inscricao = new Atleta({
@@ -172,6 +179,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                 formInscricao.$setUntouched();
             }
             $scope.campoProvaTocado = false;
+            limpaSelecaoProvas();
         };
         $scope.reset();
         $scope.selecionaTipoAfiliacao = function(tipoFiliacao) {
@@ -189,6 +197,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                         return atual == esperado || atual == 'AB' || atual == 'MI';
                     }
                 );
+                limpaSelecaoProvas();
             }
         });
 
