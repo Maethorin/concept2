@@ -90,6 +90,10 @@
         .prova {
             min-height: 89px;
         }
+        .tabela-provas {
+            max-height: 300px;
+            overflow: auto;
+        }
         .campo {
             .form-group {
                 min-height: 80px;

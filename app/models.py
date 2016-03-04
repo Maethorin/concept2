@@ -208,7 +208,7 @@ prova_inscricao = db.Table(
 class Prova(db.Model, QueryMixin):
     __tablename__ = 'provas'
     __mapper_args__ = {
-        'order_by': 'distancia, tipo, sexo DESC'
+        'order_by': 'data_inicio, distancia, tipo, sexo DESC'
     }
     id = db.Column(db.Integer, primary_key=True)
     distancia = db.Column(db.Integer)
@@ -239,12 +239,10 @@ class Prova(db.Model, QueryMixin):
         distancia = '{}m '.format(self.distancia) if self.distancia and self.distancia > 0 else ''
         tipo = '{} '.format(self.tipo.value[:4]) if self.tipo else ''
         sexo = '{} '.format(self.sexo.value) if self.sexo else ''
-        observacao = self.observacao if self.observacao else ''
-        return '{}{}{}{}'.format(
+        return '{}{}{}'.format(
             distancia,
             tipo,
-            sexo,
-            observacao
+            sexo
         )
 
     def as_dict(self):
@@ -257,6 +255,8 @@ class Prova(db.Model, QueryMixin):
             'id': self.id,
             'codigo': self.codigo,
             'label': self.label,
+            'dia': self.data_inicio.strftime('%d/%m'),
+            'hora': self.data_inicio.strftime('%H:%M'),
             'distancia': distancia,
             'tipo': tipo,
             'sexo': sexo,

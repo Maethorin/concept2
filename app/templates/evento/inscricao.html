@@ -137,24 +137,49 @@
                 </div>
             </div>
             <div class="row prova">
-                <div class="col-md-5">
-                    <div class="form-group">
-                        <label class="control-label" for="afiliacao">Provas na competição:</label>
-                        <div ng-dropdown-multiselect class="dropdown-provas" options="provasDropdownList" extra-settings="provasSettings" events="provasEventos" translation-texts="provasTexts" selected-model="inscricao.provas" group-by="subCategoria"></div>
-                    </div>
-                </div>
-                <div class="col-md-7 campo">
+                <div class="col-md-12 campo">
                     <div class="form-group has-feedback" ng-class="{'has-success': campoEstaValido(formInscricao.provas), 'has-error': campoEstaInvalido(formInscricao.provas)}">
                         <label class="control-label" for="provas">Provas selecionadas: <i class="fa fa-asterisk"></i></label>
                         <ul class="provas-selecionadas" id="provas" ng-class="{'has-success': campoEstaValido(formInscricao.provas), 'has-error': campoEstaInvalido(formInscricao.provas)}">
                             <li ng-repeat="provaSelecionada in inscricao.provas" ng-init="prova = obterProva(provaSelecionada)">
                                 <span role="presentation" ng-click="removeProva(prova.id)">×</span>
-                                {{prova.label}}
+                                {{prova.dia}} {{prova.hora}} - {{prova.label}} - {{prova.subCategoria}}
                             </li>
                         </ul>
                         <input type="hidden" name="provas" ng-model="inscricao.provaSelecionada" required />
                         <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricao.provas), 'fa-close': campoEstaInvalido(formInscricao.provas)}"></span>
                         <span class="help-block" ng-show="campoEstaInvalido(formInscricao.provas)">* Selecione uma ou mais provas *</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row prova">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label" for="afiliacao">Provas na competição:</label>
+                        <div class="table-responsive tabela-provas">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Dia</th>
+                                    <th>Horário</th>
+                                    <th>Prova</th>
+                                    <th>Categoria</th>
+                                    <th>Observação</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="prova in provasDropdownList" ng-class="{'success': prova.selecionada}">
+                                        <td><input type="checkbox" name="provas[]" ng-model="prova.selecionada" value="{{prova}}" ng-click="clicaNaProva(prova.selecionada, prova)" /> </td>
+                                        <td>{{prova.dia}}</td>
+                                        <td>{{prova.hora}}</td>
+                                        <td>{{prova.label}}</td>
+                                        <td>{{prova.subCategoria}}</td>
+                                        <td>{{prova.observacao}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

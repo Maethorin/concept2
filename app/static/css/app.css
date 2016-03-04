@@ -10287,6 +10287,10 @@ header .navegacao .form-busca i {
 .pagina-eventos .inscricao .form-inscricao .prova {
   min-height: 89px;
 }
+.pagina-eventos .inscricao .form-inscricao .tabela-provas {
+  max-height: 300px;
+  overflow: auto;
+}
 .pagina-eventos .inscricao .form-inscricao .campo .form-group {
   min-height: 80px;
 }

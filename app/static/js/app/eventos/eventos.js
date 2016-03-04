@@ -80,6 +80,7 @@ angular.module('concept2.eventos', ['ngRoute'])
             $scope.provasDropdownList = [];
             angular.forEach($scope.evento.provas, function(prova) {
                 if (prova.distancia > 0) {
+                    prova.selecionada = false;
                     $scope.provasDropdownList.push(prova);
                 }
             });
@@ -102,6 +103,12 @@ angular.module('concept2.eventos', ['ngRoute'])
                     return false;
                 }
             });
+            angular.forEach($scope.provasDropdownList, function(prova) {
+                if (prova.id == provaId) {
+                    prova.selecionada = false;
+                    return false;
+                }
+            });
             if ($scope.inscricao.provas.length == 0) {
                 $scope.inscricao.provaSelecionada = null;
             }
@@ -109,14 +116,24 @@ angular.module('concept2.eventos', ['ngRoute'])
         };
         $scope.provasEventos = {
             onItemSelect: function(prova) {
+                $scope.inscricao.provas.push({'id': prova.id});
                 $scope.inscricao.provaSelecionada = 1;
                 $scope.campoProvaTocado = true;
             },
             onItemDeselect: function(prova) {
+                $scope.removeProva(prova.id);
                 if ($scope.inscricao.provas.length == 0) {
                     $scope.inscricao.provaSelecionada = null;
                 }
                 $scope.campoProvaTocado = true;
+            }
+        };
+        $scope.clicaNaProva = function(selecionada, prova) {
+            if (selecionada) {
+                $scope.provasEventos.onItemSelect(prova);
+            }
+            else {
+                $scope.provasEventos.onItemDeselect(prova);
             }
         };
         $scope.provasTexts = {
