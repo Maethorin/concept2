@@ -24,7 +24,7 @@ angular.module('concept2.eventos', ['ngRoute'])
         };
         $scope.eventos = Evento.query();
     })
-    .controller('EventoController', function($rootScope, $scope, $routeParams, $http, $sce, Evento) {
+    .controller('EventoController', function($rootScope, $scope, $routeParams, $http, $sce, Evento, Atleta) {
         $scope.slug = $routeParams.slug;
         $scope.itemMenu = $routeParams.itemMenu || 'sobre';
         $scope.template = '/angular/evento/{0}.html'.format([$scope.itemMenu]);
@@ -76,25 +76,25 @@ angular.module('concept2.eventos', ['ngRoute'])
             return provaCompleta;
         };
         $scope.removeProva = function(provaId) {
-            angular.forEach($scope.dadosInscricao.provas, function(prova, index) {
+            angular.forEach($scope.inscricao.provas, function(prova, index) {
                 if (prova.id == provaId) {
-                    $scope.dadosInscricao.provas.splice(index, 1);
+                    $scope.inscricao.provas.splice(index, 1);
                     return false;
                 }
             });
-            if ($scope.dadosInscricao.provas.length == 0) {
-                $scope.dadosInscricao.provaSelecionada = null;
+            if ($scope.inscricao.provas.length == 0) {
+                $scope.inscricao.provaSelecionada = null;
             }
             $scope.campoProvaTocado = true;
         };
         $scope.provasEventos = {
             onItemSelect: function(prova) {
-                $scope.dadosInscricao.provaSelecionada = 1;
+                $scope.inscricao.provaSelecionada = 1;
                 $scope.campoProvaTocado = true;
             },
             onItemDeselect: function(prova) {
-                if ($scope.dadosInscricao.provas.length == 0) {
-                    $scope.dadosInscricao.provaSelecionada = null;
+                if ($scope.inscricao.provas.length == 0) {
+                    $scope.inscricao.provaSelecionada = null;
                 }
                 $scope.campoProvaTocado = true;
             }
@@ -110,7 +110,8 @@ angular.module('concept2.eventos', ['ngRoute'])
             scrollableHeight: '300px'
         };
         $scope.reset = function(formInscricao) {
-            $scope.dadosInscricao = {
+            $scope.inscricao = new Atleta({
+                "evento": $scope.evento.id,
                 "nome": null,
                 "sobrenome": null,
                 "sexo": null,
@@ -124,7 +125,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                 "afiliacao": null,
                 "provas": [],
                 "provaSelecionada": null
-            };
+            });
             if (formInscricao) {
                 formInscricao.$setPristine();
                 formInscricao.$setUntouched();
@@ -133,7 +134,7 @@ angular.module('concept2.eventos', ['ngRoute'])
         };
         $scope.reset();
         $scope.selecionaTipoAfiliacao = function(tipoFiliacao) {
-            $scope.dadosInscricao.tipoAfiliacao = tipoFiliacao;
+            $scope.inscricao.tipoAfiliacao = tipoFiliacao;
         };
         $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-9]/, 'M': /[0-1]/, 'm': /[0-2]/}};
         $scope.campoEstaValido = function(campo) {
@@ -177,5 +178,6 @@ angular.module('concept2.eventos', ['ngRoute'])
                 exibeValidacoes(formInscricao);
                 return false;
             }
+            $scope.inscricao.$save();
         };
     });

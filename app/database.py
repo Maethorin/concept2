@@ -30,6 +30,13 @@ MODALIDADES = [
     ('crossfit', 'CrossFit')
 ]
 
+TIPO_AFILIACAO = [
+    ('clube', 'Clube'),
+    ('academia', 'academina'),
+    ('box-cf', 'Box de CF'),
+    ('independente', 'Independente')
+]
+
 
 class ProvaTipo(choice.ChoiceType):
     def __init__(self):
@@ -53,3 +60,11 @@ class ModalidadeTipo(choice.ChoiceType):
 
     def __repr__(self):
         return "ModalidadeTipo()"
+
+
+class AfiliacaoTipo(choice.ChoiceType):
+    def __init__(self):
+        super(AfiliacaoTipo, self).__init__(TIPO_AFILIACAO)
+
+    def __repr__(self):
+        return "AfiliacaoTipo()"

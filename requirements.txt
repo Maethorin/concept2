@@ -1,8 +1,11 @@
 Flask-RESTful
 Flask-SQLAlchemy
+Flask-HTTPAuth
 alembic
 Flask-Migrate
 sqlalchemy-utils
 gunicorn
 psycopg2
 googlemaps
+passlib
+itsdangerous

@@ -3,6 +3,9 @@ import csv
 import os
 import googlemaps
 from sqlalchemy.orm import relationship
+from passlib.apps import custom_app_context
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired
+
 import database
 
 db = database.AppRepository.db
@@ -194,6 +197,13 @@ class SubCategoria(db.Model, QueryMixin):
     def label(self):
         return u'{} {}'.format(self.categoria.nome, self.nome)
 
+prova_inscricao = db.Table(
+    'provas_inscricoes',
+    db.Column('prova_id', db.Integer, db.ForeignKey('provas.id')),
+    db.Column('inscricao_id', db.Integer, db.ForeignKey('inscricoes.id')),
+    db.PrimaryKeyConstraint('prova_id', 'inscricao_id')
+)
+
 
 class Prova(db.Model, QueryMixin):
     __tablename__ = 'provas'
@@ -213,7 +223,7 @@ class Prova(db.Model, QueryMixin):
     evento = relationship("Evento", back_populates="provas")
     sub_categoria_id = db.Column(db.Integer, db.ForeignKey('sub_categorias.id'))
     sub_categoria = relationship("SubCategoria", back_populates="provas")
-    inscricoes = relationship("Inscricao", back_populates="prova")
+    inscricoes = db.relationship('Inscricao', secondary=prova_inscricao, backref='provas')
 
     @property
     def codigo(self):
@@ -260,10 +270,9 @@ class Inscricao(db.Model, QueryMixin):
     id = db.Column(db.Integer, primary_key=True)
     atleta_id = db.Column(db.Integer, db.ForeignKey('atletas.id'))
     atleta = relationship("Atleta", back_populates="inscricoes")
-    afiliacao = db.Column(db.String(15))
-    nome_time = db.Column(db.String(10))
-    prova_id = db.Column(db.Integer, db.ForeignKey('provas.id'))
-    prova = relationship("Prova", back_populates="inscricoes")
+    tipo_afiliacao = db.Column(database.AfiliacaoTipo())
+    afiliacao = db.Column(db.String(120))
+    nome_time = db.Column(db.String(120))
     pedido_numero = db.Column(db.String(10))
     comprovante_pagamento = db.Column(db.String())
 
@@ -271,7 +280,8 @@ class Inscricao(db.Model, QueryMixin):
 class Atleta(db.Model, QueryMixin):
     __tablename__ = 'atletas'
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String())
+    email = db.Column(db.String(), unique=True)
+    senha_hash = db.Column(db.String(128))
     nome = db.Column(db.String())
     sobrenome = db.Column(db.String())
     sexo = db.Column(db.String(1))
@@ -281,6 +291,66 @@ class Atleta(db.Model, QueryMixin):
     nascimento = db.Column(db.Date())
     inscricoes = relationship("Inscricao", back_populates="atleta")
 
+    @classmethod
+    def cria_de_dicionario(cls, dados_dict):
+        atleta = cls(
+            email=dados_dict['email'],
+            nome=dados_dict['nome'],
+            sobrenome=dados_dict['sobrenome'],
+            sexo=dados_dict['sexo'],
+            cpf=dados_dict['cpf'],
+            telefone=dados_dict.get('telefone', None),
+            celular=dados_dict['celular'],
+            nascimento='{}-{}-{}'.format(dados_dict['data'][4:], dados_dict['data'][2:4], dados_dict['data'][:2]),
+        )
+        # atleta.hash_senha(dados_dict['senha'])
+        db.session.add(atleta)
+        atleta.adiciona_inscricao(
+            dados_dict['provas'],
+            afiliacao=dados_dict.get('afiliacao'),
+            tipo_afiliacao=dados_dict.get('tipoAfiliacao'),
+            nome_time=dados_dict.get('time'),
+        )
+        db.session.commit()
+
+    @classmethod
+    def obter_pelo_email(cls, email):
+        cls.query.filter_by(email=email).first()
+
+    def adiciona_inscricao(self, provas, afiliacao=None, tipo_afiliacao=None, nome_time=None):
+        inscricao = Inscricao(
+            atleta=self,
+            afiliacao=afiliacao,
+            tipo_afiliacao=tipo_afiliacao,
+            nome_time=nome_time
+        )
+        for prova in provas:
+            inscricao.provas.append(
+                Prova.query.get(prova['id'])
+            )
+        db.session.add(inscricao)
+
+    def hash_senha(self, password):
+        self.senha_hash = custom_app_context.encrypt(password)
+
+    def verifica_senha(self, password):
+        return custom_app_context.verify(password, self.senha_hash)
+
+    def gera_token_aut(self, expiration=3600):
+        s = Serializer(database.config['SECRET_KEY'], expires_in=expiration)
+        return s.dumps({'id': self.id})
+
+    @staticmethod
+    def verifica_token_aut(token):
+        s = Serializer(database.config['SECRET_KEY'])
+        try:
+            data = s.loads(token)
+        except SignatureExpired:
+            return None
+        except BadSignature:
+            return None
+        user = Atleta.query.get(data['id'])
+        return user
 
 # prova pode ter uma ou mais... perguntar o tempo e agrupar na bateria quem não sabe fica por último
 # provas vem primeiro e as inscrições são feitas em cima das provas... filtrar provas de acordo com os dados

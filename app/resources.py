@@ -25,6 +25,16 @@ class Produtos(ResourceBase):
     model = models.Produto
 
 
+class Atletas(ResourceBase):
+    model = models.Atleta
+
+    def post(self):
+        try:
+            self.model.cria_de_dicionario(request.json)
+        except KeyError as ex:
+            return {'Dados faltando: {}'.format(ex)}, 400
+
+
 class Eventos(ResourceBase):
     model = models.Evento
 
