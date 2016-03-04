@@ -10130,7 +10130,7 @@ header .navegacao .form-busca i {
 }
 
 .caixa-conteudo {
-  min-height: 380px;
+  min-height: 308px;
 }
 .caixa-conteudo h3 {
   margin: 0;
@@ -10163,6 +10163,41 @@ header .navegacao .form-busca i {
 }
 .pagina-produtos .linha1 img {
   margin-top: 7px;
+}
+.pagina-produtos .menu-produtos {
+  width: 174px;
+  height: 415px;
+  position: absolute;
+  background-color: rgba(3, 12, 21, 0.8);
+}
+.pagina-produtos .menu-produtos a {
+  text-decoration: none;
+  color: white;
+}
+.pagina-produtos .menu-produtos a:hover {
+  color: black;
+}
+.pagina-produtos .menu-produtos .nav-pills > li > a {
+  border-radius: 0;
+}
+.pagina-produtos .destaque-panel {
+  padding-bottom: 30px;
+}
+.pagina-produtos .panel-body.menor-destaque {
+  padding: 0;
+}
+.pagina-produtos .remos img {
+  width: 200px;
+  margin-top: 62px;
+  margin-left: 75px;
+}
+.pagina-produtos .modeloe img {
+  width: 358px;
+  margin-left: 35px;
+}
+.pagina-produtos .outros img {
+  width: 271px;
+  margin-top: 58px;
 }
 
 .pagina-eventos .lista-caixa {
@@ -10364,7 +10399,7 @@ header .navegacao .form-busca i {
   margin-left: 110px;
 }
 .pagina-eventos .colocacao {
-  background: linear-gradient(to right, blue, indigo, violet, lavender);
+  background: linear-gradient(to right, black, blue, indigo, violet, lavender);
   background-attachment: fixed;
   background-size: contain;
 }
