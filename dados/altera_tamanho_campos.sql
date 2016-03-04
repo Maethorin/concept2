@@ -1,0 +1,3 @@
+ALTER TABLE public.atletas ALTER COLUMN sexo TYPE VARCHAR(2) USING sexo::VARCHAR(2);
+ALTER TABLE public.inscricoes ALTER COLUMN afiliacao TYPE VARCHAR(120) USING afiliacao::VARCHAR(120);
+ALTER TABLE public.inscricoes ALTER COLUMN nome_time TYPE VARCHAR(120) USING nome_time::VARCHAR(120);

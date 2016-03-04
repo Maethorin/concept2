@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime, timedelta
 import os
 
-from flask import Flask, send_from_directory, g, jsonify
+from flask import Flask, send_from_directory, g, request
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.httpauth import HTTPBasicAuth
 
 import database
 
-auth = HTTPBasicAuth()
 web_app = Flask(__name__)
 web_app.config.from_object(os.environ['APP_SETTINGS'])
 database.AppRepository.db = SQLAlchemy(web_app)
@@ -52,22 +51,28 @@ def favicon():
     return web_app.send_static_file("img/favicon.ico")
 
 
-@auth.verify_password
-def verifica_senha(username_or_token, password):
-    atleta = models.Atleta.verifica_token_aut(username_or_token)
-    if not atleta:
-        atleta = models.Atleta.obter_pelo_email(email=username_or_token)
-        if not atleta or not atleta.verifica_senha(password):
-            return False
-    g.user = atleta
-    return True
+@web_app.before_request
+def before_request():
+    token = request.cookies.get('XSRF-TOKEN', None)
+    atleta = None
+    if token:
+        atleta = models.Atleta.verifica_token_aut(token)
+    if atleta:
+        g.user = atleta
 
 
-@web_app.route('/aut/token')
-@auth.login_required
-def obter_token_aut():
-    token = g.user.gera_token_aut()
-    return jsonify({'token': token.decode('ascii')})
+@web_app.after_request
+def after_request(resp):
+    user = g.get('user', None)
+    if user is not None:
+        token = user.gera_token_aut()
+        expiration = datetime.utcnow() + timedelta(seconds=600)
+        resp.set_cookie('XSRF-TOKEN', token.decode('ascii'), expires=expiration)
+        resp.set_cookie('USER_ID', str(user.id), expires=expiration)
+    else:
+        resp.set_cookie('XSRF-TOKEN', '', expires=0)
+        resp.set_cookie('USER_ID', '', expires=0)
+    return resp
 
 
 def run():

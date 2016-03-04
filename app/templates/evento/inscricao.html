@@ -49,7 +49,7 @@
                 <div class="col-md-3 campo formulario-data">
                     <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricao.nascimento), 'has-error': campoEstaInvalido(formInscricao.nascimento)}">
                         <label class="control-label" for="nascimento">Data de Nascimento <i class="fa fa-asterisk"></i></label>
-                        <input data-format="dd/MM/yyyy" data-type="" class="form-control" name="nascimento" id="nascimento" ui-mask="Dd/Mm/9999" ng-model="inscricao.data" aria-describedby="helpData" required ui-options="maskDef" />
+                        <input data-format="dd/MM/yyyy" data-type="" class="form-control" name="nascimento" id="nascimento" ui-mask="Dd/Mm/9999" ng-model="inscricao.nascimento" aria-describedby="helpData" required ui-options="maskDef" />
                         <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricao.nascimento), 'fa-close': campoEstaInvalido(formInscricao.nascimento)} "></span>
                         <span id="helpData" class="help-block" ng-show="campoEstaInvalido(formInscricao.nascimento)">* A data deve ser válida *</span>
                     </div>

@@ -1,6 +1,6 @@
 Flask-RESTful
 Flask-SQLAlchemy
-Flask-HTTPAuth
+PyJWT
 alembic
 Flask-Migrate
 sqlalchemy-utils
@@ -8,4 +8,3 @@ gunicorn
 psycopg2
 googlemaps
 passlib
-itsdangerous

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import request
+from flask import request, g
 from flask_restful import Resource
 
 import models
@@ -13,7 +13,7 @@ class ResourceBase(Resource):
         return [item.to_dict() for item in self.model.obter_lista(*args, **kwargs)]
 
     def obter_item(self, item_id):
-        return self.model.obter_item(item_id).to_dict()
+        return self.model.obter_item(item_id).as_dict()
 
     def get(self, item_id=None):
         if not item_id:
@@ -30,7 +30,7 @@ class Atletas(ResourceBase):
 
     def post(self):
         try:
-            self.model.cria_de_dicionario(request.json)
+            g.user = self.model.cria_de_dicionario(request.json)
         except KeyError as ex:
             return {'Dados faltando: {}'.format(ex)}, 400
 

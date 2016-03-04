@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 import csv
+from datetime import datetime, timedelta
 import os
 import googlemaps
+import jwt
 from sqlalchemy.orm import relationship
 from passlib.apps import custom_app_context
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer, BadSignature, SignatureExpired
+
 
 import database
 
@@ -79,7 +81,7 @@ class OndeRemar(db.Model, QueryMixin):
     def apenas_modalidades(cls, modalidades):
         return OndeRemar.query.filter(OndeRemar.modalidade.in_(modalidades)).all()
 
-    def to_dict(self):
+    def as_dict(self):
         return {
             'id': self.id,
             'nome': self.nome,
@@ -117,7 +119,7 @@ class Produto(db.Model, QueryMixin):
         db.session.commit()
         return produto
 
-    def to_dict(self):
+    def as_dict(self):
         return {
             'id': self.id,
             'nome': self.nome,
@@ -152,7 +154,7 @@ class Evento(db.Model, QueryMixin):
     def obter_item(cls, item_id):
         return cls.query.filter_by(slug=item_id).first()
 
-    def to_dict(self):
+    def as_dict(self):
         return {
             "id": self.id,
             "slug": self.slug,
@@ -276,6 +278,16 @@ class Inscricao(db.Model, QueryMixin):
     pedido_numero = db.Column(db.String(10))
     comprovante_pagamento = db.Column(db.String())
 
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'tipoAfiliacao': self.tipo_afiliacao.code if self.tipo_afiliacao else '',
+            'afiliacao': self.afiliacao,
+            'time': self.nome_time,
+            'pedidoNumero': self.pedido_numero,
+            'provas': [prova.as_dict() for prova in self.provas]
+        }
+
 
 class Atleta(db.Model, QueryMixin):
     __tablename__ = 'atletas'
@@ -284,12 +296,26 @@ class Atleta(db.Model, QueryMixin):
     senha_hash = db.Column(db.String(128))
     nome = db.Column(db.String())
     sobrenome = db.Column(db.String())
-    sexo = db.Column(db.String(1))
+    sexo = db.Column(db.String(2))
     cpf = db.Column(db.String(11))
     telefone = db.Column(db.String(10))
     celular = db.Column(db.String(11))
     nascimento = db.Column(db.Date())
     inscricoes = relationship("Inscricao", back_populates="atleta")
+
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'email': self.email,
+            'nome': self.nome,
+            'sobrenome': self.sobrenome,
+            'sexo': self.sexo,
+            'cpf': self.cpf,
+            'telefone': self.telefone,
+            'celuar': self.celular,
+            'nascimento': self.nascimento.strftime('%d%m%Y'),
+            'inscricoes': [inscricao.as_dict() for inscricao in self.inscricoes]
+        }
 
     @classmethod
     def cria_de_dicionario(cls, dados_dict):
@@ -303,7 +329,7 @@ class Atleta(db.Model, QueryMixin):
             celular=dados_dict['celular'],
             nascimento='{}-{}-{}'.format(dados_dict['nascimento'][4:], dados_dict['nascimento'][2:4], dados_dict['nascimento'][:2]),
         )
-        # atleta.hash_senha(dados_dict['senha'])
+        atleta.hash_senha(dados_dict['senha'])
         db.session.add(atleta)
         atleta.adiciona_inscricao(
             dados_dict['provas'],
@@ -312,6 +338,7 @@ class Atleta(db.Model, QueryMixin):
             nome_time=dados_dict.get('time'),
         )
         db.session.commit()
+        return atleta
 
     @classmethod
     def obter_pelo_email(cls, email):
@@ -325,9 +352,7 @@ class Atleta(db.Model, QueryMixin):
             nome_time=nome_time
         )
         for prova in provas:
-            inscricao.provas.append(
-                Prova.query.get(prova['id'])
-            )
+            inscricao.provas.append(Prova.query.get(prova['id']))
         db.session.add(inscricao)
 
     def hash_senha(self, password):
@@ -336,18 +361,14 @@ class Atleta(db.Model, QueryMixin):
     def verifica_senha(self, password):
         return custom_app_context.verify(password, self.senha_hash)
 
-    def gera_token_aut(self, expiration=3600):
-        s = Serializer(database.config['SECRET_KEY'], expires_in=expiration)
-        return s.dumps({'id': self.id})
+    def gera_token_aut(self, expiration=600):
+        return jwt.encode({'id': self.id, 'exp': datetime.utcnow() + timedelta(seconds=expiration)}, database.config.SECRET_KEY, algorithm='HS256')
 
     @staticmethod
     def verifica_token_aut(token):
-        s = Serializer(database.config['SECRET_KEY'])
         try:
-            data = s.loads(token)
-        except SignatureExpired:
-            return None
-        except BadSignature:
+            data = jwt.decode(token, database.config.SECRET_KEY)
+        except:
             return None
         user = Atleta.query.get(data['id'])
         return user

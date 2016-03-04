@@ -32,6 +32,7 @@ String.prototype.format = function(data) {
 angular.module('concept2', [
     'ngRoute',
     'ngResource',
+    'ngCookies',
     'uiGmapgoogle-maps',
     'ui.mask',
     'angularjs-dropdown-multiselect',
