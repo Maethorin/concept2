@@ -15,6 +15,26 @@ angular.module('concept2.eventos', ['ngRoute'])
                 controller: 'EventoController'
             })
     }])
+    .directive('emailNaoUsado', function() {
+        return {
+            require: 'ngModel',
+            link: function(scope, elm, attrs, ctrl) {
+                ctrl.$validators.emailNaoUsado = function(modelValue, viewValue) {
+                    return scope.mensagemErro != "Email já está cadastrado como atleta";
+                };
+            }
+        };
+    })
+    .directive('igualSenha', function() {
+        return {
+            require: 'ngModel',
+            link: function(scope, elm, attrs, ctrl) {
+                ctrl.$validators.igualSenha = function(modelValue, viewValue) {
+                    return scope.inscricao.senha == viewValue;
+                };
+            }
+        };
+    })
     .controller('EventosController', function($rootScope, $scope, $http, $sce, Evento) {
         $rootScope.pagina = "eventos";
         $rootScope.titulo = "Eventos";
@@ -110,12 +130,15 @@ angular.module('concept2.eventos', ['ngRoute'])
             scrollableHeight: '300px'
         };
         $scope.reset = function(formInscricao) {
+            $scope.atletaLogado = false;
             $scope.inscricao = new Atleta({
                 "evento": $scope.evento.id,
                 "nome": null,
                 "sobrenome": null,
                 "sexo": null,
-                "data": null,
+                "senha": null,
+                "confirmeSenha": null,
+                "nascimento": null,
                 "cpf": null,
                 "email": null,
                 "telefone": null,
@@ -137,28 +160,51 @@ angular.module('concept2.eventos', ['ngRoute'])
             $scope.inscricao.tipoAfiliacao = tipoFiliacao;
         };
         $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-9]/, 'M': /[0-1]/, 'm': /[0-2]/}};
+
+        $scope.verificaErro = function(campo, validacao, status) {
+            if (!campo) {
+                return false;
+            }
+            if (!validacao) {
+                validacao = 'required'
+            }
+            var statusCampo = campo.$touched || campo.$dirty;
+            if (status != 'undefined') {
+                statusCampo = status || campo.$dirty
+            }
+            return statusCampo && campo.$error[validacao];
+        };
+
         $scope.campoEstaValido = function(campo) {
-            var extra = true;
+            var valido = true;
             if (campo.$name == 'email') {
-                extra = !campo.$error.email;
+                valido = !campo.$error.email;
             }
             var statusCampo = (campo.$touched || campo.$dirty);
             if (campo.$name == 'provas') {
                 statusCampo = $scope.campoProvaTocado || campo.$dirty;
             }
-            return statusCampo && !campo.$error.required && extra;
+            return statusCampo && !campo.$error.required && valido;
 
         };
         $scope.campoEstaInvalido = function(campo) {
-            var temErro = campo.$error.required;
+            var temErro = $scope.verificaErro(campo);
             if (campo.$name == 'email') {
-                temErro = (temErro || campo.$error.email);
+                temErro |= $scope.verificaErro(campo, 'email');
             }
-            var statusCampo = (campo.$touched || campo.$dirty);
+            if (campo.$name == 'senha') {
+                temErro |= $scope.verificaErro(campo, 'minlength');
+            }
+            if (_.includes(['cpf', 'celular', 'nascimento'], campo.$name)) {
+                temErro |= $scope.verificaErro(campo, 'mask');
+            }
+            if (campo.$name == 'confirmeSenha') {
+                temErro |= $scope.verificaErro(campo, 'igualSenha');
+            }
             if (campo.$name == 'provas') {
-                statusCampo = $scope.campoProvaTocado || campo.$dirty;
+                temErro = $scope.verificaErro(campo, null, $scope.campoProvaTocado);
             }
-            return statusCampo && temErro;
+            return temErro;
         };
         $scope.campoNaoTocado = function(campo) {
             return !campo.$touched
