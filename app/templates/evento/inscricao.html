@@ -102,7 +102,7 @@
                 <div class="col-md-4 campo">
                     <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricao.confirmeSenha), 'has-error': campoEstaInvalido(formInscricao.confirmeSenha)}">
                         <label class="control-label" for="confirmeSenha">Confirme a senha: <i class="fa fa-asterisk"></i></label>
-                        <input type="password" class="form-control" name="confirmeSenha" id="confirmeSenha" ng-model="confirmeSenha" aria-describedby="helpConfirmeSenha" required igual-senha />
+                        <input type="password" class="form-control" name="confirmeSenha" id="confirmeSenha" ng-model="inscricao.confirmeSenha" aria-describedby="helpConfirmeSenha" required igual-senha />
                         <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricao.confirmeSenha), 'fa-close': campoEstaInvalido(formInscricao.confirmeSenha)} "></span>
                         <span id="helpConfirmeSenha" class="help-block" ng-show="campoEstaInvalido(formInscricao.confirmeSenha)">* A confirmação não é igual à senha *</span>
                     </div>

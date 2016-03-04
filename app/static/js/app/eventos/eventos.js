@@ -136,6 +136,8 @@ angular.module('concept2.eventos', ['ngRoute'])
                 "nome": null,
                 "sobrenome": null,
                 "sexo": null,
+                "senha": null,
+                "confirmeSenha": null,
                 "nascimento": null,
                 "cpf": null,
                 "email": null,
