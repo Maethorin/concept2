@@ -44,7 +44,7 @@ angular.module('concept2.eventos', ['ngRoute'])
         };
         $scope.eventos = Evento.query();
     })
-    .controller('EventoController', function($rootScope, $scope, $routeParams, $http, $sce, Evento, Atleta) {
+    .controller('EventoController', function($rootScope, $scope, $routeParams, $http, $sce, $filter, Evento, Atleta) {
         $scope.slug = $routeParams.slug;
         $scope.itemMenu = $routeParams.itemMenu || 'sobre';
         $scope.template = '/angular/evento/{0}.html'.format([$scope.itemMenu]);
@@ -84,6 +84,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                     $scope.provasDropdownList.push(prova);
                 }
             });
+            $scope.provasParaSelecao = angular.copy($scope.provasDropdownList);
         });
         $scope.campoProvaTocado = false;
         $scope.obterProva = function(provaSelecionada) {
@@ -177,6 +178,19 @@ angular.module('concept2.eventos', ['ngRoute'])
             $scope.inscricao.tipoAfiliacao = tipoFiliacao;
         };
         $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-9]/, 'M': /[0-1]/, 'm': /[0-2]/}};
+
+        $scope.$watch('inscricao.sexo', function(novo, antigo) {
+            if (novo) {
+                $scope.provasDropdownList = $filter('filter')(
+                    $scope.provasParaSelecao,
+                    { sexo: novo },
+                    function(atual, esperado) {
+                        atual = $filter('limitTo')(atual, 2).toUpperCase();
+                        return atual == esperado || atual == 'AB' || atual == 'MI';
+                    }
+                );
+            }
+        });
 
         $scope.verificaErro = function(campo, validacao, status) {
             if (!campo) {

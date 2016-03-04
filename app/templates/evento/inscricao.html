@@ -33,11 +33,11 @@
                     <div class="form-group">
                         <label>Sexo:</label>
                         <div class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-primary">
+                            <label class="btn btn-primary" ng-click="inscricao.sexo = 'MA'">
                                 <input type="radio" name="sexo" id="sexoM" ng-model="inscricao.sexo" autocomplete="off"/>
                                 M
                             </label>
-                            <label class="btn btn-primary">
+                            <label class="btn btn-primary" ng-click="inscricao.sexo = 'FE'">
                                 <input type="radio" name="sexo" id="sexoF" ng-model="inscricao.sexo" autocomplete="off">
                                 F
                             </label>
