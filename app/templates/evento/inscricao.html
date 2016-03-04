@@ -1,12 +1,16 @@
-<div class="campos">
-    <div class="row">
+<div class="inscricao">
+    <div class="row instrucoes">
         <div class="col-md-12">
             <h3 class="text-center">Inscrição {{evento.titulo}}</h3>
-            <p>Caso já tenha feito alguma inscrição antes em nosso site, faça o <a href="/#/login">login</a> para recuperamos os seus dados de atleta</p>
+            <p>Caso já tenha feito alguma inscrição antes em nosso site, faça o <a href="/#/login">login</a> para recuperamos os seus dados de atleta.</p>
+            <p>Após finalizar o seu cadastro, você será redirecionado para a página da loja da concept2 para realizar o pagamento da taxa de inscrição.</p>
+            <p>Depois de concluída a compra na loja, você receberá o número do pedido efetuado. Adicione esse número do pedido à sua inscrição em <a href="/#/inscricoes">minhas inscrições</a>.</p>
+            <p>Com o número do pedido adicionado, nós poderemos confirmar o pagamento mas, para o dia da prova, leve o comprovante de pagamento para eventuais problemas.</p>
         </div>
     </div>
     <form novalidate name="formInscricao" class="form-inscricao" role="form" ng-submit="enviandoInscricao(formInscricao)">
         <div class="row">
+            <h3 class="text-center">Formulário de Inscrição</h3>
             <div class="col-md-3 campo">
                 <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricao.nome), 'has-error': campoEstaInvalido(formInscricao.nome)}">
                     <label class="control-label" for="nome">Primeiro Nome: <i class="fa fa-asterisk"></i></label>

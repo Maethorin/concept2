@@ -77,119 +77,131 @@
     }
 }
 
-.form-inscricao {
-    .prova {
-        min-height: 89px;
+.inscricao {
+    h3 {
+        margin: 0 0 20px 0;
     }
-    .campo{
-        .form-group{
-            min-height: 80px;
+    .instrucoes {
+        padding-bottom: 20px;
+        border-bottom: 2px inset #777;
+    }
+    .form-inscricao {
+        padding: 15px 0;
+        .prova {
+            min-height: 89px;
         }
-        .help-block{
-            font-size: smaller;
-        }
-        &.sexo {
-            padding-top: 20px;
-            margin-bottom: -20px;
-        }
-        .control-label {
-            i {
-                font-size: 12px;
+        .campo {
+            .form-group {
+                min-height: 80px;
+            }
+            .help-block {
+                font-size: smaller;
+            }
+            &.sexo {
+                padding-top: 20px;
+                margin-bottom: -20px;
+            }
+            .control-label {
+                i {
+                    font-size: 12px;
+                }
+            }
+            &.tipo-filiacao {
+                button {
+                    min-width: 124px;
+                    height: 34px;
+                    text-align: left;
+                    .caret {
+                        float: right;
+                        margin-top: 7px;
+                        display: inline-block;
+                    }
+                }
             }
         }
-        &.tipo-filiacao {
-            button {
-                min-width: 124px;
-                height: 34px;
-                text-align: left;
-                .caret {
-                    float: right;
-                    margin-top: 7px;
+        .botoes {
+            text-align: center;
+            .btn-disabled {
+                background-color: #777;
+                color: #999;
+            }
+        }
+        .dropdown-provas {
+            li {
+                padding-left: 10px;
+                font-size: 11px;
+                cursor: pointer;
+                &.dropdown-header {
+                    font-size: 13px;
+                    font-weight: bold;
+                }
+            }
+        }
+        .provas-selecionadas {
+            box-sizing: border-box;
+            list-style: none;
+            padding: 0 5px 5px;
+            width: 100%;
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            cursor: text;
+            outline: 0;
+            overflow: hidden;
+            min-height: 33px;
+            margin-bottom: 0;
+            &.has-error {
+                color: $state-danger-text;
+                border-color: $state-danger-border;
+            }
+            &.has-success {
+                color: $state-success-text;
+                border-color: $state-success-border;
+            }
+            li {
+                background-color: #e4e4e4;
+                border: 1px solid #aaa;
+                border-radius: 4px;
+                cursor: default;
+                float: left;
+                margin-right: 5px;
+                margin-top: 5px;
+                padding: 0 5px;
+                span {
+                    color: #999;
+                    cursor: pointer;
                     display: inline-block;
+                    font-weight: bold;
+                    margin-right: 2px;
                 }
             }
         }
     }
-    .botoes {
-        text-align: center;
-        .btn-disabled {
-            background-color: #777;
-            color: #999;
-        }
-    }
-    .dropdown-provas {
-        li {
-            padding-left: 10px;
-            font-size: 11px;
-            cursor: pointer;
-            &.dropdown-header {
-                font-size: 13px;
-                font-weight: bold;
-            }
-        }
-    }
-    .provas-selecionadas {
-        box-sizing: border-box;
-        list-style: none;
-        padding: 0 5px 5px;
-        width: 100%;
-        border: 1px solid #aaa;
-        border-radius: 4px;
-        cursor: text;
-        outline: 0;
-        overflow: hidden;
-        min-height: 33px;
-        margin-bottom: 0;
-        &.has-error {
-            color: $state-danger-text;
-            border-color: $state-danger-border;
-        }
-        &.has-success {
-            color: $state-success-text;
-            border-color: $state-success-border;
-        }
-        li {
-            background-color: #e4e4e4;
-            border: 1px solid #aaa;
-            border-radius: 4px;
-            cursor: default;
-            float: left;
-            margin-right: 5px;
-            margin-top: 5px;
-            padding: 0 5px;
-            span {
-                color: #999;
-                cursor: pointer;
-                display: inline-block;
-                font-weight: bold;
-                margin-right: 2px;
-            }
-        }
-    }
 }
 
-#regulamento{
-    h4{
+#regulamento {
+    h4 {
         font-weight: bold;
     }
 }
 
-.line1{
-        td{
-            padding: 0px;
-        }
+.line1 {
+    td {
+        padding: 0px;
     }
-.tabela{
-    table{
+}
+
+.tabela {
+    table {
         margin-left: 110px;
     }
 }
-.colocacao{
-    background: linear-gradient(to right, black, blue,indigo,violet,lavender);
-    background-attachment:fixed;
+
+.colocacao {
+    background: linear-gradient(to right, black, blue, indigo, violet, lavender);
+    background-attachment: fixed;
     background-size: contain;
 
-    .posicao{
+    .posicao {
         background-color: white;
     }
 }
