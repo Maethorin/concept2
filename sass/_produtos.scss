@@ -8,3 +8,46 @@
         margin-top: 7px;
     }
 }
+.menu-produtos{
+    width: 174px;
+    height: 415px;
+    position: absolute;
+    background-color: rgba( 3, 12, 21, 0.8);
+    a{
+        text-decoration: none;
+        color:white;
+    }
+    a:hover{
+       color: black;
+    }
+    .nav-pills > li > a{
+        border-radius: 0
+    }
+}
+.destaque-panel{
+    padding-bottom: 30px;
+}
+.panel-body{
+    &.menor-destaque{
+        padding: 0;
+    }
+}
+.remos{
+    img{
+     width: 200px;
+    margin-top: 62px;
+    margin-left: 75px;
+    }
+}
+.modeloe{
+    img{
+     width: 358px;
+     margin-left: 35px;
+    }
+}
+.outros{
+    img{
+     width: 271px;
+    margin-top: 58px;
+    }
+}
