@@ -40,7 +40,7 @@ angular.module('concept2.eventos', ['ngRoute'])
         $scope.trataHtml = function(html) {
             return $sce.trustAsHtml(html);
         };
-
+        $scope.colocacoes = [1, 2, 3, 4, 5, 6, 7, 8];
         $scope.regulamentos = [];
         $http.get('/static/js/app/jsons/regulamento.json').then(function(response) {
             $scope.regulamentos = response.data;

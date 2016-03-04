@@ -10363,6 +10363,14 @@ header .navegacao .form-busca i {
 .pagina-eventos .tabela table {
   margin-left: 110px;
 }
+.pagina-eventos .colocacao {
+  background: linear-gradient(to right, blue, indigo, violet, lavender);
+  background-attachment: fixed;
+  background-size: contain;
+}
+.pagina-eventos .colocacao .posicao {
+  background-color: white;
+}
 
 .pagina-comunidade .titulo h1 {
   text-align: center;

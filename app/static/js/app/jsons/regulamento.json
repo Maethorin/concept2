@@ -1,6 +1,7 @@
 [
-  {"nome":"1x- individual", "colocacao1":"10","colocacao2":"8","colocacao3": "6","colocacao4":"5","colocacao5":"4","colocacao6":"3","colocacao7":"2","colocacao8":"1"},
-  {"nome":"2x- dupla", "colocacao1":"20","colocacao2":"16" ,"colocacao3": "12","colocacao4":"10","colocacao5":"8","colocacao6":"6","colocacao7":"4","colocacao8":"2"},
-  {"nome":"4x- quadra", "colocacao1":"40","colocacao2": "32","colocacao3":"24","colocacao4":"20", "colocacao5":"16","colocacao6":"12","colocacao7":"8","colocacao8":"4"},
-  {"nome":"Revezamento Aberto", "colocacao1": "80", "colocacao2":"64","colocacao3": "48","colocacao4":"40","colocacao5":"32","colocacao6":"24","colocacao7":"16","colocacao8":"8"}
+  {"nome":"1x- individual", "pontuacao":[{"colocacao": 1, "pontos":10}, {"colocacao": 2, "pontos":8}, {"colocacao": 3, "pontos":6}, {"colocacao": 4, "pontos":5}, {"colocacao": 5, "pontos":4}, {"colocacao": 6, "pontos":3}, {"colocacao": 7, "pontos":2}, {"colocacao": 8, "pontos":1}]},
+  {"nome":"2x- dupla",  "pontuacao":[{"colocacao": 1, "pontos":20}, {"colocacao": 2, "pontos":16}, {"colocacao": 3, "pontos":12}, {"colocacao": 4, "pontos":10}, {"colocacao": 5, "pontos":8}, {"colocacao": 6, "pontos":6}, {"colocacao": 7, "pontos":4}, {"colocacao": 8, "pontos":2}]},
+  {"nome":"4x- quadra",  "pontuacao":[{"colocacao": 1, "pontos":40}, {"colocacao": 2, "pontos":32}, {"colocacao": 3, "pontos":24}, {"colocacao": 4, "pontos":20}, {"colocacao": 5, "pontos":16}, {"colocacao": 6, "pontos":12}, {"colocacao": 7, "pontos":8}, {"colocacao": 8, "pontos":4}]},
+  {"nome":"Revezamento Aberto",  "pontuacao":[{"colocacao": 1, "pontos":80}, {"colocacao": 2, "pontos":64}, {"colocacao": 3, "pontos":48}, {"colocacao": 4, "pontos":40}, {"colocacao": 5, "pontos":32}, {"colocacao": 6, "pontos":24}, {"colocacao": 7, "pontos":16}, {"colocacao": 8, "pontos":8}]}
+
 ]

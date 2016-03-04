@@ -76,25 +76,12 @@
     <table border="1px">
         <tr class="line1" style="width: 10px; height: 10px">
             <th>Prova</th>
-            <td> <div class="col-md-1">1°</div></td>
-            <td> <div class="col-md-1">2°</div></td>
-            <td> <div class="col-md-1">3°</div></td>
-            <td> <div class="col-md-1">4°</div></td>
-            <td> <div class="col-md-1">5°</div></td>
-            <td> <div class="col-md-1">6°</div></td>
-            <td> <div class="col-md-1">7°</div></td>
-            <td> <div class="col-md-1">8°</div></td>
+            <td  ng-controller="EventoController" ng-repeat="colocacao in colocacoes"><div class="col-md-1">{{colocacao}}º</div></td>
+
         </tr>
-        <tr ng-controller="EventoController" ng-repeat="regulamento in regulamentos">
-            <td>{{regulamento.nome}}</td>
-            <td>{{regulamento.colocacao1}}</td>
-             <td>{{regulamento.colocacao2}}</td>
-            <td>{{regulamento.colocacao3}}</td>
-            <td>{{regulamento.colocacao4}}</td>
-            <td>{{regulamento.colocacao5}}</td>
-            <td>{{regulamento.colocacao6}}</td>
-            <td>{{regulamento.colocacao7}}</td>
-            <td>{{regulamento.colocacao8}}</td>
+        <tr class="colocacao" ng-controller="EventoController" ng-repeat="regulamento in regulamentos">
+            <td class="posicao">{{regulamento.nome}}</td>
+            <td style= "color: white;" ng-repeat="pontuacao in regulamento.pontuacao" class="{{pontuacao.colocacao}}">{{pontuacao.pontos}}</td>
         </tr>
 
 

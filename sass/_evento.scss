@@ -184,3 +184,12 @@
         margin-left: 110px;
     }
 }
+.colocacao{
+    background: linear-gradient(to right, black, blue,indigo,violet,lavender);
+    background-attachment:fixed;
+    background-size: contain;
+
+    .posicao{
+        background-color: white;
+    }
+}
