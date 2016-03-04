@@ -10057,7 +10057,7 @@ button.close {
   }
 }
 body {
-  background: linear-gradient(#1e71a3, #0f3d5e);
+  background: radial-gradient(#0f3d5e, #011121);
 }
 
 .col-left {
@@ -10135,6 +10135,7 @@ header .navegacao .form-busca i {
 
 .pagina-home .slide-home {
   margin-top: -20px;
+  width: 100%;
 }
 .pagina-home .slideshow {
   overflow: hidden;
@@ -10167,7 +10168,6 @@ header .navegacao .form-busca i {
   background-color: rgba(3, 12, 21, 0.6);
 }
 .pagina-produtos .menu-produtos .menu {
-  text-align: center;
   color: white;
   margin-top: 0;
 }
@@ -10187,25 +10187,6 @@ header .navegacao .form-busca i {
 }
 .pagina-produtos .menu-produtos .nav-pills > li > a {
   border-radius: 0;
-}
-.pagina-produtos .destaque-caixa img {
-  margin-left: 162px;
-  width: 699px;
-}
-.pagina-produtos .skierg-caixa img {
-  margin-left: -15px;
-}
-.pagina-produtos .remos-caixa img {
-  margin-left: -17px;
-  width: 383px;
-}
-.pagina-produtos .modeloe-caixa img {
-  margin-left: -17px;
-  width: 487px;
-}
-.pagina-produtos .outros-caixa img {
-  margin-left: -15px;
-  width: 283px;
 }
 
 .pagina-eventos .lista-caixa {

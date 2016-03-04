@@ -6,7 +6,6 @@
     position: absolute;
     background-color: rgba(3, 12, 21, 0.6);
     .menu{
-        text-align: center;
         color: white;
         margin-top: 0;
     }
@@ -30,39 +29,5 @@
     }
     .nav-pills > li > a {
         border-radius: 0
-    }
-}
-
-.destaque-caixa {
-    img {
-        margin-left: 162px;
-        width: 699px;
-    }
-}
-
-.skierg-caixa {
-    img {
-        margin-left: -15px;
-    }
-}
-
-.remos-caixa {
-    img {
-        margin-left: -17px;
-        width: 383px;
-    }
-}
-
-.modeloe-caixa {
-    img {
-        margin-left: -17px;
-        width: 487px;
-    }
-}
-
-.outros-caixa {
-    img {
-        margin-left: -15px;
-        width: 283px;
     }
 }
