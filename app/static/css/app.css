@@ -10163,6 +10163,16 @@ header .navegacao .form-busca i {
   position: absolute;
   background-color: rgba(3, 12, 21, 0.8);
 }
+.pagina-produtos .menu-produtos .menu {
+  text-align: center;
+  color: white;
+  background-color: #394c5a;
+  margin-top: 0;
+}
+.pagina-produtos .menu-produtos .submenu a {
+  padding-bottom: 6px;
+  padding-top: 6px;
+}
 .pagina-produtos .menu-produtos a {
   text-decoration: none;
   color: white;
