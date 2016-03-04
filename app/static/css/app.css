@@ -10188,6 +10188,12 @@ header .navegacao .form-busca i {
 .pagina-produtos .menu-produtos .nav-pills > li > a {
   border-radius: 0;
 }
+.pagina-produtos .modelo {
+  background-color: white;
+}
+.pagina-produtos .modelo img {
+  width: 694px;
+}
 
 .pagina-eventos .lista-caixa {
   border: 5px solid #092638;
