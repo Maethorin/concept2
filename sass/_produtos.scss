@@ -1,20 +1,19 @@
 
 .menu-produtos {
-    margin-left: -14px;
-    width: 176px;
-    height: 383px;
+    margin-left: -15px;
+    width: 177px;
+    height: 386px;
     position: absolute;
-    background-color: rgba(3, 12, 21, 0.8);
+    background-color: rgba(3, 12, 21, 0.6);
     .menu{
         text-align: center;
         color: white;
-        background-color: #394c5a;
         margin-top: 0;
     }
 
     .submenu{
         a{
-            padding-bottom: 6px;
+            padding-bottom: 7px;
             padding-top: 6px;
         }
 
@@ -26,7 +25,8 @@
         padding-top: 8px;
     }
     a:hover {
-        color: black;
+        color: white;
+        background-color: #516371;
     }
     .nav-pills > li > a {
         border-radius: 0

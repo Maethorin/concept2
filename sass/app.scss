@@ -103,6 +103,7 @@ $bg-lista: radial-gradient(#1e71a3, #0f3d5e);
 $bg-panel-heading: rgba(0,0,0, 0.4);
 $bg-panel-default: transparent;
 .pagina-produtos {
+    background: radial-gradient(circle, #0f354c, #00070f);
     @import "pagina-listagem";
     @import "produtos";
 }

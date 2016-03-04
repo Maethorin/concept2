@@ -10146,6 +10146,9 @@ header .navegacao .form-busca i {
   margin: 0;
 }
 
+.pagina-produtos {
+  background: radial-gradient(circle, #0f354c, #00070f);
+}
 .pagina-produtos .lista-caixa {
   border: 5px solid #092638;
   background: radial-gradient(#1e71a3, #0f3d5e);
@@ -10157,20 +10160,19 @@ header .navegacao .form-busca i {
   background-color: transparent;
 }
 .pagina-produtos .menu-produtos {
-  margin-left: -14px;
-  width: 176px;
-  height: 383px;
+  margin-left: -15px;
+  width: 177px;
+  height: 386px;
   position: absolute;
-  background-color: rgba(3, 12, 21, 0.8);
+  background-color: rgba(3, 12, 21, 0.6);
 }
 .pagina-produtos .menu-produtos .menu {
   text-align: center;
   color: white;
-  background-color: #394c5a;
   margin-top: 0;
 }
 .pagina-produtos .menu-produtos .submenu a {
-  padding-bottom: 6px;
+  padding-bottom: 7px;
   padding-top: 6px;
 }
 .pagina-produtos .menu-produtos a {
@@ -10180,7 +10182,8 @@ header .navegacao .form-busca i {
   padding-top: 8px;
 }
 .pagina-produtos .menu-produtos a:hover {
-  color: black;
+  color: white;
+  background-color: #516371;
 }
 .pagina-produtos .menu-produtos .nav-pills > li > a {
   border-radius: 0;
