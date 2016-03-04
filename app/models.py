@@ -301,7 +301,7 @@ class Atleta(db.Model, QueryMixin):
             cpf=dados_dict['cpf'],
             telefone=dados_dict.get('telefone', None),
             celular=dados_dict['celular'],
-            nascimento='{}-{}-{}'.format(dados_dict['data'][4:], dados_dict['data'][2:4], dados_dict['data'][:2]),
+            nascimento='{}-{}-{}'.format(dados_dict['nascimento'][4:], dados_dict['nascimento'][2:4], dados_dict['nascimento'][:2]),
         )
         # atleta.hash_senha(dados_dict['senha'])
         db.session.add(atleta)
