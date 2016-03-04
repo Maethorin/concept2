@@ -16,7 +16,8 @@ angular.module('concept2.produtos', ['ngRoute'])
         $rootScope.titulo = "Produtos"
     }])
 .controller('ModeloController', function($routeParams, $rootScope, $scope, $http){
-     $scope.slug = $routeParams.slug;
+     $scope.slug = $routeParams.slug
      $rootScope.pagina = "produtos";
      $rootScope.titulo = "Produtos";
+
 })
