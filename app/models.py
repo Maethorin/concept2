@@ -279,15 +279,31 @@ class Inscricao(db.Model, QueryMixin):
     comprovante_pagamento = db.Column(db.String())
 
     @classmethod
-    def cria_de_dicionario(cls, atleta, inscricao_dict, commit=False):
-        inscricao = Inscricao(
-            atleta=atleta,
-            afiliacao=inscricao_dict.get('afiliacao'),
-            tipo_afiliacao=inscricao_dict.get('tipoAfiliacao'),
-            nome_time=inscricao_dict.get('time')
-        )
+    def define_dados_de_dicionario(cls, inscricao_dict, atleta, inscricao=None):
+        if not inscricao:
+            inscricao = cls()
+        inscricao.atleta = atleta
+        inscricao.afiliacao = inscricao_dict.get('afiliacao')
+        inscricao.tipo_afiliacao = inscricao_dict.get('tipoAfiliacao')
+        inscricao.nome_time = inscricao_dict.get('nomeTime')
+        inscricao.pedido_numero = inscricao_dict.get('pedidoNumero')
         for prova in inscricao_dict['provas']:
             inscricao.provas.append(Prova.query.get(prova['id']))
+        return inscricao
+
+    @classmethod
+    def atualiza_de_dicionario(cls, inscricao_dict, atleta, commit=False):
+        inscricao = cls.query.get(inscricao_dict['id'])
+        inscricao.provas = []
+        inscricao = cls.define_dados_de_dicionario(inscricao_dict, atleta, inscricao)
+        db.session.add(inscricao)
+        if commit:
+            db.session.commit()
+        return inscricao
+
+    @classmethod
+    def cria_de_dicionario(cls, inscricao_dict, atleta, commit=False):
+        inscricao = cls.define_dados_de_dicionario(inscricao_dict, atleta)
         db.session.add(inscricao)
         if commit:
             db.session.commit()
@@ -298,7 +314,7 @@ class Inscricao(db.Model, QueryMixin):
             'id': self.id,
             'tipoAfiliacao': self.tipo_afiliacao.code if self.tipo_afiliacao else '',
             'afiliacao': self.afiliacao,
-            'time': self.nome_time,
+            'nomeTime': self.nome_time,
             'pedidoNumero': self.pedido_numero,
             'provas': [prova.as_dict() for prova in self.provas]
         }
@@ -337,24 +353,33 @@ class Atleta(db.Model, QueryMixin):
         return atleta_dict
 
     @classmethod
+    def obter_atleta(cls, atleta_id):
+        return cls.query.get(atleta_id)
+
+    @classmethod
+    def define_dados_de_dicionario(cls, dados_dict, atleta=None):
+        if not atleta:
+            atleta = cls()
+        atleta.email = dados_dict['email']
+        atleta.nome = dados_dict['nome']
+        atleta.sobrenome = dados_dict['sobrenome']
+        atleta.sexo = dados_dict['sexo']
+        atleta.cpf = dados_dict['cpf']
+        atleta.telefone = dados_dict.get('telefone', None)
+        atleta.celular = dados_dict['celular']
+        atleta.nascimento = '{}-{}-{}'.format(dados_dict['nascimento'][4:], dados_dict['nascimento'][2:4], dados_dict['nascimento'][:2])
+        return atleta
+
+    @classmethod
     def atualiza_de_dicionario(cls, atleta_id, dados_dict):
         atleta = cls.query.get(atleta_id)
 
     @classmethod
     def cria_de_dicionario(cls, dados_dict):
-        atleta = cls(
-            email=dados_dict['email'],
-            nome=dados_dict['nome'],
-            sobrenome=dados_dict['sobrenome'],
-            sexo=dados_dict['sexo'],
-            cpf=dados_dict['cpf'],
-            telefone=dados_dict.get('telefone', None),
-            celular=dados_dict['celular'],
-            nascimento='{}-{}-{}'.format(dados_dict['nascimento'][4:], dados_dict['nascimento'][2:4], dados_dict['nascimento'][:2]),
-        )
+        atleta = cls.define_dados_de_dicionario(dados_dict)
         atleta.hash_senha(dados_dict['senha'])
         db.session.add(atleta)
-        Inscricao.cria_de_dicionario(atleta=atleta, inscricao_dict=dados_dict['inscricao'])
+        atleta.cria_inscricao_de_dicionario(dados_dict['inscricao'])
         db.session.commit()
         return atleta
 
@@ -374,6 +399,14 @@ class Atleta(db.Model, QueryMixin):
                     atleta.inscricao = inscricao
                     break
         return atleta
+
+    def cria_inscricao_de_dicionario(self, inscricao_dict):
+        Inscricao.cria_de_dicionario(inscricao_dict, self)
+        db.session.commit()
+
+    def atualiza_inscricao_de_dicionario(self, inscricao_dict):
+        Inscricao.atualiza_de_dicionario(inscricao_dict, self)
+        db.session.commit()
 
     def hash_senha(self, password):
         self.senha_hash = custom_app_context.encrypt(password)

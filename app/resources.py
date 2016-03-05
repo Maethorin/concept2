@@ -46,6 +46,16 @@ class Atletas(ResourceBase):
             return {'Dados faltando: {}'.format(ex)}, 400
 
 
+class Inscricoes(Resource):
+    model = models.Inscricao
+
+    def get(self, atleta_id, inscricao_id=None):
+        return self.model.obter_atleta(atleta_id).obter_inscricao(inscricao_id).as_dict()
+
+    def put(self, atleta_id, inscricao_id):
+        return self.model.obter_atleta(atleta_id).atualiza_inscricao_de_dicionario(inscricao_id, request.json)
+
+
 class Eventos(ResourceBase):
     model = models.Evento
 

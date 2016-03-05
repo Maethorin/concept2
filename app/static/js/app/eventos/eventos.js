@@ -185,9 +185,10 @@ angular.module('concept2.eventos', ['ngRoute'])
                         "telefone": null,
                         "celular": null,
                         "inscricao": {
-                            "time": null,
+                            "nomeTime": null,
                             "tipoAfiliacao": null,
                             "afiliacao": null,
+                            "pedidoNumero": null,
                             "provas": []
                         },
                         "provaSelecionada": null

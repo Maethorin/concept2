@@ -123,8 +123,8 @@
                 </div>
                 <div class="col-md-3 campo">
                     <div class="form-group">
-                        <label class="control-label" for="time">Nome do Time:</label>
-                        <input type="text" class="form-control" name="time" id="time" ng-model="atleta.inscricao.time"/>
+                        <label class="control-label" for="nomeTime">Nome do Time:</label>
+                        <input type="text" class="form-control" name="nomeTime" id="nomeTime" ng-model="atleta.inscricao.nomeTime"/>
                     </div>
                 </div>
                 <div class="col-md-6 campo tipo-filiacao">
@@ -134,10 +134,10 @@
                           <div class="input-group-btn">
                             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{atleta.inscricao.tipoAfiliacao || 'Escolha...'}} <span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                              <li><a ng-click="selecionaTipoAfiliacao('Clube')">Clube</a></li>
-                              <li><a ng-click="selecionaTipoAfiliacao('Academia')">Academia</a></li>
-                              <li><a ng-click="selecionaTipoAfiliacao('Box de CF')">Box de CF</a></li>
-                              <li><a ng-click="selecionaTipoAfiliacao('Independente')">Independente</a></li>
+                              <li><a ng-click="selecionaTipoAfiliacao('clube')">Clube</a></li>
+                              <li><a ng-click="selecionaTipoAfiliacao('ccademia')">Academia</a></li>
+                              <li><a ng-click="selecionaTipoAfiliacao('box-cf')">Box de CF</a></li>
+                              <li><a ng-click="selecionaTipoAfiliacao('independente')">Independente</a></li>
                             </ul>
                           </div>
                             <input type="text" class="form-control" name="afiliacao" id="afiliacao" placeholder="Nome da afiliação" ng-model="atleta.inscricao.afiliacao" aria-label="..."/>
