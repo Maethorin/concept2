@@ -24,14 +24,13 @@
             <div class="col-md-5">
             </div>
             <div class="col-md-12">
-            <nav ng-controller="ModeloController" ng-repeat="menus in menu">
-                <ul class="nav nav-tabs">
-                    <li role="presentation" class="active"><a href="#/produtos/modelod/{{menus.slug}}">Sobre</a></li>
-                    <li role="presentation"><a href="#">Características</a></li>
-                    <li role="presentation"><a href="#">Especificações</a></li>
+            <nav>
+                <ul class="nav nav-tabs" >
+                    <li role="presentation" ng-repeat="menus in menu"><a href="#/produtos/{{slug}}/{{menus.slug}}">{{menus.nome}}</a></li>
+
                 </ul>
             </nav>
-                <div ng-view></div>
+                <div ng-include="template"></div>
              </div>
 
         </div>

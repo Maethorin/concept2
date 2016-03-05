@@ -6,7 +6,7 @@ angular.module('concept2.produtos', ['ngRoute'])
             templateUrl: '/angular/produtos.html',
             controller: 'ProdutosController'
           })
-          .when('/produtos/modeloD', {
+          .when('/produtos/:slug', {
               templateUrl: '/angular/produtos/modelod.html',
               controller: 'ModeloController'
           })
@@ -20,7 +20,11 @@ angular.module('concept2.produtos', ['ngRoute'])
      $scope.modeloMenu = $routeParams.modeloMenu || 'sobre';
      $rootScope.pagina = "produtos";
      $rootScope.titulo = "Produtos";
-     $scope.template = 'angular/produtos/modelod/{0}.html'.format([$scope.modeloMenu]);
-     $scope.menu = [{"slug": "sobre"}]
+     $scope.template = 'angular/produtos/modelod/{0}.html'.format([$scope.modeloMenu])
+     $scope.menu = [
+         {"slug": "sobre", "nome": "Sobre"},
+         {"slug": "caracteristicas", "nome": "Características"}
+
+             ]
 
 })
