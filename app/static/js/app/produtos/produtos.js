@@ -17,7 +17,10 @@ angular.module('concept2.produtos', ['ngRoute'])
     }])
 .controller('ModeloController', function($routeParams, $rootScope, $scope, $http){
      $scope.slug = $routeParams.slug
+     $scope.modeloMenu = $routeParams.modeloMenu || 'sobre';
      $rootScope.pagina = "produtos";
      $rootScope.titulo = "Produtos";
+     $scope.template = 'angular/produtos/modelod/{0}.html'.format([$scope.modeloMenu]);
+     $scope.menu = [{"slug": "sobre"}]
 
 })

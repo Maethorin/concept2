@@ -4,7 +4,7 @@
             <nav class="menu-produtos">
                 <ul class="nav nav-pills nav-stacked ">
                     <li class="menu remo"><a>REMO INDOOR</a></li>
-                    <li class="submenu"><a href="#/produtos/modeloD">Modelo D</a></li>
+                    <li class="submenu"><a href="#/produtos/modelod">Modelo D</a></li>
                     <li class="submenu"><a href="#">Modelo E</a></li>
                     <li class="submenu"><a href="#">Dynamic</a></li>
                     <li class="submenu"><a href="#">Monitores</a></li>
@@ -24,14 +24,16 @@
             <div class="col-md-5">
             </div>
             <div class="col-md-12">
-            <nav>
+            <nav ng-controller="ModeloController" ng-repeat="menus in menu">
                 <ul class="nav nav-tabs">
-                    <li role="presentation" class="active"><a href="#">Sobre</a></li>
+                    <li role="presentation" class="active"><a href="#/produtos/modelod/{{menus.slug}}">Sobre</a></li>
                     <li role="presentation"><a href="#">Características</a></li>
                     <li role="presentation"><a href="#">Especificações</a></li>
                 </ul>
             </nav>
+                <div ng-view></div>
              </div>
+
         </div>
     </div>
 </div>

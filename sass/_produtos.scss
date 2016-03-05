@@ -5,9 +5,13 @@
         color: white;
         margin-top: 0;
     }
-
+    .remo{
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
     .submenu{
         a{
+            text-align: center;
             padding-bottom: 7px;
             padding-top: 6px;
         }
@@ -16,8 +20,7 @@
     a {
         text-decoration: none;
         color: white;
-        padding-bottom: 9px;
-        padding-top: 8px;
+
     }
     a:hover {
         color: white;
@@ -26,4 +29,8 @@
     .nav-pills > li > a {
         border-radius: 0
     }
+}
+.menu-nav{
+   padding-left: 0;
+    padding-right: 0;
 }

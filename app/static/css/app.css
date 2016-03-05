@@ -10167,15 +10167,18 @@ header .navegacao .form-busca i {
   color: white;
   margin-top: 0;
 }
+.pagina-produtos .menu-produtos .remo {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
 .pagina-produtos .menu-produtos .submenu a {
+  text-align: center;
   padding-bottom: 7px;
   padding-top: 6px;
 }
 .pagina-produtos .menu-produtos a {
   text-decoration: none;
   color: white;
-  padding-bottom: 9px;
-  padding-top: 8px;
 }
 .pagina-produtos .menu-produtos a:hover {
   color: white;
@@ -10183,6 +10186,10 @@ header .navegacao .form-busca i {
 }
 .pagina-produtos .menu-produtos .nav-pills > li > a {
   border-radius: 0;
+}
+.pagina-produtos .menu-nav {
+  padding-left: 0;
+  padding-right: 0;
 }
 .pagina-produtos .modelo {
   background-color: white;
