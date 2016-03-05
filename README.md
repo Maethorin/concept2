@@ -9,6 +9,7 @@ Instala dependências
 
 Define postactivate:
 
+vim $VIRTUAL_ENV/bin/postactivate
 export APP_SETTINGS=app.config.DevelopmentConfig
 export DATABASE_URL=postgresql+psycopg2://concept2:concept2@localhost:5432/concept2
 cd <pasta-projetos>/concept2
