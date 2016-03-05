@@ -10194,6 +10194,12 @@ header .navegacao .form-busca i {
 .pagina-produtos .modelo {
   background-color: white;
 }
+.pagina-produtos .modelo img {
+  margin-left: -31px;
+}
+.pagina-produtos .descricao-caixa {
+  margin-top: 20px;
+}
 
 .pagina-eventos .lista-caixa {
   border: 5px solid #092638;
