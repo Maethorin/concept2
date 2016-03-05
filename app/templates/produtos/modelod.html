@@ -25,12 +25,14 @@
             </div>
             <div class="col-md-12">
             <nav>
-                <ul class="nav nav-tabs" >
-                    <li role="presentation" ng-repeat="menus in menu"><a href="#/produtos/{{slug}}/{{menus.slug}}">{{menus.nome}}</a></li>
+                <ul class="nav nav-tabs">
+                    <li role="presentation" ng-repeat="descricao in modelosMenu" ng-class="{'active': modeloMenu == descricao.slug}"><a href="#/produtos/{{slug}}/{{descricao.slug}}">{{descricao.nome}}</a></li>
 
                 </ul>
             </nav>
+                <div class="col-md-8 descricao-caixa">
                 <div ng-include="template"></div>
+                    </div>
              </div>
 
         </div>
