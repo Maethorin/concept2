@@ -1,8 +1,12 @@
 angular.module('concept2.services', [])
     .factory('Autentic', function($cookies) {
         return {
+            atualizaValores: function() {
+                this.token = $cookies.get('XSRF-TOKEN');
+                this.userId = $cookies.get('USER_ID');
+            },
             token: $cookies.get('XSRF-TOKEN'),
-            user_id: $cookies.get('USER_ID')
+            userId: $cookies.get('USER_ID')
         }
     })
     .factory('OndeRemar', function($resource) {

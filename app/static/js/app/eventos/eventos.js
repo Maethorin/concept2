@@ -44,7 +44,7 @@ angular.module('concept2.eventos', ['ngRoute'])
         };
         $scope.eventos = Evento.query();
     })
-    .controller('EventoController', function($rootScope, $scope, $routeParams, $http, $sce, $filter, Evento, Atleta, Inscricao, Autentic) {
+    .controller('EventoController', function($rootScope, $scope, $routeParams, $http, $sce, $filter, $window, Evento, Atleta, Inscricao, Autentic) {
         $scope.slug = $routeParams.slug;
         $scope.itemMenu = $routeParams.itemMenu || 'sobre';
         $scope.template = '/angular/evento/{0}.html'.format([$scope.itemMenu]);
@@ -96,6 +96,7 @@ angular.module('concept2.eventos', ['ngRoute'])
         }
 
         if ($scope.itemMenu == 'inscricao') {
+            $scope.urlLojaInscricao = 'https://concept2.com.br/shop/index.php?route=product/product&product_id=125';
             $scope.tiposAfiliacoes = [
                 {'codigo': 'clube', 'label': 'Clube'},
                 {'codigo': 'academia', 'label': 'Academia'},
@@ -173,9 +174,9 @@ angular.module('concept2.eventos', ['ngRoute'])
             $scope.carregandoProvas = false;
             $scope.reset = function(formInscricao) {
                 $scope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
-                if (Autentic.user_id) {
+                if (Autentic.userId) {
                     $scope.carregandoProvas = true;
-                    $scope.atleta = Atleta.get({'id': Autentic.user_id, 'evento_slug': $scope.slug}, function() {
+                    $scope.atleta = Atleta.get({'id': Autentic.userId, 'evento_slug': $scope.slug}, function() {
                         $scope.atleta.inscricao = new Inscricao($scope.atleta.inscricao);
                     });
                 }
@@ -319,7 +320,17 @@ angular.module('concept2.eventos', ['ngRoute'])
                     Inscricao.update({'id': $scope.atleta.id, 'inscricao_id': $scope.atleta.inscricao.id}, $scope.atleta.inscricao);
                 }
                 else {
-                    $scope.atleta.$save();
+                    $scope.atleta.$save().then(function() {
+                        Autentic.atualizaValores();
+                        $scope.reset();
+                        $('#modalSucesso').modal('show');
+                    });
+                }
+            };
+            $scope.redirecionaPagamento = function(modal) {
+                $window.open($scope.urlLojaInscricao, '_blank');
+                if (modal) {
+                    $('#modalSucesso').modal('hide');
                 }
             };
         }
