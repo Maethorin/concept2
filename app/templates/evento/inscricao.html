@@ -66,9 +66,9 @@
                 <div class="col-md-3 campo formulario-data">
                     <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricao.nascimento), 'has-error': campoEstaInvalido(formInscricao.nascimento)}">
                         <label class="control-label" for="nascimento">Data de Nascimento <i class="fa fa-asterisk"></i></label>
-                        <input data-format="dd/MM/yyyy" data-type="" class="form-control" name="nascimento" id="nascimento" ui-mask="Dd/Mm/9999" ng-model="atleta.nascimento" aria-describedby="helpData" required ui-options="maskDef"/>
+                        <input data-format="dd/MM/yyyy" data-type="" class="form-control" name="nascimento" id="nascimento" ui-mask="D9/M9/9999" ng-model="atleta.nascimento" aria-describedby="helpData" required nascimento-correto ui-options="maskDef"/>
                         <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricao.nascimento), 'fa-close': campoEstaInvalido(formInscricao.nascimento)} "></span>
-                        <span id="helpData" class="help-block" ng-show="campoEstaInvalido(formInscricao.nascimento)">* A data deve ser válida *</span>
+                        <span id="helpData" class="help-block" ng-show="campoEstaInvalido(formInscricao.nascimento)">* A idade deve ser entre 9 e 100 *</span>
                     </div>
                 </div>
                 <div class="col-md-3 campo">
@@ -82,7 +82,7 @@
                 <div class="col-md-3 campo">
                     <div class="form-group">
                         <label class="control-label" for="telefone">Telefone:</label>
-                        <input type="text" class="form-control" name="telefone" id="telefone" ui-mask="(99) 9999-9999" ng-model="atleta.telefone"/>
+                        <input type="text" class="form-control" name="telefone" id="telefone" ui-mask="(99) 9999-9999" no-required ng-model="atleta.telefone"/>
                     </div>
                 </div>
                 <div class="col-md-3 campo">
@@ -103,7 +103,7 @@
                 <div class="col-md-4 campo">
                     <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricao.email), 'has-error': campoEstaInvalido(formInscricao.email)}">
                         <label class="control-label" for="email">E-mail: <i class="fa fa-asterisk"></i></label>
-                        <input type="email" class="form-control" name="email" id="email" ng-model="atleta.email" aria-describedby="helpEmail" required/>
+                        <input type="email" class="form-control" name="email" id="email" ng-model="atleta.email" aria-describedby="helpEmail" required email-nao-usado />
                         <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricao.email), 'fa-close': campoEstaInvalido(formInscricao.email)} "></span>
                         <span id="helpEmail" class="help-block" ng-show="campoEstaInvalido(formInscricao.email)">* Digite um e-mail válido *</span>
                     </div>
@@ -137,7 +137,7 @@
                 </div>
                 <div class="col-md-3 campo">
                     <div class="form-group">
-                        <label class="control-label" for="nomeTime">Nome do Time:</label>
+                        <label class="control-label" for="nomeTime">Apelido ou Nome do Time:</label>
                         <input type="text" class="form-control" name="nomeTime" id="nomeTime" ng-model="atleta.inscricao.nomeTime"/>
                     </div>
                 </div>
@@ -219,16 +219,33 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Inscrição realizada com sucesso!</h4>
+                <h4 class="modal-title has-success">Gravada com sucesso!</h4>
             </div>
             <div class="modal-body">
-                <p><strong>Sua inscrição foi realizada com sucesso.</strong></p>
+                <p><strong>Sua inscrição foi gravada com sucesso.</strong></p>
                 <p>Caso ainda não tenha feito o pagamento da inscrição, clique no botão abaixo para abrir a página da loja e efetuar o pagamento.</p>
                 <p><strong>Boa sorte na competição!</strong></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                 <button type="button" class="btn btn-success" ng-click="redirecionaPagamento(true)">Efetuar o pagamento</button>
+            </div>
+        </div>
+    </div>
+</div><div class="modal fade" id="modalErro" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title has-error">Erro na Inscrição!</h4>
+            </div>
+            <div class="modal-body">
+                <p><strong>Sua inscrição não foi realizada.</strong></p>
+                <p>Verifique os erros e tente de novo:</p>
+                <p class="btn-danger" ng-bind="mensagemErro"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>

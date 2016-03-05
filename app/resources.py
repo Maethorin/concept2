@@ -37,13 +37,19 @@ class Atletas(ResourceBase):
         try:
             g.user = self.model.cria_de_dicionario(request.json)
         except KeyError as ex:
-            return {'Dados faltando: {}'.format(ex)}, 400
+            return {'mensagemErro': u'Dados faltando: {}'.format(ex)}, 400
+        except models.EmailJaExiste as ex:
+            return {'mensagemErro': u'{}'.format(ex)}, 400
+        except Exception:
+            return {'mensagemErro': u'Ocorreu um erro e não pudemos gravar a inscrição. Por favor, tente mais tarde.'}, 500
 
     def put(self, item_id):
         try:
             self.model.atualiza_de_dicionario(item_id, request.json)
         except KeyError as ex:
             return {'Dados faltando: {}'.format(ex)}, 400
+        except Exception:
+            return {'mensagemErro': u'Ocorreu um erro e não pudemos gravar a inscrição. Por favor, tente mais tarde.'}, 500
 
 
 class Inscricoes(Resource):

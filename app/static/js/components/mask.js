@@ -95,7 +95,9 @@ angular.module('ui.mask', [])
                                 }
                                 value = unmaskValue(fromModelValue || '');
                                 isValid = validateValue(value);
-                                controller.$setValidity('mask', isValid);
+                                if (iAttrs.required) {
+                                    controller.$setValidity('mask', isValid);
+                                }
                                 return isValid && value.length ? maskValue(value) : undefined;
                             }
 
@@ -110,7 +112,9 @@ angular.module('ui.mask', [])
                                 // this parser is called, which causes what the user sees in the input
                                 // to be out-of-sync with what the controller's $viewValue is set to.
                                 controller.$viewValue = value.length ? maskValue(value) : '';
-                                controller.$setValidity('mask', isValid);
+                                if (iAttrs.required) {
+                                    controller.$setValidity('mask', isValid);
+                                }
                                 if (isValid) {
                                     return modelViewValue ? controller.$viewValue : value;
                                 } else {

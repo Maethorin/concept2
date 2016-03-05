@@ -20,7 +20,7 @@ angular.module('concept2.eventos', ['ngRoute'])
             require: 'ngModel',
             link: function(scope, elm, attrs, ctrl) {
                 ctrl.$validators.emailNaoUsado = function(modelValue, viewValue) {
-                    return scope.mensagemErro != "Email já está cadastrado como atleta";
+                    return scope.mensagemErro != "Email já está cadastrado como atleta.";
                 };
             }
         };
@@ -31,6 +31,42 @@ angular.module('concept2.eventos', ['ngRoute'])
             link: function(scope, elm, attrs, ctrl) {
                 ctrl.$validators.igualSenha = function(modelValue, viewValue) {
                     return scope.atleta.senha == viewValue;
+                };
+            }
+        };
+    })
+    .directive('nascimentoCorreto', function() {
+        return {
+            require: 'ngModel',
+            link: function(scope, elm, attrs, ctrl) {
+                ctrl.$validators.nascimentoCorreto = function(modelValue, viewValue) {
+                    try {
+                        var dataArray = viewValue.split('/');
+                        var dia = parseInt(dataArray[0]);
+                        if (dia > 31) {
+                            return false;
+                        }
+                        var mes = parseInt(dataArray[1]);
+                        var ano = parseInt(dataArray[2]);
+                        if (mes == 2) {
+                            if (dia > 29) {
+                                return false;
+                            }
+                            var ehAnoBisexto = ((ano % 4 == 0) && (ano % 100 != 0)) || (ano % 400 == 0);
+                            if (!ehAnoBisexto && dia > 28) {
+                                return false;
+                            }
+                        }
+                        var hoje = new Date();
+                        var anoHoje = hoje.getFullYear();
+                        var nascimento = new Date(ano, mes - 1, dia);
+                        var dataMinima = new Date(anoHoje - 100, hoje.getMonth(), hoje.getDay());
+                        var dataMaxima = new Date(anoHoje - 9, hoje.getMonth(), hoje.getDay());
+                        return nascimento >= dataMinima && nascimento <= dataMaxima;
+                    }
+                    catch (ex) {
+                        return false;
+                    }
                 };
             }
         };
@@ -96,6 +132,7 @@ angular.module('concept2.eventos', ['ngRoute'])
         }
 
         if ($scope.itemMenu == 'inscricao') {
+            $scope.mensagemErro = '';
             $scope.urlLojaInscricao = 'https://concept2.com.br/shop/index.php?route=product/product&product_id=125';
             $scope.tiposAfiliacoes = [
                 {'codigo': 'clube', 'label': 'Clube'},
@@ -172,7 +209,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                 $scope.atleta.provaSelecionada = null;
             };
             $scope.carregandoProvas = false;
-            $scope.reset = function(formInscricao) {
+            $scope.reset = function(formInscricao, novoAtleta) {
                 $scope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
                 if (Autentic.userId) {
                     $scope.carregandoProvas = true;
@@ -202,12 +239,12 @@ angular.module('concept2.eventos', ['ngRoute'])
                         }),
                         "provaSelecionada": null
                     });
+                    limpaSelecaoProvas();
+                    $scope.campoProvaTocado = false;
                     if (formInscricao) {
                         formInscricao.$setPristine();
                         formInscricao.$setUntouched();
                     }
-                    $scope.campoProvaTocado = false;
-                    limpaSelecaoProvas();
                 }
             };
             $scope.reset();
@@ -231,6 +268,13 @@ angular.module('concept2.eventos', ['ngRoute'])
                 $scope.limpaSelecaoProvas =  true;
                 $scope.atleta.sexo = valor;
             };
+            $scope.$watch('atleta.email', function(novo, antigo) {
+                if ($scope.mensagemErro == 'Email já está cadastrado como atleta.') {
+                    if (novo !== antigo) {
+                        $scope.mensagemErro = '';
+                    }
+                }
+            });
             $scope.$watch('atleta.sexo', function(novo, antigo) {
                 if (novo) {
                     $scope.provasDropdownList = $filter('filter')(
@@ -291,13 +335,16 @@ angular.module('concept2.eventos', ['ngRoute'])
             $scope.campoEstaInvalido = function(campo) {
                 var temErro = $scope.verificaErro(campo);
                 if (campo.$name == 'email') {
-                    temErro |= $scope.verificaErro(campo, 'email');
+                    temErro |= $scope.verificaErro(campo, 'email') || $scope.verificaErro(campo, 'emailNaoUsado');
                 }
                 if (campo.$name == 'senha') {
                     temErro |= $scope.verificaErro(campo, 'minlength');
                 }
                 if (_.includes(['cpf', 'celular', 'nascimento'], campo.$name)) {
                     temErro |= $scope.verificaErro(campo, 'mask');
+                }
+                if (campo.$name == 'nascimento') {
+                    temErro |= $scope.verificaErro(campo, 'nascimentoCorreto');
                 }
                 if (campo.$name == 'confirmeSenha') {
                     temErro |= $scope.verificaErro(campo, 'igualSenha');
@@ -316,15 +363,36 @@ angular.module('concept2.eventos', ['ngRoute'])
                     exibeValidacoes(formInscricao);
                     return false;
                 }
+                $scope.processaSucesso = function() {
+                    Autentic.atualizaValores();
+                    $scope.reset();
+                    $('#modalSucesso').modal('show');
+                };
+                $scope.processaFalha = function(response) {
+                    $scope.mensagemErro = response.data['mensagemErro'];
+                    exibeValidacoes(formInscricao);
+                    $('#modalErro').modal('show');
+                };
                 if ($scope.atletaLogado) {
-                    Inscricao.update({'id': $scope.atleta.id, 'inscricao_id': $scope.atleta.inscricao.id}, $scope.atleta.inscricao);
+                    Inscricao.update({'id': $scope.atleta.id, 'inscricao_id': $scope.atleta.inscricao.id}, $scope.atleta.inscricao)
+                        .then(
+                            function() {
+                                $scope.processaSucesso();
+                            },
+                            function(response) {
+                                $scope.processaFalha(response);
+                            }
+                        );
                 }
                 else {
-                    $scope.atleta.$save().then(function() {
-                        Autentic.atualizaValores();
-                        $scope.reset();
-                        $('#modalSucesso').modal('show');
-                    });
+                    $scope.atleta.$save().then(
+                        function() {
+                            $scope.processaSucesso();
+                        },
+                        function(response) {
+                            $scope.processaFalha(response);
+                        }
+                    );
                 }
             };
             $scope.redirecionaPagamento = function(modal) {

@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 import os
 import googlemaps
 import jwt
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import relationship
 from passlib.apps import custom_app_context
 
@@ -320,6 +321,10 @@ class Inscricao(db.Model, QueryMixin):
         }
 
 
+class EmailJaExiste(Exception):
+    pass
+
+
 class Atleta(db.Model, QueryMixin):
     __tablename__ = 'atletas'
     id = db.Column(db.Integer, primary_key=True)
@@ -376,12 +381,17 @@ class Atleta(db.Model, QueryMixin):
 
     @classmethod
     def cria_de_dicionario(cls, dados_dict):
-        atleta = cls.define_dados_de_dicionario(dados_dict)
-        atleta.hash_senha(dados_dict['senha'])
-        db.session.add(atleta)
-        atleta.cria_inscricao_de_dicionario(dados_dict['inscricao'])
-        db.session.commit()
-        return atleta
+        with db.session.no_autoflush:
+            atleta = cls.define_dados_de_dicionario(dados_dict)
+            atleta.hash_senha(dados_dict['senha'])
+            db.session.add(atleta)
+            atleta.cria_inscricao_de_dicionario(dados_dict['inscricao'])
+            try:
+                db.session.commit()
+            except IntegrityError as ex:
+                if 'atletas_email' in str(ex):
+                    raise EmailJaExiste(u'Email já está cadastrado como atleta.')
+            return atleta
 
     @classmethod
     def obter_pelo_email(cls, email):
@@ -400,9 +410,10 @@ class Atleta(db.Model, QueryMixin):
                     break
         return atleta
 
-    def cria_inscricao_de_dicionario(self, inscricao_dict):
+    def cria_inscricao_de_dicionario(self, inscricao_dict, commit=False):
         Inscricao.cria_de_dicionario(inscricao_dict, self)
-        db.session.commit()
+        if commit:
+            db.session.commit()
 
     def atualiza_inscricao_de_dicionario(self, inscricao_id, inscricao_dict):
         Inscricao.atualiza_de_dicionario(inscricao_id, inscricao_dict, self)
