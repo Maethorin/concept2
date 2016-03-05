@@ -53,7 +53,7 @@ class Inscricoes(Resource):
         return self.model.obter_atleta(atleta_id).obter_inscricao(inscricao_id).as_dict()
 
     def put(self, atleta_id, inscricao_id):
-        return self.model.obter_atleta(atleta_id).atualiza_inscricao_de_dicionario(inscricao_id, request.json)
+        return models.Atleta.obter_atleta(atleta_id).atualiza_inscricao_de_dicionario(inscricao_id, request.json)
 
 
 class Eventos(ResourceBase):

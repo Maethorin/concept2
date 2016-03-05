@@ -44,7 +44,7 @@ angular.module('concept2.eventos', ['ngRoute'])
         };
         $scope.eventos = Evento.query();
     })
-    .controller('EventoController', function($rootScope, $scope, $routeParams, $http, $sce, $filter, Evento, Atleta, Autentic) {
+    .controller('EventoController', function($rootScope, $scope, $routeParams, $http, $sce, $filter, Evento, Atleta, Inscricao, Autentic) {
         $scope.slug = $routeParams.slug;
         $scope.itemMenu = $routeParams.itemMenu || 'sobre';
         $scope.template = '/angular/evento/{0}.html'.format([$scope.itemMenu]);
@@ -96,6 +96,12 @@ angular.module('concept2.eventos', ['ngRoute'])
         }
 
         if ($scope.itemMenu == 'inscricao') {
+            $scope.tiposAfiliacoes = [
+                {'codigo': 'clube', 'label': 'Clube'},
+                {'codigo': 'academia', 'label': 'Academia'},
+                {'codigo': 'box-cf', 'label': 'Box de CF'},
+                {'codigo': 'independente', 'label': 'Independente'}
+            ];
             $scope.campoProvaTocado = false;
             $scope.obterProva = function(provaSelecionada) {
                 var provaCompleta = null;
@@ -169,7 +175,9 @@ angular.module('concept2.eventos', ['ngRoute'])
                 $scope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
                 if (Autentic.user_id) {
                     $scope.carregandoProvas = true;
-                    $scope.atleta = Atleta.get({'id': Autentic.user_id, 'evento_slug': $scope.slug});
+                    $scope.atleta = Atleta.get({'id': Autentic.user_id, 'evento_slug': $scope.slug}, function() {
+                        $scope.atleta.inscricao = new Inscricao($scope.atleta.inscricao);
+                    });
                 }
                 else {
                     $scope.atleta = new Atleta({
@@ -184,13 +192,13 @@ angular.module('concept2.eventos', ['ngRoute'])
                         "email": null,
                         "telefone": null,
                         "celular": null,
-                        "inscricao": {
+                        "inscricao": new Inscricao({
                             "nomeTime": null,
                             "tipoAfiliacao": null,
                             "afiliacao": null,
                             "pedidoNumero": null,
                             "provas": []
-                        },
+                        }),
                         "provaSelecionada": null
                     });
                     if (formInscricao) {
@@ -202,8 +210,20 @@ angular.module('concept2.eventos', ['ngRoute'])
                 }
             };
             $scope.reset();
-            $scope.selecionaTipoAfiliacao = function(tipoFiliacao) {
-                $scope.atleta.inscricao.tipoAfiliacao = tipoFiliacao;
+            $scope.exibeLabelTipoAfiliacao = function(tipoAfiliacao) {
+                if (!tipoAfiliacao) {
+                    return 'Escolha...';
+                }
+                var label = '';
+                angular.forEach($scope.tiposAfiliacoes, function(tipo) {
+                    if (tipo.codigo == tipoAfiliacao) {
+                        label = tipo.label;
+                    }
+                });
+                return label;
+            };
+            $scope.selecionaTipoAfiliacao = function(tipoAfiliacao) {
+                $scope.atleta.inscricao.tipoAfiliacao = tipoAfiliacao.codigo;
             };
             $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-9]/, 'M': /[0-1]/, 'm': /[0-2]/}};
             $scope.defineSexo = function(valor) {
@@ -296,7 +316,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                     return false;
                 }
                 if ($scope.atletaLogado) {
-                    Atleta.update({'id': $scope.atleta.id}, $scope.atleta);
+                    Inscricao.update({'id': $scope.atleta.id, 'inscricao_id': $scope.atleta.inscricao.id}, $scope.atleta.inscricao);
                 }
                 else {
                     $scope.atleta.$save();

@@ -90,6 +90,11 @@
         .prova {
             min-height: 89px;
         }
+        .tipo-afiliacoes {
+            li {
+                cursor: pointer;
+            }
+        }
         .tabela-provas {
             max-height: 300px;
             overflow: auto;

@@ -292,8 +292,8 @@ class Inscricao(db.Model, QueryMixin):
         return inscricao
 
     @classmethod
-    def atualiza_de_dicionario(cls, inscricao_dict, atleta, commit=False):
-        inscricao = cls.query.get(inscricao_dict['id'])
+    def atualiza_de_dicionario(cls, inscricao_id, inscricao_dict, atleta, commit=False):
+        inscricao = cls.query.get(inscricao_id)
         inscricao.provas = []
         inscricao = cls.define_dados_de_dicionario(inscricao_dict, atleta, inscricao)
         db.session.add(inscricao)
@@ -404,8 +404,8 @@ class Atleta(db.Model, QueryMixin):
         Inscricao.cria_de_dicionario(inscricao_dict, self)
         db.session.commit()
 
-    def atualiza_inscricao_de_dicionario(self, inscricao_dict):
-        Inscricao.atualiza_de_dicionario(inscricao_dict, self)
+    def atualiza_inscricao_de_dicionario(self, inscricao_id, inscricao_dict):
+        Inscricao.atualiza_de_dicionario(inscricao_id, inscricao_dict, self)
         db.session.commit()
 
     def hash_senha(self, password):

@@ -9,8 +9,11 @@ angular.module('concept2.services', [])
         return $resource('/api/onde-remar/:id');
     })
     .factory('Atleta', function($resource) {
+        return $resource('/api/atletas/:id/:evento_slug');
+    })
+    .factory('Inscricao', function($resource) {
         return $resource(
-            '/api/atletas/:id/:evento_slug',
+            '/api/atletas/:id/inscricoes/:inscricao_id',
             null,
             {'update': {method: 'PUT'}}
         );

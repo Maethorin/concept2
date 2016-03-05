@@ -5,9 +5,11 @@
             <p ng-if="atletaLogado">Olá {{atleta.nome}}. Nessa página você pode adicionar o número do pedido à sua inscrição ou alterar os dados e provas que deseja participar. Para alterar seus dados pessoais, vá em <a href="/#/meu-perfil">meu perfil</a>.</p>
             <div ng-if="!atletaLogado">
                 <p>Caso já tenha feito alguma inscrição antes em nosso site, faça o <a href="/#/login">login</a> para recuperamos os seus dados de atleta.</p>
-                <p>Após finalizar o seu cadastro, você será redirecionado para a página da loja da concept2 para realizar o pagamento da taxa de inscrição.</p>
-                <p>Depois de concluída a compra na loja, você receberá o número do pedido efetuado. Adicione esse número do pedido à sua inscrição em <a href="/#/eventos/{{slug}}/inscricoes">minhas inscrições</a>.</p>
+                <p>Após finalizar o seu cadastro, você deverá ir à loja da concept2 para realizar o pagamento da taxa de inscrição. Um link para a página será fornecido.</p>
+                <p>Depois de concluída a compra na loja, você receberá o número do pedido efetuado. Adicione esse número do pedido à sua inscrição nessa página no campo Número do Pedido ns Dados da inscrição.</p>
+                <p>Se você já efetuou o pagamento e já tem um número de pedido, já pode adiciona-lo e ignorar a mensagem de ir até a loja.</p>
                 <p>Com o número do pedido adicionado, nós poderemos confirmar o pagamento mas, para o dia da prova, leve o comprovante de pagamento para eventuais problemas.</p>
+                <p>Depois da inscrição realizada, você pode voltar nesse página a qualquer momento para adicionar ou remover provas e editar as informações da sua Inscrição ao {{evento.titulo}}</p>
             </div>
         </div>
     </div>
@@ -132,12 +134,9 @@
                         <label class="control-label" for="afiliacao">Afiliação:</label>
                         <div class="input-group">
                           <div class="input-group-btn">
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{atleta.inscricao.tipoAfiliacao || 'Escolha...'}} <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                              <li><a ng-click="selecionaTipoAfiliacao('clube')">Clube</a></li>
-                              <li><a ng-click="selecionaTipoAfiliacao('ccademia')">Academia</a></li>
-                              <li><a ng-click="selecionaTipoAfiliacao('box-cf')">Box de CF</a></li>
-                              <li><a ng-click="selecionaTipoAfiliacao('independente')">Independente</a></li>
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{exibeLabelTipoAfiliacao(atleta.inscricao.tipoAfiliacao)}} <span class="caret"></span></button>
+                            <ul class="dropdown-menu tipo-afiliacoes">
+                              <li ng-repeat="tipoAfiliacao in tiposAfiliacoes"><a ng-click="selecionaTipoAfiliacao(tipoAfiliacao)">{{tipoAfiliacao.label}}</a></li>
                             </ul>
                           </div>
                             <input type="text" class="form-control" name="afiliacao" id="afiliacao" placeholder="Nome da afiliação" ng-model="atleta.inscricao.afiliacao" aria-label="..."/>
