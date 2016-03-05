@@ -278,6 +278,21 @@ class Inscricao(db.Model, QueryMixin):
     pedido_numero = db.Column(db.String(10))
     comprovante_pagamento = db.Column(db.String())
 
+    @classmethod
+    def cria_de_dicionario(cls, atleta, inscricao_dict, commit=False):
+        inscricao = Inscricao(
+            atleta=atleta,
+            afiliacao=inscricao_dict.get('afiliacao'),
+            tipo_afiliacao=inscricao_dict.get('tipoAfiliacao'),
+            nome_time=inscricao_dict.get('time')
+        )
+        for prova in inscricao_dict['provas']:
+            inscricao.provas.append(Prova.query.get(prova['id']))
+        db.session.add(inscricao)
+        if commit:
+            db.session.commit()
+        return inscricao
+
     def as_dict(self):
         return {
             'id': self.id,
@@ -304,7 +319,7 @@ class Atleta(db.Model, QueryMixin):
     inscricoes = relationship("Inscricao", back_populates="atleta")
 
     def as_dict(self):
-        return {
+        atleta_dict = {
             'id': self.id,
             'email': self.email,
             'nome': self.nome,
@@ -312,10 +327,18 @@ class Atleta(db.Model, QueryMixin):
             'sexo': self.sexo,
             'cpf': self.cpf,
             'telefone': self.telefone,
-            'celuar': self.celular,
-            'nascimento': self.nascimento.strftime('%d%m%Y'),
-            'inscricoes': [inscricao.as_dict() for inscricao in self.inscricoes]
+            'celular': self.celular,
+            'nascimento': self.nascimento.strftime('%d%m%Y')
         }
+        if hasattr(self, 'inscricao'):
+            atleta_dict['inscricao'] = self.inscricao.as_dict()
+        else:
+            atleta_dict['inscricoes'] = [inscricao.as_dict() for inscricao in self.inscricoes]
+        return atleta_dict
+
+    @classmethod
+    def atualiza_de_dicionario(cls, atleta_id, dados_dict):
+        atleta = cls.query.get(atleta_id)
 
     @classmethod
     def cria_de_dicionario(cls, dados_dict):
@@ -331,12 +354,7 @@ class Atleta(db.Model, QueryMixin):
         )
         atleta.hash_senha(dados_dict['senha'])
         db.session.add(atleta)
-        atleta.adiciona_inscricao(
-            dados_dict['provas'],
-            afiliacao=dados_dict.get('afiliacao'),
-            tipo_afiliacao=dados_dict.get('tipoAfiliacao'),
-            nome_time=dados_dict.get('time'),
-        )
+        Inscricao.cria_de_dicionario(atleta=atleta, inscricao_dict=dados_dict['inscricao'])
         db.session.commit()
         return atleta
 
@@ -344,16 +362,18 @@ class Atleta(db.Model, QueryMixin):
     def obter_pelo_email(cls, email):
         cls.query.filter_by(email=email).first()
 
-    def adiciona_inscricao(self, provas, afiliacao=None, tipo_afiliacao=None, nome_time=None):
-        inscricao = Inscricao(
-            atleta=self,
-            afiliacao=afiliacao,
-            tipo_afiliacao=tipo_afiliacao,
-            nome_time=nome_time
-        )
-        for prova in provas:
-            inscricao.provas.append(Prova.query.get(prova['id']))
-        db.session.add(inscricao)
+    @classmethod
+    def obter_atleta_com_inscricao_para_o_evento(cls, atleta_id, evento_slug):
+        atleta = cls.query.get(atleta_id)
+        atleta.inscricao = None
+        for inscricao in atleta.inscricoes:
+            if atleta.inscricao is not None:
+                break
+            for prova in inscricao.provas:
+                if prova.evento.slug == evento_slug:
+                    atleta.inscricao = inscricao
+                    break
+        return atleta
 
     def hash_senha(self, password):
         self.senha_hash = custom_app_context.encrypt(password)

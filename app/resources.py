@@ -10,7 +10,7 @@ class ResourceBase(Resource):
     model = None
 
     def obter_lista(self, *args, **kwargs):
-        return [item.to_dict() for item in self.model.obter_lista(*args, **kwargs)]
+        return [item.as_dict() for item in self.model.obter_lista(*args, **kwargs)]
 
     def obter_item(self, item_id):
         return self.model.obter_item(item_id).as_dict()
@@ -28,9 +28,20 @@ class Produtos(ResourceBase):
 class Atletas(ResourceBase):
     model = models.Atleta
 
+    def get(self, item_id=None, evento_slug=None):
+        if evento_slug and item_id:
+            return self.model.obter_atleta_com_inscricao_para_o_evento(item_id, evento_slug).as_dict()
+        return super(Atletas, self).get(item_id)
+
     def post(self):
         try:
             g.user = self.model.cria_de_dicionario(request.json)
+        except KeyError as ex:
+            return {'Dados faltando: {}'.format(ex)}, 400
+
+    def put(self, item_id):
+        try:
+            self.model.atualiza_de_dicionario(item_id, request.json)
         except KeyError as ex:
             return {'Dados faltando: {}'.format(ex)}, 400
 

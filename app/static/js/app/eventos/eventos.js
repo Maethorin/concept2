@@ -30,7 +30,7 @@ angular.module('concept2.eventos', ['ngRoute'])
             require: 'ngModel',
             link: function(scope, elm, attrs, ctrl) {
                 ctrl.$validators.igualSenha = function(modelValue, viewValue) {
-                    return scope.inscricao.senha == viewValue;
+                    return scope.atleta.senha == viewValue;
                 };
             }
         };
@@ -108,9 +108,9 @@ angular.module('concept2.eventos', ['ngRoute'])
                 return provaCompleta;
             };
             $scope.removeProva = function(provaId) {
-                angular.forEach($scope.inscricao.provas, function(prova, index) {
+                angular.forEach($scope.atleta.inscricao.provas, function(prova, index) {
                     if (prova.id == provaId) {
-                        $scope.inscricao.provas.splice(index, 1);
+                        $scope.atleta.inscricao.provas.splice(index, 1);
                         return false;
                     }
                 });
@@ -120,21 +120,21 @@ angular.module('concept2.eventos', ['ngRoute'])
                         return false;
                     }
                 });
-                if ($scope.inscricao.provas.length == 0) {
-                    $scope.inscricao.provaSelecionada = null;
+                if ($scope.atleta.inscricao.provas.length == 0) {
+                    $scope.atleta.provaSelecionada = null;
                 }
                 $scope.campoProvaTocado = true;
             };
             $scope.provasEventos = {
                 onItemSelect: function(prova) {
-                    $scope.inscricao.provas.push({'id': prova.id});
-                    $scope.inscricao.provaSelecionada = 1;
+                    $scope.atleta.inscricao.provas.push({'id': prova.id});
+                    $scope.atleta.provaSelecionada = 1;
                     $scope.campoProvaTocado = true;
                 },
                 onItemDeselect: function(prova) {
                     $scope.removeProva(prova.id);
-                    if ($scope.inscricao.provas.length == 0) {
-                        $scope.inscricao.provaSelecionada = null;
+                    if ($scope.atleta.inscricao.provas.length == 0) {
+                        $scope.atleta.provaSelecionada = null;
                     }
                     $scope.campoProvaTocado = true;
                 }
@@ -161,18 +161,18 @@ angular.module('concept2.eventos', ['ngRoute'])
                 angular.forEach($scope.provasDropdownList, function(prova) {
                     prova.selecionada = false;
                 });
-                $scope.inscricao.provas = [];
-                $scope.inscricao.provaSelecionada = null;
+                $scope.atleta.inscricao.provas = [];
+                $scope.atleta.provaSelecionada = null;
             };
+            $scope.carregandoProvas = false;
             $scope.reset = function(formInscricao) {
-                $scope.atletaLogado = Autentic.token;
-                console.log('user: ' + Autentic.user_id);
-                console.log('token: ' + Autentic.token);
+                $scope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
                 if (Autentic.user_id) {
-                    $scope.inscricao = Atleta.get({'id': Autentic.user_id})
+                    $scope.carregandoProvas = true;
+                    $scope.atleta = Atleta.get({'id': Autentic.user_id, 'evento_slug': $scope.slug});
                 }
                 else {
-                    $scope.inscricao = new Atleta({
+                    $scope.atleta = new Atleta({
                         "evento": $scope.evento.id,
                         "nome": null,
                         "sobrenome": null,
@@ -184,27 +184,32 @@ angular.module('concept2.eventos', ['ngRoute'])
                         "email": null,
                         "telefone": null,
                         "celular": null,
-                        "time": null,
-                        "tipoAfiliacao": null,
-                        "afiliacao": null,
-                        "provas": [],
+                        "inscricao": {
+                            "time": null,
+                            "tipoAfiliacao": null,
+                            "afiliacao": null,
+                            "provas": []
+                        },
                         "provaSelecionada": null
                     });
+                    if (formInscricao) {
+                        formInscricao.$setPristine();
+                        formInscricao.$setUntouched();
+                    }
+                    $scope.campoProvaTocado = false;
+                    limpaSelecaoProvas();
                 }
-                if (formInscricao) {
-                    formInscricao.$setPristine();
-                    formInscricao.$setUntouched();
-                }
-                $scope.campoProvaTocado = false;
-                limpaSelecaoProvas();
             };
             $scope.reset();
             $scope.selecionaTipoAfiliacao = function(tipoFiliacao) {
-                $scope.inscricao.tipoAfiliacao = tipoFiliacao;
+                $scope.atleta.inscricao.tipoAfiliacao = tipoFiliacao;
             };
             $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-9]/, 'M': /[0-1]/, 'm': /[0-2]/}};
-
-            $scope.$watch('inscricao.sexo', function(novo, antigo) {
+            $scope.defineSexo = function(valor) {
+                $scope.limpaSelecaoProvas =  true;
+                $scope.atleta.sexo = valor;
+            };
+            $scope.$watch('atleta.sexo', function(novo, antigo) {
                 if (novo) {
                     $scope.provasDropdownList = $filter('filter')(
                         $scope.provasParaSelecao,
@@ -214,7 +219,24 @@ angular.module('concept2.eventos', ['ngRoute'])
                             return atual == esperado || atual == 'AB' || atual == 'MI';
                         }
                     );
-                    limpaSelecaoProvas();
+                    if ($scope.carregandoProvas) {
+                        angular.forEach($scope.provasDropdownList, function(prova) {
+                            $scope.atleta.provaSelecionada = 1;
+                            $scope.campoProvaTocado = true;
+                            prova.selecionada = false;
+                            angular.forEach($scope.atleta.inscricao.provas, function(inscricaoProva) {
+                                if (prova.id == inscricaoProva.id) {
+                                    prova.selecionada = true;
+                                    return false;
+                                }
+                            });
+                        });
+                        $scope.carregandoProvas = false;
+                    }
+                    if ($scope.limpaSelecaoProvas) {
+                        limpaSelecaoProvas();
+                        $scope.limpaSelecaoProvas = false;
+                    }
                 }
             });
 
@@ -272,7 +294,12 @@ angular.module('concept2.eventos', ['ngRoute'])
                     exibeValidacoes(formInscricao);
                     return false;
                 }
-                $scope.inscricao.$save();
+                if ($scope.atletaLogado) {
+                    Atleta.update({'id': $scope.atleta.id}, $scope.atleta);
+                }
+                else {
+                    $scope.atleta.$save();
+                }
             };
         }
     });

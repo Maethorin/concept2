@@ -64,6 +64,7 @@ def before_request():
 @web_app.after_request
 def after_request(resp):
     user = g.get('user', None)
+    user = models.Atleta.query.get(16)
     if user is not None:
         token = user.gera_token_aut()
         expiration = datetime.utcnow() + timedelta(seconds=600)
