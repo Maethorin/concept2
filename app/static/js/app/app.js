@@ -37,6 +37,7 @@ angular.module('concept2', [
     'ui.mask',
     'angularjs-dropdown-multiselect',
     'concept2.services',
+    'concept2.login',
     'concept2.home',
     'concept2.produtos',
     'concept2.noticias',
@@ -44,4 +45,11 @@ angular.module('concept2', [
     'concept2.eventos',
     'concept2.suporte',
     'concept2.contato'
-]);
+])
+.run(function ($rootScope, Autentic) {
+    $rootScope.$on('$locationChangeSuccess', function(evt, absNewUrl, absOldUrl) {
+        $rootScope.referrer = absOldUrl;
+    });
+    Autentic.atualizaValores();
+    $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
+});

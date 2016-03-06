@@ -10133,6 +10133,11 @@ header .navegacao .form-busca i {
   margin: 0;
 }
 
+.btn-disabled {
+  background-color: #777;
+  color: #999;
+}
+
 .pagina-home .slide-home {
   margin-top: -20px;
   width: 100%;
@@ -10145,6 +10150,26 @@ header .navegacao .form-busca i {
 .pagina-home #slide img {
   padding: 0;
   margin: 0;
+}
+
+.pagina-atleta {
+  background: radial-gradient(circle, #0f354c, #00070f);
+}
+.pagina-atleta .lista-caixa {
+  border: 5px solid #092638;
+  background: radial-gradient(#1e71a3, #0f3d5e);
+}
+.pagina-atleta .caixa-conteudo .panel-heading {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.pagina-atleta .caixa-conteudo.panel-default {
+  background-color: transparent;
+}
+.pagina-atleta .login .control-label i {
+  font-size: 10px;
+}
+.pagina-atleta .login .form-group {
+  min-height: 70px;
 }
 
 .pagina-produtos {
@@ -10356,10 +10381,6 @@ header .navegacao .form-busca i {
 }
 .pagina-eventos .inscricao .form-inscricao .botoes {
   text-align: center;
-}
-.pagina-eventos .inscricao .form-inscricao .botoes .btn-disabled {
-  background-color: #777;
-  color: #999;
 }
 .pagina-eventos .inscricao .form-inscricao .dropdown-provas li {
   padding-left: 10px;

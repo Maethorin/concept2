@@ -15,6 +15,9 @@ angular.module('concept2.services', [])
     .factory('Atleta', function($resource) {
         return $resource('/api/atletas/:id/:evento_slug');
     })
+    .factory('Login', function($resource) {
+        return $resource('/api/login');
+    })
     .factory('Inscricao', function($resource) {
         return $resource(
             '/api/atletas/:id/inscricoes/:inscricao_id',

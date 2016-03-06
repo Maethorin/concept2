@@ -210,7 +210,7 @@ angular.module('concept2.eventos', ['ngRoute'])
             };
             $scope.carregandoProvas = false;
             $scope.reset = function(formInscricao, novoAtleta) {
-                $scope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
+                $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
                 if (Autentic.userId) {
                     $scope.carregandoProvas = true;
                     $scope.atleta = Atleta.get({'id': Autentic.userId, 'evento_slug': $scope.slug}, function() {
@@ -373,7 +373,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                     exibeValidacoes(formInscricao);
                     $('#modalErro').modal('show');
                 };
-                if ($scope.atletaLogado) {
+                if ($rootScope.atletaLogado) {
                     Inscricao.update({'id': $scope.atleta.id, 'inscricao_id': $scope.atleta.inscricao.id}, $scope.atleta.inscricao)
                         .then(
                             function() {
