@@ -82,6 +82,9 @@ class OndeRemar(ResourceBase):
 
 
 class Login(Resource):
+    def delete(self):
+        g.user = None
+
     def post(self):
         try:
             g.user = models.Atleta.obter_pelo_email(request.json['email'])

@@ -5,6 +5,10 @@ angular.module('concept2.services', [])
                 this.token = $cookies.get('XSRF-TOKEN');
                 this.userId = $cookies.get('USER_ID');
             },
+            limpaValores: function() {
+                $cookies.remove('XSRF-TOKEN');
+                $cookies.remove('USER_ID');
+            },
             token: $cookies.get('XSRF-TOKEN'),
             userId: $cookies.get('USER_ID')
         }

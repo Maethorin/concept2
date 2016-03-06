@@ -53,7 +53,7 @@ def favicon():
 
 @web_app.before_request
 def before_request():
-    token = None #request.cookies.get('XSRF-TOKEN', None)
+    token = request.cookies.get('XSRF-TOKEN', None)
     atleta = None
     if token:
         atleta = models.Atleta.verifica_token_aut(token)

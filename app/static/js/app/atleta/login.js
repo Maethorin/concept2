@@ -8,6 +8,7 @@ angular.module('concept2.login', ['ngRoute'])
             controller: 'LoginController'
           })
           .when('/atleta/logout', {
+            templateUrl: '/angular/home.html',
             controller: 'LogoutController'
           })
           .when('/atleta/perfil', {
@@ -19,6 +20,22 @@ angular.module('concept2.login', ['ngRoute'])
             controller: 'PerfilController'
           })
     }])
+    .controller("LogoutController", function($rootScope, $scope, $window, Login, Autentic) {
+        var login = new Login();
+        login.$delete().then(
+            function () {
+                Autentic.limpaValores();
+                Autentic.atualizaValores();
+                $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
+                if ($rootScope.referrer) {
+                    $window.location = $rootScope.referrer;
+                }
+                else {
+                    $window.location = '/';
+                }
+            }
+        );
+    })
     .controller("LoginController", function($rootScope, $scope, $window, Login, Autentic) {
         $rootScope.pagina = "atleta";
         $rootScope.titulo = "Atleta";
