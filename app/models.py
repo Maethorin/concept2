@@ -395,7 +395,7 @@ class Atleta(db.Model, QueryMixin):
 
     @classmethod
     def obter_pelo_email(cls, email):
-        cls.query.filter_by(email=email).first()
+        return cls.query.filter_by(email=email).first()
 
     @classmethod
     def obter_atleta_com_inscricao_para_o_evento(cls, atleta_id, evento_slug):

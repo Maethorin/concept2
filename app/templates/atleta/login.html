@@ -10,7 +10,7 @@
                         <div class="form-group has-feedback formInput" ng-class="{'has-success': campoValido(formLogin.email), 'has-error': campoInvalido(formLogin.email)}">
                             <label for="email" class="col-sm-2 control-label">Email: <i class="fa fa-asterisk"></i></label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="email" name="email" ng-model="login.email" aria-describedby="helpEmail" required/>
+                                <input type="email" class="form-control" id="email" name="email" ng-model="login.email" aria-describedby="helpEmail" required />
                                 <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoValido(formLogin.email), 'fa-close': campoInvalido(formLogin.email)} "></span>
                                 <span id="helpEmail" class="help-block" ng-show="campoInvalido(formLogin.email)">* o campo é obrigatório *</span>
                             </div>
@@ -19,7 +19,7 @@
                             <label for="senha" class="col-sm-2 control-label">Senha: <i class="fa fa-asterisk"></i></label>
 
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" id="senha" name="senha" ng-model="login.senha" aria-describedby="helpSenha" required/>
+                                <input type="password" class="form-control" id="senha" name="senha" ng-model="login.senha" aria-describedby="helpSenha" required />
                                 <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoValido(formLogin.senha), 'fa-close': campoInvalido(formLogin.senha)} "></span>
                                 <span id="helpSenha" class="help-block" ng-show="campoInvalido(formLogin.senha)">* o campo é obrigatório *</span>
                             </div>

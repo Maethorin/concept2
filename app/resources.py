@@ -79,3 +79,14 @@ class OndeRemar(ResourceBase):
         if 'csv' in request.args:
             self.model.adiciona_do_csv()
             return {'created': True}
+
+
+class Login(Resource):
+    def post(self):
+        try:
+            g.user = models.Atleta.obter_pelo_email(request.json['email'])
+            if g.user.verifica_senha(request.json['senha']):
+                return {'resultado': 'Login Aceito'}
+        except Exception:
+            pass
+        return {'resultado': 'Login Recusado'}, 401

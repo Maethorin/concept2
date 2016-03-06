@@ -19,7 +19,7 @@ angular.module('concept2.login', ['ngRoute'])
             controller: 'PerfilController'
           })
     }])
-    .controller("LoginController", function($rootScope, $scope, Login, Autentic) {
+    .controller("LoginController", function($rootScope, $scope, $window, Login, Autentic) {
         $rootScope.pagina = "atleta";
         $rootScope.titulo = "Atleta";
         $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
@@ -44,7 +44,11 @@ angular.module('concept2.login', ['ngRoute'])
             if ($scope.formLogin.$valid) {
                 $scope.login.$save().then(
                     function () {
-
+                        Autentic.atualizaValores();
+                        $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
+                        if ($rootScope.referrer) {
+                            $window.location = $rootScope.referrer;
+                        }
                     },
                     function () {
                         $scope.loginFalhou = true;
