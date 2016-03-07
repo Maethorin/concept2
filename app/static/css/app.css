@@ -10219,11 +10219,24 @@ header .navegacao .form-busca i {
 .pagina-produtos .modelo {
   background-color: white;
 }
-.pagina-produtos .modelo img {
-  margin-left: -31px;
+.pagina-produtos .modelo .imgp {
+  margin-left: -30px;
+  width: 625px;
 }
 .pagina-produtos .descricao-caixa {
   margin-top: 20px;
+}
+.pagina-produtos .colright {
+  margin-top: 14px;
+}
+.pagina-produtos .colright .img1 {
+  margin-left: 97px;
+}
+.pagina-produtos .colright .img2 {
+  margin-left: 90px;
+}
+.pagina-produtos .colright .img3 {
+  margin-left: 92px;
 }
 
 .pagina-eventos .lista-caixa {
