@@ -10238,6 +10238,12 @@ header .navegacao .form-busca i {
 .pagina-produtos .colright .img3 {
   margin-left: 92px;
 }
+.pagina-produtos .monitor img {
+  width: 90%;
+}
+.pagina-produtos .descricao-monitor p {
+  margin-top: 60px;
+}
 
 .pagina-eventos .lista-caixa {
   border: 5px solid #092638;
