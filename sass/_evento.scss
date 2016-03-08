@@ -1,3 +1,13 @@
+.inscreva {
+    background: radial-gradient(#962156, #7a224a);
+    border: 2px solid black;
+    margin-left: auto;
+    a {
+        text-decoration: none;
+        color: white;
+    }
+}
+
 .borda-eventos {
     border: 5px solid white;
     &.sub-menu {
@@ -44,12 +54,6 @@
             color: black;
             text-align: justify;
             font-size: small
-        }
-        button {
-            background: radial-gradient(#962156, #7a224a);
-            border: 2px solid black;
-            margin-left: 70px;
-
         }
         a {
             text-decoration: none;
@@ -184,15 +188,18 @@
     }
 }
 
-#regulamento {
-    h4 {
-        font-weight: bold;
+.regulamento {
+    ol {
+        li {
+            margin: 8px 0;
+            text-align: justify;
+        }
     }
 }
 
 .line1 {
     td {
-        padding: 0px;
+        padding: 0;
     }
 }
 
@@ -203,12 +210,71 @@
 }
 
 .colocacao {
-    background: linear-gradient(to right, black, blue, indigo, violet, lavender);
-    background-attachment: fixed;
-    background-size: contain;
-
+    th {
+        text-align: center;
+    }
+    td {
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+    }
     .posicao {
         background-color: white;
+        text-align: left;
+        font-weight: normal;
+    }
+    .colocacao-1 {
+        background-color: $cor-primaria;
+        color: #EEE;
+    }
+    .colocacao-2 {
+        background-color: lighten($cor-primaria, 10%);
+        color: #EEE;
+    }
+    .colocacao-3 {
+        background-color: lighten($cor-primaria, 20%);
+        color: #EEE;
+    }
+    .colocacao-4 {
+        background-color: lighten($cor-primaria, 30%);
+    }
+    .colocacao-5 {
+        background-color: lighten($cor-primaria, 40%);
+    }
+    .colocacao-6 {
+        background-color: lighten($cor-primaria, 50%);
+    }
+    .colocacao-7 {
+        background-color: lighten($cor-primaria, 60%);
+    }
+    .colocacao-8 {
+        background-color: lighten($cor-primaria, 70%);
+    }
+    .pontuacao-1 {
+        background-color: #e50014;
+        color: #EEE;
+    }
+    .pontuacao-2 {
+        background-color: #ff6225;
+        color: #EEE;
+    }
+    .pontuacao-3 {
+        background-color: #ff9734;
+    }
+    .pontuacao-4 {
+        background-color: #ffcb44;
+    }
+    .pontuacao-5 {
+        background-color: #ffcc9d;
+    }
+    .pontuacao-6 {
+        background-color: #fcf253;
+    }
+    .pontuacao-7 {
+        background-color: #fefea6;
+    }
+    .pontuacao-8 {
+        background-color: #fff;
     }
 }
 
@@ -234,5 +300,24 @@
 .filtro-provas {
     li {
         cursor: pointer;
+    }
+}
+
+.sobre {
+    text-align: center;
+    .row {
+        p {
+            text-align: justify;
+        }
+        img {
+            width: 60%;
+            margin: 20px 0;
+        }
+        padding: 15px;
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #EEE;
+        text-align: center;
     }
 }

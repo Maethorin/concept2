@@ -10171,6 +10171,30 @@ header .navegacao .form-busca i {
 .pagina-atleta .login .form-group {
   min-height: 70px;
 }
+.pagina-atleta .login .botao {
+  text-align: center;
+  overflow: hidden;
+}
+.pagina-atleta .login .botao button {
+  float: none;
+}
+.pagina-atleta .login .panel {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #DDD;
+}
+.pagina-atleta .login .panel.panel-default {
+  border-color: #666;
+}
+.pagina-atleta .login .panel.panel-default .panel-heading {
+  text-align: center;
+  color: #DDD;
+  font-weight: bold;
+  background-color: #0f3d5e;
+  border-color: #666;
+}
+.pagina-atleta .login .panel.panel-default .panel-footer {
+  background-color: #0f3d5e;
+}
 
 .pagina-produtos {
   background: radial-gradient(circle, #0f354c, #00070f);
@@ -10285,6 +10309,15 @@ header .navegacao .form-busca i {
 .pagina-eventos .conteudo-menor {
   text-align: center;
 }
+.pagina-eventos .inscreva {
+  background: radial-gradient(#962156, #7a224a);
+  border: 2px solid black;
+  margin-left: auto;
+}
+.pagina-eventos .inscreva a {
+  text-decoration: none;
+  color: white;
+}
 .pagina-eventos .borda-eventos {
   border: 5px solid white;
 }
@@ -10331,11 +10364,6 @@ header .navegacao .form-busca i {
   color: black;
   text-align: justify;
   font-size: small;
-}
-.pagina-eventos .borda-eventos.resumo-evento button {
-  background: radial-gradient(#962156, #7a224a);
-  border: 2px solid black;
-  margin-left: 70px;
 }
 .pagina-eventos .borda-eventos.resumo-evento a {
   text-decoration: none;
@@ -10449,22 +10477,81 @@ header .navegacao .form-busca i {
   font-weight: bold;
   margin-right: 2px;
 }
-.pagina-eventos #regulamento h4 {
-  font-weight: bold;
+.pagina-eventos .regulamento ol li {
+  margin: 8px 0;
+  text-align: justify;
 }
 .pagina-eventos .line1 td {
-  padding: 0px;
+  padding: 0;
 }
 .pagina-eventos .tabela table {
   margin-left: 110px;
 }
-.pagina-eventos .colocacao {
-  background: linear-gradient(to right, black, blue, indigo, violet, lavender);
-  background-attachment: fixed;
-  background-size: contain;
+.pagina-eventos .colocacao th {
+  text-align: center;
+}
+.pagina-eventos .colocacao td {
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
 }
 .pagina-eventos .colocacao .posicao {
   background-color: white;
+  text-align: left;
+  font-weight: normal;
+}
+.pagina-eventos .colocacao .colocacao-1 {
+  background-color: #0f3d5e;
+  color: #EEE;
+}
+.pagina-eventos .colocacao .colocacao-2 {
+  background-color: #165a8a;
+  color: #EEE;
+}
+.pagina-eventos .colocacao .colocacao-3 {
+  background-color: #1d76b6;
+  color: #EEE;
+}
+.pagina-eventos .colocacao .colocacao-4 {
+  background-color: #2992dd;
+}
+.pagina-eventos .colocacao .colocacao-5 {
+  background-color: #55a8e4;
+}
+.pagina-eventos .colocacao .colocacao-6 {
+  background-color: #81bfeb;
+}
+.pagina-eventos .colocacao .colocacao-7 {
+  background-color: #add5f2;
+}
+.pagina-eventos .colocacao .colocacao-8 {
+  background-color: #d9ecf9;
+}
+.pagina-eventos .colocacao .pontuacao-1 {
+  background-color: #e50014;
+  color: #EEE;
+}
+.pagina-eventos .colocacao .pontuacao-2 {
+  background-color: #ff6225;
+  color: #EEE;
+}
+.pagina-eventos .colocacao .pontuacao-3 {
+  background-color: #ff9734;
+}
+.pagina-eventos .colocacao .pontuacao-4 {
+  background-color: #ffcb44;
+}
+.pagina-eventos .colocacao .pontuacao-5 {
+  background-color: #ffcc9d;
+}
+.pagina-eventos .colocacao .pontuacao-6 {
+  background-color: #fcf253;
+}
+.pagina-eventos .colocacao .pontuacao-7 {
+  background-color: #fefea6;
+}
+.pagina-eventos .colocacao .pontuacao-8 {
+  background-color: #fff;
 }
 .pagina-eventos .evento-horarios th {
   text-align: center;
@@ -10481,6 +10568,24 @@ header .navegacao .form-busca i {
 }
 .pagina-eventos .filtro-provas li {
   cursor: pointer;
+}
+.pagina-eventos .sobre {
+  text-align: center;
+}
+.pagina-eventos .sobre .row {
+  padding: 15px;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #EEE;
+  text-align: center;
+}
+.pagina-eventos .sobre .row p {
+  text-align: justify;
+}
+.pagina-eventos .sobre .row img {
+  width: 60%;
+  margin: 20px 0;
 }
 
 .pagina-comunidade .titulo h1 {

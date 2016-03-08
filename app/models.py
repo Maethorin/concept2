@@ -141,7 +141,7 @@ class Evento(db.Model, QueryMixin):
     imagem_destaque = db.Column(db.String())
     imagem_logo = db.Column(db.String())
     imagem_propaganda = db.Column(db.String())
-    descricao = db.Column(db.String())
+    descricao = db.Column(db.Text())
     em_destaque = db.Column(db.Boolean)
     provas = relationship("Prova", back_populates="evento")
 
