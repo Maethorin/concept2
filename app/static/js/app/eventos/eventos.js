@@ -86,6 +86,7 @@ angular.module('concept2.eventos', ['ngRoute'])
         $scope.slug = $routeParams.slug;
         $scope.itemMenu = $routeParams.itemMenu || 'sobre';
         $scope.template = '/angular/evento/{0}.html'.format([$scope.itemMenu]);
+        $scope.urlLojaInscricao = 'https://concept2.com.br/shop/index.php?route=product/product&product_id=125';
         $rootScope.pagina = "eventos";
         $scope.itensMenu = [
             {"slug": "sobre", "nome": "Sobre"},
@@ -153,7 +154,6 @@ angular.module('concept2.eventos', ['ngRoute'])
 
             if ($scope.itemMenu == 'inscricao') {
                 $scope.mensagemErro = '';
-                $scope.urlLojaInscricao = 'https://concept2.com.br/shop/index.php?route=product/product&product_id=125';
                 $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-9]/, 'M': /[0-1]/, 'm': /[0-2]/}};
                 $scope.tiposAfiliacoes = [
                     {'codigo': 'clube', 'label': 'Clube'},
