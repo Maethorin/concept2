@@ -164,7 +164,7 @@
                         <ul class="provas-selecionadas" id="provas" ng-class="{'has-success': campoEstaValido(formInscricao.provas), 'has-error': campoEstaInvalido(formInscricao.provas)}">
                             <li ng-repeat="provaSelecionada in atleta.inscricao.provas" ng-init="prova = obterProva(provaSelecionada)">
                                 <span role="presentation" ng-click="removeProva(prova.id)">×</span>
-                                {{prova.dia}} {{prova.hora}} - {{prova.label}} - {{prova.subCategoria}}
+                                {{prova.dia}} {{prova.hora}} - {{prova.label}} - {{prova.subCategoria.label}}
                             </li>
                         </ul>
                         <input type="hidden" name="provas" ng-model="atleta.provaSelecionada" required/>
@@ -196,7 +196,7 @@
                                     <td>{{prova.dia}}</td>
                                     <td>{{prova.hora}}</td>
                                     <td>{{prova.label}}</td>
-                                    <td>{{prova.subCategoria}}</td>
+                                    <td>{{prova.subCategoria.label}}</td>
                                     <td>{{prova.observacao}}</td>
                                 </tr>
                                 </tbody>

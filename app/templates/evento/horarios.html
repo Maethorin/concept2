@@ -1,1 +1,115 @@
-HORARIOS
+<div class="row">
+    <h3 class="text-center">Horários do evento</h3>
+        <div class="alert alert-info" role="alert">
+            Filtre as provas usando os controles abaixo
+        </div>
+    <div class="filtro-provas">
+        <div class="col-md-2">
+            <div class="form-group">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ filtro.distancia || 'Distância'}} <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ng-click="filtraProvas('D', null)"><a>Todos</a></li>
+                        <li ng-click="filtraProvas('D', 500)"><a>500m</a></li>
+                        <li ng-click="filtraProvas('D', 1000)"><a>1000m</a></li>
+                        <li ng-click="filtraProvas('D', 2000)"><a>2000m</a></li>
+                        <li ng-click="filtraProvas('D', 4000)"><a>4000m</a></li>
+                        <li ng-click="filtraProvas('D', 5000)"><a>5000m</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ filtro.tipo || 'Tipo'}} <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ng-click="filtraProvas('T', null)"><a>Todos</a></li>
+                        <li ng-click="filtraProvas('T', 'Individual')"><a>Individual</a></li>
+                        <li ng-click="filtraProvas('T', 'Dupla')"><a>Dupla</a></li>
+                        <li ng-click="filtraProvas('T', 'Revezamento')"><a>Revezamento</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ filtro.sexo || 'Sexo'}} <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ng-click="filtraProvas('S', null)"><a>Todos</a></li>
+                        <li ng-click="filtraProvas('S', 'Masc')"><a>Masc</a></li>
+                        <li ng-click="filtraProvas('S', 'Fem')"><a>Fem</a></li>
+                        <li ng-click="filtraProvas('S', 'Misto')"><a>Misto</a></li>
+                        <li ng-click="filtraProvas('S', 'Aberto')"><a>Aberto</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ filtro.idade || 'Idade'}} <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li ng-click="filtraProvas('I', null)"><a>Todas</a></li>
+                        <li ng-click="filtraProvas('I', 'Aberto')"><a>Aberto</a></li>
+                        <li ng-click="filtraProvas('I', '11-12')"><a>11-12</a></li>
+                        <li ng-click="filtraProvas('I', '13-14')"><a>13-14</a></li>
+                        <li ng-click="filtraProvas('I', '15-16')"><a>15-16</a></li>
+                        <li ng-click="filtraProvas('I', '17-18')"><a>17-18</a></li>
+                        <li ng-click="filtraProvas('I', 'Sub-23')"><a>Sub-23</a></li>
+                        <li ng-click="filtraProvas('I', '35-39')"><a>35-39</a></li>
+                        <li ng-click="filtraProvas('I', '40-49')"><a>40-49</a></li>
+                        <li ng-click="filtraProvas('I', '50-59')"><a>50-59</a></li>
+                        <li ng-click="filtraProvas('I', '60-69')"><a>60-69</a></li>
+                        <li ng-click="filtraProvas('I', '70+')"><a>70+</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-warning" ng-click="filtraProvas(null)">Limpar</button>
+        </div>
+    </div>
+</div>
+<div class="row evento-horarios" ng-repeat="data in datas">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4>{{data.dia}}</h4>
+        </div>
+        <div class="panel-body">
+            <div class="table-responsive tabela-provas">
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Prova</th>
+                        <th>Categoria</th>
+                        <th>Idade</th>
+                        <th>Sexo</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="prova in data.provas" ng-init="ehIntervalo = prova.distancia == '0'" ng-class="{'intervalo': ehIntervalo}">
+                        <td>{{prova.hora}}</td>
+                        <td colspan="{{ ehIntervalo ? '5' : '1' }}"><span ng-if="!ehIntervalo">{{prova.distancia}}m</span><span ng-if="ehIntervalo">{{prova.observacao}}</span></td>
+                        <td ng-if="!ehIntervalo">{{prova.subCategoria.categoria.nome}} {{prova.tipo}}</td>
+                        <td ng-if="!ehIntervalo != '0'">{{prova.subCategoria.nome}}</td>
+                        <td ng-if="!ehIntervalo != '0'">{{prova.sexo}}</td>
+                        <td ng-if="!ehIntervalo != '0'"><a href="/#/eventos/{{slug}}/inscricao?prova={{prova.codigo}}">inscrever-se</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

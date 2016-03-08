@@ -10289,7 +10289,7 @@ header .navegacao .form-busca i {
   border: 5px solid white;
 }
 .pagina-eventos .borda-eventos.sub-menu {
-  background: linear-gradient(#2384bb, #092942, #092942, #2384bb);
+  background-color: #092942;
 }
 .pagina-eventos .borda-eventos.sub-menu li {
   font-family: 'Open Sans', sans-serif;
@@ -10347,6 +10347,7 @@ header .navegacao .form-busca i {
   margin-right: -15px;
   padding: 15px;
   min-height: 245px;
+  overflow: hidden;
 }
 .pagina-eventos .conteudo-evento {
   background-color: white;
@@ -10464,6 +10465,22 @@ header .navegacao .form-busca i {
 }
 .pagina-eventos .colocacao .posicao {
   background-color: white;
+}
+.pagina-eventos .evento-horarios th {
+  text-align: center;
+}
+.pagina-eventos .evento-horarios tr.intervalo {
+  font-weight: bold;
+}
+.pagina-eventos .evento-horarios tr td {
+  text-align: center;
+}
+.pagina-eventos .evento-horarios .panel-heading {
+  text-align: center;
+  font-weight: bold;
+}
+.pagina-eventos .filtro-provas li {
+  cursor: pointer;
 }
 
 .pagina-comunidade .titulo h1 {

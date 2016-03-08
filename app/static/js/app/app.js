@@ -29,6 +29,17 @@ String.prototype.format = function(data) {
   return format(this, data);
 };
 
+var nomesMeses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+var nomesDias = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+
+Date.prototype.nomeMes = function() {
+    return nomesMeses[this.getMonth()];
+};
+
+Date.prototype.nomeDia = function() {
+    return nomesDias[this.getDay()];
+};
+
 angular.module('concept2', [
     'ngRoute',
     'ngResource',

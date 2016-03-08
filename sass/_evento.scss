@@ -1,7 +1,7 @@
 .borda-eventos {
     border: 5px solid white;
     &.sub-menu {
-        background: linear-gradient(#2384bb, #092942, #092942, #2384bb);
+        background-color: #092942;
         li {
             font-family: 'Open Sans', sans-serif;
             font-size: 16px;
@@ -63,6 +63,7 @@
         margin-right: -($grid-gutter-width / 2);
         padding: ($grid-gutter-width / 2);
         min-height: 245px;
+        overflow: hidden;
     }
 }
 
@@ -208,5 +209,30 @@
 
     .posicao {
         background-color: white;
+    }
+}
+
+.evento-horarios {
+    th {
+        text-align: center;
+    }
+    tr {
+        &.intervalo {
+            font-weight: bold;
+
+        }
+        td {
+            text-align: center;
+        }
+    }
+    .panel-heading {
+        text-align: center;
+        font-weight: bold;
+    }
+}
+
+.filtro-provas {
+    li {
+        cursor: pointer;
     }
 }

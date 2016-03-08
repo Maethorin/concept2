@@ -21,12 +21,12 @@ angular.module('concept2.login', ['ngRoute'])
           })
     }])
     .controller("LogoutController", function($rootScope, $scope, $window, Login, Autentic) {
+        Autentic.limpaValores();
         var login = new Login();
         login.$delete().then(
             function () {
-                Autentic.limpaValores();
                 Autentic.atualizaValores();
-                $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
+                $rootScope.atletaLogado = false;
                 if ($rootScope.referrer) {
                     $window.location = $rootScope.referrer;
                 }

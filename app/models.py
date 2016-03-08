@@ -183,6 +183,12 @@ class Categoria(db.Model, QueryMixin):
     def codigo(self):
         return self.nome.upper()[:3]
 
+    def as_dict(self):
+        return {
+            'nome': self.nome,
+            'codigo': self.codigo
+        }
+
 
 class SubCategoria(db.Model, QueryMixin):
     __tablename__ = 'sub_categorias'
@@ -199,6 +205,14 @@ class SubCategoria(db.Model, QueryMixin):
     @property
     def label(self):
         return u'{} {}'.format(self.categoria.nome, self.nome)
+
+    def as_dict(self):
+        return {
+            'nome': self.nome,
+            'codigo': self.codigo,
+            'label': self.label,
+            'categoria': self.categoria.as_dict()
+        }
 
 prova_inscricao = db.Table(
     'provas_inscricoes',
@@ -252,8 +266,8 @@ class Prova(db.Model, QueryMixin):
         distancia = self.distancia
         tipo = self.tipo.value if self.tipo else ''
         sexo = self.sexo.value if self.sexo else ''
-        sub_categoria = self.sub_categoria.label if self.sub_categoria else ''
         observacao = self.observacao if self.observacao else ''
+        sub_categoria = self.sub_categoria.as_dict() if self.sub_categoria else {}
         return {
             'id': self.id,
             'codigo': self.codigo,
