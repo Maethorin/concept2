@@ -9,7 +9,7 @@
                         </div>
                         <div class="panel-body destaque">
                             <div class="col-md-4 descricao-destaque">
-                                <p ng-bind-html="trataHtml(evento.descricao)"></p>
+                                <p ng-bind-html="trataHtml(evento.resumo)"></p>
                                 <div class="right"><a ng-href="/#/eventos/{{evento.slug}}">Saiba mais...</a></div>
                             </div>
                             <img ng-src="/static/img/eventos/{{evento.imagemLista}}">
@@ -24,7 +24,7 @@
                             <h3>{{evento.titulo}}</h3>
                         </div>
                         <div class="panel-body conteudo-menor">
-                            <p style="text-align: left">{{evento.descricao}}</p>
+                            <p style="text-align: left">{{evento.resumo}}</p>
                             <img ng-src="{{evento.imagemLista}}">
 
                             <div class="link">

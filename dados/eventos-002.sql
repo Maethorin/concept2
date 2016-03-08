@@ -55,3 +55,7 @@ UPDATE public.eventos SET
   {"nome":"Revezamento Aberto",  "pontuacao":[{"colocacao": 1, "pontos":80}, {"colocacao": 2, "pontos":64}, {"colocacao": 3, "pontos":48}, {"colocacao": 4, "pontos":40}, {"colocacao": 5, "pontos":32}, {"colocacao": 6, "pontos":24}, {"colocacao": 7, "pontos":16}, {"colocacao": 8, "pontos":8}]}
 ]'
 WHERE slug = 'cabra-ri';
+
+UPDATE public.eventos SET
+    resumo = 'O 8º Campeonato Brasileiro de Remo Indoor é o maior festival de Remo Indoor do Brasil, com 2 dias de evento, diversas categorias por idade, provas coletivas e um grande prêmio para a equipe campeã.'
+WHERE slug = 'cabra-ri';

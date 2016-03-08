@@ -143,6 +143,7 @@ class Evento(db.Model, QueryMixin):
     imagem_logo = db.Column(db.String())
     imagem_propaganda = db.Column(db.String())
     descricao = db.Column(db.Text())
+    resumo = db.Column(db.Text())
     em_destaque = db.Column(db.Boolean)
     pontuacao = db.Column(postgresql.JSON)
     provas = relationship("Prova", back_populates="evento")
@@ -172,7 +173,8 @@ class Evento(db.Model, QueryMixin):
             "descricao": self.descricao,
             "destaque": self.em_destaque,
             "provas": self.lista_provas_dict(),
-            "pontuacao": self.pontuacao
+            "pontuacao": self.pontuacao,
+            "resumo": self.resumo
         }
 
 
