@@ -38,7 +38,7 @@
             text-align: center;
             font-weight: bold;
             font-size: 19px;
-            margin: 20px 0;
+            margin: 0 0 10px 0;
         }
         h4 {
             color: black;
@@ -52,14 +52,13 @@
         }
         p {
             color: black;
-            text-align: justify;
             font-size: small
         }
         a {
             text-decoration: none;
             color: white;
         }
-
+        text-align: center;
     }
     .conteudo-interno {
         border: 2px solid #888;
