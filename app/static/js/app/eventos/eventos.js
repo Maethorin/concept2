@@ -98,10 +98,6 @@ angular.module('concept2.eventos', ['ngRoute'])
             return $sce.trustAsHtml(html);
         };
         $scope.colocacoes = [1, 2, 3, 4, 5, 6, 7, 8];
-        $scope.regulamentos = [];
-        $http.get('/static/js/app/jsons/regulamento.json').then(function(response) {
-            $scope.regulamentos = response.data;
-        });
         function exibeValidacoes(formInscricao) {
             angular.forEach(formInscricao, function(field, fieldName) {
                 if (field !== undefined && field.$validate !== undefined) {

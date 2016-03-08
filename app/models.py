@@ -6,6 +6,7 @@ import googlemaps
 import jwt
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects import postgresql
 from passlib.apps import custom_app_context
 
 
@@ -143,6 +144,7 @@ class Evento(db.Model, QueryMixin):
     imagem_propaganda = db.Column(db.String())
     descricao = db.Column(db.Text())
     em_destaque = db.Column(db.Boolean)
+    pontuacao = db.Column(postgresql.JSON)
     provas = relationship("Prova", back_populates="evento")
 
     def lista_provas_dict(self):
@@ -169,7 +171,8 @@ class Evento(db.Model, QueryMixin):
             "imagemPropaganda": self.imagem_propaganda,
             "descricao": self.descricao,
             "destaque": self.em_destaque,
-            "provas": self.lista_provas_dict()
+            "provas": self.lista_provas_dict(),
+            "pontuacao": self.pontuacao
         }
 
 

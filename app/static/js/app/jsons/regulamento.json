@@ -1,7 +1,0 @@
-[
-  {"nome":"1x- individual", "pontuacao":[{"colocacao": 1, "pontos":10}, {"colocacao": 2, "pontos":8}, {"colocacao": 3, "pontos":6}, {"colocacao": 4, "pontos":5}, {"colocacao": 5, "pontos":4}, {"colocacao": 6, "pontos":3}, {"colocacao": 7, "pontos":2}, {"colocacao": 8, "pontos":1}]},
-  {"nome":"2x- dupla",  "pontuacao":[{"colocacao": 1, "pontos":20}, {"colocacao": 2, "pontos":16}, {"colocacao": 3, "pontos":12}, {"colocacao": 4, "pontos":10}, {"colocacao": 5, "pontos":8}, {"colocacao": 6, "pontos":6}, {"colocacao": 7, "pontos":4}, {"colocacao": 8, "pontos":2}]},
-  {"nome":"4x- quadra",  "pontuacao":[{"colocacao": 1, "pontos":40}, {"colocacao": 2, "pontos":32}, {"colocacao": 3, "pontos":24}, {"colocacao": 4, "pontos":20}, {"colocacao": 5, "pontos":16}, {"colocacao": 6, "pontos":12}, {"colocacao": 7, "pontos":8}, {"colocacao": 8, "pontos":4}]},
-  {"nome":"Revezamento Aberto",  "pontuacao":[{"colocacao": 1, "pontos":80}, {"colocacao": 2, "pontos":64}, {"colocacao": 3, "pontos":48}, {"colocacao": 4, "pontos":40}, {"colocacao": 5, "pontos":32}, {"colocacao": 6, "pontos":24}, {"colocacao": 7, "pontos":16}, {"colocacao": 8, "pontos":8}]}
-
-]

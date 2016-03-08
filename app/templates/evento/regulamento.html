@@ -68,9 +68,9 @@
             </tr>
             </thead>
             <tbody>
-                <tr ng-controller="EventoController" ng-repeat="regulamento in regulamentos">
-                    <td class="posicao">{{regulamento.nome}}</td>
-                    <td ng-repeat="pontuacao in regulamento.pontuacao" class="pontuacao-{{pontuacao.colocacao}}">{{pontuacao.pontos}}</td>
+                <tr ng-controller="EventoController" ng-repeat="pontuacao in evento.pontuacao">
+                    <td class="posicao">{{pontuacao.nome}}</td>
+                    <td ng-repeat="pontuacao in pontuacao.pontuacao" class="pontuacao-{{pontuacao.colocacao}}">{{pontuacao.pontos}}</td>
                 </tr>
             </tbody>
         </table>
