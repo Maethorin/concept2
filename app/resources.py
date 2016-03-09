@@ -6,6 +6,10 @@ from flask_restful import Resource
 import models
 
 
+def usuario_esta_logado():
+    return getattr(g, 'user', None) is not None
+
+
 class ResourceBase(Resource):
     model = None
 
@@ -32,6 +36,8 @@ class Atletas(ResourceBase):
     model = models.Atleta
 
     def get(self, item_id=None, evento_slug=None):
+        if not usuario_esta_logado():
+            return {'result': 'Não autorizado'}, 401
         if evento_slug and item_id:
             return self.model.obter_atleta_com_inscricao_para_o_evento(item_id, evento_slug).as_dict()
         return super(Atletas, self).get(item_id)
@@ -47,6 +53,8 @@ class Atletas(ResourceBase):
             return {'mensagemErro': u'Ocorreu um erro e não pudemos gravar a inscrição. Por favor, tente mais tarde.'}, 500
 
     def put(self, item_id):
+        if not usuario_esta_logado():
+            return {'result': 'Não autorizado'}, 401
         try:
             self.model.atualiza_de_dicionario(item_id, request.json)
         except KeyError as ex:
@@ -59,9 +67,13 @@ class Inscricoes(Resource):
     model = models.Inscricao
 
     def get(self, atleta_id, inscricao_id=None):
+        if not usuario_esta_logado():
+            return {'result': 'Não autorizado'}, 401
         return self.model.obter_atleta(atleta_id).obter_inscricao(inscricao_id).as_dict()
 
     def put(self, atleta_id, inscricao_id):
+        if not usuario_esta_logado():
+            return {'result': 'Não autorizado'}, 401
         return models.Atleta.obter_atleta(atleta_id).atualiza_inscricao_de_dicionario(inscricao_id, request.json)
 
     def options(self):
