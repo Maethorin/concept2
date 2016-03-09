@@ -228,7 +228,6 @@ angular.module('concept2.eventos', ['ngRoute'])
                         prova.selecionada = false;
                         if ($scope.provaDaQueryString && $scope.provaDaQueryString.id == prova.id) {
                             $scope.provasEventos.onItemSelect($scope.provaDaQueryString);
-                            $scope.provaDaQueryString = null;
                         }
                         angular.forEach($scope.atleta.inscricao.provas, function(inscricaoProva) {
                             if (prova.id == inscricaoProva.id) {
@@ -331,6 +330,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                         }
                         if ($scope.limpaSelecaoProvas) {
                             limpaSelecaoProvas();
+                            $scope.selecionaProvas();
                             $scope.limpaSelecaoProvas = false;
                         }
                     }
