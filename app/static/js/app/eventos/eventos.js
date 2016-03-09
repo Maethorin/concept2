@@ -128,6 +128,10 @@ angular.module('concept2.eventos', ['ngRoute'])
         $scope.urlLojaInscricao = 'https://concept2.com.br/shop/index.php?route=product/product&product_id=125';
         $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-9]/, 'M': /[0-1]/, 'm': /[0-2]/}};
         $rootScope.pagina = "eventos";
+        $scope.exibeAjudaPedido = function() {
+            $('#ajudaPedido').popover();
+            $('#ajudaPedido').popover('toggle');
+        };
         $scope.itensMenu = [
             {"slug": "sobre", "nome": "Sobre"},
             {"slug": "horarios", "nome": "Horários"},

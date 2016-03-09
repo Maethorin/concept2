@@ -129,9 +129,9 @@
         <fieldset>
             <legend>Dados da inscrição</legend>
             <div class="row">
-                <div class="col-md-3 campo">
+                <div class="col-md-3 campo pedido-numero">
                     <div class="form-group">
-                        <label class="control-label" for="pedidoNumero">Número do pedido:</label>
+                        <label class="control-label" for="pedidoNumero">Número do pedido:</label> <button type="button" id="ajudaPedido" data-toggle="popover" data-trigger="focus" title="Pedido Número" data-content="Esse é o número do seu pedido após realizar a compra da inscrição na loja on-line. Você pode fazer o cadastro antes e depois atualizar com esse número após o pagamento."><i ng-click="exibeAjudaPedido()" class="fa fa-question-circle ajuda-pedido"></i></button>
                         <input type="text" class="form-control" name="pedidoNumero" id="pedidoNumero" ng-model="atleta.inscricao.pedidoNumero"/>
                     </div>
                 </div>

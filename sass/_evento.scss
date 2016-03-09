@@ -96,6 +96,29 @@
             overflow: auto;
         }
         .campo {
+            &.pedido-numero {
+                .popover {
+                    width: 300px;
+                    h3 {
+                        margin: 0;
+                    }
+                }
+            }
+            #ajudaPedido {
+                padding: 0;
+                width: 16px;
+                height: 16px;
+                border-radius: 10px;
+                border: none;
+            }
+            .ajuda-pedido {
+                color: darken($state-info-border, 40%);
+                font-size: 17px;
+                cursor: pointer;
+                &:hover {
+                    color: darken($state-info-border, 35%);
+                }
+            }
             .form-group {
                 min-height: 80px;
             }

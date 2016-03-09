@@ -10398,6 +10398,27 @@ header .navegacao .form-busca i {
   max-height: 300px;
   overflow: auto;
 }
+.pagina-eventos .inscricao .form-inscricao .campo.pedido-numero .popover {
+  width: 300px;
+}
+.pagina-eventos .inscricao .form-inscricao .campo.pedido-numero .popover h3 {
+  margin: 0;
+}
+.pagina-eventos .inscricao .form-inscricao .campo #ajudaPedido {
+  padding: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 10px;
+  border: none;
+}
+.pagina-eventos .inscricao .form-inscricao .campo .ajuda-pedido {
+  color: #27a1b9;
+  font-size: 17px;
+  cursor: pointer;
+}
+.pagina-eventos .inscricao .form-inscricao .campo .ajuda-pedido:hover {
+  color: #2bb3ce;
+}
 .pagina-eventos .inscricao .form-inscricao .campo .form-group {
   min-height: 80px;
 }
