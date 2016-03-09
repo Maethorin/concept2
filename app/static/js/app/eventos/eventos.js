@@ -222,6 +222,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                         $scope.atleta.provaSelecionada = null;
                     }
                     $scope.campoProvaTocado = true;
+                    $scope.provaDaQueryString = null;
                 };
                 $scope.selecionaProvas = function() {
                     angular.forEach($scope.provasDropdownList, function(prova) {
