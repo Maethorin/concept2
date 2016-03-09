@@ -40,7 +40,7 @@ Date.prototype.nomeDia = function() {
     return nomesDias[this.getDay()];
 };
 
-var urlBackEnd = 'https://concept2-staging.herokuapp.com';
+var urlBackEnd = 'http://localhost:8080';//'https://concept2-staging.herokuapp.com';
 
 angular.module('concept2', [
     'ngRoute',

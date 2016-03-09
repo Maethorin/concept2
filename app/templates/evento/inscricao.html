@@ -74,7 +74,7 @@
                 <div class="col-md-3 campo">
                     <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricao.cpf), 'has-error': campoEstaInvalido(formInscricao.cpf)}">
                         <label class="control-label" for="cpf">CPF: <i class="fa fa-asterisk"></i></label>
-                        <input type="text" class="form-control" id="cpf" name="cpf" ng-model="atleta.cpf" aria-describedby="helpCpf" ui-mask="999.999.999-99" required/>
+                        <input type="text" class="form-control" id="cpf" name="cpf" ng-model="atleta.cpf" aria-describedby="helpCpf" ui-mask="999.999.999-99" required cpf-valido/>
                         <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricao.cpf), 'fa-close': campoEstaInvalido(formInscricao.cpf)} "></span>
                         <span id="helpCpf" class="help-block" ng-show="campoEstaInvalido(formInscricao.cpf)">* O CPF deve ser válido *</span>
                     </div>
