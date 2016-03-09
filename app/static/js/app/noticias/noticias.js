@@ -4,7 +4,7 @@ angular.module('concept2.noticias', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
       $routeProvider
           .when('/noticias', {
-            templateUrl: '/angular/noticias.html',
+            templateUrl: '{0}/angular/noticias.html'.format([urlBackEnd]),
             controller: 'NoticiasController'
           })
     }])

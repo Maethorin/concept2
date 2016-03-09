@@ -3,7 +3,7 @@ angular.module('concept2.comunidade', [])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/comunidade', {
-                templateUrl: '/angular/comunidade.html',
+                templateUrl: '{0}/angular/comunidade.html'.format([urlBackEnd]),
                 controller: 'ComunidadeController'
             })
     }])
@@ -46,7 +46,7 @@ angular.module('concept2.comunidade', [])
                 $scope.map.zoom = 14;
             }
         };
-        $scope.searchbox = { template: '/angular/comunidade/search-box.html', events:events};
+        $scope.searchbox = { template: '{0}/angular/comunidade/search-box.html'.format([urlBackEnd]), events:events};
         $scope.ponto = {};
         $scope.alternaTipo = function(modalidade) {
             modalidade.ativo = !modalidade.ativo;

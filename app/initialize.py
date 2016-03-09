@@ -27,7 +27,9 @@ def add_header(r):
     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     r.headers["Pragma"] = "no-cache"
     r.headers["Expires"] = "0"
-    # r.headers['Cache-Control'] = 'max-age=0'
+    r.headers['Access-Control-Allow-Origin'] = '*'
+    r.headers['Access-Control-Allow-Methods'] = ['GET', 'PUT', 'POST', 'DELETE']
+    r.headers['Access-Control-Max-Age'] = 21600
     return r
 
 

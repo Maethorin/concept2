@@ -3,15 +3,15 @@ angular.module('concept2.eventos', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/eventos', {
-                templateUrl: '/angular/eventos.html',
+                templateUrl: '{0}/angular/eventos.html'.format([urlBackEnd]),
                 controller: 'EventosController'
             })
             .when('/eventos/:slug', {
-                templateUrl: '/angular/evento/evento.html',
+                templateUrl: '{0}/angular/evento/evento.html'.format([urlBackEnd]),
                 controller: 'EventoController'
             })
             .when('/eventos/:slug/:itemMenu', {
-                templateUrl: '/angular/evento/evento.html',
+                templateUrl: '{0}/angular/evento/evento.html'.format([urlBackEnd]),
                 controller: 'EventoController'
             })
     }])
@@ -85,7 +85,7 @@ angular.module('concept2.eventos', ['ngRoute'])
     .controller('EventoController', function($rootScope, $scope, $routeParams, $http, $sce, $filter, $window, $location, Evento, Atleta, Inscricao, Autentic) {
         $scope.slug = $routeParams.slug;
         $scope.itemMenu = $routeParams.itemMenu || 'sobre';
-        $scope.template = '/angular/evento/{0}.html'.format([$scope.itemMenu]);
+        $scope.template = '{0}/angular/evento/{1}.html'.format([urlBackEnd, $scope.itemMenu]);
         $scope.urlLojaInscricao = 'https://concept2.com.br/shop/index.php?route=product/product&product_id=125';
         $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-9]/, 'M': /[0-1]/, 'm': /[0-2]/}};
         $rootScope.pagina = "eventos";

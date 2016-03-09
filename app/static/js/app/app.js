@@ -40,6 +40,8 @@ Date.prototype.nomeDia = function() {
     return nomesDias[this.getDay()];
 };
 
+var urlBackEnd = 'http://concetp2-staging.herokuapp.com';  //concetp2-staging.herokuapp.com
+
 angular.module('concept2', [
     'ngRoute',
     'ngResource',
@@ -57,10 +59,18 @@ angular.module('concept2', [
     'concept2.suporte',
     'concept2.contato'
 ])
-.run(function ($rootScope, Autentic) {
-    $rootScope.$on('$locationChangeSuccess', function(evt, absNewUrl, absOldUrl) {
-        $rootScope.referrer = absOldUrl;
+    .config(function($sceDelegateProvider) {
+        $sceDelegateProvider.resourceUrlWhitelist([
+            'self',
+            '{0}/**'.format([urlBackEnd])
+        ])
+    })
+    .run(function ($rootScope, Autentic) {
+        $rootScope.pagina = "";
+        $rootScope.titulo = "";
+        $rootScope.$on('$locationChangeSuccess', function(evt, absNewUrl, absOldUrl) {
+            $rootScope.referrer = absOldUrl;
+        });
+        Autentic.atualizaValores();
+        $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
     });
-    Autentic.atualizaValores();
-    $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
-});

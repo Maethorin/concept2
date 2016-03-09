@@ -4,19 +4,19 @@ angular.module('concept2.login', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
       $routeProvider
           .when('/atleta/login', {
-            templateUrl: '/angular/atleta/login.html',
+            templateUrl: '{0}/angular/atleta/login.html'.format([urlBackEnd]),
             controller: 'LoginController'
           })
           .when('/atleta/logout', {
-            templateUrl: '/angular/home.html',
+            templateUrl: '{0}/angular/home.html'.format([urlBackEnd]),
             controller: 'LogoutController'
           })
           .when('/atleta/perfil', {
-            templateUrl: '/angular/atleta/perfil.html',
+            templateUrl: '{0}/angular/atleta/perfil.html'.format([urlBackEnd]),
             controller: 'PerfilController'
           })
           .when('/atleta/inscricoes', {
-            templateUrl: '/angular/atleta/inscricoes.html',
+            templateUrl: '{0}/angular/atleta/inscricoes.html'.format([urlBackEnd]),
             controller: 'PerfilController'
           })
     }])

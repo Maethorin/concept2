@@ -13,22 +13,22 @@ angular.module('concept2.services', [])
             userId: $cookies.get('USER_ID')
         }
     })
-    .factory('OndeRemar', function($resource) {
-        return $resource('/api/onde-remar/:id');
+    .factory('OndeRemar', function($rootScope, $resource) {
+        return $resource('{0}/api/onde-remar/:id'.format([urlBackEnd]));
     })
-    .factory('Atleta', function($resource) {
-        return $resource('/api/atletas/:id/:evento_slug');
+    .factory('Atleta', function($rootScope, $resource) {
+        return $resource('{0}/api/atletas/:id/:evento_slug'.format([urlBackEnd]));
     })
-    .factory('Login', function($resource) {
-        return $resource('/api/login');
+    .factory('Login', function($rootScope, $resource) {
+        return $resource('{0}/api/login'.format([urlBackEnd]));
     })
-    .factory('Inscricao', function($resource) {
+    .factory('Inscricao', function($rootScope, $resource) {
         return $resource(
-            '/api/atletas/:id/inscricoes/:inscricao_id',
+            '{0}/api/atletas/:id/inscricoes/:inscricao_id'.format([urlBackEnd]),
             null,
             {'update': {method: 'PUT'}}
         );
     })
-    .factory('Evento', function($resource) {
-        return $resource('/api/eventos/:id');
+    .factory('Evento', function($rootScope, $resource) {
+        return $resource('{0}/api/eventos/:id'.format([urlBackEnd]));
     });

@@ -3,15 +3,15 @@ angular.module('concept2.produtos', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
       $routeProvider
           .when('/produtos', {
-            templateUrl: '/angular/produtos.html',
+            templateUrl: '{0}/angular/produtos.html'.format([urlBackEnd]),
             controller: 'ProdutosController'
           })
           .when('/produtos/:slug', {
-              templateUrl: '/angular/produtos/modelod.html',
+              templateUrl: '{0}/angular/produtos/modelod.html'.format([urlBackEnd]),
               controller: 'ModeloController'
           })
           .when('/produtos/:slug/:modeloMenu', {
-             templateUrl: '/angular/produtos/modelod.html',
+             templateUrl: '{0}/angular/produtos/modelod.html'.format([urlBackEnd]),
               controller: 'ModeloController'
           })
     }])
@@ -20,9 +20,9 @@ angular.module('concept2.produtos', ['ngRoute'])
         $rootScope.titulo = "Produtos"
     }])
 .controller('ModeloController', function($routeParams, $rootScope, $scope, $sce){
-     $scope.slug = $routeParams.slug
+     $scope.slug = $routeParams.slug;
      $scope.modeloMenu = $routeParams.modeloMenu || 'sobre';
-     $scope.template = '/angular/produtos/{0}.html'.format([$scope.modeloMenu]);
+     $scope.template = '{0}/angular/produtos/{1}.html'.format([urlBackEnd, $scope.modeloMenu]);
      $rootScope.pagina = "produtos";
      $scope.modelosMenu = [
          {"slug": "sobre", "nome": "Sobre"},
@@ -32,4 +32,4 @@ angular.module('concept2.produtos', ['ngRoute'])
   $scope.trataHtml = function(html) {
             return $sce.trustAsHtml(html);
         };
-})
+});
