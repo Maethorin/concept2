@@ -40,7 +40,7 @@ Date.prototype.nomeDia = function() {
     return nomesDias[this.getDay()];
 };
 
-var urlBackEnd = 'http://concetp2-staging.herokuapp.com';  //concetp2-staging.herokuapp.com
+var urlBackEnd = 'https://concept2-staging.herokuapp.com';  //concetp2-staging.herokuapp.com
 
 angular.module('concept2', [
     'ngRoute',
@@ -51,13 +51,13 @@ angular.module('concept2', [
     'angularjs-dropdown-multiselect',
     'concept2.services',
     'concept2.login',
-    'concept2.home',
-    'concept2.produtos',
-    'concept2.noticias',
-    'concept2.comunidade',
+    //'concept2.home',
+    //'concept2.produtos',
+    //'concept2.noticias',
+    //'concept2.comunidade',
     'concept2.eventos',
-    'concept2.suporte',
-    'concept2.contato'
+    //'concept2.suporte',
+    //'concept2.contato'
 ])
     .config(function($sceDelegateProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([

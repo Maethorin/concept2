@@ -20,6 +20,9 @@ class ResourceBase(Resource):
             return self.obter_lista()
         return self.obter_item(item_id)
 
+    def options(self):
+        return {'result': True}
+
 
 class Produtos(ResourceBase):
     model = models.Produto
@@ -61,6 +64,9 @@ class Inscricoes(Resource):
     def put(self, atleta_id, inscricao_id):
         return models.Atleta.obter_atleta(atleta_id).atualiza_inscricao_de_dicionario(inscricao_id, request.json)
 
+    def options(self):
+        return {'result': True}
+
 
 class Eventos(ResourceBase):
     model = models.Evento
@@ -93,3 +99,6 @@ class Login(Resource):
         except Exception:
             pass
         return {'resultado': 'Login Recusado'}, 401
+
+    def options(self):
+        return {'result': True}
