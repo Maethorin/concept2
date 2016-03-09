@@ -83,7 +83,7 @@ angular.module('concept2.eventos', ['ngRoute'])
         $scope.eventos = Evento.query();
     })
     .controller('EventoController', function($rootScope, $scope, $routeParams, $http, $sce, $filter, $window, $location, Evento, Atleta, Inscricao, Autentic) {
-        $scope.estaCarregando = true;
+        $scope.estaCarregando = false;
         $scope.slug = $routeParams.slug;
         $scope.itemMenu = $routeParams.itemMenu || 'sobre';
         $scope.template = '{0}/angular/evento/{1}.html'.format([urlBackEnd, $scope.itemMenu]);
@@ -255,7 +255,6 @@ angular.module('concept2.eventos', ['ngRoute'])
                         $scope.limpaSelecaoProvas = false;
                         $scope.atleta = Atleta.get({'id': Autentic.userId, 'evento_slug': $scope.slug}, function() {
                             $scope.atleta.inscricao = new Inscricao($scope.atleta.inscricao);
-                            $scope.estaCarregando = false;
                         });
                     }
                     else {
@@ -287,7 +286,6 @@ angular.module('concept2.eventos', ['ngRoute'])
                             formInscricao.$setPristine();
                             formInscricao.$setUntouched();
                         }
-                        $scope.estaCarregando = false;
                     }
                 };
                 $scope.reset();
@@ -388,21 +386,22 @@ angular.module('concept2.eventos', ['ngRoute'])
                     return !campo.$touched
                 };
                 $scope.enviandoInscricao = function(formInscricao) {
-                    $scope.estaCarregando = true;
                     if (formInscricao.$invalid) {
                         formInscricao.$setPristine();
                         exibeValidacoes(formInscricao);
                         return false;
                     }
+                    $scope.estaCarregando = true;
                     $scope.processaSucesso = function() {
                         Autentic.atualizaValores();
                         $scope.reset();
+                        $scope.estaCarregando = false;
                         $('#modalSucesso').modal('show');
                     };
                     $scope.processaFalha = function(response) {
                         $scope.mensagemErro = response.data['mensagemErro'];
                         exibeValidacoes(formInscricao);
-                        $scope.estaCarregando = true;
+                        $scope.estaCarregando = false;
                         $('#modalErro').modal('show');
                     };
                     if ($rootScope.atletaLogado) {

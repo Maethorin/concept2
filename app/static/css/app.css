@@ -10060,16 +10060,6 @@ body {
   background: radial-gradient(#0f3d5e, #011121);
 }
 
-.modal {
-  position: fixed;
-  z-index: 1000;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.8) url("/static/img/carregando.gif") 50% 50% no-repeat;
-}
-
 .col-left {
   padding-left: 0;
 }
@@ -10488,6 +10478,15 @@ header .navegacao .form-busca i {
   display: inline-block;
   font-weight: bold;
   margin-right: 2px;
+}
+.pagina-eventos .inscricao .carregando {
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.8) url("/static/img/carregando.gif") 50% 50% no-repeat;
 }
 .pagina-eventos .regulamento ol li {
   margin: 8px 0;
