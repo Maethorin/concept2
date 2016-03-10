@@ -65,5 +65,5 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.registerTask('default', ['concat', 'uglify', 'watch', 'compass']);
-    grunt.registerTask('heroku', ['concat:app', 'uglify:app']);
+    grunt.registerTask('heroku', ['concat:app', 'uglify:app', 'uglify:componentes']);
 };
