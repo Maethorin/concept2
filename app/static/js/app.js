@@ -56,11 +56,12 @@ angular.module(
         'concept2.suporte',
         'concept2.contato'
     ])
-    .config(['$sceDelegateProvider', function($sceDelegateProvider) {
+    .config(['$sceDelegateProvider', '$httpProvider', function($sceDelegateProvider, $httpProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
             'self',
             '{0}/**'.format([urlBackEnd])
-        ])
+        ]);
+        $httpProvider.defaults.withCredentials = true;
     }])
     .run(['$rootScope', 'Autentic', function($rootScope, Autentic) {
         $rootScope.pagina = "";
@@ -133,7 +134,8 @@ angular.module('concept2.login', ['ngRoute'])
         $scope.enviandoLogin = function() {
             if ($scope.formLogin.$valid) {
                 $scope.login.$save().then(
-                    function () {
+                    function (response) {
+                        console.log(response);
                         Autentic.atualizaValores();
                         $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
                         if ($rootScope.referrer) {
@@ -851,19 +853,17 @@ angular.module('concept2.produtos', ['ngRoute'])
         };
     }]);;'use strict';
 angular.module('concept2.services', [])
-    .factory('Autentic', ['$cookies', function($cookies) {
-        return {
-            atualizaValores: function() {
-                this.token = $cookies.get('XSRF-TOKEN');
-                this.userId = $cookies.get('USER_ID');
-            },
-            limpaValores: function() {
-                $cookies.remove('XSRF-TOKEN');
-                $cookies.remove('USER_ID');
-            },
-            token: $cookies.get('XSRF-TOKEN'),
-            userId: $cookies.get('USER_ID')
-        }
+    .service('Autentic', ['$cookies', function($cookies) {
+        this.token = $cookies.get('XSRF-TOKEN');
+        this.userId = $cookies.get('USER_ID');
+        this.atualizaValores = function() {
+            this.token = $cookies.get('XSRF-TOKEN');
+            this.userId = $cookies.get('USER_ID');
+        };
+        this.limpaValores = function() {
+            $cookies.remove('XSRF-TOKEN');
+            $cookies.remove('USER_ID');
+        };
     }])
     .factory('OndeRemar', ['$resource', function($resource) {
         return $resource('{0}/api/onde-remar/:id'.format([urlBackEnd]));

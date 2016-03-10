@@ -60,7 +60,8 @@ angular.module('concept2.login', ['ngRoute'])
         $scope.enviandoLogin = function() {
             if ($scope.formLogin.$valid) {
                 $scope.login.$save().then(
-                    function () {
+                    function (response) {
+                        console.log(response);
                         Autentic.atualizaValores();
                         $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
                         if ($rootScope.referrer) {

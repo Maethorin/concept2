@@ -56,11 +56,12 @@ angular.module(
         'concept2.suporte',
         'concept2.contato'
     ])
-    .config(['$sceDelegateProvider', function($sceDelegateProvider) {
+    .config(['$sceDelegateProvider', '$httpProvider', function($sceDelegateProvider, $httpProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
             'self',
             '{0}/**'.format([urlBackEnd])
-        ])
+        ]);
+        $httpProvider.defaults.withCredentials = true;
     }])
     .run(['$rootScope', 'Autentic', function($rootScope, Autentic) {
         $rootScope.pagina = "";

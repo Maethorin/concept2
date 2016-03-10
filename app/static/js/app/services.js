@@ -1,18 +1,16 @@
 'use strict';
 angular.module('concept2.services', [])
-    .factory('Autentic', ['$cookies', function($cookies) {
-        return {
-            atualizaValores: function() {
-                this.token = $cookies.get('XSRF-TOKEN');
-                this.userId = $cookies.get('USER_ID');
-            },
-            limpaValores: function() {
-                $cookies.remove('XSRF-TOKEN');
-                $cookies.remove('USER_ID');
-            },
-            token: $cookies.get('XSRF-TOKEN'),
-            userId: $cookies.get('USER_ID')
-        }
+    .service('Autentic', ['$cookies', function($cookies) {
+        this.token = $cookies.get('XSRF-TOKEN');
+        this.userId = $cookies.get('USER_ID');
+        this.atualizaValores = function() {
+            this.token = $cookies.get('XSRF-TOKEN');
+            this.userId = $cookies.get('USER_ID');
+        };
+        this.limpaValores = function() {
+            $cookies.remove('XSRF-TOKEN');
+            $cookies.remove('USER_ID');
+        };
     }])
     .factory('OndeRemar', ['$resource', function($resource) {
         return $resource('{0}/api/onde-remar/:id'.format([urlBackEnd]));
