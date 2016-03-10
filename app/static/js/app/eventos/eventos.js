@@ -378,6 +378,27 @@ angular.module('concept2.eventos', ['ngRoute'])
                         }
                     }
                 });
+                $scope.$watch('atleta.nascimento', function(novo, antigo) {
+                    if (novo) {
+                        $scope.provasDropdownList = $filter('filter')(
+                            $scope.provasParaSelecao,
+                            {sexo: novo},
+                            function(atual, esperado) {
+                                atual = $filter('limitTo')(atual, 2).toUpperCase();
+                                return atual == esperado || atual == 'AB' || atual == 'MI';
+                            }
+                        );
+                        if ($scope.carregandoProvas) {
+                            $scope.selecionaProvas();
+                            $scope.carregandoProvas = false;
+                        }
+                        if ($scope.limpaSelecaoProvas) {
+                            limpaSelecaoProvas();
+                            $scope.selecionaProvas();
+                            $scope.limpaSelecaoProvas = false;
+                        }
+                    }
+                });
                 $scope.verificaErro = function(campo, validacao, status) {
                     if (!campo) {
                         return false;

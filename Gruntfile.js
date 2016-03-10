@@ -1,21 +1,50 @@
 module.exports = function(grunt) {
-	grunt.initConfig({
-		pkg: grunt.file.readJSON('package.json'),
-		sass: {
-			dist: {
-				files: {
-					'app/static/css/app.css' : 'app/sass/**/*.scss'
-				}
-			}
-		},
-		watch: {
-			css: {
-				files: '**/*.scss',
-				tasks: ['sass']
-			}
-		}
-	});
-	grunt.loadNpmTasks('grunt-contrib-sass');
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.registerTask('default',['watch']);
-}
+    grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
+        concat: {
+            options: {
+                separator: ';'
+            },
+            componentes: {
+                src: [
+                    "app/static/js/bower_components/moment/moment.js",
+                    "app/static/js/bower_components/moment/locale/pt-br.js",
+                    "app/static/js/bower_components/lodash/dist/lodash.js",
+                    "app/static/js/bower_components/angular/angular.js",
+                    "app/static/js/bower_components/angular-ui-mask/dist/mask.js",
+                    "app/static/js/bower_components/angular-route/angular-route.js",
+                    "app/static/js/bower_components/angular-resource/angular-resource.js",
+                    "app/static/js/bower_components/angular-cookies/angular-cookies.js",
+                    "app/static/js/bower_components/angular-simple-logger/dist/angular-simple-logger.js",
+                    "app/static/js/bower_components/angular-google-maps/dist/angular-google-maps.js",
+                    "app/static/js/bower_components/jquery.js",
+                    "app/static/js/bower_components/bootstrap.js"
+                ],
+                dest: 'app/static/js/componentes.js'
+            },
+            app: {
+                src: [
+                    "app/static/js/app/**/*.js"
+                ],
+                dest: 'app/static/js/app.js'
+            }
+        },
+        uglify: {
+            options: {
+            },
+            componentes: {
+                files: {
+                    'app/static/js/componentes.min.js': ['<%= concat.componentes.dest %>']
+                }
+            },
+            app: {
+                files: {
+                    'app/static/js/app.min.js': ['<%= concat.app.dest %>']
+                }
+            }
+        }
+    });
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.registerTask('default', ['concat', 'uglify']);
+};

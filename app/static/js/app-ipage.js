@@ -48,7 +48,6 @@ angular.module('concept2', [
     'ngCookies',
     'uiGmapgoogle-maps',
     'ui.mask',
-    'angularjs-dropdown-multiselect',
     'concept2.services',
     'concept2.login',
     'concept2.eventos'

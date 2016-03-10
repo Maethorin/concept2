@@ -40,6 +40,13 @@ Date.prototype.nomeDia = function() {
     return nomesDias[this.getDay()];
 };
 
+Date.prototype.idadeNascidoEm = function(nascimento) {
+    nascimento = [nascimento.splice(0, 2), nascimento.splice(2, 2), nascimento.splice(4, 4)];
+    var dataNascimento = new Date(parseInt(nascimento.splice(4, 4)), parseInt(nascimento.splice(2, 2)) - 1, parseInt(nascimento.splice(0, 2)));
+    var idade = (this - dataNascimento) / (1000 * 60 * 60 * 24 * 365.4);
+    return nomesDias[this.getDay()];
+};
+
 var urlBackEnd = 'http://localhost:8080';// 'https://concept2-staging.herokuapp.com';
 
 angular.module('concept2', [
@@ -48,7 +55,6 @@ angular.module('concept2', [
     'ngCookies',
     'uiGmapgoogle-maps',
     'ui.mask',
-    'angularjs-dropdown-multiselect',
     'concept2.services',
     'concept2.login',
     'concept2.home',
