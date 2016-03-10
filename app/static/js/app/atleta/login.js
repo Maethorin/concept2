@@ -20,7 +20,7 @@ angular.module('concept2.login', ['ngRoute'])
             controller: 'PerfilController'
           })
     }])
-    .controller("LogoutController", function($rootScope, $scope, $window, Login, Autentic) {
+    .controller("LogoutController", ['$rootScope', '$scope', '$window', 'Login', 'Autentic', function($rootScope, $scope, $window, Login, Autentic) {
         Autentic.limpaValores();
         var login = new Login();
         login.$delete().then(
@@ -35,8 +35,8 @@ angular.module('concept2.login', ['ngRoute'])
                 }
             }
         );
-    })
-    .controller("LoginController", function($rootScope, $scope, $window, Login, Autentic) {
+    }])
+    .controller("LoginController", ['$rootScope', '$scope', '$window', 'Login', 'Autentic', function($rootScope, $scope, $window, Login, Autentic) {
         $rootScope.pagina = "atleta";
         $rootScope.titulo = "Atleta";
         $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
@@ -73,4 +73,4 @@ angular.module('concept2.login', ['ngRoute'])
                 );
             }
         };
-    });
+    }]);

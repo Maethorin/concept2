@@ -111,7 +111,7 @@ angular.module('concept2.eventos', ['ngRoute'])
             }
         };
     })
-    .controller('EventosController', function($rootScope, $scope, $http, $sce, Evento) {
+    .controller('EventosController', ['$rootScope', '$scope', '$http', '$sce', 'Evento', function($rootScope, $scope, $http, $sce, Evento) {
         $rootScope.pagina = "eventos";
         $rootScope.titulo = "Eventos";
         $scope.eventos = [];
@@ -119,8 +119,8 @@ angular.module('concept2.eventos', ['ngRoute'])
             return $sce.trustAsHtml(linha);
         };
         $scope.eventos = Evento.query();
-    })
-    .controller('EventoController', function($rootScope, $scope, $routeParams, $http, $sce, $filter, $window, $location, Evento, Atleta, Inscricao, Autentic) {
+    }])
+    .controller('EventoController', ['$rootScope', '$scope', '$routeParams', '$http', '$sce', '$filter', '$window', '$location', 'Evento', 'Atleta', 'Inscricao', 'Autentic', function($rootScope, $scope, $routeParams, $http, $sce, $filter, $window, $location, Evento, Atleta, Inscricao, Autentic) {
         $scope.estaCarregando = false;
         $scope.slug = $routeParams.slug;
         $scope.itemMenu = $routeParams.itemMenu || 'sobre';
@@ -554,4 +554,4 @@ angular.module('concept2.eventos', ['ngRoute'])
                 });
             }
         }
-    });
+    }]);

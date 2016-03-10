@@ -8,16 +8,16 @@
  * @returns {String}
  */
 var format = function(str, data) {
-  var re = /{([^{}]+)}/g;
+    var re = /{([^{}]+)}/g;
 
-  return str.replace(/{([^{}]+)}/g, function(match, val) {
-    var prop = data;
-    val.split('.').forEach(function(key) {
-      prop = prop[key];
+    return str.replace(/{([^{}]+)}/g, function(match, val) {
+        var prop = data;
+        val.split('.').forEach(function(key) {
+            prop = prop[key];
+        });
+
+        return prop;
     });
-
-    return prop;
-  });
 };
 
 /**
@@ -26,7 +26,7 @@ var format = function(str, data) {
  * @returns {String}
  */
 String.prototype.format = function(data) {
-  return format(this, data);
+    return format(this, data);
 };
 
 var nomesMeses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
@@ -49,29 +49,31 @@ Date.prototype.idadeNascidoEm = function(nascimento) {
 
 var urlBackEnd = 'http://localhost:8080';// 'https://concept2-staging.herokuapp.com';
 
-angular.module('concept2', [
-    'ngRoute',
-    'ngResource',
-    'ngCookies',
-    'uiGmapgoogle-maps',
-    'ui.mask',
-    'concept2.services',
-    'concept2.login',
-    'concept2.home',
-    'concept2.produtos',
-    'concept2.noticias',
-    'concept2.comunidade',
-    'concept2.eventos',
-    'concept2.suporte',
-    'concept2.contato'
-])
-    .config(function($sceDelegateProvider) {
+angular.module(
+    'concept2',
+    [
+        'ngRoute',
+        'ngResource',
+        'ngCookies',
+        'uiGmapgoogle-maps',
+        'ui.mask',
+        'concept2.services',
+        'concept2.login',
+        'concept2.home',
+        'concept2.produtos',
+        'concept2.noticias',
+        'concept2.comunidade',
+        'concept2.eventos',
+        'concept2.suporte',
+        'concept2.contato'
+    ])
+    .config(['$sceDelegateProvider', function($sceDelegateProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
             'self',
             '{0}/**'.format([urlBackEnd])
         ])
-    })
-    .run(function ($rootScope, Autentic) {
+    }])
+    .run(['$rootScope', 'Autentic', function($rootScope, Autentic) {
         $rootScope.pagina = "";
         $rootScope.titulo = "";
         $rootScope.$on('$locationChangeSuccess', function(evt, absNewUrl, absOldUrl) {
@@ -79,7 +81,7 @@ angular.module('concept2', [
         });
         Autentic.atualizaValores();
         $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
-    });
+    }]);
 ;'use strict';
 
 angular.module('concept2.login', ['ngRoute'])
@@ -102,7 +104,7 @@ angular.module('concept2.login', ['ngRoute'])
             controller: 'PerfilController'
           })
     }])
-    .controller("LogoutController", function($rootScope, $scope, $window, Login, Autentic) {
+    .controller("LogoutController", ['$rootScope', '$scope', '$window', 'Login', 'Autentic', function($rootScope, $scope, $window, Login, Autentic) {
         Autentic.limpaValores();
         var login = new Login();
         login.$delete().then(
@@ -117,8 +119,8 @@ angular.module('concept2.login', ['ngRoute'])
                 }
             }
         );
-    })
-    .controller("LoginController", function($rootScope, $scope, $window, Login, Autentic) {
+    }])
+    .controller("LoginController", ['$rootScope', '$scope', '$window', 'Login', 'Autentic', function($rootScope, $scope, $window, Login, Autentic) {
         $rootScope.pagina = "atleta";
         $rootScope.titulo = "Atleta";
         $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
@@ -155,7 +157,7 @@ angular.module('concept2.login', ['ngRoute'])
                 );
             }
         };
-    });
+    }]);
 ;'use strict';
 angular.module('concept2.comunidade', [])
     .config(['$routeProvider', function ($routeProvider) {
@@ -165,15 +167,15 @@ angular.module('concept2.comunidade', [])
                 controller: 'ComunidadeController'
             })
     }])
-    .config(function(uiGmapGoogleMapApiProvider) {
+    .config(['uiGmapGoogleMapApiProvider', function(uiGmapGoogleMapApiProvider) {
         uiGmapGoogleMapApiProvider.configure({
             key: 'AIzaSyDzcLVVah4PjogAqerQdBcYowwzJcsKjv0',
             v: '3.20',
             language: 'pt-br',
             libraries: 'places'
         });
-    })
-    .controller('ComunidadeController', function ($rootScope, $scope, $http, OndeRemar) {
+    }])
+    .controller('ComunidadeController', ['$rootScope', '$scope', '$http', 'OndeRemar', function ($rootScope, $scope, $http, OndeRemar) {
         $rootScope.pagina = "comunidade";
         $rootScope.titulo = "Comunidade";
         $scope.modalidades = [
@@ -221,18 +223,17 @@ angular.module('concept2.comunidade', [])
                 $scope.ondeRemar = OndeRemar.query({'modalidade': modalidadesAtivas}, adicionaIcone);
             }
         };
-    });
-;
-'use strict';
+    }]);
+;'use strict';
 angular.module('concept2.contato', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
-      $routeProvider
-          .when('/contato', {
-            templateUrl: '{0}/angular/contato.html'.format([urlBackEnd]),
-            controller: 'ContatoController'
-          })
+        $routeProvider
+            .when('/contato', {
+                templateUrl: '{0}/angular/contato.html'.format([urlBackEnd]),
+                controller: 'ContatoController'
+            })
     }])
- .controller('ContatoController', ['$rootScope','$scope', '$http', function($rootScope, $scope, $http) {
+    .controller('ContatoController', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
         $rootScope.pagina = "contato";
         $rootScope.titulo = "Contato"
     }]);
@@ -349,7 +350,7 @@ angular.module('concept2.eventos', ['ngRoute'])
             }
         };
     })
-    .controller('EventosController', function($rootScope, $scope, $http, $sce, Evento) {
+    .controller('EventosController', ['$rootScope', '$scope', '$http', '$sce', 'Evento', function($rootScope, $scope, $http, $sce, Evento) {
         $rootScope.pagina = "eventos";
         $rootScope.titulo = "Eventos";
         $scope.eventos = [];
@@ -357,8 +358,8 @@ angular.module('concept2.eventos', ['ngRoute'])
             return $sce.trustAsHtml(linha);
         };
         $scope.eventos = Evento.query();
-    })
-    .controller('EventoController', function($rootScope, $scope, $routeParams, $http, $sce, $filter, $window, $location, Evento, Atleta, Inscricao, Autentic) {
+    }])
+    .controller('EventoController', ['$rootScope', '$scope', '$routeParams', '$http', '$sce', '$filter', '$window', '$location', 'Evento', 'Atleta', 'Inscricao', 'Autentic', function($rootScope, $scope, $routeParams, $http, $sce, $filter, $window, $location, Evento, Atleta, Inscricao, Autentic) {
         $scope.estaCarregando = false;
         $scope.slug = $routeParams.slug;
         $scope.itemMenu = $routeParams.itemMenu || 'sobre';
@@ -792,7 +793,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                 });
             }
         }
-    });
+    }]);
 ;'use strict';
 
 angular.module('concept2.home', ['ngRoute'])
@@ -803,65 +804,65 @@ angular.module('concept2.home', ['ngRoute'])
             controller: 'HomeController'
           })
     }])
-    .controller("HomeController", function($rootScope, Autentic) {
+    .controller("HomeController", ['$rootScope', 'Autentic', function($rootScope, Autentic) {
         $rootScope.pagina = "home";
         $rootScope.titulo = "Inicial";
         $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
-    });
-;
-'use strict';
+    }]);
+;'use strict';
 angular.module('concept2.noticias', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
-      $routeProvider
-          .when('/noticias', {
-            templateUrl: '{0}/angular/noticias.html'.format([urlBackEnd]),
-            controller: 'NoticiasController'
-          })
+        $routeProvider
+            .when('/noticias', {
+                templateUrl: '{0}/angular/noticias.html'.format([urlBackEnd]),
+                controller: 'NoticiasController'
+            })
     }])
- .controller('NoticiasController', ['$rootScope','$scope', '$http', function($rootScope,$scope, $http) {
-     $rootScope.pagina = "noticias";
+    .controller('NoticiasController', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
+        $rootScope.pagina = "noticias";
         $rootScope.titulo = "Noticias";
         $scope.noticias = [];
-        $http.get('/json/noticias.json').then(function(response){
+        $http.get('/json/noticias.json').then(function(response) {
             $scope.noticias = response.data;
         });
     }]);
 ;'use strict';
 angular.module('concept2.produtos', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
-      $routeProvider
-          .when('/produtos', {
-            templateUrl: '{0}/angular/produtos.html'.format([urlBackEnd]),
-            controller: 'ProdutosController'
-          })
-          .when('/produtos/:slug', {
-              templateUrl: '{0}/angular/produtos/modelod.html'.format([urlBackEnd]),
-              controller: 'ModeloController'
-          })
-          .when('/produtos/:slug/:modeloMenu', {
-             templateUrl: '{0}/angular/produtos/modelod.html'.format([urlBackEnd]),
-              controller: 'ModeloController'
-          })
+        $routeProvider
+            .when('/produtos', {
+                templateUrl: '{0}/angular/produtos.html'.format([urlBackEnd]),
+                controller: 'ProdutosController'
+            })
+            .when('/produtos/:slug', {
+                templateUrl: '{0}/angular/produtos/modelod.html'.format([urlBackEnd]),
+                controller: 'ModeloController'
+            })
+            .when('/produtos/:slug/:modeloMenu', {
+                templateUrl: '{0}/angular/produtos/modelod.html'.format([urlBackEnd]),
+                controller: 'ModeloController'
+            })
     }])
- .controller('ProdutosController', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
+    .controller('ProdutosController', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
         $rootScope.pagina = "produtos";
         $rootScope.titulo = "Produtos"
     }])
-.controller('ModeloController', function($routeParams, $rootScope, $scope, $sce){
-     $scope.slug = $routeParams.slug;
-     $scope.modeloMenu = $routeParams.modeloMenu || 'sobre';
-     $scope.template = '{0}/angular/produtos/{1}.html'.format([urlBackEnd, $scope.modeloMenu]);
-     $rootScope.pagina = "produtos";
-     $scope.modelosMenu = [
-         {"slug": "sobre", "nome": "Sobre"},
-         {"slug":  "caracteristicas" , "nome": "Características"},
-         {"slug":  "especificacoes" , "nome": "Especificações"}
-     ];
-  $scope.trataHtml = function(html) {
+    .controller('ModeloController', ['$routeParams', '$rootScope', '$scope', '$sce', function($routeParams, $rootScope, $scope, $sce) {
+        $scope.slug = $routeParams.slug;
+        $scope.modeloMenu = $routeParams.modeloMenu || 'sobre';
+        $scope.template = '{0}/angular/produtos/{1}.html'.format([urlBackEnd, $scope.modeloMenu]);
+        $rootScope.pagina = "produtos";
+        $scope.modelosMenu = [
+            {"slug": "sobre", "nome": "Sobre"},
+            {"slug": "caracteristicas", "nome": "Características"},
+            {"slug": "especificacoes", "nome": "Especificações"}
+        ];
+        $scope.trataHtml = function(html) {
             return $sce.trustAsHtml(html);
         };
-});;angular.module('concept2.services', [])
-    .factory('Autentic', function($cookies) {
+    }]);;'use strict';
+angular.module('concept2.services', [])
+    .factory('Autentic', ['$cookies', function($cookies) {
         return {
             atualizaValores: function() {
                 this.token = $cookies.get('XSRF-TOKEN');
@@ -874,26 +875,26 @@ angular.module('concept2.produtos', ['ngRoute'])
             token: $cookies.get('XSRF-TOKEN'),
             userId: $cookies.get('USER_ID')
         }
-    })
-    .factory('OndeRemar', function($rootScope, $resource) {
+    }])
+    .factory('OndeRemar', ['$resource', function($resource) {
         return $resource('{0}/api/onde-remar/:id'.format([urlBackEnd]));
-    })
-    .factory('Atleta', function($rootScope, $resource) {
+    }])
+    .factory('Atleta', ['$resource', function($resource) {
         return $resource('{0}/api/atletas/:id/:evento_slug'.format([urlBackEnd]));
-    })
-    .factory('Login', function($rootScope, $resource) {
+    }])
+    .factory('Login', ['$resource', function($resource) {
         return $resource('{0}/api/login'.format([urlBackEnd]));
-    })
-    .factory('Inscricao', function($rootScope, $resource) {
+    }])
+    .factory('Inscricao', ['$resource', function($resource) {
         return $resource(
             '{0}/api/atletas/:id/inscricoes/:inscricao_id'.format([urlBackEnd]),
             null,
             {'update': {method: 'PUT'}}
         );
-    })
-    .factory('Evento', function($rootScope, $resource) {
+    }])
+    .factory('Evento', ['$resource', function($resource) {
         return $resource('{0}/api/eventos/:id'.format([urlBackEnd]));
-    });
+    }]);
 ;
 'use strict';
 angular.module('concept2.suporte', ['ngRoute'])

@@ -7,15 +7,15 @@ angular.module('concept2.comunidade', [])
                 controller: 'ComunidadeController'
             })
     }])
-    .config(function(uiGmapGoogleMapApiProvider) {
+    .config(['uiGmapGoogleMapApiProvider', function(uiGmapGoogleMapApiProvider) {
         uiGmapGoogleMapApiProvider.configure({
             key: 'AIzaSyDzcLVVah4PjogAqerQdBcYowwzJcsKjv0',
             v: '3.20',
             language: 'pt-br',
             libraries: 'places'
         });
-    })
-    .controller('ComunidadeController', function ($rootScope, $scope, $http, OndeRemar) {
+    }])
+    .controller('ComunidadeController', ['$rootScope', '$scope', '$http', 'OndeRemar', function ($rootScope, $scope, $http, OndeRemar) {
         $rootScope.pagina = "comunidade";
         $rootScope.titulo = "Comunidade";
         $scope.modalidades = [
@@ -63,4 +63,4 @@ angular.module('concept2.comunidade', [])
                 $scope.ondeRemar = OndeRemar.query({'modalidade': modalidadesAtivas}, adicionaIcone);
             }
         };
-    });
+    }]);

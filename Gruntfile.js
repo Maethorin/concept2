@@ -17,8 +17,8 @@ module.exports = function(grunt) {
                     "app/static/js/bower_components/angular-cookies/angular-cookies.js",
                     "app/static/js/bower_components/angular-simple-logger/dist/angular-simple-logger.js",
                     "app/static/js/bower_components/angular-google-maps/dist/angular-google-maps.js",
-                    "app/static/js/bower_components/jquery.js",
-                    "app/static/js/bower_components/bootstrap.js"
+                    "app/static/js/bower_components/jquery/dist/jquery.js",
+                    "app/static/js/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"
                 ],
                 dest: 'app/static/js/componentes.js'
             },

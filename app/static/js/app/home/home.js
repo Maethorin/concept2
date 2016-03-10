@@ -8,8 +8,8 @@ angular.module('concept2.home', ['ngRoute'])
             controller: 'HomeController'
           })
     }])
-    .controller("HomeController", function($rootScope, Autentic) {
+    .controller("HomeController", ['$rootScope', 'Autentic', function($rootScope, Autentic) {
         $rootScope.pagina = "home";
         $rootScope.titulo = "Inicial";
         $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
-    });
+    }]);

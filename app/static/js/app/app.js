@@ -8,16 +8,16 @@
  * @returns {String}
  */
 var format = function(str, data) {
-  var re = /{([^{}]+)}/g;
+    var re = /{([^{}]+)}/g;
 
-  return str.replace(/{([^{}]+)}/g, function(match, val) {
-    var prop = data;
-    val.split('.').forEach(function(key) {
-      prop = prop[key];
+    return str.replace(/{([^{}]+)}/g, function(match, val) {
+        var prop = data;
+        val.split('.').forEach(function(key) {
+            prop = prop[key];
+        });
+
+        return prop;
     });
-
-    return prop;
-  });
 };
 
 /**
@@ -26,7 +26,7 @@ var format = function(str, data) {
  * @returns {String}
  */
 String.prototype.format = function(data) {
-  return format(this, data);
+    return format(this, data);
 };
 
 var nomesMeses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
@@ -49,29 +49,31 @@ Date.prototype.idadeNascidoEm = function(nascimento) {
 
 var urlBackEnd = 'http://localhost:8080';// 'https://concept2-staging.herokuapp.com';
 
-angular.module('concept2', [
-    'ngRoute',
-    'ngResource',
-    'ngCookies',
-    'uiGmapgoogle-maps',
-    'ui.mask',
-    'concept2.services',
-    'concept2.login',
-    'concept2.home',
-    'concept2.produtos',
-    'concept2.noticias',
-    'concept2.comunidade',
-    'concept2.eventos',
-    'concept2.suporte',
-    'concept2.contato'
-])
-    .config(function($sceDelegateProvider) {
+angular.module(
+    'concept2',
+    [
+        'ngRoute',
+        'ngResource',
+        'ngCookies',
+        'uiGmapgoogle-maps',
+        'ui.mask',
+        'concept2.services',
+        'concept2.login',
+        'concept2.home',
+        'concept2.produtos',
+        'concept2.noticias',
+        'concept2.comunidade',
+        'concept2.eventos',
+        'concept2.suporte',
+        'concept2.contato'
+    ])
+    .config(['$sceDelegateProvider', function($sceDelegateProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
             'self',
             '{0}/**'.format([urlBackEnd])
         ])
-    })
-    .run(function ($rootScope, Autentic) {
+    }])
+    .run(['$rootScope', 'Autentic', function($rootScope, Autentic) {
         $rootScope.pagina = "";
         $rootScope.titulo = "";
         $rootScope.$on('$locationChangeSuccess', function(evt, absNewUrl, absOldUrl) {
@@ -79,4 +81,4 @@ angular.module('concept2', [
         });
         Autentic.atualizaValores();
         $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
-    });
+    }]);
