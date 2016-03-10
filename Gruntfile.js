@@ -30,8 +30,7 @@ module.exports = function(grunt) {
             }
         },
         uglify: {
-            options: {
-            },
+            options: {},
             componentes: {
                 files: {
                     'app/static/js/componentes.min.js': ['<%= concat.componentes.dest %>']
@@ -42,9 +41,28 @@ module.exports = function(grunt) {
                     'app/static/js/app.min.js': ['<%= concat.app.dest %>']
                 }
             }
+        },
+        compass: {
+            app: {
+                options: {
+                    config: 'config.rb'
+                }
+            }
+        },
+        watch: {
+            scripts: {
+                files: '<%= concat.app.src %>',
+                tasks: ['concat:app', 'uglify:app']
+            },
+            css: {
+                files: 'sass/**/*.scss',
+                tasks: ['compass:app']
+            }
         }
     });
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.registerTask('default', ['concat', 'uglify']);
+    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-compass');
+    grunt.registerTask('default', ['concat', 'uglify', 'watch', 'compass']);
 };

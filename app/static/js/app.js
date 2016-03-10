@@ -1,12 +1,5 @@
 'use strict';
 
-
-/**
- * Python-like string format function
- * @param {String} str - Template string.
- * @param {Object} data - Data to insert strings from.
- * @returns {String}
- */
 var format = function(str, data) {
     var re = /{([^{}]+)}/g;
 
@@ -20,11 +13,6 @@ var format = function(str, data) {
     });
 };
 
-/**
- * Python-like format method
- * @param {Object} data - Data to insert strings from.
- * @returns {String}
- */
 String.prototype.format = function(data) {
     return format(this, data);
 };
