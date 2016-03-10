@@ -70,5 +70,5 @@ angular.module(
             $rootScope.referrer = absOldUrl;
         });
         Autentic.atualizaValores();
-        $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
+        $rootScope.atletaLogado = Autentic.estaLogado();
     }]);

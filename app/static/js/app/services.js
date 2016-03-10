@@ -6,6 +6,11 @@ angular.module('concept2.services', [])
         this.atualizaValores = function() {
             this.token = $cookies.get('XSRF-TOKEN');
             this.userId = $cookies.get('USER_ID');
+            console.log(this.token);
+            console.log(this.userId);
+        };
+        this.estaLogado = function() {
+            return this.token != 'undefined' && this.token != null;
         };
         this.limpaValores = function() {
             $cookies.remove('XSRF-TOKEN');

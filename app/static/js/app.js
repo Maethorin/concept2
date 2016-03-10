@@ -70,7 +70,7 @@ angular.module(
             $rootScope.referrer = absOldUrl;
         });
         Autentic.atualizaValores();
-        $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
+        $rootScope.atletaLogado = Autentic.estaLogado();
     }]);
 ;'use strict';
 
@@ -134,10 +134,9 @@ angular.module('concept2.login', ['ngRoute'])
         $scope.enviandoLogin = function() {
             if ($scope.formLogin.$valid) {
                 $scope.login.$save().then(
-                    function (response) {
-                        console.log(response);
+                    function () {
                         Autentic.atualizaValores();
-                        $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
+                        $rootScope.atletaLogado = Autentic.estaLogado();
                         if ($rootScope.referrer) {
                             $window.location = $rootScope.referrer;
                         }
@@ -859,6 +858,11 @@ angular.module('concept2.services', [])
         this.atualizaValores = function() {
             this.token = $cookies.get('XSRF-TOKEN');
             this.userId = $cookies.get('USER_ID');
+            console.log(this.token);
+            console.log(this.userId);
+        };
+        this.estaLogado = function() {
+            return this.token != 'undefined' && this.token != null;
         };
         this.limpaValores = function() {
             $cookies.remove('XSRF-TOKEN');
