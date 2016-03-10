@@ -35,7 +35,8 @@ Date.prototype.idadeNascidoEm = function(nascimento) {
     return nomesDias[this.getDay()];
 };
 
-var urlBackEnd = 'http://localhost:5000';// 'https://concept2-staging.herokuapp.com';
+var urlBackEnd = 'https://concept2-staging.herokuapp.com';
+//var urlBackEnd = 'http://localhost:5000';
 
 angular.module(
     'concept2',
