@@ -37,6 +37,15 @@ def add_header(r):
     r.headers['Access-Control-Expose-Headers'] = 'true'
     r.headers['Access-Control-Allow-Methods'] = ','.join(['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'])
     r.headers['Access-Control-Max-Age'] = 21600
+    user = g.get('user', None)
+    if user is not None:
+        token = user.gera_token_aut()
+        expiration = datetime.utcnow() + timedelta(seconds=600)
+        r.headers['TOKEN'] = token
+        r.headers['USER'] = user.id
+    else:
+        r.headers['TOKEN'] = ''
+        r.headers['USER'] = ''
     return r
 
 
