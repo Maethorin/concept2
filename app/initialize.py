@@ -34,7 +34,7 @@ def add_header(r):
     r.headers['Access-Control-Allow-Origin'] = 'http://{}'.format(DOMAIN)
     r.headers['Access-Control-Allow-Credentials'] = 'true'
     r.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization,Set-Cookie'
-    r.headers['Access-Control-Expose-Headers'] = 'true'
+    r.headers['Access-Control-Expose-Headers'] = 'Content-Type,Authorization,Set-Cookie,TOKEN,USER'
     r.headers['Access-Control-Allow-Methods'] = ','.join(['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'])
     r.headers['Access-Control-Max-Age'] = 21600
     user = g.get('user', None)
