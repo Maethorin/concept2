@@ -27,8 +27,9 @@ def add_header(r):
     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     r.headers["Pragma"] = "no-cache"
     r.headers["Expires"] = "0"
-    r.headers['Access-Control-Allow-Origin'] = '*'
-    r.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
+    r.headers['Access-Control-Allow-Origin'] = 'http://concept2.com.br' #'http://localhost:8000'
+    r.headers['Access-Control-Allow-Credentials'] = 'true'
+    r.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization,Set-Cookie'
     r.headers['Access-Control-Allow-Methods'] = ','.join(['GET', 'PUT', 'POST', 'DELETE'])
     r.headers['Access-Control-Max-Age'] = 21600
     return r
