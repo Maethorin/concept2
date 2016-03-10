@@ -18,6 +18,10 @@ import api, models
 api.create_api(web_app)
 
 
+DOMAIN = 'concept2.com.br'
+# DOMAIN = 'localhost:8000'
+
+
 @web_app.after_request
 def add_header(r):
     """
@@ -27,8 +31,7 @@ def add_header(r):
     r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
     r.headers["Pragma"] = "no-cache"
     r.headers["Expires"] = "0"
-    r.headers['Access-Control-Allow-Origin'] = 'http://concept2.com.br'
-    # r.headers['Access-Control-Allow-Origin'] = 'http://localhost:8000'
+    r.headers['Access-Control-Allow-Origin'] = 'http://{}'.format(DOMAIN)
     r.headers['Access-Control-Allow-Credentials'] = 'true'
     r.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization,Set-Cookie'
     r.headers['Access-Control-Allow-Methods'] = ','.join(['GET', 'PUT', 'POST', 'DELETE'])
@@ -72,11 +75,11 @@ def after_request(resp):
     if user is not None:
         token = user.gera_token_aut()
         expiration = datetime.utcnow() + timedelta(seconds=600)
-        resp.set_cookie('XSRF-TOKEN', token.decode('ascii'), expires=expiration)
-        resp.set_cookie('USER_ID', str(user.id), expires=expiration)
+        resp.set_cookie('XSRF-TOKEN', token.decode('ascii'), expires=expiration, domain=DOMAIN)
+        resp.set_cookie('USER_ID', str(user.id), expires=expiration, domain=DOMAIN)
     else:
-        resp.set_cookie('XSRF-TOKEN', '', expires=0)
-        resp.set_cookie('USER_ID', '', expires=0)
+        resp.set_cookie('XSRF-TOKEN', '', expires=0, domain=DOMAIN)
+        resp.set_cookie('USER_ID', '', expires=0, domain=DOMAIN)
     return resp
 
 
