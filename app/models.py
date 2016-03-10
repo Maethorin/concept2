@@ -202,6 +202,8 @@ class SubCategoria(db.Model, QueryMixin):
     categoria_id = db.Column(db.Integer, db.ForeignKey('categorias.id'))
     categoria = relationship("Categoria", back_populates="sub_categorias")
     provas = relationship("Prova", back_populates="sub_categoria")
+    limite_minimo = db.Column(db.Integer)
+    limite_maximo = db.Column(db.Integer)
 
     @property
     def codigo(self):
@@ -216,6 +218,8 @@ class SubCategoria(db.Model, QueryMixin):
             'nome': self.nome,
             'codigo': self.codigo,
             'label': self.label,
+            'limiteMinimo': self.limite_minimo,
+            'limiteMaximo': self.limite_maximo,
             'categoria': self.categoria.as_dict()
         }
 
