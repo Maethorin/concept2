@@ -53,6 +53,21 @@ angular.module('concept2', [
     'concept2.login',
     'concept2.eventos'
 ])
+    .factory('atualizaToken', ['Autentic', function(Autentic) {
+        return {
+            response: function(response) {
+                var headers = response.headers();
+                if (headers['xsrf-token']) {
+                   Autentic.atualizaValores(headers['xsrf-token'], headers['user-id'])
+                }
+                return response;
+            },
+            request: function(config) {
+                config.headers['XSRF-TOKEN'] = Autentic.token;
+                return config;
+            }
+        };
+    }])
     .config(function($sceDelegateProvider, $routeProvider, $httpProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
             'self',
@@ -60,6 +75,7 @@ angular.module('concept2', [
         ]);
         $routeProvider.when('/', {redirectTo: '/eventos/cabra-ri'});
         $httpProvider.defaults.withCredentials = true;
+        $httpProvider.interceptors.push('atualizaToken');
     })
     .run(function ($rootScope, Autentic) {
         $rootScope.pagina = "";

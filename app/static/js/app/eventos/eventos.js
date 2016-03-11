@@ -472,8 +472,9 @@ angular.module('concept2.eventos', ['ngRoute'])
                         $('#modalErro').modal('show');
                     };
                     if ($rootScope.atletaLogado) {
-                        Inscricao.update({'id': $scope.atleta.id, 'inscricao_id': $scope.atleta.inscricao.id}, $scope.atleta.inscricao)
-                            .then(
+                        Inscricao.update(
+                            {'id': $scope.atleta.id, 'inscricao_id': $scope.atleta.inscricao.id},
+                            $scope.atleta.inscricao,
                             function() {
                                 $scope.processaSucesso();
                             },

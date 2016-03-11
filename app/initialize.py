@@ -19,7 +19,7 @@ api.create_api(web_app)
 
 
 DOMAIN = 'concept2.com.br'
-# DOMAIN = 'localhost:8000'
+# DOMAIN = '127.0.0.1:8000'
 
 
 @web_app.after_request
@@ -33,19 +33,10 @@ def add_header(r):
     r.headers["Expires"] = "0"
     r.headers['Access-Control-Allow-Origin'] = 'http://{}'.format(DOMAIN)
     r.headers['Access-Control-Allow-Credentials'] = 'true'
-    r.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization,Set-Cookie'
-    r.headers['Access-Control-Expose-Headers'] = 'Content-Type,Authorization,Set-Cookie,TOKEN,USER'
+    r.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization,Set-Cookie,XSRF-TOKEN,USER-ID'
+    r.headers['Access-Control-Expose-Headers'] = 'Content-Type,Authorization,Set-Cookie,XSRF-TOKEN,USER-ID'
     r.headers['Access-Control-Allow-Methods'] = ','.join(['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'])
     r.headers['Access-Control-Max-Age'] = 21600
-    user = g.get('user', None)
-    if user is not None:
-        token = user.gera_token_aut()
-        expiration = datetime.utcnow() + timedelta(seconds=600)
-        r.headers['TOKEN'] = token
-        r.headers['USER'] = user.id
-    else:
-        r.headers['TOKEN'] = ''
-        r.headers['USER'] = ''
     return r
 
 
@@ -71,7 +62,7 @@ def favicon():
 
 @web_app.before_request
 def before_request():
-    token = request.cookies.get('XSRF-TOKEN', None)
+    token = request.headers.get('XSRF_TOKEN', None)
     atleta = None
     if token:
         atleta = models.Atleta.verifica_token_aut(token)
@@ -84,12 +75,8 @@ def after_request(resp):
     user = g.get('user', None)
     if user is not None:
         token = user.gera_token_aut()
-        expiration = datetime.utcnow() + timedelta(seconds=600)
-        resp.set_cookie('XSRF-TOKEN', token.decode('ascii'), expires=expiration, domain=DOMAIN)
-        resp.set_cookie('USER_ID', str(user.id), expires=expiration, domain=DOMAIN)
-    else:
-        resp.set_cookie('XSRF-TOKEN', '', expires=0, domain=DOMAIN)
-        resp.set_cookie('USER_ID', '', expires=0, domain=DOMAIN)
+        resp.headers['XSRF-TOKEN'] = token.decode('ascii')
+        resp.headers['USER-ID'] = str(user.id)
     return resp
 
 

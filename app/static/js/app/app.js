@@ -35,8 +35,8 @@ Date.prototype.idadeNascidoEm = function(nascimento) {
     return nomesDias[this.getDay()];
 };
 
-var urlBackEnd = 'https://concept2-staging.herokuapp.com';
-//var urlBackEnd = 'http://localhost:5000';
+//var urlBackEnd = 'https://concept2-staging.herokuapp.com';
+var urlBackEnd = 'http://localhost:5000';
 
 angular.module(
     'concept2',
@@ -56,12 +56,28 @@ angular.module(
         'concept2.suporte',
         'concept2.contato'
     ])
+    .factory('atualizaToken', ['Autentic', function(Autentic) {
+        return {
+            response: function(response) {
+                var headers = response.headers();
+                if (headers['xsrf-token']) {
+                   Autentic.atualizaValores(headers['xsrf-token'], headers['user-id'])
+                }
+                return response;
+            },
+            request: function(config) {
+                config.headers['XSRF-TOKEN'] = Autentic.token;
+                return config;
+            }
+        };
+    }])
     .config(['$sceDelegateProvider', '$httpProvider', function($sceDelegateProvider, $httpProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
             'self',
             '{0}/**'.format([urlBackEnd])
         ]);
         $httpProvider.defaults.withCredentials = true;
+        $httpProvider.interceptors.push('atualizaToken');
     }])
     .run(['$rootScope', 'Autentic', function($rootScope, Autentic) {
         $rootScope.pagina = "";

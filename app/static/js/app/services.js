@@ -1,20 +1,25 @@
 'use strict';
 angular.module('concept2.services', [])
-    .service('Autentic', ['$cookies', function($cookies) {
-        this.token = $cookies.get('XSRF-TOKEN');
-        this.userId = $cookies.get('USER_ID');
-        this.atualizaValores = function() {
-            this.token = $cookies.get('XSRF-TOKEN');
-            this.userId = $cookies.get('USER_ID');
-            console.log(this.token);
-            console.log(this.userId);
+    .service('Autentic', [function() {
+        this.token = null;
+        this.userId = null;
+        this.atualizaValores = function(token, userId) {
+            if (token) {
+                localStorage.setItem('XSRF-TOKEN', token);
+            }
+            if (userId) {
+                localStorage.setItem('USER-ID', userId);
+            }
+            this.token = localStorage.getItem('XSRF-TOKEN');
+            this.userId = localStorage.getItem('USER-ID');
         };
         this.estaLogado = function() {
             return this.token != 'undefined' && this.token != null;
         };
         this.limpaValores = function() {
-            $cookies.remove('XSRF-TOKEN');
-            $cookies.remove('USER_ID');
+            localStorage.removeItem('XSRF-TOKEN');
+            localStorage.removeItem('USER-ID');
+            this.atualizaValores();
         };
     }])
     .factory('OndeRemar', ['$resource', function($resource) {

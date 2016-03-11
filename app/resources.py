@@ -24,7 +24,7 @@ class ResourceBase(Resource):
             return self.obter_lista()
         return self.obter_item(item_id)
 
-    def options(self):
+    def options(self, *args, **kwargs):
         return {'result': True}
 
 
@@ -76,7 +76,7 @@ class Inscricoes(Resource):
             return {'result': 'Não autorizado'}, 401
         return models.Atleta.obter_atleta(atleta_id).atualiza_inscricao_de_dicionario(inscricao_id, request.json)
 
-    def options(self):
+    def options(self, *args, **kwargs):
         return {'result': True}
 
 
@@ -107,10 +107,10 @@ class Login(Resource):
         try:
             g.user = models.Atleta.obter_pelo_email(request.json['email'])
             if g.user.verifica_senha(request.json['senha']):
-                return {'resultado': 'Login Aceito'}
+                return {'token': g.user.gera_token_aut(), 'userId': g.user.id}
         except Exception:
             pass
         return {'resultado': 'Login Recusado'}, 401
 
-    def options(self):
+    def options(self, *args, **kwargs):
         return {'result': True}
