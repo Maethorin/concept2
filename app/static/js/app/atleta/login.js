@@ -4,29 +4,29 @@ angular.module('concept2.login', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
       $routeProvider
           .when('/atleta/login', {
-            templateUrl: '/angular/atleta/login.html',
+            templateUrl: '{0}/angular/atleta/login.html'.format([urlBackEnd]),
             controller: 'LoginController'
           })
           .when('/atleta/logout', {
-            templateUrl: '/angular/home.html',
+            templateUrl: '{0}/angular/home.html'.format([urlBackEnd]),
             controller: 'LogoutController'
           })
           .when('/atleta/perfil', {
-            templateUrl: '/angular/atleta/perfil.html',
+            templateUrl: '{0}/angular/atleta/perfil.html'.format([urlBackEnd]),
             controller: 'PerfilController'
           })
           .when('/atleta/inscricoes', {
-            templateUrl: '/angular/atleta/inscricoes.html',
+            templateUrl: '{0}/angular/atleta/inscricoes.html'.format([urlBackEnd]),
             controller: 'PerfilController'
           })
     }])
-    .controller("LogoutController", function($rootScope, $scope, $window, Login, Autentic) {
+    .controller("LogoutController", ['$rootScope', '$scope', '$window', 'Login', 'Autentic', function($rootScope, $scope, $window, Login, Autentic) {
+        Autentic.limpaValores();
         var login = new Login();
         login.$delete().then(
             function () {
-                Autentic.limpaValores();
                 Autentic.atualizaValores();
-                $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
+                $rootScope.atletaLogado = false;
                 if ($rootScope.referrer) {
                     $window.location = $rootScope.referrer;
                 }
@@ -35,8 +35,8 @@ angular.module('concept2.login', ['ngRoute'])
                 }
             }
         );
-    })
-    .controller("LoginController", function($rootScope, $scope, $window, Login, Autentic) {
+    }])
+    .controller("LoginController", ['$rootScope', '$scope', '$window', 'Login', 'Autentic', function($rootScope, $scope, $window, Login, Autentic) {
         $rootScope.pagina = "atleta";
         $rootScope.titulo = "Atleta";
         $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
@@ -62,7 +62,7 @@ angular.module('concept2.login', ['ngRoute'])
                 $scope.login.$save().then(
                     function () {
                         Autentic.atualizaValores();
-                        $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
+                        $rootScope.atletaLogado = Autentic.estaLogado();
                         if ($rootScope.referrer) {
                             $window.location = $rootScope.referrer;
                         }
@@ -73,4 +73,4 @@ angular.module('concept2.login', ['ngRoute'])
                 );
             }
         };
-    });
+    }]);

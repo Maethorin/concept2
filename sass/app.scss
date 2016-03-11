@@ -6,9 +6,14 @@ $imageUrl: "/static/img/";
     background-image: url($imageUrl + $imageFile);
 }
 
+$cor-primaria: #0f3d5e;
 
 body {
  background: radial-gradient(#0f3d5e, #011121);
+}
+
+img {
+    width: 100%;
 }
 
 .col-left {

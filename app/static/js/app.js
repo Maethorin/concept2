@@ -1,4 +1,233 @@
 'use strict';
+
+var format = function(str, data) {
+    var re = /{([^{}]+)}/g;
+
+    return str.replace(/{([^{}]+)}/g, function(match, val) {
+        var prop = data;
+        val.split('.').forEach(function(key) {
+            prop = prop[key];
+        });
+
+        return prop;
+    });
+};
+
+String.prototype.format = function(data) {
+    return format(this, data);
+};
+
+var nomesMeses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+var nomesDias = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+
+Date.prototype.nomeMes = function() {
+    return nomesMeses[this.getMonth()];
+};
+
+Date.prototype.nomeDia = function() {
+    return nomesDias[this.getDay()];
+};
+
+Date.prototype.idadeNascidoEm = function(nascimento) {
+    nascimento = [nascimento.splice(0, 2), nascimento.splice(2, 2), nascimento.splice(4, 4)];
+    var dataNascimento = new Date(parseInt(nascimento.splice(4, 4)), parseInt(nascimento.splice(2, 2)) - 1, parseInt(nascimento.splice(0, 2)));
+    var idade = (this - dataNascimento) / (1000 * 60 * 60 * 24 * 365.4);
+    return nomesDias[this.getDay()];
+};
+
+var urlBackEnd = 'https://concept2-staging.herokuapp.com';
+//var urlBackEnd = 'http://localhost:5000';
+
+angular.module(
+    'concept2',
+    [
+        'ngRoute',
+        'ngResource',
+        'ngCookies',
+        'uiGmapgoogle-maps',
+        'ui.mask',
+        'concept2.services',
+        'concept2.login',
+        'concept2.home',
+        'concept2.produtos',
+        'concept2.noticias',
+        'concept2.comunidade',
+        'concept2.eventos',
+        'concept2.suporte',
+        'concept2.contato'
+    ])
+    .config(['$sceDelegateProvider', '$httpProvider', function($sceDelegateProvider, $httpProvider) {
+        $sceDelegateProvider.resourceUrlWhitelist([
+            'self',
+            '{0}/**'.format([urlBackEnd])
+        ]);
+        $httpProvider.defaults.withCredentials = true;
+    }])
+    .run(['$rootScope', 'Autentic', function($rootScope, Autentic) {
+        $rootScope.pagina = "";
+        $rootScope.titulo = "";
+        $rootScope.$on('$locationChangeSuccess', function(evt, absNewUrl, absOldUrl) {
+            $rootScope.referrer = absOldUrl;
+        });
+        Autentic.atualizaValores();
+        $rootScope.atletaLogado = Autentic.estaLogado();
+    }]);
+;'use strict';
+
+angular.module('concept2.login', ['ngRoute'])
+    .config(['$routeProvider', function($routeProvider) {
+      $routeProvider
+          .when('/atleta/login', {
+            templateUrl: '{0}/angular/atleta/login.html'.format([urlBackEnd]),
+            controller: 'LoginController'
+          })
+          .when('/atleta/logout', {
+            templateUrl: '{0}/angular/home.html'.format([urlBackEnd]),
+            controller: 'LogoutController'
+          })
+          .when('/atleta/perfil', {
+            templateUrl: '{0}/angular/atleta/perfil.html'.format([urlBackEnd]),
+            controller: 'PerfilController'
+          })
+          .when('/atleta/inscricoes', {
+            templateUrl: '{0}/angular/atleta/inscricoes.html'.format([urlBackEnd]),
+            controller: 'PerfilController'
+          })
+    }])
+    .controller("LogoutController", ['$rootScope', '$scope', '$window', 'Login', 'Autentic', function($rootScope, $scope, $window, Login, Autentic) {
+        Autentic.limpaValores();
+        var login = new Login();
+        login.$delete().then(
+            function () {
+                Autentic.atualizaValores();
+                $rootScope.atletaLogado = false;
+                if ($rootScope.referrer) {
+                    $window.location = $rootScope.referrer;
+                }
+                else {
+                    $window.location = '/';
+                }
+            }
+        );
+    }])
+    .controller("LoginController", ['$rootScope', '$scope', '$window', 'Login', 'Autentic', function($rootScope, $scope, $window, Login, Autentic) {
+        $rootScope.pagina = "atleta";
+        $rootScope.titulo = "Atleta";
+        $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
+        $scope.login = new Login({
+            'email': null,
+            'senha': null
+        });
+        $scope.campoValido = function(campo) {
+            if (campo) {
+                return campo.$touched && campo.$valid
+            }
+            return true;
+        };
+        $scope.campoInvalido = function(campo) {
+            if (campo) {
+                return campo.$touched && campo.$invalid
+            }
+            return false;
+        };
+        $scope.loginFalhou = false;
+        $scope.enviandoLogin = function() {
+            if ($scope.formLogin.$valid) {
+                $scope.login.$save().then(
+                    function () {
+                        Autentic.atualizaValores();
+                        $rootScope.atletaLogado = Autentic.estaLogado();
+                        if ($rootScope.referrer) {
+                            $window.location = $rootScope.referrer;
+                        }
+                    },
+                    function () {
+                        $scope.loginFalhou = true;
+                    }
+                );
+            }
+        };
+    }]);
+;'use strict';
+angular.module('concept2.comunidade', [])
+    .config(['$routeProvider', function ($routeProvider) {
+        $routeProvider
+            .when('/comunidade', {
+                templateUrl: '{0}/angular/comunidade.html'.format([urlBackEnd]),
+                controller: 'ComunidadeController'
+            })
+    }])
+    .config(['uiGmapGoogleMapApiProvider', function(uiGmapGoogleMapApiProvider) {
+        uiGmapGoogleMapApiProvider.configure({
+            key: 'AIzaSyDzcLVVah4PjogAqerQdBcYowwzJcsKjv0',
+            v: '3.20',
+            language: 'pt-br',
+            libraries: 'places'
+        });
+    }])
+    .controller('ComunidadeController', ['$rootScope', '$scope', '$http', 'OndeRemar', function ($rootScope, $scope, $http, OndeRemar) {
+        $rootScope.pagina = "comunidade";
+        $rootScope.titulo = "Comunidade";
+        $scope.modalidades = [
+            {'nome': 'Clube de Remo', 'slug': 'clube-remo', 'ativo': true},
+            {'nome': 'CrossFit', 'slug': 'crossfit', 'ativo': true},
+            {'nome': 'Musculação', 'slug': 'musculacao', 'ativo': true},
+            {'nome': 'Aula Coletiva', 'slug': 'aula-coletiva', 'ativo': true}
+        ];
+        $scope.map = { center: {latitude: -14.235004, longitude: -51.92528}, zoom: 4 };
+        var adicionaIcone = function() {
+            angular.forEach($scope.ondeRemar, function(local) {
+                local.icone = '/static/img/comunidade/mini/{0}.png'.format([local.modalidade.codigo]);
+                local.options = {
+                    "title": local.modalidade.nome
+                };
+                local.exibeInfo = false;
+            });
+        };
+        $scope.ondeRemar = OndeRemar.query(adicionaIcone);
+        var events = {
+            places_changed: function (searchBox) {
+                var place = searchBox.getPlaces();
+                if (place.length == 0) {
+                    return false;
+                }
+                place = place[0];
+                $scope.map.center = {'latitude': place.geometry.location.lat(), 'longitude': place.geometry.location.lng()};
+                $scope.map.zoom = 14;
+            }
+        };
+        $scope.searchbox = { template: '{0}/angular/comunidade/search-box.html'.format([urlBackEnd]), events:events};
+        $scope.ponto = {};
+        $scope.alternaTipo = function(modalidade) {
+            modalidade.ativo = !modalidade.ativo;
+            var modalidadesAtivas = [];
+            angular.forEach($scope.modalidades, function(modalidade) {
+                if (modalidade.ativo) {
+                    modalidadesAtivas.push(modalidade.slug);
+                }
+            });
+            if (modalidadesAtivas.length == 0) {
+                $scope.ondeRemar = [];
+            }
+            else {
+                $scope.ondeRemar = OndeRemar.query({'modalidade': modalidadesAtivas}, adicionaIcone);
+            }
+        };
+    }]);
+;'use strict';
+angular.module('concept2.contato', ['ngRoute'])
+    .config(['$routeProvider', function($routeProvider) {
+        $routeProvider
+            .when('/contato', {
+                templateUrl: '{0}/angular/contato.html'.format([urlBackEnd]),
+                controller: 'ContatoController'
+            })
+    }])
+    .controller('ContatoController', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
+        $rootScope.pagina = "contato";
+        $rootScope.titulo = "Contato"
+    }]);
+;'use strict';
 angular.module('concept2.eventos', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
@@ -554,4 +783,122 @@ angular.module('concept2.eventos', ['ngRoute'])
                 });
             }
         }
+    }]);
+;'use strict';
+
+angular.module('concept2.home', ['ngRoute'])
+    .config(['$routeProvider', function($routeProvider) {
+      $routeProvider
+          .when('/', {
+            templateUrl: '{0}/angular/home.html'.format([urlBackEnd]),
+            controller: 'HomeController'
+          })
+    }])
+    .controller("HomeController", ['$rootScope', 'Autentic', function($rootScope, Autentic) {
+        $rootScope.pagina = "home";
+        $rootScope.titulo = "Inicial";
+        $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
+    }]);
+;'use strict';
+angular.module('concept2.noticias', ['ngRoute'])
+    .config(['$routeProvider', function($routeProvider) {
+        $routeProvider
+            .when('/noticias', {
+                templateUrl: '{0}/angular/noticias.html'.format([urlBackEnd]),
+                controller: 'NoticiasController'
+            })
+    }])
+    .controller('NoticiasController', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
+        $rootScope.pagina = "noticias";
+        $rootScope.titulo = "Noticias";
+        $scope.noticias = [];
+        $http.get('/json/noticias.json').then(function(response) {
+            $scope.noticias = response.data;
+        });
+    }]);
+;'use strict';
+angular.module('concept2.produtos', ['ngRoute'])
+    .config(['$routeProvider', function($routeProvider) {
+        $routeProvider
+            .when('/produtos', {
+                templateUrl: '{0}/angular/produtos.html'.format([urlBackEnd]),
+                controller: 'ProdutosController'
+            })
+            .when('/produtos/:slug', {
+                templateUrl: '{0}/angular/produtos/modelod.html'.format([urlBackEnd]),
+                controller: 'ModeloController'
+            })
+            .when('/produtos/:slug/:modeloMenu', {
+                templateUrl: '{0}/angular/produtos/modelod.html'.format([urlBackEnd]),
+                controller: 'ModeloController'
+            })
+    }])
+    .controller('ProdutosController', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
+        $rootScope.pagina = "produtos";
+        $rootScope.titulo = "Produtos"
+    }])
+    .controller('ModeloController', ['$routeParams', '$rootScope', '$scope', '$sce', function($routeParams, $rootScope, $scope, $sce) {
+        $scope.slug = $routeParams.slug;
+        $scope.modeloMenu = $routeParams.modeloMenu || 'sobre';
+        $scope.template = '{0}/angular/produtos/{1}.html'.format([urlBackEnd, $scope.modeloMenu]);
+        $rootScope.pagina = "produtos";
+        $scope.modelosMenu = [
+            {"slug": "sobre", "nome": "Sobre"},
+            {"slug": "caracteristicas", "nome": "Características"},
+            {"slug": "especificacoes", "nome": "Especificações"}
+        ];
+        $scope.trataHtml = function(html) {
+            return $sce.trustAsHtml(html);
+        };
+    }]);;'use strict';
+angular.module('concept2.services', [])
+    .service('Autentic', ['$cookies', function($cookies) {
+        this.token = $cookies.get('XSRF-TOKEN');
+        this.userId = $cookies.get('USER_ID');
+        this.atualizaValores = function() {
+            this.token = $cookies.get('XSRF-TOKEN');
+            this.userId = $cookies.get('USER_ID');
+            console.log(this.token);
+            console.log(this.userId);
+        };
+        this.estaLogado = function() {
+            return this.token != 'undefined' && this.token != null;
+        };
+        this.limpaValores = function() {
+            $cookies.remove('XSRF-TOKEN');
+            $cookies.remove('USER_ID');
+        };
+    }])
+    .factory('OndeRemar', ['$resource', function($resource) {
+        return $resource('{0}/api/onde-remar/:id'.format([urlBackEnd]));
+    }])
+    .factory('Atleta', ['$resource', function($resource) {
+        return $resource('{0}/api/atletas/:id/:evento_slug'.format([urlBackEnd]));
+    }])
+    .factory('Login', ['$resource', function($resource) {
+        return $resource('{0}/api/login'.format([urlBackEnd]));
+    }])
+    .factory('Inscricao', ['$resource', function($resource) {
+        return $resource(
+            '{0}/api/atletas/:id/inscricoes/:inscricao_id'.format([urlBackEnd]),
+            null,
+            {'update': {method: 'PUT'}}
+        );
+    }])
+    .factory('Evento', ['$resource', function($resource) {
+        return $resource('{0}/api/eventos/:id'.format([urlBackEnd]));
+    }]);
+;
+'use strict';
+angular.module('concept2.suporte', ['ngRoute'])
+    .config(['$routeProvider', function($routeProvider) {
+      $routeProvider
+          .when('/suporte', {
+            templateUrl: '{0}/angular/suporte.html'.format([urlBackEnd]),
+            controller: 'SuporteController'
+          })
+    }])
+ .controller('SuporteController', ['$rootScope','$scope', '$http', function($rootScope, $scope, $http) {
+     $rootScope.pagina = "suporte";
+        $rootScope.titulo = "Suporte"
     }]);

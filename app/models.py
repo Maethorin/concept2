@@ -6,6 +6,7 @@ import googlemaps
 import jwt
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects import postgresql
 from passlib.apps import custom_app_context
 
 
@@ -141,8 +142,10 @@ class Evento(db.Model, QueryMixin):
     imagem_destaque = db.Column(db.String())
     imagem_logo = db.Column(db.String())
     imagem_propaganda = db.Column(db.String())
-    descricao = db.Column(db.String())
+    descricao = db.Column(db.Text())
+    resumo = db.Column(db.Text())
     em_destaque = db.Column(db.Boolean)
+    pontuacao = db.Column(postgresql.JSON)
     provas = relationship("Prova", back_populates="evento")
 
     def lista_provas_dict(self):
@@ -169,7 +172,9 @@ class Evento(db.Model, QueryMixin):
             "imagemPropaganda": self.imagem_propaganda,
             "descricao": self.descricao,
             "destaque": self.em_destaque,
-            "provas": self.lista_provas_dict()
+            "provas": self.lista_provas_dict(),
+            "pontuacao": self.pontuacao,
+            "resumo": self.resumo
         }
 
 
@@ -183,6 +188,12 @@ class Categoria(db.Model, QueryMixin):
     def codigo(self):
         return self.nome.upper()[:3]
 
+    def as_dict(self):
+        return {
+            'nome': self.nome,
+            'codigo': self.codigo
+        }
+
 
 class SubCategoria(db.Model, QueryMixin):
     __tablename__ = 'sub_categorias'
@@ -191,6 +202,8 @@ class SubCategoria(db.Model, QueryMixin):
     categoria_id = db.Column(db.Integer, db.ForeignKey('categorias.id'))
     categoria = relationship("Categoria", back_populates="sub_categorias")
     provas = relationship("Prova", back_populates="sub_categoria")
+    limite_minimo = db.Column(db.Integer)
+    limite_maximo = db.Column(db.Integer)
 
     @property
     def codigo(self):
@@ -199,6 +212,16 @@ class SubCategoria(db.Model, QueryMixin):
     @property
     def label(self):
         return u'{} {}'.format(self.categoria.nome, self.nome)
+
+    def as_dict(self):
+        return {
+            'nome': self.nome,
+            'codigo': self.codigo,
+            'label': self.label,
+            'limiteMinimo': self.limite_minimo,
+            'limiteMaximo': self.limite_maximo,
+            'categoria': self.categoria.as_dict()
+        }
 
 prova_inscricao = db.Table(
     'provas_inscricoes',
@@ -252,8 +275,8 @@ class Prova(db.Model, QueryMixin):
         distancia = self.distancia
         tipo = self.tipo.value if self.tipo else ''
         sexo = self.sexo.value if self.sexo else ''
-        sub_categoria = self.sub_categoria.label if self.sub_categoria else ''
         observacao = self.observacao if self.observacao else ''
+        sub_categoria = self.sub_categoria.as_dict() if self.sub_categoria else {}
         return {
             'id': self.id,
             'codigo': self.codigo,

@@ -1,7 +1,18 @@
+
+.inscreva {
+    background: radial-gradient(#962156, #7a224a);
+    border: 2px solid black;
+    margin-left: auto;
+    a {
+        text-decoration: none;
+        color: white;
+    }
+}
+
 .borda-eventos {
     border: 5px solid white;
     &.sub-menu {
-        background: linear-gradient(#2384bb, #092942, #092942, #2384bb);
+        background-color: #092942;
         li {
             font-family: 'Open Sans', sans-serif;
             font-size: 16px;
@@ -15,20 +26,12 @@
             }
         }
     }
-    &.destaque img {
-        margin-left: -17px;
-        height: 376px;
-        margin-top: 5px;
-    }
-    img {
-        margin-left: -15px;
-    }
     &.resumo-evento {
         .data-evento {
             text-align: center;
             font-weight: bold;
             font-size: 19px;
-            margin: 20px 0;
+            margin: 0 0 10px 0;
         }
         h4 {
             color: black;
@@ -42,20 +45,13 @@
         }
         p {
             color: black;
-            text-align: justify;
             font-size: small
-        }
-        button {
-            background: radial-gradient(#962156, #7a224a);
-            border: 2px solid black;
-            margin-left: 70px;
-
         }
         a {
             text-decoration: none;
             color: white;
         }
-
+        text-align: center;
     }
     .conteudo-interno {
         border: 2px solid #888;
@@ -63,6 +59,7 @@
         margin-right: -($grid-gutter-width / 2);
         padding: ($grid-gutter-width / 2);
         min-height: 245px;
+        overflow: hidden;
     }
 }
 
@@ -100,6 +97,29 @@
             overflow: auto;
         }
         .campo {
+            &.pedido-numero {
+                .popover {
+                    width: 300px;
+                    h3 {
+                        margin: 0;
+                    }
+                }
+            }
+            #ajudaPedido {
+                padding: 0;
+                width: 16px;
+                height: 16px;
+                border-radius: 10px;
+                border: none;
+            }
+            .ajuda-pedido {
+                color: darken($state-info-border, 40%);
+                font-size: 17px;
+                cursor: pointer;
+                &:hover {
+                    color: darken($state-info-border, 35%);
+                }
+            }
             .form-group {
                 min-height: 80px;
             }
@@ -181,17 +201,32 @@
             }
         }
     }
+    .carregando {
+        position:   fixed;
+        z-index:    1000;
+        top:        0;
+        left:       0;
+        height:     100%;
+        width:      100%;
+        background: rgba( 255, 255, 255, .8 )
+                    url('/static/img/carregando.gif')
+                    50% 50%
+                    no-repeat;
+    }
 }
 
-#regulamento {
-    h4 {
-        font-weight: bold;
+.regulamento {
+    ol {
+        li {
+            margin: 8px 0;
+            text-align: justify;
+        }
     }
 }
 
 .line1 {
     td {
-        padding: 0px;
+        padding: 0;
     }
 }
 
@@ -202,11 +237,114 @@
 }
 
 .colocacao {
-    background: linear-gradient(to right, black, blue, indigo, violet, lavender);
-    background-attachment: fixed;
-    background-size: contain;
-
+    th {
+        text-align: center;
+    }
+    td {
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+    }
     .posicao {
         background-color: white;
+        text-align: left;
+        font-weight: normal;
+    }
+    .colocacao-1 {
+        background-color: $cor-primaria;
+        color: #EEE;
+    }
+    .colocacao-2 {
+        background-color: lighten($cor-primaria, 10%);
+        color: #EEE;
+    }
+    .colocacao-3 {
+        background-color: lighten($cor-primaria, 20%);
+        color: #EEE;
+    }
+    .colocacao-4 {
+        background-color: lighten($cor-primaria, 30%);
+    }
+    .colocacao-5 {
+        background-color: lighten($cor-primaria, 40%);
+    }
+    .colocacao-6 {
+        background-color: lighten($cor-primaria, 50%);
+    }
+    .colocacao-7 {
+        background-color: lighten($cor-primaria, 60%);
+    }
+    .colocacao-8 {
+        background-color: lighten($cor-primaria, 70%);
+    }
+    .pontuacao-1 {
+        background-color: #e50014;
+        color: #EEE;
+    }
+    .pontuacao-2 {
+        background-color: #ff6225;
+        color: #EEE;
+    }
+    .pontuacao-3 {
+        background-color: #ff9734;
+    }
+    .pontuacao-4 {
+        background-color: #ffcb44;
+    }
+    .pontuacao-5 {
+        background-color: #ffcc9d;
+    }
+    .pontuacao-6 {
+        background-color: #fcf253;
+    }
+    .pontuacao-7 {
+        background-color: #fefea6;
+    }
+    .pontuacao-8 {
+        background-color: #fff;
+    }
+}
+
+.evento-horarios {
+    th {
+        text-align: center;
+    }
+    tr {
+        &.intervalo {
+            font-weight: bold;
+
+        }
+        td {
+            text-align: center;
+        }
+    }
+    .panel-heading {
+        text-align: center;
+        font-weight: bold;
+    }
+}
+
+.filtro-provas {
+    li {
+        cursor: pointer;
+    }
+}
+
+.sobre {
+    text-align: center;
+    .row {
+        p {
+            text-align: justify;
+        }
+        img {
+            width: 60%;
+            margin: 20px 0;
+        }
+        padding: 15px;
+        margin-left: 0;
+        margin-right: 0;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #EEE;
+        text-align: center;
     }
 }

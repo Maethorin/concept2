@@ -3,19 +3,19 @@ angular.module('concept2.comunidade', [])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/comunidade', {
-                templateUrl: '/angular/comunidade.html',
+                templateUrl: '{0}/angular/comunidade.html'.format([urlBackEnd]),
                 controller: 'ComunidadeController'
             })
     }])
-    .config(function(uiGmapGoogleMapApiProvider) {
+    .config(['uiGmapGoogleMapApiProvider', function(uiGmapGoogleMapApiProvider) {
         uiGmapGoogleMapApiProvider.configure({
             key: 'AIzaSyDzcLVVah4PjogAqerQdBcYowwzJcsKjv0',
             v: '3.20',
             language: 'pt-br',
             libraries: 'places'
         });
-    })
-    .controller('ComunidadeController', function ($rootScope, $scope, $http, OndeRemar) {
+    }])
+    .controller('ComunidadeController', ['$rootScope', '$scope', '$http', 'OndeRemar', function ($rootScope, $scope, $http, OndeRemar) {
         $rootScope.pagina = "comunidade";
         $rootScope.titulo = "Comunidade";
         $scope.modalidades = [
@@ -46,7 +46,7 @@ angular.module('concept2.comunidade', [])
                 $scope.map.zoom = 14;
             }
         };
-        $scope.searchbox = { template: '/angular/comunidade/search-box.html', events:events};
+        $scope.searchbox = { template: '{0}/angular/comunidade/search-box.html'.format([urlBackEnd]), events:events};
         $scope.ponto = {};
         $scope.alternaTipo = function(modalidade) {
             modalidade.ativo = !modalidade.ativo;
@@ -63,4 +63,4 @@ angular.module('concept2.comunidade', [])
                 $scope.ondeRemar = OndeRemar.query({'modalidade': modalidadesAtivas}, adicionaIcone);
             }
         };
-    });
+    }]);

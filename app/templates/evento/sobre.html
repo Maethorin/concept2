@@ -1,1 +1,7 @@
-<div class="sobre" ng-bind-html="trataHtml(evento.descricao)"></div>
+<div class="sobre">
+<h3>Sobre o {{evento.titulo}}</h3>
+<div ng-bind-html="trataHtml(evento.descricao)"></div>
+<div class="row">
+    <button type="button" class="btn btn-default inscreva"><a href="#/eventos/{{slug}}/inscricao">Inscreva-se!</a></button>
+</div>
+</div>

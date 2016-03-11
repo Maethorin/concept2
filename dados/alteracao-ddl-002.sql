@@ -1,0 +1,1 @@
+ALTER TABLE public.eventos ALTER COLUMN descricao TYPE TEXT USING descricao::TEXT;

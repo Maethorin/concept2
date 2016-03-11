@@ -4,12 +4,12 @@ angular.module('concept2.home', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
       $routeProvider
           .when('/', {
-            templateUrl: '/angular/home.html',
+            templateUrl: '{0}/angular/home.html'.format([urlBackEnd]),
             controller: 'HomeController'
           })
     }])
-    .controller("HomeController", function($rootScope, Autentic) {
+    .controller("HomeController", ['$rootScope', 'Autentic', function($rootScope, Autentic) {
         $rootScope.pagina = "home";
         $rootScope.titulo = "Inicial";
         $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
-    });
+    }]);
