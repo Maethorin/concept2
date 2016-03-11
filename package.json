@@ -5,7 +5,7 @@
   "description": "Novo site Concept2 BR",
   "repository": "https://github.com/maethorin/concept2",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "bower": "^1.7.6",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
