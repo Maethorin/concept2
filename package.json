@@ -15,6 +15,7 @@
     "grunt-contrib-watch": "^0.6.1"
   },
   "scripts": {
-    "start": "http-server ./app -a localhost -p 8000 -c-1"
+    "postinstall": "grunt heroku",
+    "rodando": "http-server ./app -a localhost -p 8000 -c-1"
   }
 }
