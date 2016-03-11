@@ -15,7 +15,7 @@
     "grunt-contrib-watch": null
   },
   "scripts": {
-    "postinstall": ["bower install", "grunt heroku"],
+    "postinstall": "bower install && grunt heroku",
     "rodando": "http-server ./app -a localhost -p 8000 -c-1"
   }
 }
