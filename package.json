@@ -6,7 +6,7 @@
   "repository": "https://github.com/maethorin/concept2",
   "license": "MIT",
   "devDependencies": {
-    "bower": null,
+    "bower": "^1.7.6",
     "grunt": "^0.4.5",
     "grunt-cli": "^0.1.13",
     "grunt-contrib-compass": "^1.1.1",
