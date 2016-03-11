@@ -5,17 +5,17 @@
   "description": "Novo site Concept2 BR",
   "repository": "https://github.com/maethorin/concept2",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "bower": null,
-    "grunt": "^0.4.5",
-    "grunt-cli": "^0.1.13",
-    "grunt-contrib-compass": "^1.1.1",
-    "grunt-contrib-concat": "^1.0.0",
-    "grunt-contrib-uglify": "^1.0.0",
-    "grunt-contrib-watch": "^0.6.1"
+    "grunt":null,
+    "grunt-cli": null,
+    "grunt-contrib-compass": null,
+    "grunt-contrib-concat": null,
+    "grunt-contrib-uglify": null,
+    "grunt-contrib-watch": null
   },
   "scripts": {
-    "postinstall": "grunt heroku",
+    "postinstall": ["bower install", "grunt heroku"],
     "rodando": "http-server ./app -a localhost -p 8000 -c-1"
   }
 }
