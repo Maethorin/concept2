@@ -60,11 +60,13 @@ def favicon():
 @web_app.before_request
 def before_request():
     token = request.headers.get('XSRF_TOKEN', None)
-    atleta = None
+    eh_admin = request.headers.get('EH_ADMIN', 'false') == 'true'
+    usuario = None
     if token:
-        atleta = models.Atleta.verifica_token_aut(token)
-    if atleta:
-        g.user = atleta
+        model = models.Admin if eh_admin else models.Atleta
+        usuario = model.verifica_token_aut(token)
+    if usuario:
+        g.user = usuario
 
 
 @web_app.after_request
@@ -74,6 +76,7 @@ def after_request(resp):
         token = user.gera_token_aut()
         resp.headers['XSRF-TOKEN'] = token.decode('ascii')
         resp.headers['USER-ID'] = str(user.id)
+        resp.headers['EH-ADMIN'] = str(user.eh_admin).lower()
     return resp
 
 

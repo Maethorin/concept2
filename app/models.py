@@ -26,6 +26,47 @@ class QueryMixin(object):
         return cls.query.get(item_id)
 
 
+class AutenticMixin(object):
+    def hash_senha(self, password):
+        self.senha_hash = custom_app_context.encrypt(password)
+
+    def verifica_senha(self, password):
+        return custom_app_context.verify(password, self.senha_hash)
+
+    def gera_token_aut(self, expiration=600):
+        return jwt.encode({'id': self.id, 'exp': datetime.utcnow() + timedelta(seconds=expiration)}, database.config.SECRET_KEY, algorithm='HS256')
+
+    @classmethod
+    def verifica_token_aut(cls, token):
+        try:
+            data = jwt.decode(token, database.config.SECRET_KEY)
+        except:
+            return None
+        user = cls.query.get(data['id'])
+        return user
+
+    @classmethod
+    def obter_pelo_email(cls, email):
+        return cls.query.filter_by(email=email).first()
+
+    @property
+    def eh_admin(self):
+        return False
+
+
+class Admin(db.Model, AutenticMixin):
+    __tablename__ = 'admins'
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String())
+    email = db.Column(db.String(), unique=True)
+    senha_hash = db.Column(db.String(128))
+    ativo = db.Column(db.Boolean)
+
+    @property
+    def eh_admin(self):
+        return True
+
+
 class OndeRemar(db.Model, QueryMixin):
     __tablename__ = 'onde_remar'
     id = db.Column(db.Integer, primary_key=True)
@@ -303,6 +344,10 @@ class Inscricao(db.Model, QueryMixin):
     comprovante_pagamento = db.Column(db.String())
 
     @classmethod
+    def obter_inscricoes(cls):
+        return cls.obter_lista()
+
+    @classmethod
     def define_dados_de_dicionario(cls, inscricao_dict, atleta, inscricao=None):
         if not inscricao:
             inscricao = cls()
@@ -348,7 +393,7 @@ class EmailJaExiste(Exception):
     pass
 
 
-class Atleta(db.Model, QueryMixin):
+class Atleta(db.Model, QueryMixin, AutenticMixin):
     __tablename__ = 'atletas'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(), unique=True)
@@ -417,10 +462,6 @@ class Atleta(db.Model, QueryMixin):
             return atleta
 
     @classmethod
-    def obter_pelo_email(cls, email):
-        return cls.query.filter_by(email=email).first()
-
-    @classmethod
     def obter_atleta_com_inscricao_para_o_evento(cls, atleta_id, evento_slug):
         atleta = cls.query.get(atleta_id)
         atleta.inscricao = None
@@ -442,23 +483,6 @@ class Atleta(db.Model, QueryMixin):
         Inscricao.atualiza_de_dicionario(inscricao_id, inscricao_dict, self)
         db.session.commit()
 
-    def hash_senha(self, password):
-        self.senha_hash = custom_app_context.encrypt(password)
-
-    def verifica_senha(self, password):
-        return custom_app_context.verify(password, self.senha_hash)
-
-    def gera_token_aut(self, expiration=600):
-        return jwt.encode({'id': self.id, 'exp': datetime.utcnow() + timedelta(seconds=expiration)}, database.config.SECRET_KEY, algorithm='HS256')
-
-    @staticmethod
-    def verifica_token_aut(token):
-        try:
-            data = jwt.decode(token, database.config.SECRET_KEY)
-        except:
-            return None
-        user = Atleta.query.get(data['id'])
-        return user
 
 # prova pode ter uma ou mais... perguntar o tempo e agrupar na bateria quem não sabe fica por último
 # provas vem primeiro e as inscrições são feitas em cima das provas... filtrar provas de acordo com os dados

@@ -6,8 +6,13 @@ from flask_restful import Resource
 import models
 
 
-def usuario_esta_logado():
-    return getattr(g, 'user', None) is not None
+def usuario_esta_logado(eh_admin=False):
+    user = getattr(g, 'user', None)
+    if user is None:
+        return False
+    if eh_admin:
+        return user.eh_admin
+    return True
 
 
 class ResourceBase(Resource):
@@ -26,6 +31,17 @@ class ResourceBase(Resource):
 
     def options(self, *args, **kwargs):
         return {'result': True}
+
+
+class ResourceAdmin(ResourceBase):
+    def get(self, item_id=None):
+        if not usuario_esta_logado(True):
+            return {'result': 'Não autorizado'}, 401
+        return super(ResourceAdmin, self).get(item_id)
+
+
+class Inscricoes(ResourceAdmin):
+    model = models.Inscricao
 
 
 class Produtos(ResourceBase):
@@ -63,7 +79,7 @@ class Atletas(ResourceBase):
             return {'mensagemErro': u'Ocorreu um erro e não pudemos gravar a inscrição. Por favor, tente mais tarde.'}, 500
 
 
-class Inscricoes(Resource):
+class InscricoesAtletas(Resource):
     model = models.Inscricao
 
     def get(self, atleta_id, inscricao_id=None):
@@ -99,13 +115,15 @@ class OndeRemar(ResourceBase):
             return {'created': True}
 
 
-class Login(Resource):
+class LoginResource(Resource):
+    model = None
+
     def delete(self):
         g.user = None
 
     def post(self):
         try:
-            g.user = models.Atleta.obter_pelo_email(request.json['email'])
+            g.user = self.model.obter_pelo_email(request.json['email'])
             if g.user.verifica_senha(request.json['senha']):
                 return {'token': g.user.gera_token_aut(), 'userId': g.user.id}
         except Exception:
@@ -114,3 +132,11 @@ class Login(Resource):
 
     def options(self, *args, **kwargs):
         return {'result': True}
+
+
+class LoginAtleta(LoginResource):
+    model = models.Atleta
+
+
+class LoginAdmin(LoginResource):
+    model = models.Admin
