@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/static/css/app.css">
     <link rel="icon" href="/static/img/c2-logo.png" sizes="16x16"/>
     <title>Concept2 Brasil: {{titulo}}</title>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <body class="pagina-{{pagina}}">
 <div id="fb-root"></div>
@@ -57,8 +58,8 @@
                     <!--<li ng-class="{'active': pagina == 'contato'}"><a href="/#contato" class="text-uppercase">contato</a></li>-->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-if="!atletaLogado"><a href="#/atleta/login">LOGIN</a></li>
-                    <li class="dropdown" ng-if="atletaLogado">
+                    <li ng-show="!atletaLogado"><a href="#/atleta/login">LOGIN</a></li>
+                    <li class="dropdown" ng-show="atletaLogado">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Olá Atleta!<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <!--<li><a href="#/atleta/perfil">Meu Perfil</a></li>-->

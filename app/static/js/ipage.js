@@ -41,7 +41,9 @@ Date.prototype.nomeDia = function() {
 };
 
 var urlBackEnd = 'http://concept2-staging.herokuapp.com';
-//var urlBackEnd = 'http://localhost:5000';
+if (window.location.hostname == '127.0.0.1') {
+    urlBackEnd = 'http://localhost:5000';
+}
 
 angular.module('concept2', [
     'ngRoute',
@@ -53,12 +55,19 @@ angular.module('concept2', [
     'concept2.login',
     'concept2.eventos'
 ])
-    .factory('atualizaToken', ['Autentic', function(Autentic) {
+    .factory('atualizaToken', ['Autentic', '$rootScope', function(Autentic, $rootScope) {
         return {
             response: function(response) {
                 var headers = response.headers();
                 if (headers['xsrf-token']) {
                    Autentic.atualizaValores(headers['xsrf-token'], headers['user-id'])
+                }
+                return response;
+            },
+            responseError: function(response) {
+                if (response.status == 401) {
+                    Autentic.limpaValores();
+                    $rootScope.atletaLogado = Autentic.estaLogado();
                 }
                 return response;
             },
