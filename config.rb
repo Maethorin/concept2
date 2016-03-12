@@ -7,7 +7,7 @@ css_dir = "app/static/css"
 sass_dir = "sass"
 images_dir = "app/static/img"
 javascripts_dir = "app/static/js"
-additional_import_paths = "app/static/js/bower_components"
+additional_import_paths = "bower_components"
 
 # You can select your preferred output style here (can be overridden via the command line):
 output_style = :compressed
