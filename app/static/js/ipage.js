@@ -51,6 +51,7 @@ angular.module('concept2', [
     'ngCookies',
     'uiGmapgoogle-maps',
     'ui.mask',
+    'vcRecaptcha',
     'concept2.services',
     'concept2.login',
     'concept2.eventos'

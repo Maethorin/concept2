@@ -206,9 +206,12 @@
                 </div>
             </div>
         </fieldset>
-        <div class="g-recaptcha" data-sitekey="6LdrnhoTAAAAAKDfPoEgTvtmjCV7ny_iCrb1dVzy"></div>
         <div class="row">
-            <div class="col-md-12 botoes">
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                <div vc-recaptcha key="'6LdrnhoTAAAAAKDfPoEgTvtmjCV7ny_iCrb1dVzy'" ng-model="atleta.recaptcha"></div>
+            </div>
+            <div class="col-md-5 botoes">
                 <button type="submit" class="btn" ng-class="{'btn-disabled': formInscricao.$invalid, 'btn-success': formInscricao.$valid}">Inscrever-se</button>
                 <button type="button" class="btn btn-warning" ng-click="reset(formInscricao)">Limpar</button>
             </div>

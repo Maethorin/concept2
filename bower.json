@@ -14,6 +14,7 @@
     "angular-cookies": "~1.4.0",
     "angular-google-maps": "~2.3.1",
     "angular-ui-mask": "~1.7.2",
+    "angular-recaptcha": "~2.2.3",
     "bootstrap-sass": "~>3.3.6",
     "fontawesome": "~4.5.0",
     "moment": null

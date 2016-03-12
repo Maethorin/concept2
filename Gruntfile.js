@@ -7,18 +7,19 @@ module.exports = function(grunt) {
             },
             componentes: {
                 src: [
-                    "app/static/js/bower_components/moment/moment.js",
-                    "app/static/js/bower_components/moment/locale/pt-br.js",
-                    "app/static/js/bower_components/lodash/dist/lodash.js",
-                    "app/static/js/bower_components/angular/angular.js",
-                    "app/static/js/bower_components/angular-ui-mask/dist/mask.js",
-                    "app/static/js/bower_components/angular-route/angular-route.js",
-                    "app/static/js/bower_components/angular-resource/angular-resource.js",
-                    "app/static/js/bower_components/angular-cookies/angular-cookies.js",
-                    "app/static/js/bower_components/angular-simple-logger/dist/angular-simple-logger.js",
-                    "app/static/js/bower_components/angular-google-maps/dist/angular-google-maps.js",
-                    "app/static/js/bower_components/jquery/dist/jquery.js",
-                    "app/static/js/bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"
+                    "bower_components/moment/moment.js",
+                    "bower_components/moment/locale/pt-br.js",
+                    "bower_components/lodash/dist/lodash.js",
+                    "bower_components/angular/angular.js",
+                    "bower_components/angular-ui-mask/dist/mask.js",
+                    "bower_components/angular-route/angular-route.js",
+                    "bower_components/angular-resource/angular-resource.js",
+                    "bower_components/angular-cookies/angular-cookies.js",
+                    "bower_components/angular-simple-logger/dist/angular-simple-logger.js",
+                    "bower_components/angular-recaptcha/release/angular-recaptcha.js",
+                    "bower_components/angular-google-maps/dist/angular-google-maps.js",
+                    "bower_components/jquery/dist/jquery.js",
+                    "bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"
                 ],
                 dest: 'app/static/js/componentes.js'
             },
