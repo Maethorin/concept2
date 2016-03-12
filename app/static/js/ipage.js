@@ -56,7 +56,7 @@ angular.module('concept2', [
     'concept2.login',
     'concept2.eventos'
 ])
-    .factory('atualizaToken', ['Autentic', '$rootScope', function(Autentic, $rootScope) {
+    .factory('atualizaToken', ['Autentic', '$rootScope', '$q', function(Autentic, $rootScope, $q) {
         return {
             response: function(response) {
                 var headers = response.headers();
@@ -70,7 +70,7 @@ angular.module('concept2', [
                     Autentic.limpaValores();
                     $rootScope.atletaLogado = Autentic.estaLogado();
                 }
-                return response;
+                return $q.reject(response);
             },
             request: function(config) {
                 config.headers['XSRF-TOKEN'] = Autentic.token;
