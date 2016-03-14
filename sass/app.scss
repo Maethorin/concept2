@@ -148,7 +148,9 @@ $bg-lista: radial_gradient(#34505b, #132026);
 }
 
 .pagina-contato {
+    background:  radial_gradient(#207bb0,#011121);;
     @import "contato";
+    @import "pagina-listagem";
 }
 
 footer {
