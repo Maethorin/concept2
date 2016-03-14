@@ -15,4 +15,5 @@ def create_api(app):
     api.add_resource(resources.InscricoesAtletas, '/api/atletas/<int:atleta_id>/inscricoes', '/api/atletas/<int:atleta_id>/inscricoes/<int:inscricao_id>')
 
     api.add_resource(resources.LoginAdmin, '/admin/api/login')
+    api.add_resource(resources.EventosAdmin, '/admin/api/eventos', '/admin/api/eventos/<string:item_id>')
     api.add_resource(resources.InscricoesAdmin, '/admin/api/inscricoes', '/admin/api/inscricoes/<int:item_id>')

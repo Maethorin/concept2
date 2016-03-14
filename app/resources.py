@@ -40,6 +40,10 @@ class ResourceAdmin(ResourceBase):
         return super(ResourceAdmin, self).get(item_id)
 
 
+class EventosAdmin(ResourceAdmin):
+    model = models.Evento
+
+
 class InscricoesAdmin(ResourceAdmin):
     model = models.Inscricao
 

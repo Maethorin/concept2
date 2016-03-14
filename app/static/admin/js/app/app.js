@@ -10,7 +10,7 @@ angular.module(
         'concept2Admin.services',
         'concept2Admin.login',
         'concept2Admin.home',
-        'concept2Admin.inscricoes'
+        'concept2Admin.eventos'
     ])
     .factory('atualizaToken', ['Autentic', '$rootScope', '$q', '$window', function(Autentic, $rootScope, $q, $window) {
         return atualizaTokenFactory(Autentic, $rootScope, $q, $window, true);
@@ -26,4 +26,8 @@ angular.module(
         });
         Autentic.atualizaValores();
         $rootScope.adminLogado = Autentic.estaLogado();
+
+        $rootScope.itensMenu = [
+            {slug: 'eventos', label: 'eventos', url: '/admin/#/eventos', subItens: []}
+        ];
     }]);

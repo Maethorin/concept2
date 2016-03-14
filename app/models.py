@@ -204,7 +204,7 @@ class Evento(db.Model, QueryMixin):
             "id": self.id,
             "slug": self.slug,
             "titulo": self.titulo,
-            "subtitulo": self.subtitulo,
+            "subTitulo": self.subtitulo,
             "dataInicio": {"ano": self.data_inicio.year, "mes": self.data_inicio.month, "dia": self.data_inicio.day},
             "dataFim": {"ano": self.data_fim.year, "mes": self.data_fim.month, "dia": self.data_fim.day},
             "imagemLista": self.imagem_lista,
