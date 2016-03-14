@@ -12,7 +12,7 @@ web_app.config.from_object(os.environ['APP_SETTINGS'])
 database.AppRepository.db = SQLAlchemy(web_app)
 app_directory = os.path.join(os.getcwd(), 'app')
 template_directory = os.path.join(app_directory, 'templates')
-static_directory = os.path.join(app_directory, 'static')
+template_admin_directory = os.path.join(template_directory, 'admin')
 
 import api, models
 api.create_api(web_app)
@@ -45,6 +45,16 @@ def index():
 @web_app.route('/angular/<path:template_path>', methods=['GET', 'POST'])
 def angular_template(template_path):
     return send_from_directory(template_directory, template_path)
+
+
+@web_app.route('/admin/', methods=['GET', 'POST'])
+def index_admin():
+    return send_from_directory(template_admin_directory, 'index.html')
+
+
+@web_app.route('/admin/angular/<path:template_path>', methods=['GET', 'POST'])
+def angular_template_admin(template_path):
+    return send_from_directory(template_admin_directory, template_path)
 
 
 @web_app.route('/json/<json_name>', methods=['GET', 'POST'])

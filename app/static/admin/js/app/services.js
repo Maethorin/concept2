@@ -5,20 +5,20 @@ angular.module('concept2Admin.services', [])
         this.userId = null;
         this.atualizaValores = function(token, userId) {
             if (token) {
-                localStorage.setItem('XSRF-TOKEN', token);
+                localStorage.setItem('XSRFU-TOKEN', token);
             }
             if (userId) {
-                localStorage.setItem('USER-ID', userId);
+                localStorage.setItem('USERU-ID', userId);
             }
-            this.token = localStorage.getItem('XSRF-TOKEN');
-            this.userId = localStorage.getItem('USER-ID');
+            this.token = localStorage.getItem('XSRFU-TOKEN');
+            this.userId = localStorage.getItem('USERU-ID');
         };
         this.estaLogado = function() {
             return this.token != 'undefined' && this.token != null;
         };
         this.limpaValores = function() {
-            localStorage.removeItem('XSRF-TOKEN');
-            localStorage.removeItem('USER-ID');
+            localStorage.removeItem('XSRFU-TOKEN');
+            localStorage.removeItem('USERU-ID');
             this.atualizaValores();
         };
     }])

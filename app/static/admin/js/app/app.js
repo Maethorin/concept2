@@ -1,6 +1,6 @@
 'use strict';
 
-urlBackEnd = '{0}/admin'.format(urlBackEnd);
+urlBackEnd = '{0}/admin'.format([urlBackEnd]);
 
 angular.module(
     'concept2Admin',
@@ -20,5 +20,5 @@ angular.module(
     }])
     .run(['$rootScope', 'Autentic', function($rootScope, Autentic) {
         baseRun($rootScope, Autentic);
-        $rootScope.adminLogado = Autentic.estaLogado(true);
+        $rootScope.adminLogado = Autentic.estaLogado();
     }]);

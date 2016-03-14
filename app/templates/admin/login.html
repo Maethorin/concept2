@@ -1,0 +1,41 @@
+<div class="container login">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">Faça o login administrador</div>
+                <form name="formLogin" class="form-horizontal" ng-submit="enviandoLogin()" novalidate>
+                    <div class="panel-body">
+                        <div class="alert alert-danger" ng-show="loginFalhou"><strong>Falha no login:</strong> Não foi possível efetuar o login com os dados enviados.</div>
+                        <div class="form-group has-feedback formInput" ng-class="{'has-success': campoValido(formLogin.email), 'has-error': campoInvalido(formLogin.email)}">
+                            <label for="email" class="col-sm-2 control-label">Email: <i class="fa fa-asterisk"></i></label>
+
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="email" name="email" ng-model="login.email" aria-describedby="helpEmail" required/>
+                                <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoValido(formLogin.email), 'fa-close': campoInvalido(formLogin.email)} "></span>
+                                <span id="helpEmail" class="help-block" ng-show="campoInvalido(formLogin.email)">* o campo é obrigatório *</span>
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback formInput" ng-class="{'has-success': campoValido(formLogin.senha), 'has-error': campoInvalido(formLogin.senha)}">
+                            <label for="senha" class="col-sm-2 control-label">Senha: <i class="fa fa-asterisk"></i></label>
+
+                            <div class="col-sm-10">
+                                <input type="password" class="form-control" id="senha" name="senha" ng-model="login.senha" aria-describedby="helpSenha" required/>
+                                <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoValido(formLogin.senha), 'fa-close': campoInvalido(formLogin.senha)} "></span>
+                                <span id="helpSenha" class="help-block" ng-show="campoInvalido(formLogin.senha)">* o campo é obrigatório *</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="botao">
+                            <div class="col-sm-12">
+                                <button type="submit" class="btn col-sm-4" ng-class="{'btn-disabled': formLogin.$invalid, 'btn-success': formLogin.$valid}">Enviar</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>

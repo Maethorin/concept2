@@ -3,27 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="/static/css/app-admin.css">
+        <link rel="stylesheet" href="/static/admin/css/app-admin.css">
         <link rel="icon" href="/static/img/c2-logo.png" sizes="16x16"/>
         <title>Admin Concept2 Brasil</title>
     </head>
     <body>
         <header>
-            <div class="container topo">
-                <div class="row">
-                    <div class="col-md-9 col-xs-3">
-                        <a class="navbar-brand" id="logo" href="/#/">Concept2</a>
-                    </div>
-                    <div class="col-md-3 col-xs-9">
-                        <div id="social">
-                            <a href="https://concept2.com.br/shop"><i class="fa fa-shopping-cart fa-2x"></i></a>
-                            <a href="https://www.facebook.com/Concept2Brasil/?fref=ts" title="Facebook" target="_blank"><i class="fa fa-facebook-official fa-2x"></i></a>
-                            <a href="https://www.instagram.com/concept2brasil/" title="Instagram" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <nav class="navbar navbar-default navbar-static-top navegacao">
                 <div class="container">
                     <div class="navbar-header">
@@ -33,39 +18,21 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand icon" href="/#/"></a>
+                        <a class="navbar-brand icon" href="/admin/#/"></a>
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li ng-class="{'active': pagina == 'produtos'}"><a href="/#produtos" class="text-uppercase">produtos</a></li>
-                            <li ng-class="{'active': pagina == 'comunidade'}"><a href="/#comunidade" class="text-uppercase">comunidade</a></li>
-                            <li ng-class="{'active': pagina == 'eventos'}"><a href="/#eventos" class="text-uppercase">eventos</a></li>
-                            <!--<li ng-class="{'active': pagina == 'noticias'}"><a href="/#noticias" class="text-uppercase">notícias</a></li>-->
-                            <li ng-class="{'active': pagina == 'suporte'}"><a href="/#suporte" class="text-uppercase">suporte</a></li>
-                            <li ng-class="{'active': pagina == 'contato'}"><a href="/#contato" class="text-uppercase">contato</a></li>
+                            <li ng-class="{'active': pagina == 'incricoes'}"><a href="/admin/#inscricoes" class="text-uppercase">incricões</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
-                            <li ng-if="!atletaLogado"><a href="/#/atleta/login">LOGIN</a></li>
-                            <li class="dropdown" ng-if="atletaLogado">
-                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Olá Atleta!<span class="caret"></span></a>
+                            <li ng-if="!adminLogado"><a href="/admin/#/login">LOGIN</a></li>
+                            <li class="dropdown" ng-if="adminLogado">
+                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Olá Admin!<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="/#/atleta/perfil">Meu Perfil</a></li>
-                                    <li><a href="/#/atleta/inscricoes">Minhas Inscrições</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="/#/atleta/logout">Logout</a></li>
+                                    <li><a href="/admin/#/logout">Logout</a></li>
                                 </ul>
                             </li>
                         </ul>
-                        <!--<form class="navbar-form navbar-left form-busca" role="search">-->
-                        <!--<div class="form-group">-->
-                        <!--<div class="input-group">-->
-                        <!--<input type="text" class="form-control" placeholder="BUSCA">-->
-                        <!--<span class="input-group-btn">-->
-                        <!--<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>-->
-                        <!--</span>-->
-                        <!--</div>-->
-                        <!--</div>-->
-                        <!--</form>-->
                     </div>
                 </div>
             </nav>
@@ -79,7 +46,7 @@
                 </div>
             </div>
         </footer>
-        <script src="/static/js/componentes-admin.min.js"></script>
-        <script src="/static/js/app-admin.min.js"></script>
+        <script src="/static/admin/js/componentes-admin.min.js"></script>
+        <script src="/static/admin/js/app-admin.min.js"></script>
     </body>
 </html>
