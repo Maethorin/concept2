@@ -35,12 +35,12 @@ class ResourceBase(Resource):
 
 class ResourceAdmin(ResourceBase):
     def get(self, item_id=None):
-        if not usuario_esta_logado(True):
+        if not usuario_esta_logado(eh_admin=True):
             return {'result': 'Não autorizado'}, 401
         return super(ResourceAdmin, self).get(item_id)
 
 
-class Inscricoes(ResourceAdmin):
+class InscricoesAdmin(ResourceAdmin):
     model = models.Inscricao
 
 
