@@ -43,7 +43,7 @@ module.exports = function(grunt) {
             appAdmin: {
                 src: [
                     "app/static/js/common.js",
-                    "app/static/admin/js/**/*.js"
+                    "app/static/admin/js/app/**/*.js"
                 ],
                 dest: 'app/static/admin/js/app-admin.js'
             }

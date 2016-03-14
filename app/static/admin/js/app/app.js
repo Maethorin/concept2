@@ -1,5 +1,7 @@
 'use strict';
 
+urlBackEnd = '{0}/admin'.format(urlBackEnd);
+
 angular.module(
     'concept2Admin',
     [
@@ -7,45 +9,16 @@ angular.module(
         'ngResource',
         'concept2Admin.services',
         'concept2Admin.login',
-        'concept2.home',
+        'concept2Admin.home',
         'concept2Admin.inscricoes'
     ])
     .factory('atualizaToken', ['Autentic', '$rootScope', '$q', function(Autentic, $rootScope, $q) {
-        return {
-            response: function(response) {
-                var headers = response.headers();
-                if (headers['xsrf-token']) {
-                   Autentic.atualizaValores(headers['xsrf-token'], headers['user-id'])
-                }
-                return response;
-            },
-            responseError: function(response) {
-                if (response.status == 401) {
-                    Autentic.limpaValores();
-                    $rootScope.atletaLogado = Autentic.estaLogado();
-                }
-                return $q.reject(response);
-            },
-            request: function(config) {
-                config.headers['XSRF-TOKEN'] = Autentic.token;
-                return config;
-            }
-        };
+        return atualizaTokenFactory(Autentic, $rootScope, $q);
     }])
     .config(['$sceDelegateProvider', '$httpProvider', function($sceDelegateProvider, $httpProvider) {
-        $sceDelegateProvider.resourceUrlWhitelist([
-            'self',
-            '{0}/**'.format([urlBackEnd])
-        ]);
-        $httpProvider.defaults.withCredentials = true;
-        $httpProvider.interceptors.push('atualizaToken');
+        configApp($sceDelegateProvider, $httpProvider);
     }])
     .run(['$rootScope', 'Autentic', function($rootScope, Autentic) {
-        $rootScope.pagina = "";
-        $rootScope.titulo = "";
-        $rootScope.$on('$locationChangeSuccess', function(evt, absNewUrl, absOldUrl) {
-            $rootScope.referrer = absOldUrl;
-        });
-        Autentic.atualizaValores();
-        $rootScope.atletaLogado = Autentic.estaLogado();
+        baseRun($rootScope, Autentic);
+        $rootScope.adminLogado = Autentic.estaLogado(true);
     }]);

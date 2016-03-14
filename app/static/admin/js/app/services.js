@@ -1,5 +1,5 @@
 'use strict';
-angular.module('concept2.services', [])
+angular.module('concept2Admin.services', [])
     .service('Autentic', [function() {
         this.token = null;
         this.userId = null;
@@ -23,21 +23,37 @@ angular.module('concept2.services', [])
         };
     }])
     .factory('OndeRemar', ['$resource', function($resource) {
-        return $resource('{0}/api/onde-remar/:id'.format([urlBackEnd]));
+        return $resource(
+            '{0}/api/onde-remar/:id'.format([urlBackEnd]),
+            null,
+            {'update': {method: 'PUT'}}
+        );
     }])
     .factory('Atleta', ['$resource', function($resource) {
-        return $resource('{0}/api/atletas/:id/:evento_slug'.format([urlBackEnd]));
+        return $resource(
+            '{0}/api/atletas/:id/:evento_slug'.format([urlBackEnd]),
+            null,
+            {'update': {method: 'PUT'}}
+        );
     }])
     .factory('Login', ['$resource', function($resource) {
-        return $resource('{0}/api/login'.format([urlBackEnd]));
+        return $resource(
+            '{0}/api/login'.format([urlBackEnd]),
+            null,
+            {'update': {method: 'PUT'}}
+        );
     }])
     .factory('Inscricao', ['$resource', function($resource) {
         return $resource(
-            '{0}/api/atletas/:id/inscricoes/:inscricao_id'.format([urlBackEnd]),
+            '{0}/api/inscricoes/:id'.format([urlBackEnd]),
             null,
             {'update': {method: 'PUT'}}
         );
     }])
     .factory('Evento', ['$resource', function($resource) {
-        return $resource('{0}/api/eventos/:id'.format([urlBackEnd]));
+        return $resource(
+            '{0}/api/eventos/:id'.format([urlBackEnd]),
+            null,
+            {'update': {method: 'PUT'}}
+        );
     }]);

@@ -42,3 +42,43 @@ if (window.location.hostname == '127.0.0.1') {
     urlBackEnd = 'http://localhost:5000';
 }
 
+var configApp = function($sceDelegateProvider, $httpProvider) {
+    $sceDelegateProvider.resourceUrlWhitelist([
+        'self',
+        '{0}/**'.format([urlBackEnd])
+    ]);
+    $httpProvider.defaults.withCredentials = true;
+    $httpProvider.interceptors.push('atualizaToken');
+};
+
+var baseRun = function($rootScope, Autentic) {
+    $rootScope.pagina = "";
+    $rootScope.titulo = "";
+    $rootScope.$on('$locationChangeSuccess', function(evt, absNewUrl, absOldUrl) {
+        $rootScope.referrer = absOldUrl;
+    });
+    Autentic.atualizaValores();
+};
+
+var atualizaTokenFactory = function(Autentic, $rootScope, $q) {
+    return {
+        response: function(response) {
+            var headers = response.headers();
+            if (headers['xsrf-token']) {
+               Autentic.atualizaValores(headers['xsrf-token'], headers['user-id'])
+            }
+            return response;
+        },
+        responseError: function(response) {
+            if (response.status == 401) {
+                Autentic.limpaValores();
+                $rootScope.atletaLogado = Autentic.estaLogado();
+            }
+            return $q.reject(response);
+        },
+        request: function(config) {
+            config.headers['XSRF-TOKEN'] = Autentic.token;
+            return config;
+        }
+    };
+};
