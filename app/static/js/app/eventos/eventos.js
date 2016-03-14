@@ -392,7 +392,6 @@ angular.module('concept2.eventos', ['ngRoute'])
                             return $scope.atleta.idade >= limiteMinimo && $scope.atleta.idade <= limiteMaximo;
                         });
                     }
-                    console.log($scope.carregandoProvas);
                     if ($scope.carregandoProvas) {
                         $scope.selecionaProvas();
                     }
