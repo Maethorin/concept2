@@ -1,0 +1,22 @@
+<div class="col-md-7">
+    <img class="imgp" src="../../../static/img/produtos/modelod/_ModDb.png"/>
+</div>
+<div class="col-md-5 colright">
+    <img class="img1" src="../../../static/img/produtos/modelod/Dpreto_remando.jpg"/>
+    <img src="../../../static/img/produtos/modelod/D_stored_ltgray.jpg"/>
+    <img class="img2" src="../../../static/img/produtos/modelod/lifestyle_kat_ltgray.jpg"/>
+    <img src="../../../static/img/produtos/modelod/campeonato-CrossFit.JPG"/>
+    <img class="img3" src="../../../static/img/produtos/modelod/pm5_black_backlight.jpg"/>
+    <img src="../../../static/img/produtos/modelod/blackD_separating.jpg"/>
+</div>
+<div class="col-md-12">
+    <nav>
+        <ul class="nav nav-tabs">
+            <li role="presentation" ng-repeat="descricao in modelosMenu" ng-class="{'active': modeloMenu == descricao.slug}"><a href="#/produtos/{{slug}}/{{descricao.slug}}">{{descricao.nome}}</a></li>
+
+        </ul>
+    </nav>
+    <div class="col-md-12 descricao-caixa">
+        <div ng-include="subTemplate"></div>
+    </div>
+</div>

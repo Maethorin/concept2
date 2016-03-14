@@ -7,22 +7,24 @@ angular.module('concept2.produtos', ['ngRoute'])
                 controller: 'ProdutosController'
             })
             .when('/produtos/:slug', {
-                templateUrl: '{0}/angular/produtos/modelod.html'.format([urlBackEnd]),
-                controller: 'ModeloController'
+                templateUrl: '{0}/angular/produtos/produto.html'.format([urlBackEnd]),
+                controller: 'ProdutoController'
             })
             .when('/produtos/:slug/:modeloMenu', {
-                templateUrl: '{0}/angular/produtos/modelod.html'.format([urlBackEnd]),
-                controller: 'ModeloController'
+                templateUrl: '{0}/angular/produtos/produto.html'.format([urlBackEnd]),
+                controller: 'ProdutoController'
             })
+
     }])
     .controller('ProdutosController', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
         $rootScope.pagina = "produtos";
         $rootScope.titulo = "Produtos"
     }])
-    .controller('ModeloController', ['$routeParams', '$rootScope', '$scope', '$sce', function($routeParams, $rootScope, $scope, $sce) {
+    .controller('ProdutoController', ['$routeParams', '$rootScope', '$scope', '$sce', function($routeParams, $rootScope, $scope, $sce) {
         $scope.slug = $routeParams.slug;
         $scope.modeloMenu = $routeParams.modeloMenu || 'sobre';
-        $scope.template = '{0}/angular/produtos/{1}.html'.format([urlBackEnd, $scope.modeloMenu]);
+        $scope.produtoTemplate = '{0}/angular/produtos/{1}/produto.html'.format([urlBackEnd, $scope.slug]);
+        $scope.subTemplate = '{0}/angular/produtos/{1}/{2}.html'.format([urlBackEnd, $scope.slug, $scope.modeloMenu]);
         $rootScope.pagina = "produtos";
         $scope.modelosMenu = [
             {"slug": "sobre", "nome": "Sobre"},

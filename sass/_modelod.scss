@@ -5,20 +5,22 @@
         width: 625px;
 
     }
-
 }
-
 .descricao-caixa {
     margin-top: 20px;
+    border-bottom: 1px solid #D0D0D0;
+    border-left: 1px solid #D0D0D0;
+    border-right: 1px solid #D0D0D0;
 
 }
+
 
 .colright {
     margin-top: 14px;
 
 
 .img1 {
-    margin-left: 97px;
+    margin-left: 84px;
 }
 
 .img2 {
@@ -39,4 +41,12 @@
     p{
         margin-top: 60px;
     }
+}
+.tabela{
+    td{
+    padding-bottom: 20px;
+    padding-top: 20px;
+    }
+
+
 }
