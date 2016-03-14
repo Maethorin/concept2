@@ -389,13 +389,12 @@ angular.module('concept2.eventos', ['ngRoute'])
                         $scope.provasDropdownList = $scope.provasDropdownList.filter(function(prova) {
                             var limiteMinimo = prova.subCategoria.limiteMinimo || 0;
                             var limiteMaximo = prova.subCategoria.limiteMaximo || 100;
-                            console.log($scope.atleta.idade, '>=', limiteMinimo, '&&', $scope.atleta.idade, '<=', limiteMaximo);
                             return $scope.atleta.idade >= limiteMinimo && $scope.atleta.idade <= limiteMaximo;
                         });
                     }
+                    console.log($scope.carregandoProvas);
                     if ($scope.carregandoProvas) {
                         $scope.selecionaProvas();
-                        $scope.carregandoProvas = false;
                     }
                     if ($scope.limpaSelecaoProvas) {
                         limpaSelecaoProvas();
@@ -410,6 +409,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                 });
                 $scope.$watch('atleta.nascimento', function(novo, antigo) {
                     if (novo) {
+                        $scope.limpaSelecaoProvas = !$scope.carregandoProvas;
                         filtraProvas();
                     }
                 });
