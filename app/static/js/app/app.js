@@ -36,6 +36,9 @@ Date.prototype.idadeNascidoEm = function(nascimento) {
 };
 
 var urlBackEnd = '//concept2-staging.herokuapp.com';
+if (window.location.hostname == 'localhost' && window.location.port == '5000') {
+    urlBackEnd = 'http://localhost:5000';
+}
 if (window.location.hostname == '127.0.0.1') {
     urlBackEnd = 'http://localhost:5000';
 }
