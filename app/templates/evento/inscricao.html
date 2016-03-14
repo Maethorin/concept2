@@ -131,7 +131,7 @@
             <div class="row">
                 <div class="col-md-3 campo pedido-numero">
                     <div class="form-group">
-                        <label class="control-label" for="pedidoNumero">Número do pedido:</label> <button type="button" id="ajudaPedido" data-toggle="popover" data-trigger="focus" data-placement="top" title="Pedido Número" data-content="Esse é o número do seu pedido após realizar a compra da inscrição na loja on-line. Você pode fazer o cadastro antes e depois atualizar com esse número após o pagamento."><i ng-click="exibeAjudaPedido()" class="fa fa-question-circle ajuda-pedido"></i></button>
+                        <label class="control-label" for="pedidoNumero">Número do pedido:</label> <button class="botao-icone-ajuda" type="button" id="ajudaPedido" data-toggle="popover" data-trigger="focus" data-placement="top" title="Pedido Número" data-content="Esse é o número do seu pedido após realizar a compra da inscrição na loja on-line. Você pode fazer o cadastro antes e depois atualizar com esse número após o pagamento."><i ng-click="exibeAjuda('#ajudaPedido')" class="fa fa-question-circle ajuda-icone-popover"></i></button>
                         <input type="text" class="form-control" name="pedidoNumero" id="pedidoNumero" ng-model="atleta.inscricao.pedidoNumero"/>
                     </div>
                 </div>
@@ -154,6 +154,20 @@
                             </div>
                             <input type="text" class="form-control" name="afiliacao" id="afiliacao" placeholder="Nome da afiliação" ng-model="atleta.inscricao.afiliacao" aria-label="..."/>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 campo convidado">
+                    <div class="form-group">
+                        <label class="control-label" for="nomeConvidado">Nome do Convidado:</label> <button class="botao-icone-ajuda" type="button" id="ajudaConvidado" data-toggle="popover" data-trigger="focus" data-placement="top" title="Nome do Convidado" data-content="Adicione o nome da pessoa que você quer levar como convidado para o dia da competição."><i ng-click="exibeAjuda('#ajudaConvidado')" class="fa fa-question-circle ajuda-icone-popover"></i></button>
+                        <input type="text" class="form-control" name="nomeConvidado" id="nomeConvidado" ng-model="atleta.inscricao.nomeConvidado"/>
+                    </div>
+                </div>
+                <div class="col-md-6 campo convidado" ng-show="atleta.idade && atleta.idade < 18">
+                    <div class="form-group">
+                        <label class="control-label" for="nomeSegundoConvidado">Nome do Segundo Convidado:</label> <button class="botao-icone-ajuda" type="button" id="ajudaSegundoConvidado" data-toggle="popover" data-trigger="focus" data-placement="top" title="Nome do Segundo Convidado" data-content="Menores de 18 anos têm direito a um segundo convidado para levar no dia da competição."><i ng-click="exibeAjuda('#ajudaSegundoConvidado')" class="fa fa-question-circle ajuda-icone-popover"></i></button>
+                        <input type="text" class="form-control" name="nomeSegundoConvidado" id="nomeSegundoConvidado" ng-model="atleta.inscricao.nomeSegundoConvidado"/>
                     </div>
                 </div>
             </div>

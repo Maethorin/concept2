@@ -128,9 +128,10 @@ angular.module('concept2.eventos', ['ngRoute'])
         $scope.urlLojaInscricao = 'https://concept2.com.br/shop/index.php?route=product/product&product_id=125';
         $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-9]/, 'M': /[0-1]/, 'm': /[0-2]/}};
         $rootScope.pagina = "eventos";
-        $scope.exibeAjudaPedido = function() {
-            $('#ajudaPedido').popover();
-            $('#ajudaPedido').popover('toggle');
+        $scope.exibeAjuda = function(seletor) {
+            var $ajudaPopOver = $(seletor);
+            $ajudaPopOver.popover();
+            $ajudaPopOver.popover('toggle');
         };
         $scope.itensMenu = [
             {"slug": "sobre", "nome": "Sobre"},
@@ -150,6 +151,20 @@ angular.module('concept2.eventos', ['ngRoute'])
                     field.$setDirty();
                 }
             });
+        }
+        function calculaIdadeAtleta(nascimento) {
+            nascimento = nascimento.split('');
+            var ano = parseInt(nascimento.splice(4, 4).join(''));
+            var mes = parseInt(nascimento.splice(2, 2).join('')) - 1;
+            var dia = parseInt(nascimento.splice(0, 2).join(''));
+            nascimento = new Date(ano, mes, dia);
+            var hoje = new Date();
+            var idade = hoje.getFullYear() - nascimento.getFullYear();
+            if (hoje.getMonth() < nascimento.getMonth() ||
+                hoje.getMonth() == nascimento.getMonth() && hoje.getDate() < nascimento.getDate()) {
+                idade--;
+            }
+            return idade;
         }
         $scope.evento = Evento.get({"id": $scope.slug}, function() {
             $rootScope.titulo = $scope.evento.titulo;
@@ -297,6 +312,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                         $scope.limpaSelecaoProvas = false;
                         $scope.atleta = Atleta.get({'id': Autentic.userId, 'evento_slug': $scope.slug}, function() {
                             $scope.atleta.inscricao = new Inscricao($scope.atleta.inscricao);
+                            $scope.atleta.idade = calculaIdadeAtleta($scope.atleta.nascimento);
                         });
                     }
                     else {
@@ -308,6 +324,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                             "senha": null,
                             "confirmeSenha": null,
                             "nascimento": null,
+                            "idade": null,
                             "cpf": null,
                             "email": null,
                             "telefone": null,
@@ -317,6 +334,8 @@ angular.module('concept2.eventos', ['ngRoute'])
                                 "tipoAfiliacao": null,
                                 "afiliacao": null,
                                 "pedidoNumero": null,
+                                "nomeConvidado": null,
+                                "nomeSegundoConvidado": null,
                                 "provas": []
                             }),
                             "provaSelecionada": null
@@ -357,46 +376,41 @@ angular.module('concept2.eventos', ['ngRoute'])
                         }
                     }
                 });
+                var filtraProvas = function() {
+                    $scope.provasDropdownList = angular.copy($scope.provasParaSelecao);
+                    if ($scope.atleta.sexo) {
+                        $scope.provasDropdownList = $scope.provasDropdownList.filter(function(prova) {
+                            var provaSexo = $filter('limitTo')(prova.sexo, 2).toUpperCase();
+                            return provaSexo == $scope.atleta.sexo || provaSexo == 'AB' || provaSexo == 'MI';
+                        });
+                    }
+                    if ($scope.atleta.nascimento) {
+                        $scope.atleta.idade = calculaIdadeAtleta($scope.atleta.nascimento);
+                        $scope.provasDropdownList = $scope.provasDropdownList.filter(function(prova) {
+                            var limiteMinimo = prova.subCategoria.limiteMinimo || 0;
+                            var limiteMaximo = prova.subCategoria.limiteMaximo || 100;
+                            console.log($scope.atleta.idade, '>=', limiteMinimo, '&&', $scope.atleta.idade, '<=', limiteMaximo);
+                            return $scope.atleta.idade >= limiteMinimo && $scope.atleta.idade <= limiteMaximo;
+                        });
+                    }
+                    if ($scope.carregandoProvas) {
+                        $scope.selecionaProvas();
+                        $scope.carregandoProvas = false;
+                    }
+                    if ($scope.limpaSelecaoProvas) {
+                        limpaSelecaoProvas();
+                        $scope.selecionaProvas();
+                        $scope.limpaSelecaoProvas = false;
+                    }
+                };
                 $scope.$watch('atleta.sexo', function(novo, antigo) {
                     if (novo) {
-                        $scope.provasDropdownList = $filter('filter')(
-                            $scope.provasParaSelecao,
-                            {sexo: novo},
-                            function(atual, esperado) {
-                                atual = $filter('limitTo')(atual, 2).toUpperCase();
-                                return atual == esperado || atual == 'AB' || atual == 'MI';
-                            }
-                        );
-                        if ($scope.carregandoProvas) {
-                            $scope.selecionaProvas();
-                            $scope.carregandoProvas = false;
-                        }
-                        if ($scope.limpaSelecaoProvas) {
-                            limpaSelecaoProvas();
-                            $scope.selecionaProvas();
-                            $scope.limpaSelecaoProvas = false;
-                        }
+                        filtraProvas();
                     }
                 });
                 $scope.$watch('atleta.nascimento', function(novo, antigo) {
                     if (novo) {
-                        $scope.provasDropdownList = $filter('filter')(
-                            $scope.provasParaSelecao,
-                            {sexo: novo},
-                            function(atual, esperado) {
-                                atual = $filter('limitTo')(atual, 2).toUpperCase();
-                                return atual == esperado || atual == 'AB' || atual == 'MI';
-                            }
-                        );
-                        if ($scope.carregandoProvas) {
-                            $scope.selecionaProvas();
-                            $scope.carregandoProvas = false;
-                        }
-                        if ($scope.limpaSelecaoProvas) {
-                            limpaSelecaoProvas();
-                            $scope.selecionaProvas();
-                            $scope.limpaSelecaoProvas = false;
-                        }
+                        filtraProvas();
                     }
                 });
                 $scope.verificaErro = function(campo, validacao, status) {
