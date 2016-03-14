@@ -23,11 +23,29 @@ module.exports = function(grunt) {
                 ],
                 dest: 'app/static/js/componentes.js'
             },
+            componentesAdmin: {
+                src: [
+                    "bower_components/angular/angular.js",
+                    "bower_components/angular-route/angular-route.js",
+                    "bower_components/angular-resource/angular-resource.js",
+                    "bower_components/jquery/dist/jquery.js",
+                    "bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"
+                ],
+                dest: 'app/static/admin/js/componentes-admin.js'
+            },
             app: {
                 src: [
+                    "app/static/js/common.js",
                     "app/static/js/app/**/*.js"
                 ],
                 dest: 'app/static/js/app.js'
+            },
+            appAdmin: {
+                src: [
+                    "app/static/js/common.js",
+                    "app/static/admin/js/**/*.js"
+                ],
+                dest: 'app/static/admin/js/app-admin.js'
             }
         },
         uglify: {
@@ -37,9 +55,19 @@ module.exports = function(grunt) {
                     'app/static/js/componentes.min.js': ['<%= concat.componentes.dest %>']
                 }
             },
+            componentesAdmin: {
+                files: {
+                    'app/static/admin/js/componentes-admin.min.js': ['<%= concat.componentesAdmin.dest %>']
+                }
+            },
             app: {
                 files: {
                     'app/static/js/app.min.js': ['<%= concat.app.dest %>']
+                }
+            },
+            appAdmin: {
+                files: {
+                    'app/static/admin/js/app-admin.min.js': ['<%= concat.appAdmin.dest %>']
                 }
             }
         },
@@ -48,16 +76,29 @@ module.exports = function(grunt) {
                 options: {
                     config: 'config.rb'
                 }
+            },
+            appAdmin: {
+                options: {
+                    config: 'config_admin.rb'
+                }
             }
         },
         watch: {
-            scripts: {
+            app: {
                 files: '<%= concat.app.src %>',
                 tasks: ['concat:app', 'uglify:app']
+            },
+            appAdmin: {
+                files: '<%= concat.appAdmin.src %>',
+                tasks: ['concat:appAdmin', 'uglify:appAdmin']
             },
             css: {
                 files: 'sass/**/*.scss',
                 tasks: ['compass:app']
+            },
+            cssAdmin: {
+                files: 'sass-admin/**/*.scss',
+                tasks: ['compass:appAdmin']
             }
         }
     });
@@ -66,5 +107,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.registerTask('default', ['concat', 'uglify', 'watch', 'compass']);
-    grunt.registerTask('heroku', ['concat:app', 'uglify:app', 'concat:componentes', 'uglify:componentes', 'compass:app']);
+    grunt.registerTask('admin', ['concat:appAdmin', 'uglify:appAdmin', 'concat:componentesAdmin', 'uglify:componentesAdmin', 'compass:appAdmin']);
+    grunt.registerTask('heroku', ['concat:app', 'uglify:app', 'concat:componentes', 'uglify:componentes', 'compass:app', 'admin']);
 };
