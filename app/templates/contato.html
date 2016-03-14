@@ -6,39 +6,42 @@
             <div id="mapas">
                 <ui-gmap-google-map center='mapa.center' zoom='mapa.zoom'></ui-gmap-google-map>
             </div>
-        <div class="endereco">
-            <p>Rua Carlos Machado, 197</p>
+            <div class="endereco">
+                <p>Rua Carlos Machado, 197</p>
 
-            <p>PoloRio de Cine&Video- Barra da Tijuca</p>
+                <p>PoloRio de Cine&Video- Barra da Tijuca</p>
 
-            <p>Rio de Janeiro, RJ &nbsp; &nbsp; 2275-5042</p>
+                <p>Rio de Janeiro, RJ &nbsp; &nbsp; 2275-5042</p>
 
-            <p>Brasil</p>
+                <p>Brasil</p>
 
-            <p>&nbsp;</p>
+                <p>&nbsp;</p>
 
-            <p>(21)2421-1418</p>
+                <p>(21)2421-1418</p>
 
-            <p>&nbsp;</p>
+                <p>&nbsp;</p>
 
-            <p>info@concept2.com.br</p>
-        </div>
+                <p>info@concept2.com.br</p>
+            </div>
             <img src="static/img/Christal-Company-logo-branco.png" style="height: 87px; width: 247px; margin-left: 350px; margin-top: -90px;"/>
         </div>
-        <div class="col-md-4 assinar">
-                <div class="form-group">
-                <label style="color:white;">Entre em contato</label>
-                <input type="text" class="form-control" placeholder="Nome" aria-describedby="basic-addon1"ng-class="{'has-success': campoEstaValido(formInscricao.provas), 'has-error': campoEstaInvalido(formInscricao.provas)}">
-                <input type="text" class="form-control email" placeholder="E-mail" aria-describedby="basic-addon1">
-                <textarea class="form-control mensagem" rows="10" placeholder="Escreva sua mensagem aqui"></textarea>
-                <label style="color: white;"><input type="checkbox" value="" style=" margin-right: 10px;">Me enviar uma cópia</label>
-            <div vc-recaptcha key="'6LdrnhoTAAAAAKDfPoEgTvtmjCV7ny_iCrb1dVzy'"></div>
-            </div>
-            </div>
+        <div class="col-md-4 assinar ">
+            <form name="formAssinar">
+                <div class="form-group has-feedback" >
+                    <label style="color:white;">Entre em contato</label>
+                    <input type="text" class="form-control" placeholder="Nome" aria-describedby="helpAssinar"  name="nome" required>
+                    <input type="text" class="form-control email" placeholder="E-mail" aria-describedby="basic-addon1">
+                    <textarea class="form-control mensagem" rows="10" placeholder="Escreva sua mensagem aqui"></textarea>
+                    <label style="color: white;  margin-top: 15px;  "><input type="checkbox" value="" style=" margin-right: 10px;">Me enviar uma cópia</label>
+
+                    <div vc-recaptcha key="'6LdrnhoTAAAAAKDfPoEgTvtmjCV7ny_iCrb1dVzy'" style="margin-top: 15px;"></div>
+                    <button type="button" class="btn btn-default" style="margin-top: 15px; background-color: #98b330; color: white; border: none;">Enviar</button>
+
+                </div>
+            </form>
         </div>
-
-
-
-
     </div>
+
+
+</div>
 

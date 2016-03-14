@@ -19,4 +19,12 @@ angular.module('concept2.contato', ['ngRoute'])
         $rootScope.pagina = "contato";
         $rootScope.titulo = "Contato";
         $scope.mapa = { center: {latitude: -22.9747013, longitude: -43.3734641}, zoom: 17 };
+
+
     }]);
+ //$scope.campoEstaValido = function(campo) {
+ //           return campo.$touched && !campo.$error.required
+ //       };
+ //       $scope.campoEstaInvalido = function(campo) {
+ //           return campo.$touched && campo.$error.required
+ //       };
