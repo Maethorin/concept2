@@ -2,7 +2,10 @@ logs/*
 !.gitkeep
 node_modules/
 bower_components/
-app/static/js/app*.js
+app/static/css/app.css
+app/static/js/app.js
+app/static/js/app.min.js
+app/static/js/componentes.js
 app/static/js/componentes.min.js
 tmp
 .DS_Store

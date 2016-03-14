@@ -1,161 +1,156 @@
 <!DOCTYPE html>
 <html lang="pt-BR" ng-app="concept2">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/static/css/app.css">
-    <link rel="icon" href="/static/img/c2-logo.png" sizes="16x16"/>
-    <title>Concept2 Brasil: {{titulo}}</title>
-</head>
-<body class="pagina-{{pagina}}">
-<div id="fb-root"></div>
-<!--<script>(function(d, s, id) {-->
-<!--var js, fjs = d.getElementsByTagName(s)[0];-->
-<!--if (d.getElementById(id)) return;-->
-<!--js = d.createElement(s);-->
-<!--js.id = id;-->
-<!--js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.5&appId=1745932382309577";-->
-<!--fjs.parentNode.insertBefore(js, fjs);-->
-<!--}(document, 'script', 'facebook-jssdk'));</script>-->
-<header>
-    <div class="container topo">
-        <div class="row">
-            <div class="col-md-9 col-xs-3">
-                <a class="navbar-brand" id="logo" href="/#/">Concept2</a>
-            </div>
-            <div class="col-md-3 col-xs-9">
-                <div id="social">
-                    <a href="https://concept2.com.br/shop"><i class="fa fa-shopping-cart fa-2x"></i></a>
-                    <a href="https://www.facebook.com/Concept2Brasil/?fref=ts" title="Facebook" target="_blank"><i class="fa fa-facebook-official fa-2x"></i></a>
-                    <a href="https://www.instagram.com/concept2brasil/" title="Instagram" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <nav class="navbar navbar-default navbar-static-top navegacao">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Ativa navegação</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand icon" href="/#/"></a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li ng-class="{'active': pagina == 'produtos'}"><a href="/#produtos" class="text-uppercase">produtos</a></li>
-                    <li ng-class="{'active': pagina == 'comunidade'}"><a href="/#comunidade" class="text-uppercase">comunidade</a></li>
-                    <li ng-class="{'active': pagina == 'eventos'}"><a href="/#eventos" class="text-uppercase">eventos</a></li>
-                    <!--<li ng-class="{'active': pagina == 'noticias'}"><a href="/#noticias" class="text-uppercase">notícias</a></li>-->
-                    <li ng-class="{'active': pagina == 'suporte'}"><a href="/#suporte" class="text-uppercase">suporte</a></li>
-                    <li ng-class="{'active': pagina == 'contato'}"><a href="/#contato" class="text-uppercase">contato</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li ng-if="!atletaLogado"><a href="/#/atleta/login">LOGIN</a></li>
-                    <li class="dropdown" ng-if="atletaLogado">
-                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Olá Atleta!<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="/#/atleta/perfil">Meu Perfil</a></li>
-                            <li><a href="/#/atleta/inscricoes">Minhas Inscrições</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="/#/atleta/logout">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <!--<form class="navbar-form navbar-left form-busca" role="search">-->
-                <!--<div class="form-group">-->
-                <!--<div class="input-group">-->
-                <!--<input type="text" class="form-control" placeholder="BUSCA">-->
-                <!--<span class="input-group-btn">-->
-                <!--<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>-->
-                <!--</span>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</form>-->
-            </div>
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-</header>
-<div ng-view></div>
-<footer class="rodape">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-left text-left">
-                <ul class="links">
-                    <li><a href="https://concept2.com.br/shop">visite a loja</a></li>
-                    <li><a href="/#/faq">perguntas frequentes</a></li>
-                    <li><a href="/sitemap">mapa do site</a></li>
-                </ul>
-
-                <div class="vcard christal">
-                    <span class="org">Christal Company Importação e Exportação Ltda.</span> (<a class="url" href="https://concept2.com.br">web site</a>)
-                    <div class="adr">
-                        <div class="street-address">Rua Carlos Machado, 197</div>
-                        <div class="extended-address">Polo Rio de Cine & Vídeo - Barra da Tijuca</div>
-                        <span class="locality">Rio de Janerio</span>,
-                        <abbr class="region" title="Rio de Janeiro">RJ</abbr>,
-                        CEP <span class="postal-code">22775-042</span> -
-                        <span class="country-name">Brasil</span>
-                    </div>
-                    <div class="tel">+55 21 2421-1418</div>
-                    <a class="email" href="mailto:info@concept2.com.br">info@concept2.com.br</a>
-                </div>
-            </div>
-            <div class="col-md-4">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/static/css/app.css">
+        <link rel="icon" href="/static/img/c2-logo.png" sizes="16x16"/>
+        <title>Concept2 Brasil: {{titulo}}</title>
+        <script src='https://www.google.com/recaptcha/api.js?render=explicit&onload=vcRecaptchaApiLoaded'></script>
+    </head>
+    <body class="pagina-{{pagina}}">
+        <div id="fb-root"></div>
+        <script type="application/javascript">
+            (function(d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) return;
+                js = d.createElement(s);
+                js.id = id;
+                js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.5&appId=1745932382309577";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <header>
+            <div class="container topo">
                 <div class="row">
-                    <div class="col-md-12 form-group newsletter">
-                        <label for="newsletter">receba nossas notícias!</label>
-
-                        <div class="input-group input-group-sm">
-                            <input type="text" id="newsletter" name="newsletter" class="form-control" placeholder="e-mail" aria-describedby="sizing-addon3">
-                            <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">ASSINAR</button>
-                            </span>
+                    <div class="col-md-9 col-xs-3">
+                        <a class="navbar-brand" id="logo" href="/#/">Concept2</a>
+                    </div>
+                    <div class="col-md-3 col-xs-9">
+                        <div id="social">
+                            <a href="https://concept2.com.br/shop"><i class="fa fa-shopping-cart fa-2x"></i></a>
+                            <a href="https://www.facebook.com/Concept2Brasil/?fref=ts" title="Facebook" target="_blank"><i class="fa fa-facebook-official fa-2x"></i></a>
+                            <a href="https://www.instagram.com/concept2brasil/" title="Instagram" target="_blank"><i class="fa fa-instagram fa-2x"></i></a>
                         </div>
                     </div>
                 </div>
-                <div class="row missao">
-                    <div class="col-md-3 col-sm-3 col-xs-3">
-                        <img src="static/img/c2logo.png"/>
+            </div>
+
+            <nav class="navbar navbar-default navbar-static-top navegacao">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Ativa navegação</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand icon" href="/#/"></a>
                     </div>
-                    <div class="col-md-9 col-sm-9 col-xs-9">
-                        A nossa missão na Concept2 Brasil é promover a saúde
-                        pelo remo. Trabalhamos com os equipamentos
-                        da mais alta qualidade, líderes em vendas e de desempenho por todo o mundo. Nossa preocupação é
-                        de satisfazer o cliente pela excelência.
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li ng-class="{'active': pagina == 'produtos'}"><a href="/#produtos" class="text-uppercase">produtos</a></li>
+                            <li ng-class="{'active': pagina == 'comunidade'}"><a href="/#comunidade" class="text-uppercase">comunidade</a></li>
+                            <li ng-class="{'active': pagina == 'eventos'}"><a href="/#eventos" class="text-uppercase">eventos</a></li>
+                            <!--<li ng-class="{'active': pagina == 'noticias'}"><a href="/#noticias" class="text-uppercase">notícias</a></li>-->
+                            <li ng-class="{'active': pagina == 'suporte'}"><a href="/#suporte" class="text-uppercase">suporte</a></li>
+                            <li ng-class="{'active': pagina == 'contato'}"><a href="/#contato" class="text-uppercase">contato</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li ng-if="!atletaLogado"><a href="/#/atleta/login">LOGIN</a></li>
+                            <li class="dropdown" ng-if="atletaLogado">
+                                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Olá Atleta!<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="/#/atleta/perfil">Meu Perfil</a></li>
+                                    <li><a href="/#/atleta/inscricoes">Minhas Inscrições</a></li>
+                                    <li role="separator" class="divider"></li>
+                                    <li><a href="/#/atleta/logout">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!--<form class="navbar-form navbar-left form-busca" role="search">-->
+                        <!--<div class="form-group">-->
+                        <!--<div class="input-group">-->
+                        <!--<input type="text" class="form-control" placeholder="BUSCA">-->
+                        <!--<span class="input-group-btn">-->
+                        <!--<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>-->
+                        <!--</span>-->
+                        <!--</div>-->
+                        <!--</div>-->
+                        <!--</form>-->
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div ng-view></div>
+        <footer class="rodape">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4 col-left text-left">
+                        <ul class="links">
+                            <li><a href="https://concept2.com.br/shop">visite a loja</a></li>
+                            <li><a href="/#/faq">perguntas frequentes</a></li>
+                            <li><a href="/sitemap">mapa do site</a></li>
+                        </ul>
+
+                        <div class="vcard christal">
+                            <span class="org">Christal Company Importação e Exportação Ltda.</span> (<a class="url" href="https://concept2.com.br">web site</a>)
+                            <div class="adr">
+                                <div class="street-address">Rua Carlos Machado, 197</div>
+                                <div class="extended-address">Polo Rio de Cine & Vídeo - Barra da Tijuca</div>
+                                <span class="locality">Rio de Janerio</span>,
+                                <abbr class="region" title="Rio de Janeiro">RJ</abbr>,
+                                CEP <span class="postal-code">22775-042</span> -
+                                <span class="country-name">Brasil</span>
+                            </div>
+                            <div class="tel">+55 21 2421-1418</div>
+                            <a class="email" href="mailto:info@concept2.com.br">info@concept2.com.br</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="row">
+                            <div class="col-md-12 form-group newsletter">
+                                <label for="newsletter">receba nossas notícias!</label>
+
+                                <div class="input-group input-group-sm">
+                                    <input type="text" id="newsletter" name="newsletter" class="form-control" placeholder="e-mail" aria-describedby="sizing-addon3">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">ASSINAR</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row missao">
+                            <div class="col-md-3 col-sm-3 col-xs-3">
+                                <img src="static/img/c2logo.png"/>
+                            </div>
+                            <div class="col-md-9 col-sm-9 col-xs-9">
+                                A nossa missão na Concept2 Brasil é promover a saúde
+                                pelo remo. Trabalhamos com os equipamentos
+                                da mais alta qualidade, líderes em vendas e de desempenho por todo o mundo. Nossa preocupação é
+                                de satisfazer o cliente pela excelência.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-right text-right facebook">
+                        <div class="fb-page" data-href="https://www.facebook.com/concept2-brasil/" data-tabs="e.g" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                            <div class="fb-xfbml-parse-ignore">
+                                <blockquote cite="https://www.facebook.com/concept2-brasil/">
+                                    <a href="https://www.facebook.com/concept2-brasil/">Concept2 Brasil</a>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row copyright">
+                    <div class="col-md-12">
+                        <p>&copy; Concept2, &copy; Remo Indoor e &copy; CaBra-RI são marcas registradas da Christal Company Importação e Exportação Ltda. Qualquer uso ou comercialização não autorizada dos termos são expressamente proibidos sob jurisdição da lei.</p>
+                        <p>&copy; Christal Company Importação e Exportação Ltda. CNPJ: 08.717.004/0001-05. Todos os direitos reservados 2016</p>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4 col-right text-right facebook">
-                <!--<div class="fb-page" data-href="https://www.facebook.com/concept2-brasil/" data-tabs="e.g"-->
-                <!--data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"-->
-                <!--data-show-facepile="true">-->
-                <!--<div class="fb-xfbml-parse-ignore">-->
-                <!--<blockquote cite="https://www.facebook.com/concept2-brasil/">-->
-                <!--<a href="https://www.facebook.com/concept2-brasil/">Concept2 Brasil</a>-->
-                <!--</blockquote>-->
-                <!--</div>-->
-                <!--</div>-->
-            </div>
-        </div>
-        <div class="row copyright">
-            <div class="col-md-12">
-                <p>&copy; Concept2, &copy; Remo Indoor e &copy; CaBra-RI são marcas registradas da Christal Company Importação e Exportação Ltda. Qualquer uso ou comercialização não autorizada dos termos são expressamente proibidos sob jurisdição da lei.</p>
-
-                <p>&copy; Christal Company Importação e Exportação Ltda. CNPJ: 08.717.004/0001-05. Todos os direitos reservados 2016</p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<script src="/static/js/componentes.js"></script>
-<!--<script src="/static/js/componentes.min.js"></script>-->
-<!--<script src="/static/js/app.js"></script>-->
-<script src="/static/js/app.min.js"></script>
-
-</body>
+        </footer>
+        <script src="/static/js/componentes.min.js"></script>
+        <script src="/static/js/app.min.js"></script>
+    </body>
 </html>

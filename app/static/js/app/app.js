@@ -35,8 +35,10 @@ Date.prototype.idadeNascidoEm = function(nascimento) {
     return nomesDias[this.getDay()];
 };
 
-//var urlBackEnd = 'https://concept2-staging.herokuapp.com';
-var urlBackEnd = 'http://localhost:5000';
+var urlBackEnd = '//concept2-staging.herokuapp.com';
+if (window.location.hostname == '127.0.0.1') {
+    urlBackEnd = 'http://localhost:5000';
+}
 
 angular.module(
     'concept2',
@@ -46,6 +48,7 @@ angular.module(
         'ngCookies',
         'uiGmapgoogle-maps',
         'ui.mask',
+        'vcRecaptcha',
         'concept2.services',
         'concept2.login',
         'concept2.home',
@@ -56,12 +59,35 @@ angular.module(
         'concept2.suporte',
         'concept2.contato'
     ])
+    .factory('atualizaToken', ['Autentic', '$rootScope', '$q', function(Autentic, $rootScope, $q) {
+        return {
+            response: function(response) {
+                var headers = response.headers();
+                if (headers['xsrf-token']) {
+                   Autentic.atualizaValores(headers['xsrf-token'], headers['user-id'])
+                }
+                return response;
+            },
+            responseError: function(response) {
+                if (response.status == 401) {
+                    Autentic.limpaValores();
+                    $rootScope.atletaLogado = Autentic.estaLogado();
+                }
+                return $q.reject(response);
+            },
+            request: function(config) {
+                config.headers['XSRF-TOKEN'] = Autentic.token;
+                return config;
+            }
+        };
+    }])
     .config(['$sceDelegateProvider', '$httpProvider', function($sceDelegateProvider, $httpProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
             'self',
             '{0}/**'.format([urlBackEnd])
         ]);
         $httpProvider.defaults.withCredentials = true;
+        $httpProvider.interceptors.push('atualizaToken');
     }])
     .run(['$rootScope', 'Autentic', function($rootScope, Autentic) {
         $rootScope.pagina = "";

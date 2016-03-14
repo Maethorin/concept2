@@ -41,7 +41,9 @@ Date.prototype.nomeDia = function() {
 };
 
 var urlBackEnd = 'http://concept2-staging.herokuapp.com';
-//var urlBackEnd = 'http://localhost:5000';
+if (window.location.hostname == '127.0.0.1') {
+    urlBackEnd = 'http://localhost:5000';
+}
 
 angular.module('concept2', [
     'ngRoute',
@@ -49,10 +51,33 @@ angular.module('concept2', [
     'ngCookies',
     'uiGmapgoogle-maps',
     'ui.mask',
+    'vcRecaptcha',
     'concept2.services',
     'concept2.login',
     'concept2.eventos'
 ])
+    .factory('atualizaToken', ['Autentic', '$rootScope', '$q', function(Autentic, $rootScope, $q) {
+        return {
+            response: function(response) {
+                var headers = response.headers();
+                if (headers['xsrf-token']) {
+                   Autentic.atualizaValores(headers['xsrf-token'], headers['user-id'])
+                }
+                return response;
+            },
+            responseError: function(response) {
+                if (response.status == 401) {
+                    Autentic.limpaValores();
+                    $rootScope.atletaLogado = Autentic.estaLogado();
+                }
+                return $q.reject(response);
+            },
+            request: function(config) {
+                config.headers['XSRF-TOKEN'] = Autentic.token;
+                return config;
+            }
+        };
+    }])
     .config(function($sceDelegateProvider, $routeProvider, $httpProvider) {
         $sceDelegateProvider.resourceUrlWhitelist([
             'self',
@@ -60,6 +85,7 @@ angular.module('concept2', [
         ]);
         $routeProvider.when('/', {redirectTo: '/eventos/cabra-ri'});
         $httpProvider.defaults.withCredentials = true;
+        $httpProvider.interceptors.push('atualizaToken');
     })
     .run(function ($rootScope, Autentic) {
         $rootScope.pagina = "";

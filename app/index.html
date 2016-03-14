@@ -6,19 +6,20 @@
     <link rel="stylesheet" href="/static/css/app.css">
     <link rel="icon" href="/static/img/c2-logo.png" sizes="16x16"/>
     <title>Concept2 Brasil: {{titulo}}</title>
+    <script src='https://www.google.com/recaptcha/api.js?render=explicit&onload=vcRecaptchaApiLoaded' async defer></script>
 </head>
 <body class="pagina-{{pagina}}">
-<div id="fb-root"></div>
-<script>
-    (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.5&appId=1745932382309577";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
+<!--<div id="fb-root"></div>-->
+<!--<script>-->
+    <!--(function(d, s, id) {-->
+        <!--var js, fjs = d.getElementsByTagName(s)[0];-->
+        <!--if (d.getElementById(id)) return;-->
+        <!--js = d.createElement(s);-->
+        <!--js.id = id;-->
+        <!--js.src = "//connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.5&appId=1745932382309577";-->
+        <!--fjs.parentNode.insertBefore(js, fjs);-->
+    <!--}(document, 'script', 'facebook-jssdk'));-->
+<!--</script>-->
 <header>
     <div class="container topo">
         <div class="row">
@@ -48,6 +49,7 @@
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                    <li ng-class="{'active': pagina == 'eventos'}"><a href="/#eventos/cabra-ri" class="text-uppercase">cabra-ri</a></li>
                     <!--<li ng-class="{'active': pagina == 'produtos'}"><a href="/#produtos" class="text-uppercase">produtos</a></li>-->
                     <!--<li ng-class="{'active': pagina == 'comunidade'}"><a href="/#comunidade" class="text-uppercase">comunidade</a></li>-->
                     <!--<li ng-class="{'active': pagina == 'eventos'}"><a href="/#eventos" class="text-uppercase">eventos</a></li>-->
@@ -56,13 +58,13 @@
                     <!--<li ng-class="{'active': pagina == 'contato'}"><a href="/#contato" class="text-uppercase">contato</a></li>-->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li ng-if="!atletaLogado"><a href="#/atleta/login">LOGIN</a></li>
-                    <li class="dropdown" ng-if="atletaLogado">
+                    <li ng-show="!atletaLogado"><a href="#/atleta/login">LOGIN</a></li>
+                    <li class="dropdown" ng-show="atletaLogado">
                         <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Olá Atleta!<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#/atleta/perfil">Meu Perfil</a></li>
-                            <li><a href="#/atleta/inscricoes">Minhas Inscrições</a></li>
-                            <li role="separator" class="divider"></li>
+                            <!--<li><a href="#/atleta/perfil">Meu Perfil</a></li>-->
+                            <!--<li><a href="#/atleta/inscricoes">Minhas Inscrições</a></li>-->
+                            <!--<li role="separator" class="divider"></li>-->
                             <li><a href="#/atleta/logout">Logout</a></li>
                         </ul>
                     </li>
@@ -133,15 +135,15 @@
                 </div>
             </div>
             <div class="col-md-4 col-right text-right facebook">
-                <div class="fb-page" data-href="https://www.facebook.com/concept2-brasil/" data-tabs="e.g"
-                data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"
-                data-show-facepile="true">
-                <div class="fb-xfbml-parse-ignore">
-                <blockquote cite="https://www.facebook.com/concept2-brasil/">
-                <a href="https://www.facebook.com/concept2-brasil/">Concept2 Brasil</a>
-                </blockquote>
-                </div>
-                </div>
+                <!--<div class="fb-page" data-href="https://www.facebook.com/concept2-brasil/" data-tabs="e.g"-->
+                <!--data-small-header="false" data-adapt-container-width="true" data-hide-cover="false"-->
+                <!--data-show-facepile="true">-->
+                <!--<div class="fb-xfbml-parse-ignore">-->
+                <!--<blockquote cite="https://www.facebook.com/concept2-brasil/">-->
+                <!--<a href="https://www.facebook.com/concept2-brasil/">Concept2 Brasil</a>-->
+                <!--</blockquote>-->
+                <!--</div>-->
+                <!--</div>-->
             </div>
         </div>
         <div class="row copyright">
