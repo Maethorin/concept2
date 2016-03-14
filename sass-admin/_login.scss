@@ -1,0 +1,34 @@
+.login {
+    .control-label {
+        i {
+            font-size: 10px;
+        }
+    }
+    .form-group {
+        min-height: 70px;
+    }
+    .botao {
+        text-align: center;
+        overflow: hidden;
+        button {
+            float: none;
+        }
+    }
+    .panel {
+        background-color: rgba( 255, 255, 255, 0.1);
+        color: #DDD;
+        &.panel-default {
+            border-color: #666;
+            .panel-heading {
+                text-align: center;
+                color: #DDD;
+                font-weight: bold;
+                background-color: $cor-primaria;
+                border-color: #666;
+            }
+            .panel-footer {
+                background-color: $cor-primaria;
+            }
+        }
+    }
+}

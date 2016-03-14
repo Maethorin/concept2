@@ -2,7 +2,7 @@
 from datetime import datetime, timedelta
 import os
 
-from flask import Flask, send_from_directory, g, request
+from flask import Flask, send_from_directory, g, request, Response
 from flask.ext.sqlalchemy import SQLAlchemy
 
 import database
@@ -17,6 +17,16 @@ template_admin_directory = os.path.join(template_directory, 'admin')
 import api, models
 api.create_api(web_app)
 
+HEADERS = {
+    'admin': {
+        'token': 'XSRFU-TOKEN',
+        'user': 'USERU-ID'
+    },
+    'atleta': {
+        'token': 'XSRF-TOKEN',
+        'user': 'USER-ID'
+    }
+}
 
 DOMAIN = 'concept2.com.br'
 if web_app.config['DEVELOPMENT']:
@@ -25,13 +35,13 @@ if web_app.config['DEVELOPMENT']:
 
 @web_app.after_request
 def add_header(r):
-    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    r.headers["Pragma"] = "no-cache"
-    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = "no-cache, no-store, must-revalidate"
+    r.headers['Pragma'] = 'no-cache'
+    r.headers['Expires'] = '0'
     r.headers['Access-Control-Allow-Origin'] = 'http://{}'.format(DOMAIN)
     r.headers['Access-Control-Allow-Credentials'] = 'true'
-    r.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization,Set-Cookie,XSRF-TOKEN,USER-ID'
-    r.headers['Access-Control-Expose-Headers'] = 'Content-Type,Authorization,Set-Cookie,XSRF-TOKEN,USER-ID'
+    r.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization,Set-Cookie,{},{},{},{}'.format(HEADERS['atleta']['token'], HEADERS['atleta']['user'], HEADERS['admin']['token'], HEADERS['admin']['user'])
+    r.headers['Access-Control-Expose-Headers'] = 'Content-Type,Authorization,Set-Cookie,{},{},{},{}'
     r.headers['Access-Control-Allow-Methods'] = ','.join(['GET', 'PUT', 'POST', 'DELETE', 'OPTIONS'])
     r.headers['Access-Control-Max-Age'] = 21600
     return r
@@ -54,6 +64,13 @@ def index_admin():
 
 @web_app.route('/admin/angular/<path:template_path>', methods=['GET', 'POST'])
 def angular_template_admin(template_path):
+    if 'login' in template_path:
+        return send_from_directory(template_admin_directory, template_path)
+    user = g.get('user', None)
+    if user is None:
+        return Response('Não Autorizado', 401)
+    if not user.eh_admin:
+        return Response('Não Autorizado', 401)
     return send_from_directory(template_admin_directory, template_path)
 
 
@@ -69,12 +86,13 @@ def favicon():
 
 @web_app.before_request
 def before_request():
-    token = request.headers.get('XSRF_TOKEN', None)
-    eh_admin = request.headers.get('EH_ADMIN', 'false') == 'true'
+    token = request.headers.get(HEADERS['atleta']['token'], None)
+    token_admin = request.headers.get(HEADERS['admin']['token'], None)
     usuario = None
+    if token_admin:
+        usuario = models.Admin.verifica_token_aut(token_admin)
     if token:
-        model = models.Admin if eh_admin else models.Atleta
-        usuario = model.verifica_token_aut(token)
+        usuario = models.Atleta.verifica_token_aut(token)
     if usuario:
         g.user = usuario
 
@@ -84,9 +102,9 @@ def after_request(resp):
     user = g.get('user', None)
     if user is not None:
         token = user.gera_token_aut()
-        resp.headers['XSRF-TOKEN'] = token.decode('ascii')
-        resp.headers['USER-ID'] = str(user.id)
-        resp.headers['EH-ADMIN'] = str(user.eh_admin).lower()
+        header = HEADERS['admin'] if user.eh_admin else HEADERS['atleta']
+        resp.headers[header['token']] = token.decode('ascii')
+        resp.headers[header['user']] = str(user.id)
     return resp
 
 

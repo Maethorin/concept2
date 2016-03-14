@@ -12,13 +12,18 @@ angular.module(
         'concept2Admin.home',
         'concept2Admin.inscricoes'
     ])
-    .factory('atualizaToken', ['Autentic', '$rootScope', '$q', function(Autentic, $rootScope, $q) {
-        return atualizaTokenFactory(Autentic, $rootScope, $q);
+    .factory('atualizaToken', ['Autentic', '$rootScope', '$q', '$window', function(Autentic, $rootScope, $q, $window) {
+        return atualizaTokenFactory(Autentic, $rootScope, $q, $window, true);
     }])
     .config(['$sceDelegateProvider', '$httpProvider', function($sceDelegateProvider, $httpProvider) {
         configApp($sceDelegateProvider, $httpProvider);
     }])
     .run(['$rootScope', 'Autentic', function($rootScope, Autentic) {
-        baseRun($rootScope, Autentic);
+        $rootScope.pagina = "";
+        $rootScope.titulo = "";
+        $rootScope.$on('$locationChangeSuccess', function(evt, absNewUrl, absOldUrl) {
+            $rootScope.referrer = absOldUrl;
+        });
+        Autentic.atualizaValores();
         $rootScope.adminLogado = Autentic.estaLogado();
     }]);

@@ -11,6 +11,5 @@ angular.module('concept2Admin.home', ['ngRoute'])
     .controller("HomeController", ['$rootScope', 'Autentic', function($rootScope, Autentic) {
         $rootScope.pagina = "home";
         $rootScope.titulo = "Inicial";
-        $rootScope.atletaLogado = Autentic.token != 'undefined' && Autentic.token != null;
     }]);
 

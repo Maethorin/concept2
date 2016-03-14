@@ -1,7 +1,11 @@
 @import "fontawesome/scss/font-awesome";
 @import "bootstrap-sass/assets/stylesheets/bootstrap";
 
+$cor-primaria: #0f3d5e;
+
 $imageUrl: "/admin/static/img/";
 @mixin image-background($imageFile) {
     background-image: url($imageUrl + $imageFile);
 }
+
+@import "login";

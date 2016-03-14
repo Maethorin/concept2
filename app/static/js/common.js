@@ -60,24 +60,31 @@ var baseRun = function($rootScope, Autentic) {
     Autentic.atualizaValores();
 };
 
-var atualizaTokenFactory = function(Autentic, $rootScope, $q) {
+var atualizaTokenFactory = function(Autentic, $rootScope, $q, $window, ehAdmin) {
+    var tokenHeader = ehAdmin ? 'xsrfu-token' : 'xsrf-token';
+    var userHeader = ehAdmin ? 'useru-id' : 'user-id';
+    var propriedadeLogado = ehAdmin ? 'adminLogado' : 'atletaLogado';
     return {
         response: function(response) {
             var headers = response.headers();
-            if (headers['xsrf-token']) {
-               Autentic.atualizaValores(headers['xsrf-token'], headers['user-id'])
+            if (headers[tokenHeader]) {
+
+                Autentic.atualizaValores(headers[tokenHeader], headers[userHeader])
             }
             return response;
         },
         responseError: function(response) {
             if (response.status == 401) {
                 Autentic.limpaValores();
-                $rootScope.atletaLogado = Autentic.estaLogado();
+                $rootScope[propriedadeLogado] = Autentic.estaLogado();
+            }
+            if (ehAdmin && $window.location.hash.indexOf('#/login') == -1) {
+                $window.location = '{0}/#/login'.format([urlBackEnd]);
             }
             return $q.reject(response);
         },
         request: function(config) {
-            config.headers['XSRF-TOKEN'] = Autentic.token;
+            config.headers[tokenHeader.toUpperCase()] = Autentic.token;
             return config;
         }
     };
