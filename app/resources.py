@@ -35,12 +35,12 @@ class ResourceBase(Resource):
 
 class ResourceAdmin(ResourceBase):
     def get(self, item_id=None):
-        if not usuario_esta_logado(True):
+        if not usuario_esta_logado(eh_admin=True):
             return {'result': 'Não autorizado'}, 401
         return super(ResourceAdmin, self).get(item_id)
 
 
-class Inscricoes(ResourceAdmin):
+class InscricoesAdmin(ResourceAdmin):
     model = models.Inscricao
 
 
@@ -53,6 +53,8 @@ class Atletas(ResourceBase):
 
     def get(self, item_id=None, evento_slug=None):
         if not usuario_esta_logado():
+            return {'result': 'Não autorizado'}, 401
+        if not item_id and not usuario_esta_logado(eh_admin=True):
             return {'result': 'Não autorizado'}, 401
         if evento_slug and item_id:
             return self.model.obter_atleta_com_inscricao_para_o_evento(item_id, evento_slug).as_dict()
@@ -71,7 +73,11 @@ class Atletas(ResourceBase):
     def put(self, item_id):
         if not usuario_esta_logado():
             return {'result': 'Não autorizado'}, 401
+        if not item_id:
+            return {'result': 'Dados Inválidos'}, 400
         try:
+            if int(item_id) != g.user.id:
+                return {'result': 'Não autorizado'}, 401
             self.model.atualiza_de_dicionario(item_id, request.json)
         except KeyError as ex:
             return {'Dados faltando: {}'.format(ex)}, 400
@@ -89,6 +95,10 @@ class InscricoesAtletas(Resource):
 
     def put(self, atleta_id, inscricao_id):
         if not usuario_esta_logado():
+            return {'result': 'Não autorizado'}, 401
+        if not atleta_id or not inscricao_id:
+            return {'result': 'Dados Inválidos'}, 400
+        if int(atleta_id) != g.user.id:
             return {'result': 'Não autorizado'}, 401
         return models.Atleta.obter_atleta(atleta_id).atualiza_inscricao_de_dicionario(inscricao_id, request.json)
 
@@ -110,6 +120,8 @@ class OndeRemar(ResourceBase):
         return super(OndeRemar, self).obter_lista(**kwargs)
 
     def post(self):
+        if not usuario_esta_logado(eh_admin=True):
+            return {'result': 'Não autorizado'}, 401
         if 'csv' in request.args:
             self.model.adiciona_do_csv()
             return {'created': True}

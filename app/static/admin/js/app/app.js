@@ -1,23 +1,16 @@
 'use strict';
 
+urlBackEnd = '{0}/admin'.format(urlBackEnd);
+
 angular.module(
-    'concept2',
+    'concept2Admin',
     [
         'ngRoute',
         'ngResource',
-        'ngCookies',
-        'uiGmapgoogle-maps',
-        'ui.mask',
-        'vcRecaptcha',
-        'concept2.services',
-        'concept2.login',
-        'concept2.home',
-        'concept2.produtos',
-        'concept2.noticias',
-        'concept2.comunidade',
-        'concept2.eventos',
-        'concept2.suporte',
-        'concept2.contato'
+        'concept2Admin.services',
+        'concept2Admin.login',
+        'concept2Admin.home',
+        'concept2Admin.inscricoes'
     ])
     .factory('atualizaToken', ['Autentic', '$rootScope', '$q', function(Autentic, $rootScope, $q) {
         return atualizaTokenFactory(Autentic, $rootScope, $q);
@@ -27,5 +20,5 @@ angular.module(
     }])
     .run(['$rootScope', 'Autentic', function($rootScope, Autentic) {
         baseRun($rootScope, Autentic);
-        $rootScope.atletaLogado = Autentic.estaLogado();
+        $rootScope.adminLogado = Autentic.estaLogado(true);
     }]);

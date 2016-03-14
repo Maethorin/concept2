@@ -57,9 +57,9 @@ class AutenticMixin(object):
 class Admin(db.Model, AutenticMixin):
     __tablename__ = 'admins'
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String())
-    email = db.Column(db.String(), unique=True)
-    senha_hash = db.Column(db.String(128))
+    nome = db.Column(db.String(), nullable=False)
+    email = db.Column(db.String(), unique=True, nullable=False)
+    senha_hash = db.Column(db.String(128), nullable=False)
     ativo = db.Column(db.Boolean)
 
     @property
@@ -70,9 +70,9 @@ class Admin(db.Model, AutenticMixin):
 class OndeRemar(db.Model, QueryMixin):
     __tablename__ = 'onde_remar'
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String())
-    endereco = db.Column(db.String())
-    telefone = db.Column(db.String())
+    nome = db.Column(db.String(), nullable=False)
+    endereco = db.Column(db.String(), nullable=False)
+    telefone = db.Column(db.String(), nullable=False)
     latitude = db.Column(db.Float())
     longitude = db.Column(db.Float())
     modalidade = db.Column(database.ModalidadeTipo())
@@ -138,7 +138,7 @@ class OndeRemar(db.Model, QueryMixin):
 class Produto(db.Model, QueryMixin):
     __tablename__ = 'produtos'
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String())
+    nome = db.Column(db.String(), nullable=False)
     imagem = db.Column(db.String())
     descricao = db.Column(db.String())
 
@@ -174,17 +174,17 @@ class Produto(db.Model, QueryMixin):
 class Evento(db.Model, QueryMixin):
     __tablename__ = 'eventos'
     id = db.Column(db.Integer, primary_key=True)
-    slug = db.Column(db.String())
-    titulo = db.Column(db.String())
+    slug = db.Column(db.String(), nullable=False)
+    titulo = db.Column(db.String(), nullable=False)
     subtitulo = db.Column(db.String())
-    data_inicio = db.Column(db.Date())
-    data_fim = db.Column(db.Date())
+    data_inicio = db.Column(db.Date(), nullable=False)
+    data_fim = db.Column(db.Date(), nullable=False)
     imagem_lista = db.Column(db.String())
     imagem_destaque = db.Column(db.String())
     imagem_logo = db.Column(db.String())
     imagem_propaganda = db.Column(db.String())
     descricao = db.Column(db.Text())
-    resumo = db.Column(db.Text())
+    resumo = db.Column(db.Text(), nullable=False)
     em_destaque = db.Column(db.Boolean)
     pontuacao = db.Column(postgresql.JSON)
     provas = relationship("Prova", back_populates="evento")
@@ -222,7 +222,7 @@ class Evento(db.Model, QueryMixin):
 class Categoria(db.Model, QueryMixin):
     __tablename__ = 'categorias'
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String())
+    nome = db.Column(db.String(), nullable=False)
     sub_categorias = relationship("SubCategoria", back_populates="categoria")
 
     @property
@@ -239,7 +239,7 @@ class Categoria(db.Model, QueryMixin):
 class SubCategoria(db.Model, QueryMixin):
     __tablename__ = 'sub_categorias'
     id = db.Column(db.Integer, primary_key=True)
-    nome = db.Column(db.String())
+    nome = db.Column(db.String(), nullable=False)
     categoria_id = db.Column(db.Integer, db.ForeignKey('categorias.id'))
     categoria = relationship("Categoria", back_populates="sub_categorias")
     provas = relationship("Prova", back_populates="sub_categoria")
@@ -266,8 +266,8 @@ class SubCategoria(db.Model, QueryMixin):
 
 prova_inscricao = db.Table(
     'provas_inscricoes',
-    db.Column('prova_id', db.Integer, db.ForeignKey('provas.id')),
-    db.Column('inscricao_id', db.Integer, db.ForeignKey('inscricoes.id')),
+    db.Column('prova_id', db.Integer, db.ForeignKey('provas.id'), nullable=False),
+    db.Column('inscricao_id', db.Integer, db.ForeignKey('inscricoes.id'), nullable=False),
     db.PrimaryKeyConstraint('prova_id', 'inscricao_id')
 )
 
@@ -278,7 +278,7 @@ class Prova(db.Model, QueryMixin):
         'order_by': 'data_inicio, distancia, tipo, sexo DESC'
     }
     id = db.Column(db.Integer, primary_key=True)
-    distancia = db.Column(db.Integer)
+    distancia = db.Column(db.Integer, nullable=False)
     sexo = db.Column(database.SexoTipo())
     tipo = db.Column(database.ProvaTipo())
     revezamento = db.Column(db.Integer)
@@ -341,6 +341,8 @@ class Inscricao(db.Model, QueryMixin):
     afiliacao = db.Column(db.String(120))
     nome_time = db.Column(db.String(120))
     pedido_numero = db.Column(db.String(10))
+    nome_convidado = db.Column(db.String(120))
+    nome_segundo_convidado = db.Column(db.String(120))
     comprovante_pagamento = db.Column(db.String())
 
     @classmethod
@@ -355,6 +357,8 @@ class Inscricao(db.Model, QueryMixin):
         inscricao.afiliacao = inscricao_dict.get('afiliacao')
         inscricao.tipo_afiliacao = inscricao_dict.get('tipoAfiliacao')
         inscricao.nome_time = inscricao_dict.get('nomeTime')
+        inscricao.nome_convidado = inscricao_dict.get('nomeConvidado')
+        inscricao.nome_segundo_convidado = inscricao_dict.get('nomeSegundoConvidado')
         inscricao.pedido_numero = inscricao_dict.get('pedidoNumero')
         for prova in inscricao_dict['provas']:
             inscricao.provas.append(Prova.query.get(prova['id']))
@@ -384,6 +388,8 @@ class Inscricao(db.Model, QueryMixin):
             'tipoAfiliacao': self.tipo_afiliacao.code if self.tipo_afiliacao else '',
             'afiliacao': self.afiliacao,
             'nomeTime': self.nome_time,
+            'nomeConvidado': self.nome_convidado,
+            'nomeSegundoConvidado': self.nome_segundo_convidado,
             'pedidoNumero': self.pedido_numero,
             'provas': [prova.as_dict() for prova in self.provas]
         }
@@ -396,15 +402,15 @@ class EmailJaExiste(Exception):
 class Atleta(db.Model, QueryMixin, AutenticMixin):
     __tablename__ = 'atletas'
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(), unique=True)
-    senha_hash = db.Column(db.String(128))
-    nome = db.Column(db.String())
-    sobrenome = db.Column(db.String())
-    sexo = db.Column(db.String(2))
-    cpf = db.Column(db.String(11))
+    email = db.Column(db.String(), unique=True, nullable=False)
+    senha_hash = db.Column(db.String(128), nullable=False)
+    nome = db.Column(db.String(), nullable=False)
+    sobrenome = db.Column(db.String(), nullable=False)
+    sexo = db.Column(db.String(2), nullable=False)
+    cpf = db.Column(db.String(11), nullable=False)
     telefone = db.Column(db.String(10))
-    celular = db.Column(db.String(11))
-    nascimento = db.Column(db.Date())
+    celular = db.Column(db.String(11), nullable=False)
+    nascimento = db.Column(db.Date(), nullable=False)
     inscricoes = relationship("Inscricao", back_populates="atleta")
 
     def as_dict(self):
