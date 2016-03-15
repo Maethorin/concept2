@@ -364,6 +364,7 @@ class Inscricao(db.Model, QueryMixin):
         inscricao.nome_convidado = inscricao_dict.get('nomeConvidado')
         inscricao.nome_segundo_convidado = inscricao_dict.get('nomeSegundoConvidado')
         inscricao.pedido_numero = inscricao_dict.get('pedidoNumero')
+        inscricao.evento_id = inscricao_dict.get('eventoId')
         for prova in inscricao_dict['provas']:
             inscricao.provas.append(Prova.query.get(prova['id']))
         return inscricao
@@ -395,6 +396,7 @@ class Inscricao(db.Model, QueryMixin):
             'nomeConvidado': self.nome_convidado,
             'nomeSegundoConvidado': self.nome_segundo_convidado,
             'pedidoNumero': self.pedido_numero,
+            'eventoId': self.evento_id,
             'provas': [prova.as_dict() for prova in self.provas],
             'atleta': self.atleta.as_dict(soh_atleta=True)
         }

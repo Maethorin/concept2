@@ -303,7 +303,6 @@ angular.module('concept2.eventos', ['ngRoute'])
                     }
                     else {
                         $scope.atleta = new Atleta({
-                            "evento": $scope.evento.id,
                             "nome": null,
                             "sobrenome": null,
                             "sexo": null,
@@ -316,6 +315,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                             "telefone": null,
                             "celular": null,
                             "inscricao": new Inscricao({
+                                "eventoId": $scope.evento.id,
                                 "nomeTime": null,
                                 "tipoAfiliacao": null,
                                 "afiliacao": null,
