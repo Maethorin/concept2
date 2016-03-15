@@ -23,17 +23,16 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li ng-class="{'active': pagina == item.slug}" ng-repeat="item in itensMenu">
-                        <a href="{{item.url}}" class="text-uppercase" ng-if="item.subItens.length == 0">{{item.label}}</a>
-                        <div class="btn-group" ng-if="item.subItens.length > 0">
-                            <a href="{{item.url}}" class="btn navbar-btn text-uppercase">{{item.label}}</a>
-                            <button type="button" class="btn navbar-btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="caret"></span>
-                                <span class="sr-only">Abrir</span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li ng-repeat="subItem in item.subItens"><a href="{{subItem.url}}">{{subItem.label}}</a></li>
-                            </ul>
-                        </div>
+                        <a href="{{item.url}}" class="text-uppercase">{{item.label}}</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li ng-if="!adminLogado"><a href="/admin/#/login">LOGIN</a></li>
+                    <li class="dropdown" ng-if="adminLogado">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Olá Admin!<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/admin/#/logout">Logout</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
