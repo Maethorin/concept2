@@ -27,12 +27,31 @@ Date.prototype.nomeDia = function() {
     return nomesDias[this.getDay()];
 };
 
-Date.prototype.idadeNascidoEm = function(nascimento) {
-    nascimento = [nascimento.splice(0, 2), nascimento.splice(2, 2), nascimento.splice(4, 4)];
-    var dataNascimento = new Date(parseInt(nascimento.splice(4, 4)), parseInt(nascimento.splice(2, 2)) - 1, parseInt(nascimento.splice(0, 2)));
-    var idade = (this - dataNascimento) / (1000 * 60 * 60 * 24 * 365.4);
-    return nomesDias[this.getDay()];
+Date.prototype.idade = function() {
+    var hoje = new Date();
+    var idade = hoje.getFullYear() - this.getFullYear();
+    if (hoje.getMonth() < this.getMonth() ||
+        hoje.getMonth() == this.getMonth() && hoje.getDate() < this.getDate()) {
+        idade--;
+    }
+    return idade;
 };
+
+function quebraData(nascimento, comoString) {
+    nascimento = nascimento.split('');
+    var ano = nascimento.splice(4, 4).join('');
+    var mes = nascimento.splice(2, 2).join('');
+    var dia = nascimento.splice(0, 2).join('');
+    if (comoString) {
+        return {ano: ano, mes: mes, dia: dia};
+    }
+    return {ano: parseInt(ano), mes: parseInt(mes) - 1, dia: parseInt(dia)};
+}
+
+function calculaIdadeAtleta(nascimento) {
+    nascimento = quebraData(nascimento);
+    return new Date(nascimento.ano, nascimento.mes, nascimento.dia).idade();
+}
 
 var urlBackEnd = '//concept2-staging.herokuapp.com';
 if (window.location.hostname == 'localhost' && window.location.port == '5000') {

@@ -36,20 +36,24 @@
                 <tr>
                     <th>Atleta</th>
                     <th>Email</th>
+                    <th>Nascimento</th>
+                    <th>idade</th>
                     <th>Celular</th>
                     <th>Telefone</th>
-                    <th>Provas</th>
+                    <th>Vai competir em</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="incricao in evento.inscricoes">
-                    <td>{{incricao.atleta.nome}}</td>
+                <tr ng-repeat="inscricao in evento.inscricoes">
+                    <td>{{inscricao.atleta.nomeCompleto}}</td>
                     <td>{{inscricao.atleta.email}}</td>
-                    <td>{{inscricao.atleta.celular}}</td>
-                    <td>{{inscricao.atleta.telefone}}</td>
+                    <td>{{formataData(inscricao.atleta.nascimento)}}</td>
+                    <td>{{calculaIdade(inscricao.atleta.nascimento)}}</td>
+                    <td>{{formataTelefone(inscricao.atleta.celular)}}</td>
+                    <td>{{formataTelefone(inscricao.atleta.telefone)}}</td>
                     <td>
                         <ul class="provas-selecionadas" id="provas">
-                            <li ng-repeat="prova in atleta.inscricao.provas">
+                            <li ng-repeat="prova in inscricao.provas">
                                 {{prova.dia}} {{prova.hora}} - {{prova.label}} - {{prova.subCategoria.label}}
                             </li>
                         </ul>

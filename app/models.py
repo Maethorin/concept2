@@ -187,7 +187,8 @@ class Evento(db.Model, QueryMixin):
     resumo = db.Column(db.Text(), nullable=False)
     em_destaque = db.Column(db.Boolean)
     pontuacao = db.Column(postgresql.JSON)
-    provas = relationship("Prova", back_populates="evento")
+    provas = relationship('Prova', back_populates='evento')
+    inscricoes = db.relationship('Inscricao', back_populates='evento')
 
     def lista_provas_dict(self):
         provas_dict = []
@@ -201,21 +202,22 @@ class Evento(db.Model, QueryMixin):
 
     def as_dict(self):
         return {
-            "id": self.id,
-            "slug": self.slug,
-            "titulo": self.titulo,
-            "subTitulo": self.subtitulo,
-            "dataInicio": {"ano": self.data_inicio.year, "mes": self.data_inicio.month, "dia": self.data_inicio.day},
-            "dataFim": {"ano": self.data_fim.year, "mes": self.data_fim.month, "dia": self.data_fim.day},
-            "imagemLista": self.imagem_lista,
-            "imagemDestaque": self.imagem_destaque,
-            "imagemLogo": self.imagem_logo,
-            "imagemPropaganda": self.imagem_propaganda,
-            "descricao": self.descricao,
-            "destaque": self.em_destaque,
-            "provas": self.lista_provas_dict(),
-            "pontuacao": self.pontuacao,
-            "resumo": self.resumo
+            'id': self.id,
+            'slug': self.slug,
+            'titulo': self.titulo,
+            'subTitulo': self.subtitulo,
+            'dataInicio': {'ano': self.data_inicio.year, 'mes': self.data_inicio.month, 'dia': self.data_inicio.day},
+            'dataFim': {'ano': self.data_fim.year, 'mes': self.data_fim.month, 'dia': self.data_fim.day},
+            'imagemLista': self.imagem_lista,
+            'imagemDestaque': self.imagem_destaque,
+            'imagemLogo': self.imagem_logo,
+            'imagemPropaganda': self.imagem_propaganda,
+            'descricao': self.descricao,
+            'destaque': self.em_destaque,
+            'provas': self.lista_provas_dict(),
+            'pontuacao': self.pontuacao,
+            'resumo': self.resumo,
+            'inscricoes': [inscricao.as_dict() for inscricao in self.inscricoes]
         }
 
 
@@ -223,7 +225,7 @@ class Categoria(db.Model, QueryMixin):
     __tablename__ = 'categorias'
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(), nullable=False)
-    sub_categorias = relationship("SubCategoria", back_populates="categoria")
+    sub_categorias = relationship('SubCategoria', back_populates='categoria')
 
     @property
     def codigo(self):
@@ -241,8 +243,8 @@ class SubCategoria(db.Model, QueryMixin):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(), nullable=False)
     categoria_id = db.Column(db.Integer, db.ForeignKey('categorias.id'))
-    categoria = relationship("Categoria", back_populates="sub_categorias")
-    provas = relationship("Prova", back_populates="sub_categoria")
+    categoria = relationship('Categoria', back_populates='sub_categorias')
+    provas = relationship('Prova', back_populates='sub_categoria')
     limite_minimo = db.Column(db.Integer)
     limite_maximo = db.Column(db.Integer)
 
@@ -287,9 +289,9 @@ class Prova(db.Model, QueryMixin):
     data_inicio = db.Column(db.DateTime)
     observacao = db.Column(db.String())
     evento_id = db.Column(db.Integer, db.ForeignKey('eventos.id'))
-    evento = relationship("Evento", back_populates="provas")
+    evento = relationship('Evento', back_populates='provas')
     sub_categoria_id = db.Column(db.Integer, db.ForeignKey('sub_categorias.id'))
-    sub_categoria = relationship("SubCategoria", back_populates="provas")
+    sub_categoria = relationship('SubCategoria', back_populates='provas')
     inscricoes = db.relationship('Inscricao', secondary=prova_inscricao, backref='provas')
 
     @property
@@ -336,7 +338,9 @@ class Inscricao(db.Model, QueryMixin):
     __tablename__ = 'inscricoes'
     id = db.Column(db.Integer, primary_key=True)
     atleta_id = db.Column(db.Integer, db.ForeignKey('atletas.id'))
-    atleta = relationship("Atleta", back_populates="inscricoes")
+    atleta = relationship('Atleta', back_populates='inscricoes')
+    evento_id = db.Column(db.Integer, db.ForeignKey('eventos.id'))
+    evento = relationship('Evento', back_populates='inscricoes')
     tipo_afiliacao = db.Column(database.AfiliacaoTipo())
     afiliacao = db.Column(db.String(120))
     nome_time = db.Column(db.String(120))
@@ -391,7 +395,8 @@ class Inscricao(db.Model, QueryMixin):
             'nomeConvidado': self.nome_convidado,
             'nomeSegundoConvidado': self.nome_segundo_convidado,
             'pedidoNumero': self.pedido_numero,
-            'provas': [prova.as_dict() for prova in self.provas]
+            'provas': [prova.as_dict() for prova in self.provas],
+            'atleta': self.atleta.as_dict(soh_atleta=True)
         }
 
 
@@ -411,12 +416,13 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
     telefone = db.Column(db.String(10))
     celular = db.Column(db.String(11), nullable=False)
     nascimento = db.Column(db.Date(), nullable=False)
-    inscricoes = relationship("Inscricao", back_populates="atleta")
+    inscricoes = relationship('Inscricao', back_populates='atleta')
 
-    def as_dict(self):
+    def as_dict(self, soh_atleta=False):
         atleta_dict = {
             'id': self.id,
             'email': self.email,
+            'nomeCompleto': ' '.join([self.nome, self.sobrenome]),
             'nome': self.nome,
             'sobrenome': self.sobrenome,
             'sexo': self.sexo,
@@ -425,10 +431,11 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
             'celular': self.celular,
             'nascimento': self.nascimento.strftime('%d%m%Y')
         }
-        if hasattr(self, 'inscricao'):
-            atleta_dict['inscricao'] = self.inscricao.as_dict()
-        else:
-            atleta_dict['inscricoes'] = [inscricao.as_dict() for inscricao in self.inscricoes]
+        if not soh_atleta:
+            if hasattr(self, 'inscricao'):
+                atleta_dict['inscricao'] = self.inscricao.as_dict()
+            else:
+                atleta_dict['inscricoes'] = [inscricao.as_dict() for inscricao in self.inscricoes]
         return atleta_dict
 
     @classmethod

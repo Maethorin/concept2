@@ -152,20 +152,6 @@ angular.module('concept2.eventos', ['ngRoute'])
                 }
             });
         }
-        function calculaIdadeAtleta(nascimento) {
-            nascimento = nascimento.split('');
-            var ano = parseInt(nascimento.splice(4, 4).join(''));
-            var mes = parseInt(nascimento.splice(2, 2).join('')) - 1;
-            var dia = parseInt(nascimento.splice(0, 2).join(''));
-            nascimento = new Date(ano, mes, dia);
-            var hoje = new Date();
-            var idade = hoje.getFullYear() - nascimento.getFullYear();
-            if (hoje.getMonth() < nascimento.getMonth() ||
-                hoje.getMonth() == nascimento.getMonth() && hoje.getDate() < nascimento.getDate()) {
-                idade--;
-            }
-            return idade;
-        }
         $scope.evento = Evento.get({"id": $scope.slug}, function() {
             $rootScope.titulo = $scope.evento.titulo;
             var dataInicio = new Date($scope.evento.dataInicio.ano, $scope.evento.dataInicio.mes - 1, $scope.evento.dataInicio.dia);
