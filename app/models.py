@@ -42,6 +42,8 @@ class AutenticMixin(object):
             data = jwt.decode(token, database.config.SECRET_KEY)
         except:
             return None
+        if not data['id']:
+            return None
         user = cls.query.get(data['id'])
         return user
 

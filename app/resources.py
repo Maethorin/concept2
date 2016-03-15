@@ -67,6 +67,7 @@ class Atletas(ResourceBase):
     def post(self):
         try:
             g.user = self.model.cria_de_dicionario(request.json)
+            return {'token': g.user.gera_token_aut(), 'userId': g.user.id}
         except KeyError as ex:
             return {'mensagemErro': u'Dados faltando: {}'.format(ex)}, 400
         except models.EmailJaExiste as ex:

@@ -458,8 +458,10 @@ angular.module('concept2.eventos', ['ngRoute'])
                         return false;
                     }
                     $scope.estaCarregando = true;
-                    $scope.processaSucesso = function() {
-                        Autentic.atualizaValores();
+                    $scope.processaSucesso = function(resp) {
+                        if (resp) {
+                            Autentic.atualizaValores(resp.token, resp.userId);
+                        }
                         $scope.reset();
                         $scope.estaCarregando = false;
                         $('#modalSucesso').modal('show');
@@ -484,8 +486,8 @@ angular.module('concept2.eventos', ['ngRoute'])
                     }
                     else {
                         $scope.atleta.$save().then(
-                            function() {
-                                $scope.processaSucesso();
+                            function(response) {
+                                $scope.processaSucesso(response);
                             },
                             function(response) {
                                 $scope.processaFalha(response);
