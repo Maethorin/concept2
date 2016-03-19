@@ -1,0 +1,1 @@
+DELETE from provas where distancia = 2000 and sexo = 'FE' and tipo = 'I' and data_inicio = '2016-04-02 18:20';
