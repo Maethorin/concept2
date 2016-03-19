@@ -40,7 +40,8 @@
                     <th>idade</th>
                     <th>Celular</th>
                     <th>Telefone</th>
-                    <th>Vai competir em</th>
+                    <th>Nr Pedido</th>
+                    <th>Inscrições</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -51,8 +52,12 @@
                     <td>{{calculaIdade(inscricao.atleta.nascimento)}}</td>
                     <td>{{formataTelefone(inscricao.atleta.celular)}}</td>
                     <td>{{formataTelefone(inscricao.atleta.telefone)}}</td>
+                    <td>{{inscricao.numeroPedido || 'Não registrado'}}</td>
                     <td>
                         <ul class="provas-selecionadas" id="provas">
+                            <li ng-repeat="curso in inscricao.cursos">
+                                {{curso.dia}} {{curso.hora}} - {{curso.nome}}
+                            </li>
                             <li ng-repeat="prova in inscricao.provas">
                                 {{prova.dia}} {{prova.hora}} - {{prova.label}} - {{prova.subCategoria.label}}
                             </li>
