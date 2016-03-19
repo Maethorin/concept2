@@ -190,6 +190,7 @@ class Evento(db.Model, QueryMixin):
     em_destaque = db.Column(db.Boolean)
     pontuacao = db.Column(postgresql.JSON)
     provas = relationship('Prova', back_populates='evento')
+    cursos = db.relationship('Curso', back_populates='evento')
     inscricoes = db.relationship('Inscricao', back_populates='evento')
 
     def lista_provas_dict(self):
@@ -219,6 +220,7 @@ class Evento(db.Model, QueryMixin):
             'provas': self.lista_provas_dict(),
             'pontuacao': self.pontuacao,
             'resumo': self.resumo,
+            'cursos': [curso.as_dict() for curso in self.cursos],
             'inscricoes': [inscricao.as_dict() for inscricao in self.inscricoes]
         }
 
@@ -274,6 +276,36 @@ prova_inscricao = db.Table(
     db.Column('inscricao_id', db.Integer, db.ForeignKey('inscricoes.id'), nullable=False),
     db.PrimaryKeyConstraint('prova_id', 'inscricao_id')
 )
+
+curso_inscricao = db.Table(
+    'cursos_inscricoes',
+    db.Column('curso_id', db.Integer, db.ForeignKey('cursos.id'), nullable=False),
+    db.Column('inscricao_id', db.Integer, db.ForeignKey('inscricoes.id'), nullable=False),
+    db.PrimaryKeyConstraint('curso_id', 'inscricao_id')
+)
+
+
+class Curso(db.Model, QueryMixin):
+    __tablename__ = 'cursos'
+    __mapper_args__ = {
+        'order_by': 'data_inicio'
+    }
+    id = db.Column(db.Integer, primary_key=True)
+    evento_id = db.Column(db.Integer, db.ForeignKey('eventos.id'))
+    evento = relationship('Evento', back_populates='cursos')
+    inscricoes = db.relationship('Inscricao', secondary=curso_inscricao, backref='cursos')
+    nome = db.Column(db.String())
+    data_inicio = db.Column(db.DateTime)
+    duracao = db.Column(db.Integer)
+
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'nome': self.nome,
+            'dia': self.data_inicio.strftime('%d/%m'),
+            'hora': self.data_inicio.strftime('%H:%M'),
+            'duracao': self.duracao
+        }
 
 
 class Prova(db.Model, QueryMixin):
@@ -369,6 +401,8 @@ class Inscricao(db.Model, QueryMixin):
         inscricao.evento_id = inscricao_dict.get('eventoId')
         for prova in inscricao_dict['provas']:
             inscricao.provas.append(Prova.query.get(prova['id']))
+        for curso in inscricao_dict['cursos']:
+            inscricao.cursos.append(Curso.query.get(curso['id']))
         return inscricao
 
     @classmethod
@@ -400,6 +434,7 @@ class Inscricao(db.Model, QueryMixin):
             'pedidoNumero': self.pedido_numero,
             'eventoId': self.evento_id,
             'provas': [prova.as_dict() for prova in self.provas],
+            'cursos': [curso.as_dict() for curso in self.cursos],
             'atleta': self.atleta.as_dict(soh_atleta=True)
         }
 
