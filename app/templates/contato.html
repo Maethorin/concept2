@@ -27,12 +27,12 @@
         </div>
         <div class="col-md-4 assinar ">
             <form name="formAssinar">
-                <div class="form-group has-feedback" >
+                <div class="form-group has-feedback" ng-class="{'has-success': campoValido(formAssinar.nome), 'has-error': campoInvalido(formAssinar.nome)}">
                     <label style="color:white;">Entre em contato</label>
-                    <input type="text" class="form-control" placeholder="Nome" aria-describedby="helpAssinar"  name="nome" required>
+                    <input type="text" class="form-control" placeholder="Nome" aria-describedby="helpAssinar"  name="nome" id="nome" required>
                     <input type="text" class="form-control email" placeholder="E-mail" aria-describedby="basic-addon1">
                     <textarea class="form-control mensagem" rows="10" placeholder="Escreva sua mensagem aqui"></textarea>
-                    <label style="color: white;  margin-top: 15px;  "><input type="checkbox" value="" style=" margin-right: 10px;">Me enviar uma cópia</label>
+                    <label style="color: white;  margin-top: 15px;"><input type="checkbox" value="" style=" margin-right: 10px;">Me enviar uma cópia</label>
 
                     <div vc-recaptcha key="'6LdrnhoTAAAAAKDfPoEgTvtmjCV7ny_iCrb1dVzy'" style="margin-top: 15px;"></div>
                     <button type="button" class="btn btn-default" style="margin-top: 15px; background-color: #98b330; color: white; border: none;">Enviar</button>
