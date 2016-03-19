@@ -409,6 +409,7 @@ class Inscricao(db.Model, QueryMixin):
     def atualiza_de_dicionario(cls, inscricao_id, inscricao_dict, atleta, commit=False):
         inscricao = cls.query.get(inscricao_id)
         inscricao.provas = []
+        inscricao.cursos = []
         inscricao = cls.define_dados_de_dicionario(inscricao_dict, atleta, inscricao)
         db.session.add(inscricao)
         if commit:

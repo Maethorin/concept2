@@ -127,6 +127,10 @@ angular.module('concept2.eventos', ['ngRoute'])
         $scope.template = '{0}/angular/evento/{1}.html'.format([urlBackEnd, $scope.itemMenu]);
         $scope.urlLojaInscricao = 'https://concept2.com.br/shop/index.php?route=product/product&product_id=125';
         $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-9]/, 'M': /[0-1]/, 'm': /[0-2]/}};
+        $scope.temProvas = true;
+        $scope.temCursos = true;
+        $scope.exibeProvas = true;
+        $scope.exibeCursos = true;
         $rootScope.pagina = "eventos";
         $scope.exibeAjuda = function(seletor) {
             var $ajudaPopOver = $(seletor);
@@ -152,8 +156,22 @@ angular.module('concept2.eventos', ['ngRoute'])
                 }
             });
         }
+        function onItemSelect(item, tipo) {
+                $scope.atleta.inscricao[tipo].push({'id': item.id});
+                $scope.atleta.provaSelecionada = 1;
+                $scope.campoProvaTocado = true;
+        }
+        $scope.formataDuracao = function(duracao) {
+            var horas = parseInt(duracao / 60);
+            var minutos = duracao % 60;
+            return '{0}h{1}min'.format([horas, minutos]);
+        };
         $scope.evento = Evento.get({"id": $scope.slug}, function() {
             $rootScope.titulo = $scope.evento.titulo;
+            $scope.temProvas = $scope.evento.provas.length > 0;
+            $scope.temCursos = $scope.evento.cursos.length > 0;
+            $scope.exibeProvas = $scope.evento.provas.length > 0;
+            $scope.exibeCursos = $scope.evento.cursos.length > 0;
             var dataInicio = new Date($scope.evento.dataInicio.ano, $scope.evento.dataInicio.mes - 1, $scope.evento.dataInicio.dia);
             var dataFim = new Date($scope.evento.dataFim.ano, $scope.evento.dataFim.mes - 1, $scope.evento.dataFim.dia);
             if (dataFim.getMonth() == dataInicio.getMonth()) {
@@ -187,7 +205,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                     }
                 });
                 if (prova.distancia > 0) {
-                    prova.selecionada = false;
+                    prova.selecionado = false;
                     $scope.provasDropdownList.push(prova);
                 }
                 var search = $location.search();
@@ -196,7 +214,11 @@ angular.module('concept2.eventos', ['ngRoute'])
                 }
             });
             $scope.provasParaSelecao = angular.copy($scope.provasDropdownList);
-
+            $scope.cursosDropdownList = [];
+            angular.forEach($scope.evento.cursos, function(curso) {
+                curso.selecionado = false;
+                $scope.cursosDropdownList.push(curso);
+            });
             if ($scope.itemMenu == 'inscricao') {
                 $scope.mensagemErro = '';
                 $scope.tiposAfiliacoes = [
@@ -217,78 +239,77 @@ angular.module('concept2.eventos', ['ngRoute'])
                     scrollable: true,
                     scrollableHeight: '300px'
                 };
-                $scope.provasEventos = {
-                    onItemSelect: function(prova) {
-                        $scope.atleta.inscricao.provas.push({'id': prova.id});
-                        $scope.atleta.provaSelecionada = 1;
-                        $scope.campoProvaTocado = true;
-                    },
-                    onItemDeselect: function(prova) {
-                        $scope.removeProva(prova.id);
-                        if ($scope.atleta.inscricao.provas.length == 0) {
-                            $scope.atleta.provaSelecionada = null;
-                        }
-                        $scope.campoProvaTocado = true;
-                    }
-                };
                 var limpaSelecaoProvas = function() {
                     angular.forEach($scope.provasDropdownList, function(prova) {
-                        prova.selecionada = false;
+                        prova.selecionado = false;
                     });
                     $scope.atleta.inscricao.provas = [];
                     $scope.atleta.provaSelecionada = null;
                 };
-                $scope.obterProva = function(provaSelecionada) {
-                    var provaCompleta = null;
-                    angular.forEach($scope.evento.provas, function(prova) {
-                        if (prova.id == provaSelecionada.id) {
-                            provaCompleta = prova;
+                $scope.obterItem = function(itemSelecionado, tipo) {
+                    var itemCompleto = null;
+                    angular.forEach($scope.evento[tipo], function(item) {
+                        if (item.id == itemSelecionado.id) {
+                            itemCompleto = item;
                             return false;
                         }
                     });
-                    return provaCompleta;
+                    return itemCompleto;
                 };
-                $scope.removeProva = function(provaId) {
-                    angular.forEach($scope.atleta.inscricao.provas, function(prova, index) {
-                        if (prova.id == provaId) {
-                            $scope.atleta.inscricao.provas.splice(index, 1);
+                $scope.removeItem = function(itemId, tipo) {
+                    angular.forEach($scope.atleta.inscricao[tipo], function(item, index) {
+                        if (item.id == itemId) {
+                            $scope.atleta.inscricao[tipo].splice(index, 1);
                             return false;
                         }
                     });
-                    angular.forEach($scope.provasDropdownList, function(prova) {
-                        if (prova.id == provaId) {
-                            prova.selecionada = false;
+                    angular.forEach($scope['{0}DropdownList'.format([tipo])], function(item) {
+                        if (item.id == itemId) {
+                            item.selecionado = false;
                             return false;
                         }
                     });
-                    if ($scope.atleta.inscricao.provas.length == 0) {
+                    if ($scope.atleta.inscricao.provas.length == 0 && $scope.atleta.inscricao.cursos.length == 0) {
                         $scope.atleta.provaSelecionada = null;
                     }
                     $scope.campoProvaTocado = true;
-                    $scope.provaDaQueryString = null;
+                    if (tipo == 'provas') {
+                        $scope.provaDaQueryString = null;
+                    }
                 };
-                $scope.selecionaProvas = function() {
+                $scope.selecionaItens = function() {
                     angular.forEach($scope.provasDropdownList, function(prova) {
-                        prova.selecionada = false;
+                        prova.selecionado = false;
                         if ($scope.provaDaQueryString && $scope.provaDaQueryString.id == prova.id) {
-                            $scope.provasEventos.onItemSelect($scope.provaDaQueryString);
+                            onItemSelect($scope.provaDaQueryString, 'provas');
                         }
                         angular.forEach($scope.atleta.inscricao.provas, function(inscricaoProva) {
                             if (prova.id == inscricaoProva.id) {
                                 $scope.atleta.provaSelecionada = 1;
                                 $scope.campoProvaTocado = true;
-                                prova.selecionada = true;
+                                prova.selecionado = true;
+                                return false;
+                            }
+                        });
+                    });
+                    angular.forEach($scope.cursosDropdownList, function(curso) {
+                        curso.selecionado = false;
+                        angular.forEach($scope.atleta.inscricao.cursos, function(inscricaoCurso) {
+                            if (curso.id == inscricaoCurso.id) {
+                                $scope.atleta.provaSelecionada = 1;
+                                $scope.campoProvaTocado = true;
+                                curso.selecionado = true;
                                 return false;
                             }
                         });
                     });
                 };
-                $scope.clicaNaProva = function(selecionada, prova) {
+                $scope.clicaNoItem = function(selecionada, item, tipo) {
                     if (selecionada) {
-                        $scope.provasEventos.onItemSelect(prova);
+                        onItemSelect(item, tipo);
                     }
                     else {
-                        $scope.provasEventos.onItemDeselect(prova);
+                        $scope.removeItem(item.id, tipo);
                     }
                 };
                 $scope.reset = function(formInscricao, novoAtleta) {
@@ -322,13 +343,14 @@ angular.module('concept2.eventos', ['ngRoute'])
                                 "pedidoNumero": null,
                                 "nomeConvidado": null,
                                 "nomeSegundoConvidado": null,
-                                "provas": []
+                                "provas": [],
+                                "cursos": []
                             }),
                             "provaSelecionada": null
                         });
                         limpaSelecaoProvas();
                         $scope.campoProvaTocado = false;
-                        $scope.selecionaProvas();
+                        $scope.selecionaItens();
                         if (formInscricao) {
                             formInscricao.$setPristine();
                             formInscricao.$setUntouched();
@@ -379,11 +401,11 @@ angular.module('concept2.eventos', ['ngRoute'])
                         });
                     }
                     if ($scope.carregandoProvas) {
-                        $scope.selecionaProvas();
+                        $scope.selecionaItens();
                     }
                     if ($scope.limpaSelecaoProvas) {
                         limpaSelecaoProvas();
-                        $scope.selecionaProvas();
+                        $scope.selecionaItens();
                         $scope.limpaSelecaoProvas = false;
                     }
                 };

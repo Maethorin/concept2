@@ -98,6 +98,15 @@ img {
             max-height: 300px;
             overflow: auto;
         }
+        .filtros {
+            .btn-group {
+                input {
+                    position: absolute;
+                    clip: rect(0, 0, 0, 0);
+                    pointer-events: none;
+                }
+            }
+        }
         .campo {
             &.pedido-numero, &.convidado {
                 .popover {
