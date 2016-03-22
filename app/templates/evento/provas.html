@@ -1,18 +1,18 @@
 <div class="inscricao">
     <div class="row instrucoes">
         <div class="col-md-12">
-            <h3 class="text-center">Inscrição {{evento.titulo}}<span ng-if="atletaLogado"> para {{atleta.nome}}</span></h3>
+            <h3 class="text-center">Inscrição para Provas no {{evento.titulo}}<span ng-if="atletaLogado"> para {{atleta.nome}}</span></h3>
 
             <div ng-if="atletaLogado">
                 <p>Aqui, você pode adicionar o número do pedido, efetuado na loja, à sua inscrição ou alterar os dados e provas que deseja participar.</p>
 
-                <p>Caso ainda não tenha feito, você deverá ir à <a href="{{urlLojaInscricao}}" target="_blank">loja da concept2</a> para realizar o pagamento da taxa de inscrição.</p>
+                <p>Caso ainda não tenha feito, você deverá ir à <a href="{{urlPagamentoProvas}}" target="_blank">loja da concept2</a> para realizar o pagamento da taxa de inscrição.</p>
                 <!--Para alterar seus dados pessoais, vá em <a href="/#/meu-perfil">meu perfil</a>.-->
             </div>
             <div ng-if="!atletaLogado">
                 <p>Caso já tenha feito alguma inscrição antes em nosso site, faça o <a href="/#/atleta/login">login</a> para recuperamos os seus dados de atleta.</p>
 
-                <p>Após finalizar o seu cadastro, você deverá ir à <a href="{{urlLojaInscricao}}" target="_blank">loja da concept2</a> para realizar o pagamento da taxa de inscrição.</p>
+                <p>Após finalizar o seu cadastro, você deverá ir à <a href="{{urlPagamentoProvas}}" target="_blank">loja da concept2</a> para realizar o pagamento da taxa de inscrição.</p>
 
                 <p>Depois de concluída a compra na loja, você receberá o número do pedido efetuado. Adicione esse número do pedido à sua inscrição nessa página no campo Número do Pedido ns Dados da inscrição.</p>
 
@@ -20,29 +20,29 @@
 
                 <p>Com o número do pedido adicionado, nós poderemos confirmar o pagamento mas, para o dia da prova, leve o comprovante de pagamento para eventuais problemas.</p>
 
-                <p>Depois da inscrição realizada, você pode voltar nesse página a qualquer momento para adicionar ou remover provas e editar as informações da sua Inscrição ao {{evento.titulo}}</p>
+                <p>Depois da inscrição realizada, você pode voltar nesse página a qualquer momento para adicionar ou remover provas e editar as informações da sua Inscrição às Provas do {{evento.titulo}}</p>
             </div>
         </div>
     </div>
-    <form novalidate name="formInscricao" class="form-inscricao" role="form" ng-submit="enviandoInscricao(formInscricao)">
-        <h3 class="text-center">Formulário de Inscrição</h3>
+    <form novalidate name="formInscricaoProvas" class="form-inscricao" role="form" ng-submit="enviandoInscricao(formInscricaoProvas)">
+        <h3 class="text-center">Formulário de Inscrição para as Provas</h3>
         <fieldset ng-if="!atletaLogado">
             <legend>Dados Pessoais</legend>
             <div class="row">
                 <div class="col-md-5 campo">
-                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricao.nome), 'has-error': campoEstaInvalido(formInscricao.nome)}">
+                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricaoProvas.nome), 'has-error': campoEstaInvalido(formInscricaoProvas.nome)}">
                         <label class="control-label" for="nome">Primeiro Nome: <i class="fa fa-asterisk"></i></label>
                         <input type="text" class="form-control" id="nome" name="nome" ng-model="atleta.nome" aria-describedby="helpNome" required/>
-                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricao.nome), 'fa-close': campoEstaInvalido(formInscricao.nome)} "></span>
-                        <span id="helpNome" class="help-block" ng-show="campoEstaInvalido(formInscricao.nome)">* o campo é obrigatório *</span>
+                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoProvas.nome), 'fa-close': campoEstaInvalido(formInscricaoProvas.nome)} "></span>
+                        <span id="helpNome" class="help-block" ng-show="campoEstaInvalido(formInscricaoProvas.nome)">* o campo é obrigatório *</span>
                     </div>
                 </div>
                 <div class="col-md-5 campo">
-                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricao.sobrenome), 'has-error': campoEstaInvalido(formInscricao.sobrenome)}">
+                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricaoProvas.sobrenome), 'has-error': campoEstaInvalido(formInscricaoProvas.sobrenome)}">
                         <label class="control-label" for="sobrenome">Sobrenome: <i class="fa fa-asterisk"></i></label>
                         <input type="text" class="form-control" id="sobrenome" name="sobrenome" ng-model="atleta.sobrenome" aria-describedby="helpSobrenome" required/>
-                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricao.sobrenome), 'fa-close': campoEstaInvalido(formInscricao.sobrenome)} "></span>
-                        <span id="helpSobrenome" class="help-block" ng-show="campoEstaInvalido(formInscricao.sobrenome)">* O campo é obrigatório *</span>
+                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoProvas.sobrenome), 'fa-close': campoEstaInvalido(formInscricaoProvas.sobrenome)} "></span>
+                        <span id="helpSobrenome" class="help-block" ng-show="campoEstaInvalido(formInscricaoProvas.sobrenome)">* O campo é obrigatório *</span>
                     </div>
                 </div>
                 <div class="col-md-2 campo sexo">
@@ -64,19 +64,19 @@
             </div>
             <div class="row">
                 <div class="col-md-3 campo formulario-data">
-                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricao.nascimento), 'has-error': campoEstaInvalido(formInscricao.nascimento)}">
+                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricaoProvas.nascimento), 'has-error': campoEstaInvalido(formInscricaoProvas.nascimento)}">
                         <label class="control-label" for="nascimento">Data de Nascimento <i class="fa fa-asterisk"></i></label>
                         <input data-format="dd/MM/yyyy" data-type="" class="form-control" name="nascimento" id="nascimento" ui-mask="D9/M9/9999" ng-model="atleta.nascimento" aria-describedby="helpData" required nascimento-correto ui-options="maskDef"/>
-                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricao.nascimento), 'fa-close': campoEstaInvalido(formInscricao.nascimento)} "></span>
-                        <span id="helpData" class="help-block" ng-show="campoEstaInvalido(formInscricao.nascimento)">* A idade deve ser entre 9 e 100 *</span>
+                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoProvas.nascimento), 'fa-close': campoEstaInvalido(formInscricaoProvas.nascimento)} "></span>
+                        <span id="helpData" class="help-block" ng-show="campoEstaInvalido(formInscricaoProvas.nascimento)">* A idade deve ser entre 9 e 100 *</span>
                     </div>
                 </div>
                 <div class="col-md-3 campo">
-                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricao.cpf), 'has-error': campoEstaInvalido(formInscricao.cpf)}">
+                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricaoProvas.cpf), 'has-error': campoEstaInvalido(formInscricaoProvas.cpf)}">
                         <label class="control-label" for="cpf">CPF: <i class="fa fa-asterisk"></i></label>
                         <input type="text" class="form-control" id="cpf" name="cpf" ng-model="atleta.cpf" aria-describedby="helpCpf" ui-mask="999.999.999-99" required cpf-valido/>
-                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricao.cpf), 'fa-close': campoEstaInvalido(formInscricao.cpf)} "></span>
-                        <span id="helpCpf" class="help-block" ng-show="campoEstaInvalido(formInscricao.cpf)">* O CPF deve ser válido *</span>
+                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoProvas.cpf), 'fa-close': campoEstaInvalido(formInscricaoProvas.cpf)} "></span>
+                        <span id="helpCpf" class="help-block" ng-show="campoEstaInvalido(formInscricaoProvas.cpf)">* O CPF deve ser válido *</span>
                     </div>
                 </div>
                 <div class="col-md-3 campo">
@@ -87,11 +87,11 @@
                 </div>
                 <div class="col-md-3 campo">
                     <div class="form-group">
-                        <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricao.celular), 'has-error': campoEstaInvalido(formInscricao.celular)}">
+                        <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricaoProvas.celular), 'has-error': campoEstaInvalido(formInscricaoProvas.celular)}">
                             <label class="control-label" for="celular">Celular: <i class="fa fa-asterisk"></i></label>
                             <input type="text" class="form-control" name="celular" id="celular" ui-mask="(99) 99999-9999" ng-model="atleta.celular" aria-describedby="helpCelular" required/>
-                            <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricao.celular), 'fa-close': campoEstaInvalido(formInscricao.celular)}"></span>
-                            <span id="helpCelular" class="help-block" ng-show="campoEstaInvalido(formInscricao.celular)">* O celular deve ser válido *</span>
+                            <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoProvas.celular), 'fa-close': campoEstaInvalido(formInscricaoProvas.celular)}"></span>
+                            <span id="helpCelular" class="help-block" ng-show="campoEstaInvalido(formInscricaoProvas.celular)">* O celular deve ser válido *</span>
                         </div>
                     </div>
                 </div>
@@ -101,27 +101,27 @@
             <legend>Dados de login</legend>
             <div class="row">
                 <div class="col-md-4 campo">
-                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricao.email), 'has-error': campoEstaInvalido(formInscricao.email)}">
+                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricaoProvas.email), 'has-error': campoEstaInvalido(formInscricaoProvas.email)}">
                         <label class="control-label" for="email">E-mail: <i class="fa fa-asterisk"></i></label>
                         <input type="email" class="form-control" name="email" id="email" ng-model="atleta.email" aria-describedby="helpEmail" required email-nao-usado />
-                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricao.email), 'fa-close': campoEstaInvalido(formInscricao.email)} "></span>
-                        <span id="helpEmail" class="help-block" ng-show="campoEstaInvalido(formInscricao.email)">* Digite um e-mail válido *</span>
+                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoProvas.email), 'fa-close': campoEstaInvalido(formInscricaoProvas.email)} "></span>
+                        <span id="helpEmail" class="help-block" ng-show="campoEstaInvalido(formInscricaoProvas.email)">* Digite um e-mail válido *</span>
                     </div>
                 </div>
                 <div class="col-md-4 campo">
-                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricao.senha), 'has-error': campoEstaInvalido(formInscricao.senha)}">
+                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricaoProvas.senha), 'has-error': campoEstaInvalido(formInscricaoProvas.senha)}">
                         <label class="control-label" for="senha">Senha: <i class="fa fa-asterisk"></i></label>
                         <input type="password" class="form-control" name="senha" id="senha" ng-model="atleta.senha" aria-describedby="helpSenha" required minlength="8"/>
-                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricao.senha), 'fa-close': campoEstaInvalido(formInscricao.senha)} "></span>
-                        <span id="helpSenha" class="help-block" ng-show="campoEstaInvalido(formInscricao.senha)">* Senha deve contar mínimo de 8 caracteres *</span>
+                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoProvas.senha), 'fa-close': campoEstaInvalido(formInscricaoProvas.senha)} "></span>
+                        <span id="helpSenha" class="help-block" ng-show="campoEstaInvalido(formInscricaoProvas.senha)">* Senha deve contar mínimo de 8 caracteres *</span>
                     </div>
                 </div>
                 <div class="col-md-4 campo">
-                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricao.confirmeSenha), 'has-error': campoEstaInvalido(formInscricao.confirmeSenha)}">
+                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricaoProvas.confirmeSenha), 'has-error': campoEstaInvalido(formInscricaoProvas.confirmeSenha)}">
                         <label class="control-label" for="confirmeSenha">Confirme a senha: <i class="fa fa-asterisk"></i></label>
                         <input type="password" class="form-control" name="confirmeSenha" id="confirmeSenha" ng-model="atleta.confirmeSenha" aria-describedby="helpConfirmeSenha" required igual-senha/>
-                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricao.confirmeSenha), 'fa-close': campoEstaInvalido(formInscricao.confirmeSenha)} "></span>
-                        <span id="helpConfirmeSenha" class="help-block" ng-show="campoEstaInvalido(formInscricao.confirmeSenha)">* A confirmação não é igual à senha *</span>
+                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoProvas.confirmeSenha), 'fa-close': campoEstaInvalido(formInscricaoProvas.confirmeSenha)} "></span>
+                        <span id="helpConfirmeSenha" class="help-block" ng-show="campoEstaInvalido(formInscricaoProvas.confirmeSenha)">* A confirmação não é igual à senha *</span>
                     </div>
                 </div>
             </div>
@@ -173,65 +173,39 @@
             </div>
             <div class="row prova">
                 <div class="col-md-12 campo">
-                    <div class="form-group has-feedback" ng-class="{'has-success': campoEstaValido(formInscricao.provas), 'has-error': campoEstaInvalido(formInscricao.provas)}">
-                        <label class="control-label" for="provas">Provas e/ou Cursos selecionadas: <i class="fa fa-asterisk"></i></label>
-                        <ul class="provas-selecionadas" id="provas" ng-class="{'has-success': campoEstaValido(formInscricao.provas), 'has-error': campoEstaInvalido(formInscricao.provas)}">
+                    <div class="form-group has-feedback" ng-class="{'has-success': campoEstaValido(formInscricaoProvas.provas), 'has-error': campoEstaInvalido(formInscricaoProvas.provas)}">
+                        <label class="control-label" for="provas">Provas selecionadas: <i class="fa fa-asterisk"></i></label>
+                        <ul class="provas-selecionadas" id="provas" ng-class="{'has-success': campoEstaValido(formInscricaoProvas.provas), 'has-error': campoEstaInvalido(formInscricaoProvas.provas)}">
                             <li ng-repeat="provaSelecionada in atleta.inscricao.provas" ng-init="prova = obterItem(provaSelecionada, 'provas')">
                                 <span role="presentation" ng-click="removeItem(prova.id, 'provas')">×</span>
                                 {{prova.dia}} {{prova.hora}} - {{prova.label}} - {{prova.subCategoria.label}}
                             </li>
-                            <li ng-repeat="cursoSelecionado in atleta.inscricao.cursos" ng-init="curso = obterItem(cursoSelecionado, 'cursos')">
-                                <span role="presentation" ng-click="removeItem(curso.id, 'cursos')">×</span>
-                                {{curso.dia}} {{curso.hora}} - {{curso.nome}}
-                            </li>
                         </ul>
                         <input type="hidden" name="provas" ng-model="atleta.provaSelecionada" required/>
-                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricao.provas), 'fa-close': campoEstaInvalido(formInscricao.provas)}"></span>
-                        <span class="help-block" ng-show="campoEstaInvalido(formInscricao.provas)">* Selecione uma ou mais provas *</span>
+                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoProvas.provas), 'fa-close': campoEstaInvalido(formInscricaoProvas.provas)}"></span>
+                        <span class="help-block" ng-show="campoEstaInvalido(formInscricaoProvas.provas)">* Selecione uma ou mais provas *</span>
                     </div>
-                </div>
-            </div>
-            <div class="row filtros">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Exibir:</label>
-                        <div class="btn-group">
-                            <label class="btn btn-primary" ng-show="temProvas" ng-click="exibeProvas = !exibeProvas" ng-class="{'active': exibeProvas}">
-                                <input type="checkbox" autocomplete="off" name="exibeProvas" ng-model="exibeProvas" /> Provas
-                            </label>
-                            <label class="btn btn-primary" ng-show="temCursos" ng-click="exibeCursos = !exibeCursos" ng-class="{'active': exibeCursos}">
-                                <input type="checkbox" autocomplete="off" name="exibeCursos" ng-model="exibeCursos" /> Cursos
-                            </label>
-                        </div>
+                    <div class="botoes" ng-show="atletaLogado">
+                        <a class="btn btn-success" href="{{urlPagamentoProvas}}" title="ir para o pagamento" target="_blank">Ir para o pagamento</a>
                     </div>
                 </div>
             </div>
             <div class="row prova">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="control-label" for="afiliacao"><span ng-show="exibeProvas || exibeCursos"><span ng-show="exibeProvas">Provas</span><span ng-show="exibeProvas && exibeCursos"> e/ou </span><span ng-show="exibeCursos">Cursos</span> na competição:</span></label>
+                        <label class="control-label">Provas na competição:</label>
                         <div class="table-responsive tabela-provas">
                             <table class="table table-striped table-hover">
                                 <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Dia</th>
-                                    <th>Horário</th>
-                                    <th><span ng-show="exibeProvas">Prova</span><span ng-show="exibeProvas && exibeCursos">/</span><span ng-show="exibeCursos">Curso</span></th>
-                                    <th><span ng-show="exibeProvas">Categoria</span><span ng-show="exibeProvas && exibeCursos">/</span><span ng-show="exibeCursos">Duração</span></th>
-                                    <th>Observação</th>
-                                </tr>
-                                </thead>
-                                <tbody ng-show="exibeCursos">
-                                    <tr ng-repeat="curso in cursosDropdownList" ng-class="{'success': curso.selecionado}">
-                                        <td><input type="checkbox" name="cursos[]" ng-model="curso.selecionado" value="{{curso}}" ng-click="clicaNoItem(curso.selecionado, curso, 'cursos')"/></td>
-                                        <td>{{curso.dia}}</td>
-                                        <td>{{curso.hora}}</td>
-                                        <td>{{curso.nome}}</td>
-                                        <td>{{formataDuracao(curso.duracao)}}</td>
-                                        <td>{{curso.observacao}}</td>
+                                    <tr>
+                                        <th></th>
+                                        <th>Dia</th>
+                                        <th>Horário</th>
+                                        <th>Prova</th>
+                                        <th>Categoria</th>
+                                        <th>Observação</th>
                                     </tr>
-                                </tbody>
+                                </thead>
                                 <tbody ng-show="exibeProvas">
                                     <tr ng-repeat="prova in provasDropdownList" ng-class="{'success': prova.selecionado}">
                                         <td><input type="checkbox" name="provas[]" ng-model="prova.selecionado" value="{{prova}}" ng-click="clicaNoItem(prova.selecionado, prova, 'provas')"/></td>
@@ -254,8 +228,8 @@
                 <div vc-recaptcha key="'6LdrnhoTAAAAAKDfPoEgTvtmjCV7ny_iCrb1dVzy'" ng-model="atleta.recaptcha"></div>
             </div>
             <div class="col-md-5 botoes">
-                <button type="submit" class="btn" ng-class="{'btn-disabled': formInscricao.$invalid, 'btn-success': formInscricao.$valid}">Inscrever-se</button>
-                <button type="button" class="btn btn-warning" ng-click="reset(formInscricao)">Limpar</button>
+                <button type="submit" class="btn" ng-class="{'btn-disabled': formInscricaoProvas.$invalid, 'btn-success': formInscricaoProvas.$valid}">Inscrever-se</button>
+                <button type="button" class="btn btn-warning" ng-click="reset(formInscricaoProvas)">Limpar</button>
             </div>
         </div>
     </form>
@@ -275,7 +249,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-success" ng-click="redirecionaPagamento(true)">Efetuar o pagamento</button>
+                <button type="button" class="btn btn-success" ng-click="redirecionaPagamento(true, 'provas')">Efetuar o pagamento</button>
             </div>
         </div>
     </div>

@@ -192,6 +192,8 @@ class Evento(db.Model, QueryMixin):
     provas = relationship('Prova', back_populates='evento')
     cursos = db.relationship('Curso', back_populates='evento')
     inscricoes = db.relationship('Inscricao', back_populates='evento')
+    url_pagamento_provas = db.Column(db.String())
+    url_pagamento_cursos = db.Column(db.String())
 
     def lista_provas_dict(self):
         provas_dict = []
@@ -220,6 +222,8 @@ class Evento(db.Model, QueryMixin):
             'provas': self.lista_provas_dict(),
             'pontuacao': self.pontuacao,
             'resumo': self.resumo,
+            'urlPagamentoProvas': self.url_pagamento_provas,
+            'urlPagamentoCursos': self.url_pagamento_cursos,
             'cursos': [curso.as_dict() for curso in self.cursos],
             'inscricoes': [inscricao.as_dict() for inscricao in self.inscricoes]
         }
@@ -297,6 +301,8 @@ class Curso(db.Model, QueryMixin):
     nome = db.Column(db.String())
     data_inicio = db.Column(db.DateTime)
     duracao = db.Column(db.Integer)
+    valor = db.Column(db.Integer)
+    url_pagamento = db.Column(db.String())
 
     def as_dict(self):
         return {
@@ -304,7 +310,9 @@ class Curso(db.Model, QueryMixin):
             'nome': self.nome,
             'dia': self.data_inicio.strftime('%d/%m'),
             'hora': self.data_inicio.strftime('%H:%M'),
-            'duracao': self.duracao
+            'duracao': self.duracao,
+            'urlPagamento': self.url_pagamento,
+            'valor': self.valor
         }
 
 
@@ -523,6 +531,10 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
                 break
             for prova in inscricao.provas:
                 if prova.evento.slug == evento_slug:
+                    atleta.inscricao = inscricao
+                    break
+            for curso in inscricao.cursos:
+                if curso.evento.slug == evento_slug:
                     atleta.inscricao = inscricao
                     break
         return atleta

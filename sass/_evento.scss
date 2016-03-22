@@ -86,15 +86,19 @@ img {
     }
     .form-inscricao {
         padding: 15px 0;
-        .prova {
+        .prova, .curso {
             min-height: 89px;
+            margin-bottom: 20px;
+            .botoes {
+                text-align: center;
+            }
         }
         .tipo-afiliacoes {
             li {
                 cursor: pointer;
             }
         }
-        .tabela-provas {
+        .tabela-provas, .tabela-cursos {
             max-height: 300px;
             overflow: auto;
         }
@@ -162,18 +166,7 @@ img {
         .botoes {
             padding-top: 20px;
         }
-        .dropdown-provas {
-            li {
-                padding-left: 10px;
-                font-size: 11px;
-                cursor: pointer;
-                &.dropdown-header {
-                    font-size: 13px;
-                    font-weight: bold;
-                }
-            }
-        }
-        .provas-selecionadas {
+        .provas-selecionadas, .cursos-selecionados {
             box-sizing: border-box;
             list-style: none;
             padding: 0 5px 5px;
@@ -185,6 +178,9 @@ img {
             overflow: hidden;
             min-height: 33px;
             margin-bottom: 0;
+            .btn-sm {
+                padding: 0 5px;
+            }
             &.has-error {
                 color: $state-danger-text;
                 border-color: $state-danger-border;
@@ -201,7 +197,7 @@ img {
                 float: left;
                 margin-right: 5px;
                 margin-top: 5px;
-                padding: 0 5px;
+                padding: 2px 5px;
                 span {
                     color: #999;
                     cursor: pointer;

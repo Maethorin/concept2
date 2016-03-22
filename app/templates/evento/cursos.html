@@ -1,0 +1,267 @@
+<div class="inscricao">
+    <div class="row instrucoes">
+        <div class="col-md-12">
+            <h3 class="text-center">Inscrição para Cursos no {{evento.titulo}}<span ng-if="atletaLogado"> para {{atleta.nome}}</span></h3>
+
+            <div ng-if="atletaLogado">
+                <p>Aqui, você pode adicionar o número do pedido, efetuado na loja, à inscrição do(s) curso(s).</p>
+
+                <p>Caso ainda não tenha feito, verifique abaixo no cadastro a url para realizar o pagamento da taxa de inscrição no curso.</p>
+                <!--Para alterar seus dados pessoais, vá em <a href="/#/meu-perfil">meu perfil</a>.-->
+            </div>
+            <div ng-if="!atletaLogado">
+                <p>Caso já tenha feito alguma inscrição antes em nosso site, faça o <a href="/#/atleta/login">login</a> para recuperamos os seus dados de atleta.</p>
+
+                <p>Após finalizar o seu cadastro, você deverá ir à loja da concept2 para realizar o pagamento da taxa de inscrição.</p>
+
+                <p>Depois de concluída a compra na loja, você receberá o número do pedido efetuado. Adicione esse número do pedido à sua inscrição no curso nessa página no campo Número do Pedido nos Dados da inscrição.</p>
+
+                <p>Se você já efetuou o pagamento e já tem um número de pedido, já pode adiciona-lo e ignorar a mensagem de ir até a loja.</p>
+
+                <p>Com o número do pedido adicionado, nós poderemos confirmar o pagamento mas, para o dia do curso, leve o comprovante de pagamento para eventuais problemas.</p>
+
+                <p>Depois da inscrição realizada, você pode voltar nesse página a qualquer momento para adicionar ou remover cursos e editar as informações da sua Inscrição aos Cursos do {{evento.titulo}}</p>
+            </div>
+        </div>
+    </div>
+    <form novalidate name="formInscricaoCurso" class="form-inscricao" role="form" ng-submit="enviandoInscricao(formInscricaoCurso)">
+        <h3 class="text-center">Formulário de Inscrição para os Cursos</h3>
+        <fieldset ng-if="!atletaLogado">
+            <legend>Dados Pessoais</legend>
+            <div class="row">
+                <div class="col-md-5 campo">
+                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricaoCurso.nome), 'has-error': campoEstaInvalido(formInscricaoCurso.nome)}">
+                        <label class="control-label" for="nome">Primeiro Nome: <i class="fa fa-asterisk"></i></label>
+                        <input type="text" class="form-control" id="nome" name="nome" ng-model="atleta.nome" aria-describedby="helpNome" required/>
+                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoCurso.nome), 'fa-close': campoEstaInvalido(formInscricaoCurso.nome)} "></span>
+                        <span id="helpNome" class="help-block" ng-show="campoEstaInvalido(formInscricaoCurso.nome)">* o campo é obrigatório *</span>
+                    </div>
+                </div>
+                <div class="col-md-5 campo">
+                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricaoCurso.sobrenome), 'has-error': campoEstaInvalido(formInscricaoCurso.sobrenome)}">
+                        <label class="control-label" for="sobrenome">Sobrenome: <i class="fa fa-asterisk"></i></label>
+                        <input type="text" class="form-control" id="sobrenome" name="sobrenome" ng-model="atleta.sobrenome" aria-describedby="helpSobrenome" required/>
+                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoCurso.sobrenome), 'fa-close': campoEstaInvalido(formInscricaoCurso.sobrenome)} "></span>
+                        <span id="helpSobrenome" class="help-block" ng-show="campoEstaInvalido(formInscricaoCurso.sobrenome)">* O campo é obrigatório *</span>
+                    </div>
+                </div>
+                <div class="col-md-2 campo sexo">
+                    <div class="form-group">
+                        <label>Sexo:</label>
+
+                        <div class="btn-group" data-toggle="buttons">
+                            <label class="btn btn-primary" ng-click="defineSexo('MA')">
+                                <input type="radio" name="sexo" id="sexoM" ng-model="atleta.sexo" autocomplete="off"/>
+                                M
+                            </label>
+                            <label class="btn btn-primary" ng-click="defineSexo('FE')">
+                                <input type="radio" name="sexo" id="sexoF" ng-model="atleta.sexo" autocomplete="off">
+                                F
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 campo formulario-data">
+                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricaoCurso.nascimento), 'has-error': campoEstaInvalido(formInscricaoCurso.nascimento)}">
+                        <label class="control-label" for="nascimento">Data de Nascimento <i class="fa fa-asterisk"></i></label>
+                        <input data-format="dd/MM/yyyy" data-type="" class="form-control" name="nascimento" id="nascimento" ui-mask="D9/M9/9999" ng-model="atleta.nascimento" aria-describedby="helpData" required nascimento-correto ui-options="maskDef"/>
+                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoCurso.nascimento), 'fa-close': campoEstaInvalido(formInscricaoCurso.nascimento)} "></span>
+                        <span id="helpData" class="help-block" ng-show="campoEstaInvalido(formInscricaoCurso.nascimento)">* A idade deve ser entre 9 e 100 *</span>
+                    </div>
+                </div>
+                <div class="col-md-3 campo">
+                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricaoCurso.cpf), 'has-error': campoEstaInvalido(formInscricaoCurso.cpf)}">
+                        <label class="control-label" for="cpf">CPF: <i class="fa fa-asterisk"></i></label>
+                        <input type="text" class="form-control" id="cpf" name="cpf" ng-model="atleta.cpf" aria-describedby="helpCpf" ui-mask="999.999.999-99" required cpf-valido/>
+                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoCurso.cpf), 'fa-close': campoEstaInvalido(formInscricaoCurso.cpf)} "></span>
+                        <span id="helpCpf" class="help-block" ng-show="campoEstaInvalido(formInscricaoCurso.cpf)">* O CPF deve ser válido *</span>
+                    </div>
+                </div>
+                <div class="col-md-3 campo">
+                    <div class="form-group">
+                        <label class="control-label" for="telefone">Telefone:</label>
+                        <input type="text" class="form-control" name="telefone" id="telefone" ui-mask="(99) 9999-9999" no-required ng-model="atleta.telefone"/>
+                    </div>
+                </div>
+                <div class="col-md-3 campo">
+                    <div class="form-group">
+                        <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricaoCurso.celular), 'has-error': campoEstaInvalido(formInscricaoCurso.celular)}">
+                            <label class="control-label" for="celular">Celular: <i class="fa fa-asterisk"></i></label>
+                            <input type="text" class="form-control" name="celular" id="celular" ui-mask="(99) 99999-9999" ng-model="atleta.celular" aria-describedby="helpCelular" required/>
+                            <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoCurso.celular), 'fa-close': campoEstaInvalido(formInscricaoCurso.celular)}"></span>
+                            <span id="helpCelular" class="help-block" ng-show="campoEstaInvalido(formInscricaoCurso.celular)">* O celular deve ser válido *</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset ng-if="!atletaLogado">
+            <legend>Dados de login</legend>
+            <div class="row">
+                <div class="col-md-4 campo">
+                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricaoCurso.email), 'has-error': campoEstaInvalido(formInscricaoCurso.email)}">
+                        <label class="control-label" for="email">E-mail: <i class="fa fa-asterisk"></i></label>
+                        <input type="email" class="form-control" name="email" id="email" ng-model="atleta.email" aria-describedby="helpEmail" required email-nao-usado />
+                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoCurso.email), 'fa-close': campoEstaInvalido(formInscricaoCurso.email)} "></span>
+                        <span id="helpEmail" class="help-block" ng-show="campoEstaInvalido(formInscricaoCurso.email)">* Digite um e-mail válido *</span>
+                    </div>
+                </div>
+                <div class="col-md-4 campo">
+                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricaoCurso.senha), 'has-error': campoEstaInvalido(formInscricaoCurso.senha)}">
+                        <label class="control-label" for="senha">Senha: <i class="fa fa-asterisk"></i></label>
+                        <input type="password" class="form-control" name="senha" id="senha" ng-model="atleta.senha" aria-describedby="helpSenha" required minlength="8"/>
+                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoCurso.senha), 'fa-close': campoEstaInvalido(formInscricaoCurso.senha)} "></span>
+                        <span id="helpSenha" class="help-block" ng-show="campoEstaInvalido(formInscricaoCurso.senha)">* Senha deve contar mínimo de 8 caracteres *</span>
+                    </div>
+                </div>
+                <div class="col-md-4 campo">
+                    <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formInscricaoCurso.confirmeSenha), 'has-error': campoEstaInvalido(formInscricaoCurso.confirmeSenha)}">
+                        <label class="control-label" for="confirmeSenha">Confirme a senha: <i class="fa fa-asterisk"></i></label>
+                        <input type="password" class="form-control" name="confirmeSenha" id="confirmeSenha" ng-model="atleta.confirmeSenha" aria-describedby="helpConfirmeSenha" required igual-senha/>
+                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoCurso.confirmeSenha), 'fa-close': campoEstaInvalido(formInscricaoCurso.confirmeSenha)} "></span>
+                        <span id="helpConfirmeSenha" class="help-block" ng-show="campoEstaInvalido(formInscricaoCurso.confirmeSenha)">* A confirmação não é igual à senha *</span>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset>
+            <legend>Dados da inscrição</legend>
+            <div class="row">
+                <div class="col-md-5 campo pedido-numero">
+                    <div class="form-group">
+                        <label class="control-label" for="pedidoNumero">Número do pedido:</label> <button class="botao-icone-ajuda" type="button" id="ajudaPedido" data-toggle="popover" data-trigger="focus" data-placement="top" title="Pedido Número" data-content="Esse é o número do seu pedido após realizar a compra da inscrição na loja on-line. Você pode fazer o cadastro antes e depois atualizar com esse número após o pagamento."><i ng-click="exibeAjuda('#ajudaPedido')" class="fa fa-question-circle ajuda-icone-popover"></i></button>
+                        <input type="text" class="form-control" name="pedidoNumero" id="pedidoNumero" ng-model="atleta.inscricao.pedidoNumero"/>
+                    </div>
+                </div>
+                <div class="col-md-7 campo tipo-filiacao">
+                    <div class="form-group">
+                        <label class="control-label" for="afiliacao">Afiliação:</label>
+
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{exibeLabelTipoAfiliacao(atleta.inscricao.tipoAfiliacao)}} <span class="caret"></span></button>
+                                <ul class="dropdown-menu tipo-afiliacoes">
+                                    <li ng-repeat="tipoAfiliacao in tiposAfiliacoes"><a ng-click="selecionaTipoAfiliacao(tipoAfiliacao)">{{tipoAfiliacao.label}}</a></li>
+                                </ul>
+                            </div>
+                            <input type="text" class="form-control" name="afiliacao" id="afiliacao" placeholder="Nome da afiliação" ng-model="atleta.inscricao.afiliacao" aria-label="..."/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 campo convidado">
+                    <div class="form-group">
+                        <label class="control-label" for="nomeConvidado">Nome do Convidado:</label> <button class="botao-icone-ajuda" type="button" id="ajudaConvidado" data-toggle="popover" data-trigger="focus" data-placement="top" title="Nome do Convidado" data-content="Adicione o nome da pessoa que você quer levar como convidado para o dia do curso."><i ng-click="exibeAjuda('#ajudaConvidado')" class="fa fa-question-circle ajuda-icone-popover"></i></button>
+                        <input type="text" class="form-control" name="nomeConvidado" id="nomeConvidado" ng-model="atleta.inscricao.nomeConvidado"/>
+                    </div>
+                </div>
+                <div class="col-md-6 campo convidado" ng-show="atleta.idade && atleta.idade < 18">
+                    <div class="form-group">
+                        <label class="control-label" for="nomeSegundoConvidado">Nome do Segundo Convidado:</label> <button class="botao-icone-ajuda" type="button" id="ajudaSegundoConvidado" data-toggle="popover" data-trigger="focus" data-placement="top" title="Nome do Segundo Convidado" data-content="Menores de 18 anos têm direito a um segundo convidado para levar no dia do curso."><i ng-click="exibeAjuda('#ajudaSegundoConvidado')" class="fa fa-question-circle ajuda-icone-popover"></i></button>
+                        <input type="text" class="form-control" name="nomeSegundoConvidado" id="nomeSegundoConvidado" ng-model="atleta.inscricao.nomeSegundoConvidado"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row curso">
+                <div class="col-md-12 campo">
+                    <div class="form-group has-feedback" ng-class="{'has-success': campoEstaValido(formInscricaoCurso.cursos), 'has-error': campoEstaInvalido(formInscricaoCurso.cursos)}">
+                        <label class="control-label" for="cursos">Cursos selecionados: <i class="fa fa-asterisk"></i></label>
+                        <ul class="cursos-selecionados" id="cursos" ng-class="{'has-success': campoEstaValido(formInscricaoCurso.cursos), 'has-error': campoEstaInvalido(formInscricaoCurso.cursos)}">
+                            <li ng-repeat="cursoSelecionado in atleta.inscricao.cursos" ng-init="curso = obterItem(cursoSelecionado, 'cursos')">
+                                <span role="presentation" ng-click="removeItem(curso.id, 'cursos')">×</span>
+                                {{curso.dia}} {{curso.hora}} - {{curso.nome}} - <a class="btn btn-sm btn-success" href="{{curso.urlPagamento}}" title="ir para o pagamento" target="_blank">{{formataValor(curso.valor)}}</a>
+                            </li>
+                        </ul>
+                        <input type="hidden" name="cursos" ng-model="atleta.cursoSelecionado" required/>
+                        <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formInscricaoCurso.cursos), 'fa-close': campoEstaInvalido(formInscricaoCurso.cursos)}"></span>
+                        <span class="help-block" ng-show="campoEstaInvalido(formInscricaoCurso.cursos)">* Selecione uma ou mais cursos *</span>
+                    </div>
+                    <div class="urls">
+                        Ir para o pagamento</a>
+                    </div>
+                </div>
+            </div>
+            <div class="row curso">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label">Cursos:</label>
+                        <div class="table-responsive tabela-cursos">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Dia</th>
+                                        <th>Horário</th>
+                                        <th>Curso</th>
+                                        <th>Duração</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="curso in cursosDropdownList" ng-class="{'success': curso.selecionado}">
+                                        <td><input type="checkbox" name="cursos[]" ng-model="curso.selecionado" value="{{curso}}" ng-click="clicaNoItem(curso.selecionado, curso, 'cursos')"/></td>
+                                        <td>{{curso.dia}}</td>
+                                        <td>{{curso.hora}}</td>
+                                        <td>{{curso.nome}}</td>
+                                        <td>{{formataDuracao(curso.duracao)}}</td>
+                                        <td><a class="btn btn-sm btn-success" href="{{curso.urlPagamento}}" title="ir para o pagamento" target="_blank">{{formataValor(curso.valor)}}</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-5">
+                <div vc-recaptcha key="'6LdrnhoTAAAAAKDfPoEgTvtmjCV7ny_iCrb1dVzy'" ng-model="atleta.recaptcha"></div>
+            </div>
+            <div class="col-md-5 botoes">
+                <button type="submit" class="btn" ng-class="{'btn-disabled': formInscricaoCurso.$invalid, 'btn-success': formInscricaoCurso.$valid}">Inscrever-se</button>
+                <button type="button" class="btn btn-warning" ng-click="reset(formInscricaoCurso)">Limpar</button>
+            </div>
+        </div>
+    </form>
+    <div class="carregando" ng-show="estaCarregando" ng-init="carregandoProvas = false"></div>
+</div>
+<div class="modal fade" id="modalSucesso" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title has-success">Gravada com sucesso!</h4>
+            </div>
+            <div class="modal-body">
+                <p><strong>Sua inscrição foi gravada com sucesso.</strong></p>
+                <p>Caso ainda não tenha feito o pagamento da inscrição, clique no botão abaixo para abrir a página da loja e efetuar o pagamento.</p>
+                <p><strong>Bom curso!</strong></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-success" ng-click="redirecionaPagamento(true, 'cursos')">Efetuar o pagamento</button>
+            </div>
+        </div>
+    </div>
+</div><div class="modal fade" id="modalErro" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title has-error">Erro na Inscrição!</h4>
+            </div>
+            <div class="modal-body">
+                <p><strong>Sua inscrição não foi realizada.</strong></p>
+                <p>Verifique os erros e tente de novo:</p>
+                <p class="btn-danger" ng-bind="mensagemErro"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>

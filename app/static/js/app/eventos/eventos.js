@@ -125,7 +125,6 @@ angular.module('concept2.eventos', ['ngRoute'])
         $scope.slug = $routeParams.slug;
         $scope.itemMenu = $routeParams.itemMenu || 'sobre';
         $scope.template = '{0}/angular/evento/{1}.html'.format([urlBackEnd, $scope.itemMenu]);
-        $scope.urlLojaInscricao = 'https://concept2.com.br/shop/index.php?route=product/product&product_id=125';
         $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-9]/, 'M': /[0-1]/, 'm': /[0-2]/}};
         $scope.temProvas = true;
         $scope.temCursos = true;
@@ -141,8 +140,9 @@ angular.module('concept2.eventos', ['ngRoute'])
             {"slug": "sobre", "nome": "Sobre"},
             {"slug": "horarios", "nome": "Horários"},
             {"slug": "regulamento", "nome": "Regulamento"},
-            {"slug": "resultados", "nome": "Resultados"},
-            {"slug": "inscricao", "nome": "Inscreva-se"}
+            {"slug": "provas", "nome": "Provas"},
+            {"slug": "cursos", "nome": "Cursos"},
+            {"slug": "resultados", "nome": "Resultados"}
         ];
         $scope.trataHtml = function(html) {
             return $sce.trustAsHtml(html);
@@ -157,14 +157,29 @@ angular.module('concept2.eventos', ['ngRoute'])
             });
         }
         function onItemSelect(item, tipo) {
-                $scope.atleta.inscricao[tipo].push({'id': item.id});
+            $scope.atleta.inscricao[tipo].push({'id': item.id});
+            if (tipo == 'provas') {
                 $scope.atleta.provaSelecionada = 1;
                 $scope.campoProvaTocado = true;
+            }
+            if (tipo == 'cursos') {
+                $scope.atleta.cursoSelecionado = 1;
+                $scope.campoCursoTocado = true;
+                $scope.defineUrlPagamentoCurso();
+            }
         }
         $scope.formataDuracao = function(duracao) {
             var horas = parseInt(duracao / 60);
             var minutos = duracao % 60;
             return '{0}h{1}min'.format([horas, minutos]);
+        };
+        $scope.formataValor = function(valor) {
+            var reais = parseInt(valor / 100);
+            var centavos = valor % 100;
+            if (centavos < 10) {
+                centavos = '0{0}'.format([centavos]);
+            }
+            return 'R$ {0},{1}'.format([reais, centavos]);
         };
         $scope.evento = Evento.get({"id": $scope.slug}, function() {
             $rootScope.titulo = $scope.evento.titulo;
@@ -219,8 +234,25 @@ angular.module('concept2.eventos', ['ngRoute'])
                 curso.selecionado = false;
                 $scope.cursosDropdownList.push(curso);
             });
-            if ($scope.itemMenu == 'inscricao') {
+            if ($scope.itemMenu == 'provas' || $scope.itemMenu == 'cursos') {
                 $scope.mensagemErro = '';
+                $scope.urlPagamentoProvas = $scope.evento.urlPagamentoProvas;
+                $scope.urlPagamentoCursos = [$scope.evento.urlPagamentoCursos];
+                $scope.defineUrlPagamentoCurso = function() {
+                    if ($scope.evento.cursos.length == $scope.atleta.inscricao.cursos.length) {
+                        $scope.urlPagamentoCursos = [$scope.evento.urlPagamentoCursos];
+                    }
+                    else {
+                        $scope.urlPagamentoCursos = [];
+                        angular.forEach($scope.evento.cursos, function(curso) {
+                            angular.forEach($scope.atleta.inscricao.cursos, function(cursoEscolhido) {
+                                if (curso.id == cursoEscolhido.id) {
+                                    $scope.urlPagamentoCursos.push(curso.urlPagamento);
+                                }
+                            });
+                        });
+                    }
+                };
                 $scope.tiposAfiliacoes = [
                     {'codigo': 'clube', 'label': 'Clube'},
                     {'codigo': 'academia', 'label': 'Academia'},
@@ -228,6 +260,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                     {'codigo': 'independente', 'label': 'Independente'}
                 ];
                 $scope.campoProvaTocado = false;
+                $scope.campoCursoTocado = false;
                 $scope.carregandoProvas = false;
                 $scope.provasTexts = {
                     buttonDefaultText: 'Selecione a(s) prova(s) que vai participar...'
@@ -269,12 +302,19 @@ angular.module('concept2.eventos', ['ngRoute'])
                             return false;
                         }
                     });
-                    if ($scope.atleta.inscricao.provas.length == 0 && $scope.atleta.inscricao.cursos.length == 0) {
-                        $scope.atleta.provaSelecionada = null;
-                    }
-                    $scope.campoProvaTocado = true;
                     if (tipo == 'provas') {
+                        if ($scope.atleta.inscricao.provas.length == 0) {
+                            $scope.atleta.provaSelecionada = null;
+                        }
+                        $scope.campoProvaTocado = true;
                         $scope.provaDaQueryString = null;
+                    }
+                    if (tipo == 'cursos') {
+                        if ($scope.atleta.inscricao.cursos.length == 0) {
+                            $scope.atleta.cursoSelecionado = null;
+                        }
+                        $scope.campoCursoTocado = true;
+                        $scope.defineUrlPagamentoCurso();
                     }
                 };
                 $scope.selecionaItens = function() {
@@ -296,13 +336,14 @@ angular.module('concept2.eventos', ['ngRoute'])
                         curso.selecionado = false;
                         angular.forEach($scope.atleta.inscricao.cursos, function(inscricaoCurso) {
                             if (curso.id == inscricaoCurso.id) {
-                                $scope.atleta.provaSelecionada = 1;
-                                $scope.campoProvaTocado = true;
+                                $scope.atleta.cursoSelecionado = 1;
+                                $scope.campoCursoTocado = true;
                                 curso.selecionado = true;
                                 return false;
                             }
                         });
                     });
+                    $scope.defineUrlPagamentoCurso();
                 };
                 $scope.clicaNoItem = function(selecionada, item, tipo) {
                     if (selecionada) {
@@ -320,6 +361,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                         $scope.atleta = Atleta.get({'id': Autentic.userId, 'evento_slug': $scope.slug}, function() {
                             $scope.atleta.inscricao = new Inscricao($scope.atleta.inscricao);
                             $scope.atleta.idade = calculaIdadeAtleta($scope.atleta.nascimento);
+                            $scope.defineUrlPagamentoCurso();
                         });
                     }
                     else {
@@ -350,6 +392,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                         });
                         limpaSelecaoProvas();
                         $scope.campoProvaTocado = false;
+                        $scope.campoCursoTocado = false;
                         $scope.selecionaItens();
                         if (formInscricao) {
                             formInscricao.$setPristine();
@@ -434,6 +477,9 @@ angular.module('concept2.eventos', ['ngRoute'])
                     return statusCampo && campo.$error[validacao];
                 };
                 $scope.campoEstaValido = function(campo) {
+                    if (!campo) {
+                        return false;
+                    }
                     var valido = true;
                     if (campo.$name == 'email') {
                         valido = !campo.$error.email;
@@ -442,10 +488,16 @@ angular.module('concept2.eventos', ['ngRoute'])
                     if (campo.$name == 'provas') {
                         statusCampo = $scope.campoProvaTocado || campo.$dirty;
                     }
+                    if (campo.$name == 'cursos') {
+                        statusCampo = $scope.campoCursoTocado || campo.$dirty;
+                    }
                     return statusCampo && !campo.$error.required && valido;
 
                 };
                 $scope.campoEstaInvalido = function(campo) {
+                    if (!campo) {
+                        return false;
+                    }
                     var temErro = $scope.verificaErro(campo);
                     if (campo.$name == 'email') {
                         temErro |= $scope.verificaErro(campo, 'email') || $scope.verificaErro(campo, 'emailNaoUsado');
@@ -467,6 +519,9 @@ angular.module('concept2.eventos', ['ngRoute'])
                     }
                     if (campo.$name == 'provas') {
                         temErro = $scope.verificaErro(campo, null, $scope.campoProvaTocado);
+                    }
+                    if (campo.$name == 'cursos') {
+                        temErro = $scope.verificaErro(campo, null, $scope.campoCursoTocado);
                     }
                     return temErro;
                 };
@@ -517,65 +572,72 @@ angular.module('concept2.eventos', ['ngRoute'])
                         );
                     }
                 };
-                $scope.redirecionaPagamento = function(modal) {
-                    $window.open($scope.urlLojaInscricao, '_blank');
+                $scope.redirecionaPagamento = function(modal, tipo) {
+                    if (tipo == 'provas') {
+                        $window.open($scope.urlPagamentoProvas, '_blank');
+                    }
+                    if (tipo == 'cursos') {
+                        angular.forEach($scope.urlPagamentoCursos, function(url) {
+                            $window.open(url, '_blank');
+                        });
+                    }
                     if (modal) {
                         $('#modalSucesso').modal('hide');
                     }
                 };
             }
-        });
-        if ($scope.itemMenu == 'horarios') {
-            $scope.filtro = {
-                ditancia: null,
-                tipo: null,
-                sexo: null,
-                idade: null
-            };
-            $scope.filtraProvas = function(tipo, valor) {
-                if (tipo == 'D') {
-                    $scope.filtro.distancia = valor;
-                }
-                if (tipo == 'T') {
-                    $scope.filtro.tipo = valor;
-                }
-                if (tipo == 'S') {
-                    $scope.filtro.sexo = valor;
-                }
-                if (tipo == 'I') {
-                    $scope.filtro.idade = valor;
-                }
-                if (!tipo) {
-                    $scope.filtro = {
-                        ditancia: null,
-                        tipo: null,
-                        sexo: null,
-                        idade: null
-                    };
-                }
-                $scope.provasDropdownList = angular.copy($scope.provasParaSelecao);
-                if ($scope.filtro.distancia) {
-                    $scope.provasDropdownList = $filter('filter')($scope.provasDropdownList, {distancia: $scope.filtro.distancia});
-                }
-                if ($scope.filtro.tipo) {
-                    $scope.provasDropdownList = $filter('filter')($scope.provasDropdownList, {tipo: $scope.filtro.tipo});
-                }
-                if ($scope.filtro.sexo) {
-                    $scope.provasDropdownList = $filter('filter')($scope.provasDropdownList, {sexo: $scope.filtro.sexo});
-                }
-                if ($scope.filtro.idade) {
-                    $scope.provasDropdownList = $filter('filter')($scope.provasDropdownList, {'subCategoria': {'nome': $scope.filtro.idade}});
-                }
-                angular.forEach($scope.datas, function(data) {
-                    data.provas = []
-                });
-                angular.forEach($scope.provasDropdownList, function(prova) {
+            if ($scope.itemMenu == 'horarios') {
+                $scope.filtro = {
+                    ditancia: null,
+                    tipo: null,
+                    sexo: null,
+                    idade: null
+                };
+                $scope.filtraProvas = function(tipo, valor) {
+                    if (tipo == 'D') {
+                        $scope.filtro.distancia = valor;
+                    }
+                    if (tipo == 'T') {
+                        $scope.filtro.tipo = valor;
+                    }
+                    if (tipo == 'S') {
+                        $scope.filtro.sexo = valor;
+                    }
+                    if (tipo == 'I') {
+                        $scope.filtro.idade = valor;
+                    }
+                    if (!tipo) {
+                        $scope.filtro = {
+                            ditancia: null,
+                            tipo: null,
+                            sexo: null,
+                            idade: null
+                        };
+                    }
+                    $scope.provasDropdownList = angular.copy($scope.provasParaSelecao);
+                    if ($scope.filtro.distancia) {
+                        $scope.provasDropdownList = $filter('filter')($scope.provasDropdownList, {distancia: $scope.filtro.distancia});
+                    }
+                    if ($scope.filtro.tipo) {
+                        $scope.provasDropdownList = $filter('filter')($scope.provasDropdownList, {tipo: $scope.filtro.tipo});
+                    }
+                    if ($scope.filtro.sexo) {
+                        $scope.provasDropdownList = $filter('filter')($scope.provasDropdownList, {sexo: $scope.filtro.sexo});
+                    }
+                    if ($scope.filtro.idade) {
+                        $scope.provasDropdownList = $filter('filter')($scope.provasDropdownList, {'subCategoria': {'nome': $scope.filtro.idade}});
+                    }
                     angular.forEach($scope.datas, function(data) {
-                        if (prova.dia.replace(/0/g, '') == data.data) {
-                            data.provas.push(prova);
-                        }
+                        data.provas = []
                     });
-                });
+                    angular.forEach($scope.provasDropdownList, function(prova) {
+                        angular.forEach($scope.datas, function(data) {
+                            if (prova.dia.replace(/0/g, '') == data.data) {
+                                data.provas.push(prova);
+                            }
+                        });
+                    });
+                }
             }
-        }
+        });
     }]);
