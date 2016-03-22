@@ -1,21 +1,74 @@
 
+h2 {
+    font-family: 'Oswald', sans-serif;
+}
+
+h3 {
+    font-family: 'Oswald', sans-serif;
+}
+
+h4 {
+    font-family: 'Oswald', sans-serif;
+}
+
+h5 {
+    font-family: 'Oswald', sans-serif;
+}
+
+.caixa-texto {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-right: 10px;
+}
+
 .menu-produtos {
     background-color: rgba(3, 12, 21, 0.6);
-    .menu{
+    margin-right: -15px;
+    .nav > li > a:focus {
+        background-color: #516371;
+    }
+
+    .menu {
         color: white;
         margin-top: 0;
+        background: linear-gradient(#3a4c5a, #1f3040);
+        a {
+            text-align: center;
+        }
+        .sub-acessorios {
+        a {
+            font-size: small;
+            margin-bottom: -10px;
+            text-align: left;
+        }
+        .sub-pas{
+            a{
+                text-align: center;
+            }
+        }
     }
-    .remo{
+
+    }
+    .remo {
         margin-top: 20px;
         margin-bottom: 20px;
     }
-    .submenu{
-        a{
-            text-align: center;
+    .submenu {
+        a {
             padding-bottom: 7px;
             padding-top: 6px;
         }
 
+    }
+
+    .menu-remo {
+        background: linear-gradient(#3a4c5a, #1f3040);
+        a {
+            padding-top: 25px;
+            text-align: center;
+            padding-bottom: 20px;
+
+        }
     }
     a {
         text-decoration: none;
@@ -30,17 +83,10 @@
         border-radius: 0
     }
 }
-.menu-nav{
-   padding-left: 0;
-    padding-right: 0;
-}
-.sub-acessorios{
-    a{
-        text-align: center;
-        font-size: small;
-        margin-bottom: -10px;
-    }
 
+.menu-nav {
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .descricao-remos {
@@ -51,9 +97,9 @@
     }
 }
 
-.palameta{
+.palameta {
     margin-top: 20px;
-    img{
+    img {
         width: 110%
     }
 }
