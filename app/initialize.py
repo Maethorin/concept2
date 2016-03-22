@@ -84,6 +84,13 @@ def favicon():
     return web_app.send_static_file("img/favicon.ico")
 
 
+@web_app.route('/valida-lote', methods=['OPTIONS', 'POST'])
+def valida_lote():
+    if request.method == 'OPTIONS':
+        return Response('OK')
+    return Response('{"legal": true}')
+
+
 @web_app.before_request
 def before_request():
     token = request.headers.get(HEADERS['atleta']['token'], None)

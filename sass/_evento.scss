@@ -86,6 +86,10 @@ img {
     }
     .form-inscricao {
         padding: 15px 0;
+        .cadastro-lote {
+            margin-bottom: 20px;
+            text-align: center;
+        }
         .prova, .curso {
             min-height: 89px;
             margin-bottom: 20px;
@@ -137,6 +141,25 @@ img {
             }
             .form-group {
                 min-height: 80px;
+                .btn-file {
+                    position: relative;
+                    overflow: hidden;
+                    input[type=file] {
+                        position: absolute;
+                        top: 0;
+                        right: 0;
+                        min-width: 100%;
+                        min-height: 100%;
+                        font-size: 100px;
+                        text-align: right;
+                        filter: alpha(opacity=0);
+                        opacity: 0;
+                        outline: none;
+                        background: white;
+                        cursor: inherit;
+                        display: block;
+                    }
+                }
             }
             .help-block {
                 font-size: smaller;

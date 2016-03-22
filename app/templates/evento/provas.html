@@ -126,7 +126,56 @@
                 </div>
             </div>
         </fieldset>
-        <fieldset>
+        <div class="row cadastro-lote">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary" ng-click="cadastroEmLote = !cadastroEmLote" autocomplete="off"><span ng-show="cadastroEmLote">Quero me cadastrar apenas</span><span ng-show="!cadastroEmLote">Quero cadastrar mais de um atleta</span></button>
+            </div>
+        </div>
+        <fieldset ng-if="cadastroEmLote">
+            <legend>Cadastro em Lote</legend>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Instruções:</h4>
+                    <p>
+                        Para efetuar a inscrição do seu time, baixe o <a href="{{urlArquivoEmLote}}">arquivo modelo</a> e abra em um editor de planilha (Excel, LibreOffice Calc, etc). O arquivo vem com uma linha cabeçalho e uma linha modelo. Não apague a linha cabeçalho, pois o cadastro não irá funcionar.
+                    </p>
+                    <p>
+                        Preencha corretamente cada coluna, de acordo com as seguintes regras:
+                    </p>
+                    <ul>
+                        <li><strong>email:</strong> Obrigatório.</li>
+                        <li><strong>nome:</strong> Obrigatório. Primeiro nome do atleta</li>
+                        <li><strong>sobrenome:</strong> Obrigatório. Sobrenome do atleta</li>
+                        <li><strong>sexo:</strong> MA para masculino ou FE para feminino</li>
+                        <li><strong>cpf:</strong> Somente números, sem pontos ou traços</li>
+                        <li><strong>telefone:</strong> Um telefone fixo completo com DDD. Somente números, sem traços ou parênteses</li>
+                        <li><strong>celular:</strong> Obrigatório. Um celular completo com DDD. Somente números, sem traços ou parênteses</li>
+                        <li><strong>nascimento:</strong> Obrigatório. Data de nascimento do atleta. Somente números, sem as barras</li>
+                        <li><strong>tipoAfiliacao:</strong> Um dos seguintes valores: clube, academia, box-cf ou independente</li>
+                        <li><strong>afiliacao:</strong> O nome da Afilição. Ex.: Academia Boa Forma</li>
+                        <li><strong>nomeTime:</strong> O nome do time do atleta.</li>
+                        <li><strong>nomeConvidado:</strong> O nome de uma pessoa que o atleta poderá levar no dia da competição.</li>
+                        <li><strong>nomeSegundoConvidado:</strong> Somente para menores de 18 anos. O nome de uma segunda pessoa que o atleta poderá levar no dia da competição.</li>
+                        <li><strong>numeroPedido:</strong> O número do pedido para o pagamento realizado na loja. Cada atleta deve acessar a <a href="{{urlPagamentoProvas}}" target="_blank">loja da concept2</a> e realizar a compra da inscrição. O número do pedido gerado pela loja deve ser usado nesse campo. Você pode fazer a inscrição primeiro e depois acessar essa página para adicionar os números de pedidos.</li>
+                    </ul>
+                    <p>
+                        Depois de preenchido, exporte o arquivo no formato CSV e faça o upload do arquivo com o formulário abaixo. Se tudo estiver correto, vc verá o resultado do cadastro em uma tabela abaixo.
+                    </p>
+                    <p>
+                        Em seguida, escolha a(s) prova(s) onde os atletas irão competir e clique em Inscrever Atletas e aguarde a mensagem de confirmação.
+                        Todos os atletas na tabela serão inscritos em todas as provas selecionadas.
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 campo">
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="text/*.csv" ngf-max-size="1MB">Escolha o arquivo</button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <fieldset ng-if="!cadastroEmLote">
             <legend>Dados da inscrição</legend>
             <div class="row">
                 <div class="col-md-3 campo pedido-numero">
@@ -171,6 +220,9 @@
                     </div>
                 </div>
             </div>
+        </fieldset>
+        <fieldset>
+            <legend>Escolha da(s) prova(s)</legend>
             <div class="row prova">
                 <div class="col-md-12 campo">
                     <div class="form-group has-feedback" ng-class="{'has-success': campoEstaValido(formInscricaoProvas.provas), 'has-error': campoEstaInvalido(formInscricaoProvas.provas)}">
@@ -228,7 +280,7 @@
                 <div vc-recaptcha key="'6LdrnhoTAAAAAKDfPoEgTvtmjCV7ny_iCrb1dVzy'" ng-model="atleta.recaptcha"></div>
             </div>
             <div class="col-md-5 botoes">
-                <button type="submit" class="btn" ng-class="{'btn-disabled': formInscricaoProvas.$invalid, 'btn-success': formInscricaoProvas.$valid}">Inscrever-se</button>
+                <button type="submit" class="btn" ng-class="{'btn-disabled': formInscricaoProvas.$invalid, 'btn-success': formInscricaoProvas.$valid}">Inscrever<span ng-show="!cadastroEmLote">-se</span><span ng-show="cadastroEmLote"> Atletas</span></button>
                 <button type="button" class="btn btn-warning" ng-click="reset(formInscricaoProvas)">Limpar</button>
             </div>
         </div>

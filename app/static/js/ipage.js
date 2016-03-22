@@ -12,6 +12,7 @@ angular.module('concept2', [
     'ngCookies',
     'uiGmapgoogle-maps',
     'ui.mask',
+    'ngFileUpload',
     'vcRecaptcha',
     'concept2.services',
     'concept2.login',

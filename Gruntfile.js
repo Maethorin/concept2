@@ -18,6 +18,7 @@ module.exports = function(grunt) {
                     "bower_components/angular-simple-logger/dist/angular-simple-logger.js",
                     "bower_components/angular-recaptcha/release/angular-recaptcha.js",
                     "bower_components/angular-google-maps/dist/angular-google-maps.js",
+                    "bower_components/ng-file-upload/ng-file-upload.js",
                     "bower_components/jquery/dist/jquery.js",
                     "bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"
                 ],

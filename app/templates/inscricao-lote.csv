@@ -1,0 +1,3 @@
+email,nome,sobrenome,sexo,cpf,telefone,celular,nascimento,tipoAfiliacao,afiliacao,nomeTime,nomeConvidado,nomeSegundoConvidado,pedidoNumero
+email@test.com,Nome,Sobrenome,MA|FE,19119119100,2122224444,21999887777,21051991,clube|academia|box-cf|independente,Nome Afiliação,Nome Time,Nome Convidado,Nome Segundo Convidado,Número do Pedido
+

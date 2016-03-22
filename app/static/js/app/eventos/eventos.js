@@ -122,7 +122,7 @@ angular.module('concept2.eventos', ['ngRoute'])
         };
         $scope.eventos = Evento.query();
     }])
-    .controller('EventoController', ['$rootScope', '$scope', '$routeParams', '$http', '$sce', '$filter', '$window', '$location', 'Evento', 'Atleta', 'Inscricao', 'Autentic', function($rootScope, $scope, $routeParams, $http, $sce, $filter, $window, $location, Evento, Atleta, Inscricao, Autentic) {
+    .controller('EventoController', ['$rootScope', '$scope', '$routeParams', '$http', '$sce', '$filter', '$window', '$location', 'Evento', 'Atleta', 'Inscricao', 'Autentic', 'Upload', function($rootScope, $scope, $routeParams, $http, $sce, $filter, $window, $location, Evento, Atleta, Inscricao, Autentic, Upload) {
         $scope.estaCarregando = false;
         $scope.slug = $routeParams.slug;
         $scope.itemMenu = $routeParams.itemMenu || 'sobre';
@@ -240,6 +240,30 @@ angular.module('concept2.eventos', ['ngRoute'])
                 $scope.mensagemErro = '';
                 $scope.urlPagamentoProvas = $scope.evento.urlPagamentoProvas;
                 $scope.urlPagamentoCursos = [$scope.evento.urlPagamentoCursos];
+                $scope.cadastroEmLote = false;
+                $scope.urlArquivoEmLote = '{0}/angular/inscricao-lote.csv'.format([urlBackEnd]);
+                $scope.uploadFiles = function(file, errFiles) {
+                    $scope.f = file;
+                    $scope.errFile = errFiles && errFiles[0];
+                    if (file) {
+                        file.upload = Upload.upload({
+                            url: '{0}/valida-lote'.format([urlBackEnd]),
+                            data: {file: file}
+                        });
+
+                        file.upload.then(
+                            function(response) {
+                                $timeout(function () {
+                                    file.result = response.data;
+                                });
+                            },
+                            function(response) {
+                                if (response.status > 0)
+                                    $scope.errorMsg = response.status + ': ' + response.data;
+                            }
+                        );
+                    }
+                };
                 $scope.defineUrlPagamentoCurso = function() {
                     if ($scope.evento.cursos.length == $scope.atleta.inscricao.cursos.length) {
                         $scope.urlPagamentoCursos = [$scope.evento.urlPagamentoCursos];
