@@ -242,6 +242,8 @@ angular.module('concept2.eventos', ['ngRoute'])
                 $scope.urlPagamentoCursos = [$scope.evento.urlPagamentoCursos];
                 $scope.cadastroEmLote = false;
                 $scope.atletasEmLote = [];
+                $scope.atletasEmLoteComErro = [];
+                $scope.atletasEmLoteValido = null;
                 $scope.urlArquivoEmLote = '{0}/angular/inscricao-lote.csv'.format([urlBackEnd]);
                 $scope.enviaArquivoEmLote = function(file, errFiles) {
                     if (file) {
@@ -253,6 +255,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                             function(response) {
                                 $scope.atletasEmLote = response.data.atletasEmLote;
                                 $scope.atletasEmLoteComErro = response.data.erros;
+                                $scope.atletasEmLoteValido = $scope.atletasEmLote.length > 0 && $scope.atletasEmLoteComErro.length == 0 ? 1 : null;
                             },
                             function(response) {
                                 $scope.erroArquivoEmLote = response.data.mensagem;
