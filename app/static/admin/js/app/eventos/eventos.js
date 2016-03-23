@@ -22,18 +22,5 @@ angular.module('concept2Admin.eventos', ['ngRoute'])
         $rootScope.pagina = "evento";
         $rootScope.titulo = "Evento";
         $scope.evento = Evento.get({id: $scope.slug});
-        $scope.formataTelefone = function(numero) {
-            numero = numero.split('');
-            var ddd = numero.splice(0, 2).join('');
-            var parte1 = numero.splice(0, 4).join('');
-            var parte2 = numero.join('');
-            return '({0}) {1}-{2}'.format([ddd, parte1, parte2]);
-        };
-        $scope.formataData = function(data) {
-            return '{dia}/{mes}/{ano}'.format(quebraData(data, true));
-        };
-        $scope.calculaIdade = function(nascimento) {
-            return calculaIdadeAtleta(nascimento);
-        }
     }]);
 

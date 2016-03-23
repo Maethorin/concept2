@@ -539,6 +539,22 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
                     break
         return atleta
 
+    @classmethod
+    def lista_de_atletas_de_csv(cls, csv_stream):
+        reader = csv.DictReader(csv_stream)
+        lista_atletas = []
+        lista_erros = []
+        for row in reader:
+            if not row['email'] or not row['nome'] or not row['sobrenome'] or not row['cpf'] or not row['celular'] or not row['nascimento']:
+                lista_erros.append(row)
+                continue
+            row['cpf'] = row['cpf'].replace(' ', '').replace('.', '').replace('-', '')
+            row['telefone'] = row['telefone'].replace(' ', '').replace('(', '').replace(')', '').replace('-', '')
+            row['celular'] = row['celular'].replace(' ', '').replace('(', '').replace(')', '').replace('-', '')
+            row['nascimento'] = row['nascimento'].replace(' ', '').replace('/', '')
+            lista_atletas.append(row)
+        return lista_atletas, lista_erros
+
     def cria_inscricao_de_dicionario(self, inscricao_dict, commit=False):
         Inscricao.cria_de_dicionario(inscricao_dict, self)
         if commit:

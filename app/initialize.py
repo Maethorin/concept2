@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime, timedelta
+import json
 import os
 
 from flask import Flask, send_from_directory, g, request, Response
@@ -88,7 +89,14 @@ def favicon():
 def valida_lote():
     if request.method == 'OPTIONS':
         return Response('OK')
-    return Response('{"legal": true}')
+    atletas_em_lote = request.files.get('atletasEmLote', None)
+    if not atletas_em_lote:
+        return Response({'mensagem': u'Nenhum arquivo foi recebido. Por favor, tente de novo'}, content_type='application/json', status=400)
+    try:
+        lista_atletas, lista_erros = models.Atleta.lista_de_atletas_de_csv(atletas_em_lote)
+    except KeyError:
+        return Response({'mensagem': u'O arquivo está inválido pois falta a linha de cabeçalho'}, content_type='application/json', status=400)
+    return Response(json.dumps({'atletasEmLote': lista_atletas, 'erros': lista_erros}), content_type='application/json')
 
 
 @web_app.before_request

@@ -241,25 +241,21 @@ angular.module('concept2.eventos', ['ngRoute'])
                 $scope.urlPagamentoProvas = $scope.evento.urlPagamentoProvas;
                 $scope.urlPagamentoCursos = [$scope.evento.urlPagamentoCursos];
                 $scope.cadastroEmLote = false;
+                $scope.atletasEmLote = [];
                 $scope.urlArquivoEmLote = '{0}/angular/inscricao-lote.csv'.format([urlBackEnd]);
-                $scope.uploadFiles = function(file, errFiles) {
-                    $scope.f = file;
-                    $scope.errFile = errFiles && errFiles[0];
+                $scope.enviaArquivoEmLote = function(file, errFiles) {
                     if (file) {
                         file.upload = Upload.upload({
                             url: '{0}/valida-lote'.format([urlBackEnd]),
-                            data: {file: file}
+                            data: {atletasEmLote: file}
                         });
-
                         file.upload.then(
                             function(response) {
-                                $timeout(function () {
-                                    file.result = response.data;
-                                });
+                                $scope.atletasEmLote = response.data.atletasEmLote;
+                                $scope.atletasEmLoteComErro = response.data.erros;
                             },
                             function(response) {
-                                if (response.status > 0)
-                                    $scope.errorMsg = response.status + ': ' + response.data;
+                                $scope.erroArquivoEmLote = response.data.mensagem;
                             }
                         );
                     }

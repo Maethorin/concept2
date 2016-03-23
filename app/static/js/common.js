@@ -76,6 +76,44 @@ var baseRun = function($rootScope, Autentic) {
     $rootScope.$on('$locationChangeSuccess', function(evt, absNewUrl, absOldUrl) {
         $rootScope.referrer = absOldUrl;
     });
+    $rootScope.nomeCompleto = function(nome, sobrenome) {
+        if (!nome) {
+            nome = 'Nome'
+        }
+        if (!sobrenome) {
+            sobrenome = 'Sobrenome'
+        }
+        return [nome, sobrenome].join(' ');
+    };
+    $rootScope.formataData = function(data) {
+        if (!data) {
+            return 'Sem Data';
+        }
+        return '{dia}/{mes}/{ano}'.format(quebraData(data, true));
+    };
+    $rootScope.formataCPF = function(cpf) {
+        if (!cpf) {
+            return 'Sem CPF';
+        }
+        cpf = cpf.split('');
+        var dv = cpf.splice(9, 2).join('');
+        var p3 = cpf.splice(6, 3).join('');
+        var p2 = cpf.splice(3, 3).join('');
+        return '{0}.{1}.{2}-{3}'.format([cpf.join(''), p2, p3, dv]);
+    };
+    $rootScope.calculaIdade = function(nascimento) {
+        return calculaIdadeAtleta(nascimento);
+    };
+    $rootScope.formataTelefone = function(numero) {
+        if (!numero) {
+            return 'Sem número';
+        }
+        numero = numero.split('');
+        var ddd = numero.splice(0, 2).join('');
+        var parte1 = numero.splice(0, 4).join('');
+        var parte2 = numero.join('');
+        return '({0}) {1}-{2}'.format([ddd, parte1, parte2]);
+    };
     Autentic.atualizaValores();
 };
 
