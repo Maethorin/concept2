@@ -1,0 +1,16 @@
+<div class="col-md-7">
+    <h3>Especificação</h3>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+</div>
+<div class="col-md-12">
+    <nav>
+        <ul class="nav nav-tabs">
+            <li role="presentation" ng-repeat="descricao in modelosMenu" ng-class="{'active': modeloMenu == descricao.slug}"><a href="#/produtos/{{slug}}/{{descricao.slug}}">{{descricao.nome}}</a></li>
+
+        </ul>
+    </nav>
+    <div class="col-md-12 descricao-caixa">
+        <div ng-include="subTemplate"></div>
+    </div>
+</div>

@@ -14,24 +14,36 @@ h4 {
 h5 {
     font-family: 'Oswald', sans-serif;
 }
-
 .caixa-texto {
     margin-top: 30px;
     margin-bottom: 30px;
     margin-right: 10px;
 }
-
 .menu-produtos {
     background-color: rgba(3, 12, 21, 0.6);
     margin-right: -15px;
     .nav > li > a:focus {
         background-color: #516371;
     }
-
+    .menus{
+         color: white;
+        margin-top: 0;
+        margin-left: 10px;
+        p{
+         margin-left: 15px;
+        }
+        a:hover{
+            color: #516371;
+            background-color: transparent;
+        }
+    }
+    .produtos{
+        margin-bottom: 25px;
+    }
     .menu {
         color: white;
         margin-top: 0;
-        background: linear-gradient(#3a4c5a, #1f3040);
+        background-color:#1f3040;
         a {
             text-align: center;
         }
@@ -49,6 +61,10 @@ h5 {
     }
 
     }
+    .remos{
+        margin-top: 25px;
+        margin-left: 10px;
+    }
     .remo {
         margin-top: 20px;
         margin-bottom: 20px;
@@ -60,9 +76,22 @@ h5 {
         }
 
     }
+    .submenus {
+        margin-left: 10px;
+        a{
+            padding-bottom: 7px;
+            padding-top: 6px;
+        }
+        a:hover{
+            color: #516371;
+            background-color: transparent;
+        }
+
+
+    }
 
     .menu-remo {
-        background: linear-gradient(#3a4c5a, #1f3040);
+        background-color:  #1f3040;
         a {
             padding-top: 25px;
             text-align: center;
