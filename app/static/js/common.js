@@ -1,4 +1,3 @@
-
 var format = function(str, data) {
     var re = /{([^{}]+)}/g;
 
@@ -14,6 +13,21 @@ var format = function(str, data) {
 
 String.prototype.format = function(data) {
     return format(this, data);
+};
+
+Number.prototype.paddingLeft = function(quantos, char) {
+    if (!char) {
+        char = '0'
+    }
+    var tamanho = this.toString().length;
+    if (tamanho >= quantos) {
+        return this.toString();
+    }
+    var resultado = [];
+    for (var i = tamanho; i < quantos; i++) {
+        resultado.push(char);
+    }
+    return resultado.join('') + this.toString();
 };
 
 var nomesMeses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];

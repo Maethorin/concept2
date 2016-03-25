@@ -16,5 +16,12 @@
   },
   "scripts": {
     "start": "http-server ./app -a localhost -p 8000 -c-1"
+  },
+  "devDependencies": {
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^0.2.3",
+    "karma-jasmine": "^0.3.8",
+    "karma-ng-html2js-preprocessor": "^0.2.1"
   }
 }

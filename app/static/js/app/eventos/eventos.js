@@ -33,6 +33,9 @@ angular.module('concept2.eventos', ['ngRoute'])
             link: function(scope, elm, attrs, ctrl) {
                 ctrl.$validators.cpfValido = function(modelValue, viewValue) {
                     if (!viewValue) {
+                        viewValue = ctrl.$viewValue;
+                    }
+                    if (!viewValue) {
                         return false;
                     }
                     var strCPF = viewValue.replace(/\./g, '').replace(/_/g, '').replace(/\-/g, '');
@@ -71,7 +74,7 @@ angular.module('concept2.eventos', ['ngRoute'])
             link: function(scope, elm, attrs, ctrl) {
                 ctrl.$validators.igualSenha = function(modelValue, viewValue) {
                     if (scope.atleta) {
-                        return scope.atleta.senha == viewValue;
+                        return scope.atleta.senha == (viewValue || ctrl.$viewValue);
                     }
                 };
             }
@@ -82,6 +85,12 @@ angular.module('concept2.eventos', ['ngRoute'])
             require: 'ngModel',
             link: function(scope, elm, attrs, ctrl) {
                 ctrl.$validators.nascimentoCorreto = function(modelValue, viewValue) {
+                    if (!viewValue) {
+                        viewValue = ctrl.$viewValue;
+                    }
+                    if (!viewValue) {
+                        return false;
+                    }
                     try {
                         var dataArray = viewValue.split('/');
                         var dia = parseInt(dataArray[0]);
@@ -101,9 +110,9 @@ angular.module('concept2.eventos', ['ngRoute'])
                         }
                         var hoje = new Date();
                         var anoHoje = hoje.getFullYear();
+                        var dataMinima = new Date(anoHoje - 100, hoje.getMonth(), hoje.getDate());
+                        var dataMaxima = new Date(anoHoje - 9, hoje.getMonth(), hoje.getDate());
                         var nascimento = new Date(ano, mes - 1, dia);
-                        var dataMinima = new Date(anoHoje - 100, hoje.getMonth(), hoje.getDay());
-                        var dataMaxima = new Date(anoHoje - 9, hoje.getMonth(), hoje.getDay());
                         return nascimento >= dataMinima && nascimento <= dataMaxima;
                     }
                     catch (ex) {
@@ -123,21 +132,12 @@ angular.module('concept2.eventos', ['ngRoute'])
         $scope.eventos = Evento.query();
     }])
     .controller('EventoController', ['$rootScope', '$scope', '$routeParams', '$http', '$sce', '$filter', '$window', '$location', 'Evento', 'Atleta', 'Inscricao', 'Autentic', 'Upload', function($rootScope, $scope, $routeParams, $http, $sce, $filter, $window, $location, Evento, Atleta, Inscricao, Autentic, Upload) {
+        $rootScope.pagina = "eventos";
+        $rootScope.titulo = "Eventos";
         $scope.estaCarregando = false;
         $scope.slug = $routeParams.slug;
         $scope.itemMenu = $routeParams.itemMenu || 'sobre';
         $scope.template = '{0}/angular/evento/{1}.html'.format([urlBackEnd, $scope.itemMenu]);
-        $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-9]/, 'M': /[0-1]/, 'm': /[0-2]/}};
-        $scope.temProvas = true;
-        $scope.temCursos = true;
-        $scope.exibeProvas = true;
-        $scope.exibeCursos = true;
-        $rootScope.pagina = "eventos";
-        $scope.exibeAjuda = function(seletor) {
-            var $ajudaPopOver = $(seletor);
-            $ajudaPopOver.popover();
-            $ajudaPopOver.popover('toggle');
-        };
         $scope.itensMenu = [
             {"slug": "sobre", "nome": "Sobre"},
             {"slug": "horarios", "nome": "Horários"},
@@ -146,10 +146,50 @@ angular.module('concept2.eventos', ['ngRoute'])
             {"slug": "cursos", "nome": "Cursos"},
             {"slug": "resultados", "nome": "Resultados"}
         ];
+        $scope.colocacoes = [1, 2, 3, 4, 5, 6, 7, 8];
+        $scope.atleta = null;
+        $scope.maskDef = {'maskDefinitions': {'9': /\d/, 'D': /[0-3]/, 'd': /[0-9]/, 'M': /[0-1]/, 'm': /[0-2]/}};
+        $scope.temProvas = true;
+        $scope.temCursos = true;
+        $scope.exibeProvas = true;
+        $scope.exibeCursos = true;
+        $scope.campoProvaTocado = false;
+        $scope.datas = [];
+        $scope.provasDropdownList = [];
+        $scope.provaDaQueryString = null;
+        $scope.cursosDropdownList = [];
+        $scope.provasParaSelecao = [];
+        $scope.mensagemErro = '';
+        $scope.urlPagamentoProvas = null;
+        $scope.urlPagamentoCursos = [];
+        $scope.cadastroEmLote = false;
+        $scope.atletasEmLote = [];
+        $scope.atletasEmLoteComErro = [];
+        $scope.atletasEmLoteValido = null;
+        $scope.urlArquivoEmLote = '{0}/angular/inscricao-lote.csv'.format([urlBackEnd]);
+        $scope.tiposAfiliacoes = [
+            {'codigo': 'clube', 'label': 'Clube'},
+            {'codigo': 'academia', 'label': 'Academia'},
+            {'codigo': 'box-cf', 'label': 'Box de CF'},
+            {'codigo': 'independente', 'label': 'Independente'}
+        ];
+        $scope.campoProvaTocado = false;
+        $scope.campoCursoTocado = false;
+        $scope.carregandoProvas = false;
+        $scope.filtro = {
+            ditancia: null,
+            tipo: null,
+            sexo: null,
+            idade: null
+        };
+        $scope.exibeAjuda = function(seletor) {
+            var $ajudaPopOver = $(seletor);
+            $ajudaPopOver.popover();
+            $ajudaPopOver.popover('toggle');
+        };
         $scope.trataHtml = function(html) {
             return $sce.trustAsHtml(html);
         };
-        $scope.colocacoes = [1, 2, 3, 4, 5, 6, 7, 8];
         function exibeValidacoes(formInscricao) {
             angular.forEach(formInscricao, function(field, fieldName) {
                 if (field !== undefined && field.$validate !== undefined) {
@@ -158,7 +198,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                 }
             });
         }
-        function onItemSelect(item, tipo) {
+        $scope.selecionandoItem = function(item, tipo) {
             $scope.atleta.inscricao[tipo].push({'id': item.id});
             if (tipo == 'provas') {
                 $scope.atleta.provaSelecionada = 1;
@@ -169,7 +209,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                 $scope.campoCursoTocado = true;
                 $scope.defineUrlPagamentoCurso();
             }
-        }
+        };
         $scope.formataDuracao = function(duracao) {
             var horas = parseInt(duracao / 60);
             var minutos = duracao % 60;
@@ -199,7 +239,6 @@ angular.module('concept2.eventos', ['ngRoute'])
                 $scope.evento.duracao = 'de {0} a {1} de {2}'.format([$scope.evento.dataInicio.dia, $scope.evento.dataFim.dia, mesNome])
             }
             var dias = parseInt((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + dataInicio.getDate();
-            $scope.datas = [];
             for (var i = dataInicio.getDate(); i <= dias; i++) {
                 $scope.datas.push({
                     data: '{0}/{1}'.format([dataInicio.getDate(), dataInicio.getMonth() + 1]),
@@ -213,8 +252,6 @@ angular.module('concept2.eventos', ['ngRoute'])
                 });
                 dataInicio.setDate(dataInicio.getDate() + 1);
             }
-            $scope.provasDropdownList = [];
-            $scope.provaDaQueryString = null;
             angular.forEach($scope.evento.provas, function(prova) {
                 angular.forEach($scope.datas, function(data) {
                     if (prova.dia.replace(/0/g, '') == data.data) {
@@ -231,20 +268,13 @@ angular.module('concept2.eventos', ['ngRoute'])
                 }
             });
             $scope.provasParaSelecao = angular.copy($scope.provasDropdownList);
-            $scope.cursosDropdownList = [];
             angular.forEach($scope.evento.cursos, function(curso) {
                 curso.selecionado = false;
                 $scope.cursosDropdownList.push(curso);
             });
             if ($scope.itemMenu == 'provas' || $scope.itemMenu == 'cursos') {
-                $scope.mensagemErro = '';
                 $scope.urlPagamentoProvas = $scope.evento.urlPagamentoProvas;
                 $scope.urlPagamentoCursos = [$scope.evento.urlPagamentoCursos];
-                $scope.cadastroEmLote = false;
-                $scope.atletasEmLote = [];
-                $scope.atletasEmLoteComErro = [];
-                $scope.atletasEmLoteValido = null;
-                $scope.urlArquivoEmLote = '{0}/angular/inscricao-lote.csv'.format([urlBackEnd]);
                 $scope.enviaArquivoEmLote = function(file, errFiles) {
                     if (file) {
                         file.upload = Upload.upload({
@@ -277,25 +307,6 @@ angular.module('concept2.eventos', ['ngRoute'])
                             });
                         });
                     }
-                };
-                $scope.tiposAfiliacoes = [
-                    {'codigo': 'clube', 'label': 'Clube'},
-                    {'codigo': 'academia', 'label': 'Academia'},
-                    {'codigo': 'box-cf', 'label': 'Box de CF'},
-                    {'codigo': 'independente', 'label': 'Independente'}
-                ];
-                $scope.campoProvaTocado = false;
-                $scope.campoCursoTocado = false;
-                $scope.carregandoProvas = false;
-                $scope.provasTexts = {
-                    buttonDefaultText: 'Selecione a(s) prova(s) que vai participar...'
-                };
-                $scope.provasSettings = {
-                    dynamicTitle: false,
-                    showCheckAll: false,
-                    showUncheckAll: false,
-                    scrollable: true,
-                    scrollableHeight: '300px'
                 };
                 var limpaSelecaoProvas = function() {
                     angular.forEach($scope.provasDropdownList, function(prova) {
@@ -346,7 +357,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                     angular.forEach($scope.provasDropdownList, function(prova) {
                         prova.selecionado = false;
                         if ($scope.provaDaQueryString && $scope.provaDaQueryString.id == prova.id) {
-                            onItemSelect($scope.provaDaQueryString, 'provas');
+                            $scope.selecionandoItem($scope.provaDaQueryString, 'provas');
                         }
                         angular.forEach($scope.atleta.inscricao.provas, function(inscricaoProva) {
                             if (prova.id == inscricaoProva.id) {
@@ -372,7 +383,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                 };
                 $scope.clicaNoItem = function(selecionada, item, tipo) {
                     if (selecionada) {
-                        onItemSelect(item, tipo);
+                        $scope.selecionandoItem(item, tipo);
                     }
                     else {
                         $scope.removeItem(item.id, tipo);
@@ -612,12 +623,6 @@ angular.module('concept2.eventos', ['ngRoute'])
                 };
             }
             if ($scope.itemMenu == 'horarios') {
-                $scope.filtro = {
-                    ditancia: null,
-                    tipo: null,
-                    sexo: null,
-                    idade: null
-                };
                 $scope.filtraProvas = function(tipo, valor) {
                     if (tipo == 'D') {
                         $scope.filtro.distancia = valor;
