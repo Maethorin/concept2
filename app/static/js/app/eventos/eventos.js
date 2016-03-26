@@ -231,21 +231,29 @@ angular.module('concept2.eventos', ['ngRoute'])
             $scope.exibeCursos = $scope.evento.cursos.length > 0;
             var dataInicio = new Date($scope.evento.dataInicio.ano, $scope.evento.dataInicio.mes - 1, $scope.evento.dataInicio.dia);
             var dataFim = new Date($scope.evento.dataFim.ano, $scope.evento.dataFim.mes - 1, $scope.evento.dataFim.dia);
+            var mesNomeInicio = dataInicio.nomeMes();
+            var mesNomeFim = dataFim.nomeMes();
+            $scope.evento.duracao = 'de {0}{1}{2} a {3}{4} de {5}'.format([
+                $scope.evento.dataInicio.dia,
+                ($scope.evento.dataInicio.dia == 1 ? 'º' : ''),
+                (mesNomeInicio == mesNomeFim ? '' : ' de ' + mesNomeInicio),
+                $scope.evento.dataFim.dia,
+                ($scope.evento.dataFim.dia == 1 ? 'º' : ''),
+                mesNomeFim
+            ]);
             if (dataFim.getMonth() == dataInicio.getMonth()) {
-                var mesNome = dataInicio.toLocaleString('pt-br', {month: "long"});
                 if (dataFim.getDay() == dataInicio.getDay()) {
-                    $scope.evento.duracao = 'dia {0} de {2}'.format([$scope.evento.dataInicio.dia, mesNome])
+                    $scope.evento.duracao = 'dia {0}{1} de {2}'.format([$scope.evento.dataInicio.dia, ($scope.evento.dataInicio.dia == 1 ? 'º' : ''), mesNomeInicio])
                 }
-                $scope.evento.duracao = 'de {0} a {1} de {2}'.format([$scope.evento.dataInicio.dia, $scope.evento.dataFim.dia, mesNome])
             }
             var dias = parseInt((dataFim - dataInicio) / (1000 * 60 * 60 * 24)) + dataInicio.getDate();
             for (var i = dataInicio.getDate(); i <= dias; i++) {
                 $scope.datas.push({
-                    data: '{0}/{1}'.format([dataInicio.getDate(), dataInicio.getMonth() + 1]),
+                    data: '{0}/{1}'.format([dataInicio.getDate().paddingLeft(2), (dataInicio.getMonth() + 1).paddingLeft(2)]),
                     dia: '{0}, {1}{2} de {3}'.format([
                         dataInicio.nomeDia(),
-                        i,
-                        (i == 1 ? 'º' : ''),
+                        dataInicio.getDate(),
+                        (dataInicio.getDate() == 1 ? 'º' : ''),
                         dataInicio.nomeMes()
                     ]),
                     provas: []
@@ -254,7 +262,7 @@ angular.module('concept2.eventos', ['ngRoute'])
             }
             angular.forEach($scope.evento.provas, function(prova) {
                 angular.forEach($scope.datas, function(data) {
-                    if (prova.dia.replace(/0/g, '') == data.data) {
+                    if (prova.dia == data.data) {
                         data.provas.push(prova);
                     }
                 });
@@ -662,7 +670,7 @@ angular.module('concept2.eventos', ['ngRoute'])
                     });
                     angular.forEach($scope.provasDropdownList, function(prova) {
                         angular.forEach($scope.datas, function(data) {
-                            if (prova.dia.replace(/0/g, '') == data.data) {
+                            if (prova.dia == data.data) {
                                 data.provas.push(prova);
                             }
                         });

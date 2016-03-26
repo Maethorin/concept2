@@ -1,18 +1,25 @@
 describe('Página do evento', function() {
-    var $compile, $rootScope, $controller, $scope, $templateCache, $routeParams;
+    var $compile, $rootScope, $controller, $scope, $templateCache, $routeParams, $httpBackend, $location;
     beforeEach(module('concept2', 'app-templates'));
-    beforeEach(inject(function(_$compile_, _$rootScope_, _$controller_, _$templateCache_) {
+    beforeEach(inject(function(_$compile_, _$rootScope_, _$controller_, _$templateCache_, _$httpBackend_, _$location_) {
         $compile = _$compile_;
         $rootScope = _$rootScope_;
         $controller = _$controller_;
         $templateCache = _$templateCache_;
-        $scope = $rootScope.$new();
+        $httpBackend = _$httpBackend_;
+        $location = _$location_;
         $routeParams = {
             slug: 'evento-url'
         };
         var $sce = {
             trustAsHtml: function(html) {
                 return '#' + html + '#'
+            }
+        };
+        $scope = $rootScope.$new();
+        $location.search = function() {
+            return {
+                prova: 'CODIGO'
             }
         };
         $controller('EventoController', { $scope: $scope, $rootScope: $rootScope, $sce: $sce, $routeParams: $routeParams });
@@ -119,6 +126,121 @@ describe('Página do evento', function() {
         expect(chamou).toBeTruthy();
     });
     describe('carregando evento', function() {
-
+        var evento;
+        beforeEach(function() {
+            evento = {
+                id: 1,
+                titulo: 'Titulo Evento',
+                provas: [],
+                cursos: [],
+                dataInicio: {dia: 12, mes: 3, ano: 2016},
+                dataFim: {dia: 14, mes: 3, ano: 2016}
+            }
+        });
+        it('atualiza scope', function() {
+            $httpBackend.expect('GET', '{0}/api/eventos/evento-url'.format([urlBackEnd])).respond(evento);
+            $httpBackend.flush();
+            expect($scope.evento.titulo).toBe('Titulo Evento');
+        });
+        it('preenche datas com um dia', function() {
+            evento.dataFim.dia = 12;
+            $httpBackend.expect('GET', '{0}/api/eventos/evento-url'.format([urlBackEnd])).respond(evento);
+            $httpBackend.flush();
+            expect($scope.datas).toEqual([{data: '12/03', dia: 'Sábado, 12 de Março', provas: []}]);
+            expect($scope.evento.duracao).toBe('dia 12 de Março');
+        });
+        it('preenche datas com mais de um dia', function() {
+            $httpBackend.expect('GET', '{0}/api/eventos/evento-url'.format([urlBackEnd])).respond(evento);
+            $httpBackend.flush();
+            expect($scope.datas).toEqual([
+                {data: '12/03', dia: 'Sábado, 12 de Março', provas: []},
+                {data: '13/03', dia: 'Domingo, 13 de Março', provas: []},
+                {data: '14/03', dia: 'Segunda, 14 de Março', provas: []}
+            ]);
+            expect($scope.evento.duracao).toBe('de 12 a 14 de Março');
+        });
+        it('preenche datas com dia 1 no fim', function() {
+            evento.dataInicio = {dia: 31, mes: 3, ano: 2016};
+            evento.dataFim = {dia: 1, mes: 4, ano: 2016};
+            $httpBackend.expect('GET', '{0}/api/eventos/evento-url'.format([urlBackEnd])).respond(evento);
+            $httpBackend.flush();
+            expect($scope.datas).toEqual([
+                {data: '31/03', dia: 'Quinta, 31 de Março', provas: []},
+                {data: '01/04', dia: 'Sexta, 1º de Abril', provas: []}
+            ]);
+            expect($scope.evento.duracao).toBe('de 31 de Março a 1º de Abril');
+        });
+        it('preenche datas com dia 1 na frente', function() {
+            evento.dataInicio = {dia: 1, mes: 3, ano: 2016};
+            evento.dataFim = {dia: 2, mes: 3, ano: 2016};
+            $httpBackend.expect('GET', '{0}/api/eventos/evento-url'.format([urlBackEnd])).respond(evento);
+            $httpBackend.flush();
+            expect($scope.datas).toEqual([
+                {data: '01/03', dia: 'Terça, 1º de Março', provas: []},
+                {data: '02/03', dia: 'Quarta, 2 de Março', provas: []}
+            ]);
+            expect($scope.evento.duracao).toBe('de 1º a 2 de Março');
+        });
+        it('preenche provas para o dia', function() {
+            evento.provas = [
+                {id: 1, dia: '12/03'},
+                {id: 2, dia: '12/03'},
+                {id: 3, dia: '13/03'},
+                {id: 4, dia: '14/03'},
+                {id: 5, dia: '13/03'}
+            ];
+            $httpBackend.expect('GET', '{0}/api/eventos/evento-url'.format([urlBackEnd])).respond(evento);
+            $httpBackend.flush();
+            expect($scope.datas).toEqual([
+                {data: '12/03', dia: 'Sábado, 12 de Março', provas: [
+                    {id: 1, dia: '12/03'},
+                    {id: 2, dia: '12/03'}
+                ]},
+                {data: '13/03', dia: 'Domingo, 13 de Março', provas: [
+                    {id: 3, dia: '13/03'},
+                    {id: 5, dia: '13/03'}
+                ]},
+                {data: '14/03', dia: 'Segunda, 14 de Março', provas: [{id: 4, dia: '14/03'}]}
+            ]);
+        });
+        it('preenche provas para a tabela', function() {
+            evento.provas = [
+                {id: 1, dia: '12/03', distancia: 500},
+                {id: 2, dia: '12/03', distancia: 0},
+                {id: 3, dia: '13/03', distancia: 500},
+                {id: 4, dia: '14/03', distancia: 0},
+                {id: 5, dia: '13/03', distancia: 500}
+            ];
+            $httpBackend.expect('GET', '{0}/api/eventos/evento-url'.format([urlBackEnd])).respond(evento);
+            $httpBackend.flush();
+            expect($scope.provasDropdownList).toEqual([
+                {id: 1, dia: '12/03', distancia: 500, selecionado: false},
+                {id: 3, dia: '13/03', distancia: 500, selecionado: false},
+                {id: 5, dia: '13/03', distancia: 500, selecionado: false}
+            ]);
+            expect($scope.provasParaSelecao).toEqual($scope.provasDropdownList);
+        });
+        it('define prova da querystring', function() {
+            evento.provas = [
+                {id: 1, dia: '12/03', codigo: 'CODIGO'}
+            ];
+            $httpBackend.expect('GET', '{0}/api/eventos/evento-url'.format([urlBackEnd])).respond(evento);
+            $httpBackend.flush();
+            expect($scope.provaDaQueryString).toEqual({id: 1, dia: '12/03', codigo: 'CODIGO'});
+        });
+        it('preenche cursos para a tabela', function() {
+            evento.cursos = [
+                {id: 1, dia: '12/03'},
+                {id: 3, dia: '13/03'},
+                {id: 5, dia: '13/03'}
+            ];
+            $httpBackend.expect('GET', '{0}/api/eventos/evento-url'.format([urlBackEnd])).respond(evento);
+            $httpBackend.flush();
+            expect($scope.cursosDropdownList).toEqual([
+                {id: 1, dia: '12/03', selecionado: false},
+                {id: 3, dia: '13/03', selecionado: false},
+                {id: 5, dia: '13/03', selecionado: false}
+            ]);
+        });
     });
 });
