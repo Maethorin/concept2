@@ -132,7 +132,7 @@ $bg-panel-default: transparent;
     @import "evento";
 }
 
-$bg-lista: radial_gradient(#34505b, #132026);
+$bg-lista: radial-gradient(#34505b, #132026);
 .pagina-comunidade {
     @import "comunidade";
     @import "pagina-listagem";
@@ -141,12 +141,13 @@ $bg-lista: radial_gradient(#34505b, #132026);
     @import "noticias";
 }
 
+$bg-lista : radial-gradient(#2386bf, #011121);
 .pagina-suporte {
     @import "suporte";
 }
 
 .pagina-contato {
-    background:  radial_gradient(#207bb0,#011121);;
+    background:  radial-gradient(#207bb0,#011121);;
     @import "contato";
     @import "pagina-listagem";
 }

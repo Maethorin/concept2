@@ -43,6 +43,7 @@
     }
 }
 .menu-downloads{
+    margin-right: -14px;
     background-color: rgba(3, 12, 21, 0.6);
     a{
         color: white;
@@ -53,7 +54,6 @@
    }
     ul {
         li {
-            margin-bottom: -10px;
         }
     }
 }
@@ -70,7 +70,7 @@
 .sub-download{
    margin-left: 32px;
 }
-.download{
+.descricao-down{
     background-color: white;
 }
 .imagem{
@@ -87,4 +87,7 @@
     margin-bottom: 20px;
             width: 90%;
     }
+}
+.descricao-download{
+    min-height: 395px;
 }
