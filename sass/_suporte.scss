@@ -1,5 +1,4 @@
 .suporte {
-   @include image-background("Site-Concept2-V-4-fundo-azul.jpg");
     min-height: 500px;
     a {
         position: absolute;
@@ -47,6 +46,7 @@
     background-color: rgba(3, 12, 21, 0.6);
     a{
         color: white;
+        font-family: "Open Sans";
     }
    a:hover{
        background-color: transparent;
@@ -72,6 +72,7 @@
 }
 .descricao-down{
     background-color: white;
+    font-family: 'Open Sans', sans-serif;
 }
 .imagem{
     img{

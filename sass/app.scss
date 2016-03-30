@@ -1,6 +1,7 @@
 @import "fontawesome/scss/font-awesome";
 @import "bootstrap-sass/assets/stylesheets/bootstrap";
 @import url(https://fonts.googleapis.com/css?family=Oswald);
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 $imageUrl: "/static/img/";
 @mixin image-background($imageFile) {
@@ -140,10 +141,11 @@ $bg-lista: radial-gradient(#34505b, #132026);
 .pagina-noticias {
     @import "noticias";
 }
-
 $bg-lista : radial-gradient(#2386bf, #011121);
 .pagina-suporte {
+    background: radial-gradient(#2386bf, #011121);;
     @import "suporte";
+    @import "pagina-listagem";
 }
 
 .pagina-contato {
