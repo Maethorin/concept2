@@ -132,7 +132,7 @@
                 <div class="col-md-3 campo pedido-numero">
                     <div class="form-group">
                         <label class="control-label" for="pedidoNumero">Número do pedido:</label> <button class="botao-icone-ajuda" type="button" id="ajudaPedido" data-toggle="popover" data-trigger="focus" data-placement="top" title="Pedido Número" data-content="Esse é o número do seu pedido após realizar a compra da inscrição na loja on-line. Você pode fazer o cadastro antes e depois atualizar com esse número após o pagamento."><i ng-click="exibeAjuda('#ajudaPedido')" class="fa fa-question-circle ajuda-icone-popover"></i></button>
-                        <input type="text" class="form-control" name="pedidoNumero" id="pedidoNumero" ng-model="atleta.inscricao.pedidoNumero"/>
+                        <input type="text" class="form-control" name="pedidoNumero" id="pedidoNumero" ng-model="atleta.inscricao.pedidoNumero" ng-disabled="atleta.inscricao.estahPago"/>
                     </div>
                 </div>
                 <div class="col-md-3 campo">
@@ -240,7 +240,8 @@
                         <span class="help-block" ng-show="campoEstaInvalido(formInscricaoProvas.provas)">* Selecione uma ou mais provas *</span>
                     </div>
                     <div class="botoes" ng-show="atletaLogado">
-                        <a class="btn btn-success" href="{{urlPagamentoProvas}}" title="ir para o pagamento" target="_blank">Ir para o pagamento</a>
+                        <a class="btn btn-success" ng-if="!atleta.inscricao.estahPago" href="{{urlPagamentoProvas}}" title="ir para o pagamento" target="_blank">Ir para o pagamento</a>
+                        <span class="label label-success" ng-if="atleta.inscricao.estahPago">pagto confirmado</span>
                     </div>
                 </div>
             </div>

@@ -433,6 +433,14 @@ class Inscricao(db.Model, QueryMixin):
             db.session.commit()
         return inscricao
 
+    @classmethod
+    def define_pagamento(cls, inscricao_id, esta_pago):
+        inscricao = cls.query.get(inscricao_id)
+        inscricao.esta_pago = esta_pago
+        db.session.add(inscricao)
+        db.session.commit()
+        return inscricao
+
     def as_dict(self):
         return {
             'id': self.id,
@@ -442,6 +450,7 @@ class Inscricao(db.Model, QueryMixin):
             'nomeConvidado': self.nome_convidado,
             'nomeSegundoConvidado': self.nome_segundo_convidado,
             'pedidoNumero': self.pedido_numero,
+            'estahPago': self.esta_pago,
             'eventoId': self.evento_id,
             'provas': [prova.as_dict() for prova in self.provas],
             'cursos': [curso.as_dict() for curso in self.cursos],

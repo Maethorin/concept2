@@ -1,0 +1,11 @@
+.inscricoes {
+    .inscricao-paga {
+        font-size: 27px;
+        &.fa-check {
+            color: green;
+        }
+        &.fa-close {
+            color: red;
+        }
+    }
+}

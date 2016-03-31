@@ -47,6 +47,10 @@ class EventosAdmin(ResourceAdmin):
 class InscricoesAdmin(ResourceAdmin):
     model = models.Inscricao
 
+    def put(self, item_id):
+        if 'estahPago' in request.json:
+            return self.model.define_pagamento(item_id, request.json['estahPago']).as_dict()
+
 
 class Produtos(ResourceBase):
     model = models.Produto
