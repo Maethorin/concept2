@@ -22,6 +22,7 @@ h5 {
 .menu-produtos {
     background-color: rgba(3, 12, 21, 0.6);
     margin-right: -15px;
+    font-family: 'Open Sans', sans-serif;
     .nav > li > a:focus {
         background-color: #516371;
     }
@@ -131,4 +132,7 @@ h5 {
     img {
         width: 110%
     }
+}
+.modelo{
+    font-family: 'Open Sans', sans-serif;
 }

@@ -1,5 +1,4 @@
 .suporte {
-   @include image-background("Site-Concept2-V-4-fundo-azul.jpg");
     min-height: 500px;
     a {
         position: absolute;
@@ -41,4 +40,55 @@
             margin-left: 49px;
         }
     }
+}
+.menu-downloads{
+    margin-right: -14px;
+    background-color: rgba(3, 12, 21, 0.6);
+    a{
+        color: white;
+        font-family: "Open Sans";
+    }
+   a:hover{
+       background-color: transparent;
+       color:gray;
+   }
+    ul {
+        li {
+        }
+    }
+}
+.titulo{
+    margin-top: 15px;
+}
+.menu-titulo{
+        a:hover{
+            background-color: transparent;
+            color: white;
+        }
+
+}
+.sub-download{
+   margin-left: 32px;
+}
+.descricao-down{
+    background-color: white;
+    font-family: 'Open Sans', sans-serif;
+}
+.imagem{
+    img{
+     width: 70%;
+    margin-left: 60px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    }
+}
+.imagem1{
+    img{
+        margin-top: 55px;
+    margin-bottom: 20px;
+            width: 90%;
+    }
+}
+.descricao-download{
+    min-height: 395px;
 }
