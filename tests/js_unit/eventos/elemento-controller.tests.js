@@ -60,7 +60,7 @@ describe('Página do evento', function() {
         expect($scope.urlPagamentoProvas).toBeDefined();
         expect($scope.urlPagamentoCursos).toEqual([]);
         expect($scope.cadastroEmLote).toBeFalsy();
-        expect($scope.atletasEmLote).toEqual([]);
+        expect($scope.atleta.atletas).toEqual([]);
         expect($scope.atletasEmLoteComErro).toEqual([]);
         expect($scope.atletasEmLoteValido).toBeDefined();
         expect($scope.urlArquivoEmLote).toBe('{0}/angular/inscricao-lote.csv'.format([urlBackEnd]));

@@ -390,6 +390,7 @@ class Inscricao(db.Model, QueryMixin):
     nome_convidado = db.Column(db.String(120))
     nome_segundo_convidado = db.Column(db.String(120))
     comprovante_pagamento = db.Column(db.String())
+    esta_pago = db.Column(db.Boolean())
 
     @classmethod
     def obter_inscricoes(cls):
@@ -452,10 +453,15 @@ class EmailJaExiste(Exception):
     pass
 
 
+class ErroDados(Exception):
+    pass
+
+
 class Atleta(db.Model, QueryMixin, AutenticMixin):
     __tablename__ = 'atletas'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(), unique=True, nullable=False)
+    tecnico = db.Column(db.String())
     senha_hash = db.Column(db.String(128), nullable=False)
     nome = db.Column(db.String(), nullable=False)
     sobrenome = db.Column(db.String(), nullable=False)
@@ -509,10 +515,15 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
         atleta = cls.query.get(atleta_id)
 
     @classmethod
-    def cria_de_dicionario(cls, dados_dict):
+    def cria_de_dicionario(cls, dados_dict, com_senha=True, tecnico=None):
         with db.session.no_autoflush:
             atleta = cls.define_dados_de_dicionario(dados_dict)
-            atleta.hash_senha(dados_dict['senha'])
+            if tecnico:
+                atleta.tecnico = tecnico
+            if com_senha:
+                atleta.hash_senha(dados_dict['senha'])
+            else:
+                atleta.hash_senha('1q2w3e!Q@W#E')
             db.session.add(atleta)
             atleta.cria_inscricao_de_dicionario(dados_dict['inscricao'])
             try:

@@ -91,11 +91,11 @@ def valida_lote():
         return Response('OK')
     atletas_em_lote = request.files.get('atletasEmLote', None)
     if not atletas_em_lote:
-        return Response({'mensagem': u'Nenhum arquivo foi recebido. Por favor, tente de novo'}, content_type='application/json', status=400)
+        return Response(json.dumps({'mensagem': u'Nenhum arquivo foi recebido. Por favor, tente de novo'}), content_type='application/json', status=400)
     try:
         lista_atletas, lista_erros = models.Atleta.lista_de_atletas_de_csv(atletas_em_lote)
-    except KeyError:
-        return Response({'mensagem': u'O arquivo está inválido pois falta a linha de cabeçalho'}, content_type='application/json', status=400)
+    except KeyError, ex:
+        return Response(json.dumps({'mensagem': u'O arquivo está inválido pois falta a linha de cabeçalho'}), content_type='application/json', status=400)
     return Response(json.dumps({'atletasEmLote': lista_atletas, 'erros': lista_erros}), content_type='application/json')
 
 
