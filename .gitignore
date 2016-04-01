@@ -2,7 +2,7 @@ logs/*
 !.gitkeep
 node_modules/
 bower_components/
-app/downloads/*.txt
+app/downloads/*.rac
 app/static/css/*.css
 app/static/js/app.js
 app/static/js/componentes.js
