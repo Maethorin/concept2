@@ -344,8 +344,7 @@ class Prova(db.Model, QueryMixin):
 {codigoProva}
 BRA
 {nascimento}
-{tamanhoTime}
-{time}"""
+"""
     MODELO_ARQUIVO = """RACE
 108
 {tipo}
@@ -357,7 +356,8 @@ BRA
 50
 30
 {numeroBarcos}
-{atletas}"""
+{atletas}
+"""
     DE_PARA_TIPO = {'I': 0, 'D': 1, 'Q': 2, '8': 3, 'R': 2}
     DE_PARA_TAMANHO = {'I': 0, 'D': 2, 'Q': 4, '8': 8, 'R': 2}
 
@@ -385,9 +385,7 @@ BRA
                             'nomeInscricao': cls.slugify(inscricao.nome_time or inscricao.atleta.nome_completo).upper(),
                             'atletaId': inscricao.atleta.id,
                             'codigoProva': prova.codigo,
-                            'nascimento': inscricao.atleta.nascimento.strftime('%m%d%Y'),
-                            'tamanhoTime': cls.DE_PARA_TAMANHO[prova.tipo.code],
-                            'time': ''
+                            'nascimento': inscricao.atleta.nascimento.strftime('%m%d%Y')
                         })
                     )
                 corrida['atletas'] = ''.join(atletas)

@@ -110,9 +110,8 @@ def cria_arquivos():
     caminhos = []
     for arquivo in arquivos:
         caminhos.append('<a href="/downloads/{}.rac">{}</a>'.format(arquivo, arquivo))
-        escrita = open(os.path.join(donwload_directory, '{}.rac'.format(arquivo)), 'w')
-        escrita.write(arquivos[arquivo].replace('\n', '\r\n'))
-        escrita.close()
+        with open(os.path.join(donwload_directory, '{}.rac'.format(arquivo)), 'w') as escrita:
+            escrita.writelines(['{}\r\n'.format(line) for line in arquivos[arquivo].split('\n')])
     return Response('<br>'.join(caminhos))
 
 
