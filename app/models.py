@@ -372,14 +372,10 @@ BRA
         arquivos = {}
         for prova in Prova.query.all():
             if prova.inscricoes:
-                corrida = {
-                    'tipo': cls.DE_PARA_TIPO[prova.tipo.code],
-                    'label': prova.label,
-                    'distancia': prova.distancia,
-                    'numeroBarcos': total_barco,
-                }
                 atletas = []
                 for inscricao in prova.inscricoes:
+                    if not inscricao.esta_pago:
+                        continue
                     nome = cls.slugify(inscricao.nome_time or inscricao.atleta.nome_completo).upper()
                     if nome == 'CFVV':
                         nome = cls.slugify(u"{} - {}".format(inscricao.atleta.nome_completo, 'CFVV')).upper()
@@ -391,7 +387,15 @@ BRA
                             'nascimento': inscricao.atleta.nascimento.strftime('%m%d%Y')
                         })
                     )
-                corrida['atletas'] = ''.join(atletas)
+                if not atletas:
+                    continue
+                corrida = {
+                    'tipo': cls.DE_PARA_TIPO[prova.tipo.code],
+                    'label': prova.label,
+                    'distancia': prova.distancia,
+                    'numeroBarcos': total_barco,
+                    'atletas': ''.join(atletas)
+                }
                 arquivos[prova.codigo] = (cls.MODELO_ARQUIVO.format(**corrida))
         return arquivos
 
