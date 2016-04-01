@@ -380,9 +380,12 @@ BRA
                 }
                 atletas = []
                 for inscricao in prova.inscricoes:
+                    nome = cls.slugify(inscricao.nome_time or inscricao.atleta.nome_completo).upper()
+                    if nome == 'CFVV':
+                        nome = cls.slugify(u"{} - {}".format(inscricao.atleta.nome_completo, 'CFVV')).upper()
                     atletas.append(
                         cls.MODELO_ATLETA.format(**{
-                            'nomeInscricao': cls.slugify(inscricao.nome_time or inscricao.atleta.nome_completo).upper(),
+                            'nomeInscricao': nome,
                             'atletaId': inscricao.atleta.id,
                             'codigoProva': prova.codigo,
                             'nascimento': inscricao.atleta.nascimento.strftime('%m%d%Y')
