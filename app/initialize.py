@@ -111,7 +111,7 @@ def cria_arquivos():
     for arquivo in arquivos:
         caminhos.append('<a href="/downloads/{}.txt">{}</a>'.format(arquivo, arquivo))
         escrita = open(os.path.join(donwload_directory, '{}.txt'.format(arquivo)), 'w')
-        escrita.write(arquivos[arquivo])
+        escrita.write(arquivos[arquivo].replace('\n', '\r\n'))
         escrita.close()
     return Response('<br>'.join(caminhos))
 
