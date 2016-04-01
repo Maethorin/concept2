@@ -13,6 +13,7 @@ web_app.config.from_object(os.environ['APP_SETTINGS'])
 database.AppRepository.db = SQLAlchemy(web_app)
 app_directory = os.path.join(os.getcwd(), 'app')
 template_directory = os.path.join(app_directory, 'templates')
+donwload_directory = os.path.join(app_directory, 'downloads')
 template_admin_directory = os.path.join(template_directory, 'admin')
 
 import api, models
@@ -93,10 +94,33 @@ def valida_lote():
     if not atletas_em_lote:
         return Response(json.dumps({'mensagem': u'Nenhum arquivo foi recebido. Por favor, tente de novo'}), content_type='application/json', status=400)
     try:
-        lista_atletas, lista_erros = models.Atleta.lista_de_atletas_de_csv(atletas_em_lote)
+        lista_atletas, lista_erros = models.Atleta.lista_de_atletas_de_csv(atletas_em_lote, 1)
+        for atleta in lista_atletas:
+            models.Atleta.cria_de_dicionario(atleta, tecnico='crossifitvilavalqueire@gmail.com', com_senha=False)
     except KeyError, ex:
         return Response(json.dumps({'mensagem': u'O arquivo está inválido pois falta a linha de cabeçalho'}), content_type='application/json', status=400)
     return Response(json.dumps({'atletasEmLote': lista_atletas, 'erros': lista_erros}), content_type='application/json')
+
+
+@web_app.route('/cria-arquivos', methods=['OPTIONS', 'GET'])
+def cria_arquivos():
+    if request.method == 'OPTIONS':
+        return Response('OK')
+    arquivos = models.Prova.gera_arquivo_texto()
+    caminhos = []
+    for arquivo in arquivos:
+        caminhos.append('<a href="/downloads/{}.txt">{}</a>'.format(arquivo, arquivo))
+        escrita = open(os.path.join(donwload_directory, '{}.txt'.format(arquivo)), 'w')
+        escrita.write(arquivos[arquivo])
+        escrita.close()
+    return Response('<br>'.join(caminhos))
+
+
+@web_app.route('/downloads/<path:template_path>', methods=['GET', 'POST'])
+def downloads(template_path):
+    response = send_from_directory(donwload_directory, template_path)
+    response.headers["Content-Disposition"] = "attachment; filename={}".format(template_path)
+    return response
 
 
 @web_app.before_request

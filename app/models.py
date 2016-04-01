@@ -2,13 +2,14 @@
 import csv
 from datetime import datetime, timedelta
 import os
+import re
 import googlemaps
 import jwt
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects import postgresql
 from passlib.apps import custom_app_context
-
+import unicodedata
 
 import database
 
@@ -335,6 +336,63 @@ class Prova(db.Model, QueryMixin):
     sub_categoria_id = db.Column(db.Integer, db.ForeignKey('sub_categorias.id'))
     sub_categoria = relationship('SubCategoria', back_populates='provas')
     inscricoes = db.relationship('Inscricao', secondary=prova_inscricao, backref='provas')
+    MODELO_TIME = """{nomeInscricao}
+{atletaId}
+{label}"""
+    MODELO_ATLETA = """{nomeInscricao}
+{atletaId}
+{codigoProva}
+BRA
+{nascimento}
+{tamanhoTime}
+{time}"""
+    MODELO_ARQUIVO = """RACE
+108
+{tipo}
+{label}
+{distancia}
+0
+0
+1
+50
+30
+{numeroBarcos}
+{atletas}"""
+    DE_PARA_TIPO = {'I': 0, 'D': 1, 'Q': 2, '8': 3, 'R': 2}
+    DE_PARA_TAMANHO = {'I': 0, 'D': 2, 'Q': 4, '8': 8, 'R': 2}
+
+    @classmethod
+    def slugify(cls, value):
+        slug = unicodedata.normalize('NFKD', value)
+        slug = slug.encode('ascii', 'ignore').lower()
+        return slug
+
+    @classmethod
+    def gera_arquivo_texto(cls, total_barco=8):
+        arquivos = {}
+        for prova in Prova.query.all():
+            if prova.inscricoes:
+                corrida = {
+                    'tipo': cls.DE_PARA_TIPO[prova.tipo.code],
+                    'label': prova.label,
+                    'distancia': prova.distancia,
+                    'numeroBarcos': total_barco,
+                }
+                atletas = []
+                for inscricao in prova.inscricoes:
+                    atletas.append(
+                        cls.MODELO_ATLETA.format(**{
+                            'nomeInscricao': cls.slugify(inscricao.nome_time or inscricao.atleta.nome_completo).upper(),
+                            'atletaId': inscricao.atleta.id,
+                            'codigoProva': prova.codigo,
+                            'nascimento': inscricao.atleta.nascimento.strftime('%m%d%Y'),
+                            'tamanhoTime': cls.DE_PARA_TAMANHO[prova.tipo.code],
+                            'time': ''
+                        })
+                    )
+                corrida['atletas'] = ''.join(atletas)
+                arquivos[prova.codigo] = (cls.MODELO_ARQUIVO.format(**corrida))
+        return arquivos
 
     @property
     def codigo(self):
@@ -409,7 +467,12 @@ class Inscricao(db.Model, QueryMixin):
         inscricao.pedido_numero = inscricao_dict.get('pedidoNumero')
         inscricao.evento_id = inscricao_dict.get('eventoId')
         for prova in inscricao_dict['provas']:
-            inscricao.provas.append(Prova.query.get(prova['id']))
+            if 'id' in prova:
+                inscricao.provas.append(Prova.query.get(prova['id']))
+            else:
+                for prova_banco in Prova.query.all():
+                    if prova_banco.codigo == prova['codigo']:
+                        inscricao.provas.append(prova_banco)
         for curso in inscricao_dict['cursos']:
             inscricao.cursos.append(Curso.query.get(curso['id']))
         return inscricao
@@ -485,7 +548,7 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
         atleta_dict = {
             'id': self.id,
             'email': self.email,
-            'nomeCompleto': ' '.join([self.nome, self.sobrenome]),
+            'nomeCompleto': self.nome_completo,
             'nome': self.nome,
             'sobrenome': self.sobrenome,
             'sexo': self.sexo,
@@ -500,6 +563,10 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
             else:
                 atleta_dict['inscricoes'] = [inscricao.as_dict() for inscricao in self.inscricoes]
         return atleta_dict
+
+    @property
+    def nome_completo(self):
+        return ' '.join([self.nome, self.sobrenome])
 
     @classmethod
     def obter_atleta(cls, atleta_id):
@@ -560,7 +627,7 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
         return atleta
 
     @classmethod
-    def lista_de_atletas_de_csv(cls, csv_stream):
+    def lista_de_atletas_de_csv(cls, csv_stream, evento_id):
         reader = csv.DictReader(csv_stream)
         lista_atletas = []
         lista_erros = []
@@ -572,6 +639,17 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
             row['telefone'] = row['telefone'].replace(' ', '').replace('(', '').replace(')', '').replace('-', '')
             row['celular'] = row['celular'].replace(' ', '').replace('(', '').replace(')', '').replace('-', '')
             row['nascimento'] = row['nascimento'].replace(' ', '').replace('/', '')
+            row['inscricao'] = {
+                'tipoAfiliacao': row['tipoAfiliacao'],
+                'afiliacao': row['afiliacao'],
+                'nomeTime': row['nomeTime'],
+                'nomeConvidado': row['nomeConvidado'],
+                'nomeSegundoConvidado': row['nomeSegundoConvidado'],
+                'pedidoNumero': row['pedidoNumero'],
+                'eventoId': evento_id,
+                'cursos': [],
+                'provas': [{'codigo': codigo} for codigo in row['provas'].split('#')]
+            }
             lista_atletas.append(row)
         return lista_atletas, lista_erros
 
