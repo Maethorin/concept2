@@ -19,13 +19,7 @@ angular.module(
         configApp($sceDelegateProvider, $httpProvider);
     }])
     .run(['$rootScope', 'Autentic', function($rootScope, Autentic) {
-        $rootScope.pagina = "";
-        $rootScope.titulo = "";
-        $rootScope.$on('$locationChangeSuccess', function(evt, absNewUrl, absOldUrl) {
-            $rootScope.referrer = absOldUrl;
-        });
-        Autentic.atualizaValores();
-        $rootScope.adminLogado = Autentic.estaLogado();
+        baseRun($rootScope, Autentic);
 
         $rootScope.itensMenu = [
             {slug: 'eventos', label: 'eventos', url: '/admin/#/eventos', subItens: []}

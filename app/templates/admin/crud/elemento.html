@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
     <h3>Dados:</h3>
 
     <form novalidate name="formEdicao" class="form-edicao" role="form" ng-submit="enviandoEdicao()">
@@ -35,11 +35,11 @@
                 <thead>
                 <tr>
                     <th>Atleta</th>
+                    <th>Time</th>
                     <th>Email</th>
                     <th>Nascimento</th>
-                    <th>idade</th>
+                    <th>Idade</th>
                     <th>Celular</th>
-                    <th>Telefone</th>
                     <th>Nr Pedido</th>
                     <th>Inscrições</th>
                     <th>Pago?</th>
@@ -49,11 +49,11 @@
                 <tbody>
                 <tr ng-repeat="inscricao in evento.inscricoes">
                     <td>{{inscricao.atleta.nomeCompleto}}</td>
+                    <td>{{inscricao.nomeTime || 'Não Definido'}}</td>
                     <td>{{inscricao.atleta.email}}</td>
                     <td>{{formataData(inscricao.atleta.nascimento)}}</td>
                     <td>{{calculaIdade(inscricao.atleta.nascimento)}}</td>
                     <td>{{formataTelefone(inscricao.atleta.celular)}}</td>
-                    <td>{{formataTelefone(inscricao.atleta.telefone)}}</td>
                     <td>{{inscricao.numeroPedido || 'Não registrado'}}</td>
                     <td>
                         <ul class="provas-selecionadas" id="provas">
