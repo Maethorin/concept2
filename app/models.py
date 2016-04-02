@@ -374,7 +374,9 @@ class Resultado(db.Model, QueryMixin):
         for prova in evento.provas:
             if prova.distancia == 0:
                 continue
-            status = u'Pronto' if len(prova.resultados) > 0 else u'Em Apuração' if agora > prova.data_inicio else u'Não Iniciada'
+            if prova.status and prova.status.code == 'NA':
+                continue
+            status = u'Pronto' if len(prova.resultados) > 0 else u'Em Apuração' if agora > prova.data_inicio else u'Prova Prevista'
             resultados.append({
                 'prova': prova.as_dict(),
                 'resultados': [resultado.as_dict() for resultado in prova.resultados],
@@ -401,6 +403,7 @@ class Prova(db.Model, QueryMixin):
     distancia = db.Column(db.Integer, nullable=False)
     sexo = db.Column(database.SexoTipo())
     tipo = db.Column(database.ProvaTipo())
+    status = db.Column(database.StatusProva())
     revezamento = db.Column(db.Integer)
     ordem = db.Column(db.Integer)
     tempo_execucao = db.Column(db.Integer)

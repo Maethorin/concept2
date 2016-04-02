@@ -21,7 +21,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('prova_id', sa.Integer(), nullable=True),
     sa.Column('atleta_id', sa.Integer(), nullable=True),
-    sa.Column('tempo', sa.Integer(), nullable=True),
+    sa.Column('tempo', sa.String(length=20), nullable=True),
     sa.Column('pontuacao', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['atleta_id'], ['atletas.id'], ),
     sa.ForeignKeyConstraint(['prova_id'], ['provas.id'], ),

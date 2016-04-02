@@ -37,6 +37,13 @@ TIPO_AFILIACAO = [
     ('independente', 'Independente')
 ]
 
+STATUS_PROVA = [
+    ('NA', 'Não Aconteceu'),
+    ('CA', 'Cancelada'),
+    ('EA', 'Em Andamento'),
+    ('FN', 'Finalizada')
+]
+
 
 class ProvaTipo(choice.ChoiceType):
     def __init__(self):
@@ -52,6 +59,14 @@ class SexoTipo(choice.ChoiceType):
 
     def __repr__(self):
         return "SexoTipo()"
+
+
+class StatusProva(choice.ChoiceType):
+    def __init__(self):
+        super(StatusProva, self).__init__(STATUS_PROVA)
+
+    def __repr__(self):
+        return "StatusProva()"
 
 
 class ModalidadeTipo(choice.ChoiceType):
