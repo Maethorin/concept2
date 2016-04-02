@@ -478,6 +478,16 @@ BRA
                 arquivos[prova.codigo] = (cls.MODELO_ARQUIVO.format(**corrida))
         return arquivos
 
+    @classmethod
+    def atualiza_status(cls, prova_id, codigo_status):
+        prova = Prova.query.get(prova_id)
+        if not prova:
+            raise ValueError
+        prova.status = codigo_status
+        db.session.add(prova)
+        db.session.commit()
+        return prova
+
     @property
     def codigo(self):
         return '{}{}{}{}'.format(

@@ -43,6 +43,13 @@ angular.module('concept2Admin.services', [])
             {'update': {method: 'PUT'}}
         );
     }])
+    .factory('Prova', ['$resource', function($resource) {
+        return $resource(
+            '{0}/api/provas/:id'.format([urlBackEnd]),
+            null,
+            {'update': {method: 'PUT'}}
+        );
+    }])
     .factory('Inscricao', ['$resource', function($resource) {
         return $resource(
             '{0}/api/inscricoes/:id'.format([urlBackEnd]),

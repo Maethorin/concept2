@@ -17,11 +17,32 @@ angular.module('concept2Admin.eventos', ['ngRoute'])
         $rootScope.titulo = "Eventos";
         $scope.lista = Evento.query();
     }])
-    .controller("EventoController", ['$rootScope', '$routeParams', '$scope', '$route', 'Upload', 'Evento', 'Inscricao', function($rootScope, $routeParams, $scope, $route, Upload, Evento, Inscricao) {
+    .controller("EventoController", ['$rootScope', '$routeParams', '$scope', '$route', 'Upload', 'Evento', 'Inscricao', 'Prova', function($rootScope, $routeParams, $scope, $route, Upload, Evento, Inscricao, Prova) {
         $scope.slug = $routeParams.slug;
         $rootScope.pagina = "evento";
         $rootScope.titulo = "Evento";
         $scope.evento = Evento.get({id: $scope.slug});
+        $scope.statusProva = [
+            {codigo: 'NA', nome: 'Não Aconteceu'},
+            {codigo: 'CA', nome: 'Cancelada'},
+            {codigo: 'EA', nome: 'Em Andamento'},
+            {codigo: 'EP', nome: 'Em Apuração'},
+            {codigo: 'FN', nome: 'Finalizada'},
+            {codigo: 'PP', nome: 'Prova Prevista'}
+        ];
+        $scope.trocaStatusProva = function(prova, status) {
+            Prova.update(
+                {'id': prova.id},
+                new Prova({'status': status.codigo}),
+                function(response) {
+                    prova.status = response.status;
+                },
+                function(response) {
+                    alert('Erro')
+                }
+            );
+
+        };
         $scope.marcarPago = function(inscricaoId) {
             var inscricao = new Inscricao({estahPago: true});
             Inscricao.update(

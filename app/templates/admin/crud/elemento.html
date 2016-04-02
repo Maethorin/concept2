@@ -4,35 +4,84 @@
     <form novalidate name="formEdicao" class="form-edicao" role="form" ng-submit="enviandoEdicao()">
         <div class="row">
             <div class="col-md-4 campo">
-                <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formEdicao.titulo), 'has-error': campoEstaInvalido(formEdicao.titulo)}">
+                <div class="form-group has-feedback formInput"
+                     ng-class="{'has-success': campoEstaValido(formEdicao.titulo), 'has-error': campoEstaInvalido(formEdicao.titulo)}">
                     <label class="control-label" for="titulo">Título: <i class="fa fa-asterisk"></i></label>
-                    <input type="text" class="form-control" id="titulo" name="titulo" ng-model="evento.titulo" aria-describedby="helpTitulo" required/>
-                    <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formEdicao.titulo), 'fa-close': campoEstaInvalido(formEdicao.titulo)} "></span>
+                    <input type="text" class="form-control" id="titulo" name="titulo" ng-model="evento.titulo"
+                           aria-describedby="helpTitulo" required/>
+                    <span class="fa form-control-feedback" aria-hidden="true"
+                          ng-class="{'fa-check': campoEstaValido(formEdicao.titulo), 'fa-close': campoEstaInvalido(formEdicao.titulo)} "></span>
                     <span id="helpTitulo" class="help-block" ng-show="campoEstaInvalido(formEdicao.titulo)">* o campo é obrigatório *</span>
                 </div>
             </div>
             <div class="col-md-4 campo">
-                <div class="form-group has-feedback formInput" ng-class="{'has-success': campoEstaValido(formEdicao.slug), 'has-error': campoEstaInvalido(formEdicao.slug)}">
+                <div class="form-group has-feedback formInput"
+                     ng-class="{'has-success': campoEstaValido(formEdicao.slug), 'has-error': campoEstaInvalido(formEdicao.slug)}">
                     <label class="control-label" for="slug">Slug: <i class="fa fa-asterisk"></i></label>
-                    <input type="text" class="form-control" id="slug" name="slug" ng-model="evento.slug" aria-describedby="helpSlug" required/>
-                    <span class="fa form-control-feedback" aria-hidden="true" ng-class="{'fa-check': campoEstaValido(formEdicao.slug), 'fa-close': campoEstaInvalido(formEdicao.slug)} "></span>
+                    <input type="text" class="form-control" id="slug" name="slug" ng-model="evento.slug"
+                           aria-describedby="helpSlug" required/>
+                    <span class="fa form-control-feedback" aria-hidden="true"
+                          ng-class="{'fa-check': campoEstaValido(formEdicao.slug), 'fa-close': campoEstaInvalido(formEdicao.slug)} "></span>
                     <span id="helpSlug" class="help-block" ng-show="campoEstaInvalido(formEdicao.slug)">* o campo é obrigatório *</span>
                 </div>
             </div>
             <div class="col-md-4 campo">
                 <div class="form-group has-feedback formInput">
                     <label class="control-label" for="subTitulo">SubTitulo:</label>
-                    <input type="text" class="form-control" id="subTitulo" name="subTitulo" ng-model="evento.subTitulo" aria-describedby="helpSubTitulo"/>
+                    <input type="text" class="form-control" id="subTitulo" name="subTitulo" ng-model="evento.subTitulo"
+                           aria-describedby="helpSubTitulo"/>
                 </div>
             </div>
         </div>
     </form>
+    <h3>Provas</h3>
+    <div class="row provas">
+        <div class="col-md-12">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Data/Hora</th>
+                    <th>Distancia</th>
+                    <th>Tipo</th>
+                    <th>Sexo</th>
+                    <th>Categoria</th>
+                    <th>Subcategoria</th>
+                    <th>Status</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="prova in evento.provas">
+                    <td>{{prova.dia}} {{prova.hora}}</td>
+                    <td>{{prova.distancia || prova.observacao}}</td>
+                    <td>{{prova.tipo}}</td>
+                    <td>{{prova.sexo}}</td>
+                    <td>{{prova.subCategoria.categoria.nome}}</td>
+                    <td>{{prova.subCategoria.nome}}</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="mudaStatusProva" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                {{prova.status}}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="mudaStatusProva">
+                                <li ng-repeat="status in statusProva" ng-click="trocaStatusProva(prova, status)"><a>{{status.nome}}</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <h3>Resultados</h3>
     <div class="row">
         <div class="col-md-4 campo">
             <div class="form-group">
                 <label class="control-label">Envie o arquivo (tam máx de 3MB):</label>
-                <button class="btn btn-primary" type="file" ngf-select="enviaArquivoResultado($file, $invalidFiles)" accept="text/*.csv" ngf-max-size="3MB">Escolha o arquivo</button>
+                <button class="btn btn-primary" type="file" ngf-select="enviaArquivoResultado($file, $invalidFiles)"
+                        accept="text/*.csv" ngf-max-size="3MB">Escolha o arquivo
+                </button>
             </div>
         </div>
     </div>
@@ -75,8 +124,13 @@
                             </li>
                         </ul>
                     </td>
-                    <td><i class="fa inscricao-paga" ng-class="{'fa-check': inscricao.estahPago, 'fa-close': !inscricao.estahPago}"></i></td>
-                    <td><button class="btn btn-sm btn-success" ng-if="!inscricao.estahPago" ng-click="marcarPago(inscricao.id)">marcar pago</button></td>
+                    <td><i class="fa inscricao-paga"
+                           ng-class="{'fa-check': inscricao.estahPago, 'fa-close': !inscricao.estahPago}"></i></td>
+                    <td>
+                        <button class="btn btn-sm btn-success" ng-if="!inscricao.estahPago"
+                                ng-click="marcarPago(inscricao.id)">marcar pago
+                        </button>
+                    </td>
                 </tr>
                 </tbody>
             </table>

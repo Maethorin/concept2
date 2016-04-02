@@ -17,4 +17,5 @@ def create_api(app):
 
     api.add_resource(resources.LoginAdmin, '/admin/api/login')
     api.add_resource(resources.EventosAdmin, '/admin/api/eventos', '/admin/api/eventos/<string:item_id>')
+    api.add_resource(resources.ProvasAdmin, '/admin/api/provas', '/admin/api/provas/<int:item_id>')
     api.add_resource(resources.InscricoesAdmin, '/admin/api/inscricoes', '/admin/api/inscricoes/<int:item_id>')

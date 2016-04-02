@@ -44,6 +44,14 @@ class EventosAdmin(ResourceAdmin):
     model = models.Evento
 
 
+class ProvasAdmin(ResourceAdmin):
+    model = models.Prova
+    def put(self, item_id):
+        if 'status' in request.json:
+            return self.model.atualiza_status(item_id, request.json['status']).as_dict()
+        return {}
+
+
 class InscricoesAdmin(ResourceAdmin):
     model = models.Inscricao
 
