@@ -502,6 +502,8 @@ BRA
         distancia = self.distancia
         tipo = self.tipo.value if self.tipo else ''
         sexo = self.sexo.value if self.sexo else ''
+        status = self.status.value if self.status else 'Aguardando'
+        codigo_status = self.status.code if self.status else 'AG'
         observacao = self.observacao if self.observacao else ''
         sub_categoria = self.sub_categoria.as_dict() if self.sub_categoria else {}
         return {
@@ -513,6 +515,8 @@ BRA
             'distancia': distancia,
             'tipo': tipo,
             'sexo': sexo,
+            'status': status,
+            'codigoStatus': codigo_status,
             'subCategoria': sub_categoria,
             'observacao': observacao,
         }

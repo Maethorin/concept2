@@ -41,6 +41,7 @@ STATUS_PROVA = [
     ('NA', 'Não Aconteceu'),
     ('CA', 'Cancelada'),
     ('EA', 'Em Andamento'),
+    ('EP', 'Em Apuração'),
     ('FN', 'Finalizada'),
     ('PP', 'Prova Prevista')
 ]

@@ -8,8 +8,8 @@
             <div class="panel panel-default caixa-conteudo">
                 <div class="panel-heading">
                     <h3>{{resultadoProva.prova.label}} - {{resultadoProva.prova.subCategoria.label}}</h3>
-                    <span class="label" ng-class="{'label-success': resultadoProva.status == 'Pronto', 'label-warning': resultadoProva.status == 'Prova Prevista', 'label-info': resultadoProva.status == 'Em Apuração'}">
-                        {{ resultadoProva.status }}
+                    <span class="label" ng-class="{'label-success': resultadoProva.prova.codigoStatus == 'FN', 'label-warning': resultadoProva.prova.codigoStatus == 'PP', 'label-info': resultadoProva.prova.codigoStatus == 'AP'}">
+                        {{ resultadoProva.prova.status }}
                     </span>
                 </div>
                 <div class="panel-body">
