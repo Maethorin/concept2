@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 import csv
-from datetime import datetime, timedelta
 import os
-import re
+from StringIO import StringIO
+from datetime import datetime, timedelta
+
 import googlemaps
 import jwt
 from sqlalchemy.exc import IntegrityError
@@ -317,6 +318,80 @@ class Curso(db.Model, QueryMixin):
         }
 
 
+class Resultado(db.Model, QueryMixin):
+    __tablename__ = 'resultados'
+    __mapper_args__ = {
+        'order_by': 'colocacao'
+    }
+    id = db.Column(db.Integer, primary_key=True)
+    prova_id = db.Column(db.Integer, db.ForeignKey('provas.id'))
+    prova = relationship('Prova', back_populates='resultados')
+    atleta_nome = db.Column(db.String)
+    atleta_id = db.Column(db.Integer, db.ForeignKey('atletas.id'))
+    atleta = relationship('Atleta', back_populates='resultados')
+    tempo = db.Column(db.String)
+    pontuacao = db.Column(db.Integer)
+    colocacao = db.Column(db.Integer)
+
+    @property
+    def inscricao(self):
+        for inscricao in self.prova.inscricoes:
+            if self.atleta_id == inscricao.atleta_id:
+                return inscricao
+
+    @classmethod
+    def ler_resultados_do_arquivo(cls, stream, evento_slug):
+        conteudo = stream.read().replace('\r', '').split('\n')
+        colocacoes = []
+        for linha in conteudo[3:]:
+            if linha:
+                if linha == 'Detailed Results':
+                    break
+                colocacoes.append(linha)
+        como_stream = StringIO('\n'.join(colocacoes))
+        reader = csv.DictReader(como_stream)
+        evento = Evento.query.filter_by(slug=evento_slug).first()
+        provas = Prova.query.filter_by(evento_id=evento.id).all()
+        for row in reader:
+            resultado = Resultado()
+            db.session.add(resultado)
+            atleta = Atleta.query.get(row['Bib Number'])
+            if atleta:
+                resultado.atleta = atleta
+            resultado.atleta_nome = row['Boat/Team Name']
+            resultado.prova = [prova for prova in provas if prova.codigo == row['Class']][0]
+            resultado.colocacao = int(row['Place'])
+            resultado.tempo = row['Time Rowed']
+        db.session.commit()
+        return colocacoes
+
+
+    @classmethod
+    def obter_lista(cls, evento_slug):
+        resultados = []
+        evento = Evento.query.filter_by(slug=evento_slug).first()
+        agora = datetime.now()
+        for prova in evento.provas:
+            if prova.distancia == 0:
+                continue
+            status = u'Pronto' if len(prova.resultados) > 0 else u'Em Apuração' if agora > prova.data_inicio else u'Não Iniciada'
+            resultados.append({
+                'prova': prova.as_dict(),
+                'resultados': [resultado.as_dict() for resultado in prova.resultados],
+                'status': status,
+            })
+        return resultados
+
+    def as_dict(self):
+        return {
+            'atleta': self.atleta.as_dict(soh_atleta=True) if self.atleta else {},
+            'atletaNome': self.atleta_nome,
+            'inscricao': self.inscricao.as_dict() if self.inscricao else {},
+            'tempo': self.tempo,
+            'pontuacao': self.pontuacao
+        }
+
+
 class Prova(db.Model, QueryMixin):
     __tablename__ = 'provas'
     __mapper_args__ = {
@@ -336,6 +411,7 @@ class Prova(db.Model, QueryMixin):
     sub_categoria_id = db.Column(db.Integer, db.ForeignKey('sub_categorias.id'))
     sub_categoria = relationship('SubCategoria', back_populates='provas')
     inscricoes = db.relationship('Inscricao', secondary=prova_inscricao, backref='provas')
+    resultados = relationship('Resultado', back_populates='prova')
     MODELO_TIME = """{nomeInscricao}
 {atletaId}
 {label}"""
@@ -548,6 +624,7 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
     celular = db.Column(db.String(11), nullable=False)
     nascimento = db.Column(db.Date(), nullable=False)
     inscricoes = relationship('Inscricao', back_populates='atleta')
+    resultados = relationship('Resultado', back_populates='atleta')
 
     def as_dict(self, soh_atleta=False):
         atleta_dict = {
@@ -615,8 +692,9 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
             return atleta
 
     @classmethod
-    def obter_atleta_com_inscricao_para_o_evento(cls, atleta_id, evento_slug):
-        atleta = cls.query.get(atleta_id)
+    def obter_atleta_com_inscricao_para_o_evento(cls, atleta_id, evento_slug, atleta=None):
+        if not atleta:
+            atleta = cls.query.get(atleta_id)
         atleta.inscricao = None
         for inscricao in atleta.inscricoes:
             if atleta.inscricao is not None:

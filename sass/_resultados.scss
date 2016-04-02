@@ -1,0 +1,52 @@
+.resultados {
+    .caixa-conteudo {
+        .panel-heading {
+            background-color: rgba(100,150,0,0.4);
+            text-align: center;
+            h3 {
+                font-size: 20px;
+                margin-bottom: 7px;
+            }
+            .label {
+                font-size: 12px;
+            }
+        }
+        li {
+            &.pos-1 {
+                background-color: lighten(gold, 20%);
+            }
+            &.pos-2 {
+                background-color: lighten(silver, 20%);
+            }
+            &.pos-3 {
+                background-color: lighten(darkgoldenrod, 20%);
+            }
+        }
+        .nome-atleta {
+            font-size: 12px;
+            &.pos-1, &.pos-2, &.pos-3 {
+                font-size: 14px;
+            }
+
+        }
+        .colocacao {
+            display: inline-block;
+            margin-left: 10px;
+            font-size: 12px;
+            &.pos-1, &.pos-2, &.pos-3 {
+                font-size: 14px;
+            }
+        }
+        .tempo {
+            position: absolute;
+            right: 10px;
+            font-family: monospace;
+            padding: 3px;
+            border: 1px solid darkgrey;
+            font-size: 12px;
+            &.pos-1, &.pos-2, &.pos-3 {
+                font-size: 14px;
+            }
+        }
+    }
+}

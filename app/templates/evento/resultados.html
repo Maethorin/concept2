@@ -1,6 +1,29 @@
-<div class="sobre">
-<h3>Resultados do {{evento.titulo}}</h3>
-<div class="row">
-    <div class="alert alert-info">Durante a prova, visite essa página para conhecer os resultados em tempo real!</div>
-</div>
+<div class="resultados">
+    <h3>Resultados do {{evento.titulo}}</h3>
+    <div class="row">
+        <div class="alert alert-info">Durante a prova, visite essa página para conhecer os resultados em tempo real!</div>
+    </div>
+    <div class="row">
+        <div class="col-md-6" ng-repeat="resultadoProva in resultados">
+            <div class="panel panel-default caixa-conteudo">
+                <div class="panel-heading">
+                    <h3>{{resultadoProva.prova.label}} - {{resultadoProva.prova.subCategoria.label}}</h3>
+                    <span class="label" ng-class="{'label-success': resultadoProva.status == 'Pronto', 'label-warning': resultadoProva.status == 'Não Iniciada', 'label-info': resultadoProva.status == 'Em Apuração'}">
+                        {{ resultadoProva.status }}
+                    </span>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item pos-{{$index + 1}}" ng-repeat="resultado in resultadoProva.resultados">
+                            <span class="label colocacao pos-{{$index + 1}}" ng-class="{'label-success': $index <= 2,'label-info': $index > 2,}">{{ $index + 1 }}</span>
+                            <span class="nome-atleta pos-{{$index + 1}}">
+                                {{ resultado.atletaNome || resultado.atleta.nomeCompleto }}
+                            </span>
+                            <span class="label label-info tempo pos-{{$index + 1}}">{{resultado.tempo}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -76,6 +76,18 @@ def angular_template_admin(template_path):
     return send_from_directory(template_admin_directory, template_path)
 
 
+@web_app.route('/admin/resultado/<string:evento_slug>', methods=['OPTIONS', 'POST'])
+def admin_resultado(evento_slug):
+    if request.method == 'OPTIONS':
+        return Response('OK')
+    resultado = request.files.get('resultado', None)
+    try:
+        models.Resultado.ler_resultados_do_arquivo(resultado, evento_slug)
+        return Response('{}', content_type='application/json')
+    except Exception as ex:
+        return Response('{}', content_type='application/json', status=400)
+
+
 @web_app.route('/json/<json_name>', methods=['GET', 'POST'])
 def angular_json(json_name):
     return web_app.send_static_file("js/app/jsons/{}".format(json_name))

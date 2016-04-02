@@ -7,6 +7,7 @@ angular.module(
     [
         'ngRoute',
         'ngResource',
+        'ngFileUpload',
         'concept2Admin.services',
         'concept2Admin.login',
         'concept2Admin.home',

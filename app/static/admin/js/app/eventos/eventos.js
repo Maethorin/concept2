@@ -17,7 +17,7 @@ angular.module('concept2Admin.eventos', ['ngRoute'])
         $rootScope.titulo = "Eventos";
         $scope.lista = Evento.query();
     }])
-    .controller("EventoController", ['$rootScope', '$routeParams', '$scope', '$route', 'Evento', 'Inscricao', function($rootScope, $routeParams, $scope, $route, Evento, Inscricao) {
+    .controller("EventoController", ['$rootScope', '$routeParams', '$scope', '$route', 'Upload', 'Evento', 'Inscricao', function($rootScope, $routeParams, $scope, $route, Upload, Evento, Inscricao) {
         $scope.slug = $routeParams.slug;
         $rootScope.pagina = "evento";
         $rootScope.titulo = "Evento";
@@ -35,6 +35,22 @@ angular.module('concept2Admin.eventos', ['ngRoute'])
                     alert(response);
                 }
             );
+        };
+        $scope.enviaArquivoResultado = function(file, errFiles) {
+            if (file) {
+                file.upload = Upload.upload({
+                    url: '{0}/resultado/{1}'.format([urlBackEnd, $scope.slug]),
+                    data: {resultado: file}
+                });
+                file.upload.then(
+                    function(response) {
+                        alert('Enviado com sucesso');
+                    },
+                    function(response) {
+                        alert('Erro');
+                    }
+                );
+            }
         };
     }]);
 

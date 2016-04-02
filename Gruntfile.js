@@ -29,6 +29,7 @@ module.exports = function(grunt) {
                     "bower_components/angular/angular.js",
                     "bower_components/angular-route/angular-route.js",
                     "bower_components/angular-resource/angular-resource.js",
+                    "bower_components/ng-file-upload/ng-file-upload.js",
                     "bower_components/jquery/dist/jquery.js",
                     "bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"
                 ],

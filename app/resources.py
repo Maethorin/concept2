@@ -115,6 +115,13 @@ class InscricoesAtletas(Resource):
         return {'result': True}
 
 
+class Resultados(ResourceBase):
+    model = models.Resultado
+
+    def get(self, item_id=None):
+        return self.model.obter_lista(evento_slug=item_id)
+
+
 class Eventos(ResourceBase):
     model = models.Evento
 
