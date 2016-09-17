@@ -11,7 +11,8 @@ angular.module(
         'concept2Admin.services',
         'concept2Admin.login',
         'concept2Admin.home',
-        'concept2Admin.eventos'
+        'concept2Admin.eventos',
+        'concept2Admin.newsletters'
     ])
     .factory('atualizaToken', ['Autentic', '$rootScope', '$q', '$window', function(Autentic, $rootScope, $q, $window) {
         return atualizaTokenFactory(Autentic, $rootScope, $q, $window, true);
@@ -23,6 +24,7 @@ angular.module(
         baseRun($rootScope, Autentic);
 
         $rootScope.itensMenu = [
-            {slug: 'eventos', label: 'eventos', url: '/admin/#/eventos', subItens: []}
+            {slug: 'eventos', label: 'eventos', url: '/admin/#/eventos', subItens: []},
+            {slug: 'newsletter', label: 'newsletter', url: '/admin/#/newsletter', subItens: []}
         ];
     }]);

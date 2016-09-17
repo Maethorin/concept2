@@ -158,16 +158,5 @@ def after_request(resp):
     return resp
 
 
-@web_app.route('/newsletter', methods=['OPTIONS', 'GET', 'POST', 'DELETE'])
-def newsletter():
-    if request.method == 'OPTIONS':
-        return Response('OK')
-    try:
-        models.Newsletter.criar_de_json(request.json)
-        return Response({'resultado': 'OK'})
-    except Exception as ex:
-        return Response(ex, status=500)
-
-
 def run():
     web_app.run(host='0.0.0.0', port=5000, debug=True)

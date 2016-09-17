@@ -111,15 +111,17 @@
                         <div class="row">
                             <div class="col-md-12 form-group newsletter">
                                 <label for="newsletter">receba nossas notícias!</label>
-
                                 <form novalidate name="formNewsletter">
                                 <div class="input-group input-group-sm">
-                                        <input type="email" id="newsletter" name="newsletter" required ng-model="emailNewsletter" class="form-control" placeholder="e-mail" aria-describedby="sizing-addon3">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button" ng-click="enviarNewsletter(formNewsletter)">{{ labelNewsletter }}</button>
-                                        </span>
+                                    <input type="email" id="newsletter" name="newsletter" required ng-model="emailNewsletter" class="form-control" placeholder="e-mail" aria-describedby="sizing-addon3">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" ng-click="enviarNewsletter(formNewsletter)">{{ labelNewsletter }}</button>
+                                    </span>
                                 </div>
                                 </form>
+                                <div class="alert alert-danger" ng-show="emailJaExisteNaNewsletter">
+                                    <strong>Já cadastrado:</strong> Este email já consta na nossa newsletter.
+                                </div>
                             </div>
                         </div>
                         <div class="row missao">

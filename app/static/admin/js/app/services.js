@@ -63,4 +63,7 @@ angular.module('concept2Admin.services', [])
             null,
             {'update': {method: 'PUT'}}
         );
+    }])
+    .factory('Newsletter', ['$resource', function($resource) {
+        return $resource('{0}/api/newsletter'.format([urlBackEnd]));
     }]);

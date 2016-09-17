@@ -781,7 +781,7 @@ class Noticia(db.Model, QueryMixin):
 class Newsletter(db.Model, QueryMixin):
     __tablename__ = 'newsletters'
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(), nullable=False)
+    email = db.Column(db.String(), nullable=False, unique=True)
     ultimo_envio = db.Column(db.DateTime)
 
     @classmethod
@@ -790,10 +790,18 @@ class Newsletter(db.Model, QueryMixin):
         newsletter.email = json_data['email']
         newsletter.ultimo_envio = datetime.now()
         db.session.add(newsletter)
-        db.session.commit()
-        return newsletter.as_dict()
+        try:
+            db.session.commit()
+            return newsletter
+        except IntegrityError:
+            raise EmailJaExisteNoNewsLetter('Email já cadstrado')
 
     def as_dict(self):
         return {
-            'email': self.email
+            'email': self.email,
+            'ultimo_enviado': self.ultimo_envio.strftime('%d/%m/%Y')
         }
+
+
+class EmailJaExisteNoNewsLetter(Exception):
+    pass

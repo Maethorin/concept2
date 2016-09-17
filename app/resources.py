@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import re
 
 from flask import request, g
 from flask_restful import Resource
@@ -15,22 +16,44 @@ def usuario_esta_logado(eh_admin=False):
     return True
 
 
+def camel_to_snake(name):
+    s1 = re.sub('(.)([A-Z][a-z]+)', r'\1_\2', name)
+    return re.sub('([a-z0-9])([A-Z])', r'\1_\2', s1).lower()
+
+
+def snake_to_camel(name):
+    result = []
+    for index, part in enumerate(name.split('_')):
+        if index == 0:
+            result.append(part.lower())
+        else:
+            result.append(part.capitalize())
+    return ''.join(result)
+
+
 class ResourceBase(Resource):
     model = None
 
     def obter_lista(self, *args, **kwargs):
-        return [item.as_dict() for item in self.model.obter_lista(*args, **kwargs)]
+        return [self.response(item.as_dict()) for item in self.model.obter_lista(*args, **kwargs)]
 
     def obter_item(self, item_id):
-        return self.model.obter_item(item_id).as_dict()
+        return self.response(self.model.obter_item(item_id).as_dict())
 
     def get(self, item_id=None):
         if not item_id:
             return self.obter_lista()
         return self.obter_item(item_id)
 
+    @property
+    def payload(self):
+        return {camel_to_snake(key): value for key, value in request.json.iteritems()}
+
     def options(self, *args, **kwargs):
         return {'result': True}
+
+    def response(self, data_dict):
+        return {snake_to_camel(key): value for key, value in data_dict.iteritems()}
 
 
 class ResourceAdmin(ResourceBase):
@@ -42,6 +65,10 @@ class ResourceAdmin(ResourceBase):
 
 class EventosAdmin(ResourceAdmin):
     model = models.Evento
+
+
+class NewsletterAdmin(ResourceAdmin):
+    model = models.Newsletter
 
 
 class ProvasAdmin(ResourceAdmin):
@@ -132,6 +159,16 @@ class Resultados(ResourceBase):
 
 class Eventos(ResourceBase):
     model = models.Evento
+
+
+class Newsletter(ResourceBase):
+    model = models.Newsletter
+
+    def post(self):
+        try:
+            return self.response(self.model.criar_de_json(self.payload).as_dict())
+        except models.EmailJaExisteNoNewsLetter as ex:
+            return {'erro': 'ja-existe'}, 400
 
 
 class OndeRemar(ResourceBase):

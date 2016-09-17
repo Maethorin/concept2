@@ -31,7 +31,9 @@ angular.module(
         $rootScope.atletaLogado = Autentic.estaLogado();
         $rootScope.labelNewsletter = 'ASSINAR';
         $rootScope.emailNewsletter = null;
+        $rootScope.emailJaExisteNaNewsletter = false;
         $rootScope.enviarNewsletter = function(form) {
+            $rootScope.emailJaExisteNaNewsletter = false;
             if (form.$invalid) {
                 alert('Digite um email válido');
                 return false;
@@ -46,9 +48,14 @@ angular.module(
                 function() {
                     $rootScope.labelNewsletter = 'PRONTO';
                 },
-                function() {
+                function(response) {
                     $rootScope.labelNewsletter = 'ASSINAR';
-                    alert('Ocorreu um erro no registro da newsletter. Por favor, tente de novo');
+                    if (response.status == 400 && response.data.erro == 'ja-existe') {
+                        $rootScope.emailJaExisteNaNewsletter = true;
+                    }
+                    else {
+                        alert('Ocorreu um erro no registro da newsletter. Por favor, tente de novo');
+                    }
                 }
             )
         }
