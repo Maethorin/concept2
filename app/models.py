@@ -27,6 +27,12 @@ class QueryMixin(object):
     def obter_item(cls, item_id):
         return cls.query.get(item_id)
 
+    @classmethod
+    def remover(cls, item_id):
+        item = cls.obter_item(item_id)
+        db.session.delete(item)
+        db.session.commit()
+
 
 class AutenticMixin(object):
     def hash_senha(self, password):
@@ -798,6 +804,7 @@ class Newsletter(db.Model, QueryMixin):
 
     def as_dict(self):
         return {
+            'id': self.id,
             'email': self.email,
             'ultimo_enviado': self.ultimo_envio.strftime('%d/%m/%Y')
         }

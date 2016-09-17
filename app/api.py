@@ -20,4 +20,4 @@ def create_api(app):
     api.add_resource(resources.EventosAdmin, '/admin/api/eventos', '/admin/api/eventos/<string:item_id>')
     api.add_resource(resources.ProvasAdmin, '/admin/api/provas', '/admin/api/provas/<int:item_id>')
     api.add_resource(resources.InscricoesAdmin, '/admin/api/inscricoes', '/admin/api/inscricoes/<int:item_id>')
-    api.add_resource(resources.NewsletterAdmin, '/admin/api/newsletter')
+    api.add_resource(resources.NewsletterAdmin, '/admin/api/newsletter', '/admin/api/newsletter/<int:item_id>')

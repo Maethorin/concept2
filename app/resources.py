@@ -70,6 +70,10 @@ class EventosAdmin(ResourceAdmin):
 class NewsletterAdmin(ResourceAdmin):
     model = models.Newsletter
 
+    def delete(self, item_id):
+        self.model.remover(item_id)
+        return {'resultado': 'OK'}
+
 
 class ProvasAdmin(ResourceAdmin):
     model = models.Prova

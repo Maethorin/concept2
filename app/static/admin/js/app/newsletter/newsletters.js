@@ -12,5 +12,20 @@ angular.module('concept2Admin.newsletters', ['ngRoute'])
         $rootScope.pagina = "newsletter";
         $rootScope.titulo = "Newsletter";
         $scope.lista = Newsletter.query();
+        $scope.itemSelecionado = null;
+        $scope.selecionaItem = function(item) {
+            $scope.itemSelecionado = item;
+        };
+        $scope.removeNewsletter = function(newsletter) {
+            Newsletter.delete(
+                {id: newsletter.id},
+                function() {
+                    var index = _.findIndex($scope.lista, function(item) {
+                        return item.id == newsletter.id
+                    });
+                    $scope.lista.splice(index, 1);
+                }
+            );
+        };
     }]);
 

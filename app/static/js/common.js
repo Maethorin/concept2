@@ -148,9 +148,9 @@ var atualizaTokenFactory = function(Autentic, $rootScope, $q, $window, ehAdmin) 
             if (response.status == 401) {
                 Autentic.limpaValores();
                 $rootScope[propriedadeLogado] = Autentic.estaLogado();
-            }
-            if (ehAdmin && $window.location.hash.indexOf('#/login') == -1) {
-                $window.location = '{0}/#/login'.format([urlBackEnd]);
+                if (ehAdmin && $window.location.hash.indexOf('#/login') == -1) {
+                    $window.location = '{0}/#/login'.format([urlBackEnd]);
+                }
             }
             return $q.reject(response);
         },

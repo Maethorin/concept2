@@ -65,5 +65,5 @@ angular.module('concept2Admin.services', [])
         );
     }])
     .factory('Newsletter', ['$resource', function($resource) {
-        return $resource('{0}/api/newsletter'.format([urlBackEnd]));
+        return $resource('{0}/api/newsletter/:id'.format([urlBackEnd]));
     }]);

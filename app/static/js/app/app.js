@@ -26,13 +26,16 @@ angular.module(
     .config(['$sceDelegateProvider', '$httpProvider', function($sceDelegateProvider, $httpProvider) {
         configApp($sceDelegateProvider, $httpProvider);
     }])
-    .run(['$rootScope', 'Autentic', 'Newsletter', function($rootScope, Autentic, Newsletter) {
+    .run(['$rootScope', '$timeout', 'Autentic', 'Newsletter', function($rootScope, $timeout, Autentic, Newsletter) {
         baseRun($rootScope, Autentic);
         $rootScope.atletaLogado = Autentic.estaLogado();
         $rootScope.labelNewsletter = 'ASSINAR';
         $rootScope.emailNewsletter = null;
         $rootScope.emailJaExisteNaNewsletter = false;
         $rootScope.enviarNewsletter = function(form) {
+            if ($rootScope.labelNewsletter == 'ENVIANDO') {
+                return false;
+            }
             $rootScope.emailJaExisteNaNewsletter = false;
             if (form.$invalid) {
                 alert('Digite um email válido');
@@ -47,6 +50,9 @@ angular.module(
                 {email: $rootScope.emailNewsletter},
                 function() {
                     $rootScope.labelNewsletter = 'PRONTO';
+                    $timeout(function() {
+                        $rootScope.labelNewsletter = 'ASSINAR';
+                    }, 1500);
                 },
                 function(response) {
                     $rootScope.labelNewsletter = 'ASSINAR';
