@@ -768,3 +768,32 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
 # quantidade de maq na prova (vai definir as baterias)
 # Prova: TIPO, DISTANCIA, CATEGORIA, SEXO
 # maquina recebe um nr da prova e mostra quem tá competindo junto.
+
+
+class Noticia(db.Model, QueryMixin):
+    __tablename__ = 'noticias'
+    id = db.Column(db.Integer, primary_key=True)
+    slug = db.Column(db.String(), nullable=False)
+    resumo = db.Column(db.String(), nullable=False)
+    corpo = db.Column(db.String(), nullable=False)
+
+
+class Newsletter(db.Model, QueryMixin):
+    __tablename__ = 'newsletters'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(), nullable=False)
+    ultimo_envio = db.Column(db.DateTime)
+
+    @classmethod
+    def criar_de_json(cls, json_data):
+        newsletter = cls()
+        newsletter.email = json_data['email']
+        newsletter.ultimo_envio = datetime.now()
+        db.session.add(newsletter)
+        db.session.commit()
+        return newsletter.as_dict()
+
+    def as_dict(self):
+        return {
+            'email': self.email
+        }

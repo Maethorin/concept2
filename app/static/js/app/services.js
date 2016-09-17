@@ -43,4 +43,7 @@ angular.module('concept2.services', [])
     }])
     .factory('Resultado', ['$resource', function($resource) {
         return $resource('{0}/api/eventos/:id/resultados'.format([urlBackEnd]));
+    }])
+    .factory('Newsletter', ['$resource', function($resource) {
+        return $resource('{0}/newsletter'.format([urlBackEnd]));
     }]);
