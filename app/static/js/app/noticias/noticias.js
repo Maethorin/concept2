@@ -7,11 +7,8 @@ angular.module('concept2.noticias', ['ngRoute'])
                 controller: 'NoticiasController'
             })
     }])
-    .controller('NoticiasController', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
+    .controller('NoticiasController', ['$rootScope', '$scope', 'Noticia', function($rootScope, $scope, Noticia) {
         $rootScope.pagina = "noticias";
         $rootScope.titulo = "Noticias";
-        $scope.noticias = [];
-        $http.get('/json/noticias.json').then(function(response) {
-            $scope.noticias = response.data;
-        });
+        $scope.noticias = Noticia.query();
     }]);

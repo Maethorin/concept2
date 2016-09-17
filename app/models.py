@@ -43,6 +43,10 @@ class QueryMixin(object):
         slug = slug.encode('ascii', 'ignore').lower()
         return slug
 
+    def save_db(self):
+        db.session.add(self)
+        db.session.commit()
+
 
 class AutenticMixin(object):
     def hash_senha(self, password):
@@ -773,47 +777,40 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
         db.session.commit()
 
 
-# prova pode ter uma ou mais... perguntar o tempo e agrupar na bateria quem não sabe fica por último
-# provas vem primeiro e as inscrições são feitas em cima das provas... filtrar provas de acordo com os dados
-# quantidade de maq na prova (vai definir as baterias)
-# Prova: TIPO, DISTANCIA, CATEGORIA, SEXO
-# maquina recebe um nr da prova e mostra quem tá competindo junto.
-
-
 class Noticia(db.Model, QueryMixin):
     __tablename__ = 'noticias'
     id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String(), nullable=False)
     slug = db.Column(db.String(), nullable=False, unique=True)
     resumo = db.Column(db.String(), nullable=False)
+    thumbnail_url = db.Column(db.String())
     corpo = db.Column(db.Text(), nullable=False)
     publicado = db.Column(db.Boolean)
     data_publicacao = db.Column(db.DateTime)
 
     @classmethod
-    def atribui_valores(cls, noticia, json_data, publicado=False):
-        noticia.titulo = json_data['titulo']
-        noticia.slug = cls.slugify(json_data['titulo'])[:30]
-        noticia.resumo = json_data['resumo']
-        noticia.corpo = json_data['corpo']
-        noticia.publicado = publicado
+    def atribui_valores(cls, noticia, json_data):
+        noticia.titulo = json_data.get('titulo', noticia.titulo)
+        noticia.slug = cls.slugify(noticia.titulo)[:30]
+        noticia.resumo = json_data.get('resumo', noticia.resumo)
+        noticia.corpo = json_data.get('corpo', noticia.corpo)
+        noticia.publicado = json_data.get('publicado', noticia.publicado)
+        noticia.thumbnail_url = json_data.get('thumbnail_url', None)
 
     @classmethod
     def criar_de_json(cls, json_data):
         noticia = cls()
         cls.atribui_valores(noticia, json_data)
-        db.session.add(noticia)
-        db.session.commit()
+        noticia.save_db()
         return noticia
 
     @classmethod
     def atualizar_de_json(cls, item_id, json_data):
         noticia = cls.obter_item(item_id)
-        cls.atribui_valores(noticia, json_data, json_data['publicado'])
-        if json_data['publicado']:
+        cls.atribui_valores(noticia, json_data)
+        if json_data.get('publicado', False):
             noticia.data_publicacao = datetime.now()
-        db.session.add(noticia)
-        db.session.commit()
+        noticia.save_db()
         return noticia
 
     def as_dict(self):
@@ -824,6 +821,7 @@ class Noticia(db.Model, QueryMixin):
             'resumo': self.resumo,
             'corpo': self.corpo,
             'publicado': self.publicado,
+            'thumbnail_url': self.thumbnail_url,
             'data_publicacao': self.data_publicacao.strftime('%d/%m/%Y %H:%M') if self.data_publicacao else None
         }
 
@@ -839,9 +837,8 @@ class Newsletter(db.Model, QueryMixin):
         newsletter = cls()
         newsletter.email = json_data['email']
         newsletter.ultimo_envio = datetime.now()
-        db.session.add(newsletter)
         try:
-            db.session.commit()
+            newsletter.save_db()
             return newsletter
         except IntegrityError:
             raise cls.JaExiste('Email já cadstrado')

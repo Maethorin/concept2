@@ -16,11 +16,21 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
                 controller: 'NoticiaController'
             });
     }])
-    .controller("NoticiasController", ['$rootScope', '$scope', 'Noticia', function($rootScope, $scope, Noticia) {
+    .controller("NoticiasController", ['$rootScope', '$scope', 'Noticia', 'Carregando', function($rootScope, $scope, Noticia, Carregando) {
         $rootScope.pagina = "noticias";
         $rootScope.titulo = "noticias";
-        $scope.lista = Noticia.query();
+        Carregando.show();
+        $scope.lista = Noticia.query(function() {
+            Carregando.hide();
+        });
         $scope.itemSelecionado = null;
+        $scope.pesquisa = '';
+        $scope.pesquisar = function(noticia) {
+            function valorIgual(valor) {
+                return valor.toLowerCase().indexOf($scope.pesquisa.toLowerCase()) > -1;
+            }
+            return valorIgual(noticia.titulo) || valorIgual(noticia.resumo);
+        };
         $scope.selecionaItem = function(item) {
             $scope.itemSelecionado = item;
         };
@@ -36,15 +46,17 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
             );
         };
     }])
-    .controller("NoticiaController", ['$rootScope', '$routeParams', '$scope', '$location', 'Noticia', function($rootScope, $routeParams, $scope, $location, Noticia) {
+    .controller("NoticiaController", ['$rootScope', '$routeParams', '$scope', '$location', '$route', 'Upload', 'Noticia', 'Carregando', function($rootScope, $routeParams, $scope, $location, $route, Upload, Noticia, Carregando) {
         $scope.noticiaId = $routeParams.id;
         $rootScope.pagina = "noticia";
         $rootScope.titulo = "Noticia";
-        $scope.exibePublicar = true;
+        $scope.modoEdicao = true;
+        Carregando.show();
         $scope.noticia = Noticia.get(
             {id: $scope.noticiaId},
             function() {
                 $scope.labelPublicar = $scope.noticia.publicado ? 'Despublicar' : 'Publicar';
+                Carregando.hide();
             }
         );
         $scope.erro = null;
@@ -53,12 +65,14 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
             $scope.gravar();
         };
         $scope.gravar = function() {
+            Carregando.show();
             $scope.erro = null;
             $scope.noticia.$update({id: $scope.noticiaId}).then(
                 function() {
                     $location.path('/noticias');
                 },
                 function(response) {
+                    Carregando.hide();
                     $scope.erro = {
                         codigo: response.status,
                         conteudo: response
@@ -66,13 +80,31 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
                 }
             );
         };
+        $scope.enviaThumbnail = function(file, errFiles) {
+            Carregando.show();
+            if (file) {
+                file.upload = Upload.upload({
+                    url: '{0}/api/noticias/imagem'.format([urlBackEnd]),
+                    data: {imagem: file, noticia: $scope.noticia.id, tipo: 'thumbnail'}
+                });
+                file.upload.then(
+                    function() {
+                        $route.reload();
+                    },
+                    function() {
+                        alert('Erro');
+                    }
+                );
+            }
+        };
     }])
-    .controller("NoticiaNovaController", ['$rootScope', '$scope', '$location', 'Noticia', function($rootScope, $scope, $location, Noticia) {
+    .controller("NoticiaNovaController", ['$rootScope', '$scope', '$location', 'Noticia', 'Carregando', function($rootScope, $scope, $location, Noticia, Carregando) {
         $rootScope.pagina = "noticia";
         $rootScope.titulo = "Nova Noticia";
         $scope.noticia = new Noticia();
         $scope.erro = null;
         $scope.gravar = function() {
+            Carregando.show();
             $scope.erro = null;
             $scope.noticia.$save().then(
                 function(response) {

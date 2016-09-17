@@ -23,3 +23,4 @@ def create_api(app):
     api.add_resource(resources.InscricoesAdmin, '/admin/api/inscricoes', '/admin/api/inscricoes/<int:item_id>')
     api.add_resource(resources.NewsletterAdmin, '/admin/api/newsletters', '/admin/api/newsletters/<int:item_id>')
     api.add_resource(resources.NoticiaAdmin, '/admin/api/noticias', '/admin/api/noticias/<int:item_id>')
+    api.add_resource(resources.NoticiaImagemAdmin, '/admin/api/noticias/imagem')

@@ -22,6 +22,19 @@ angular.module('concept2Admin.services', [])
             this.atualizaValores();
         };
     }])
+    .service('Carregando', [function() {
+        this.carregando = false;
+        this.show = function() {
+            if (!this.carregando) {
+                this.carregando = true;
+                waitingDialog.show('Carregando...');
+            }
+        };
+        this.hide = function() {
+            this.carregando = false;
+            waitingDialog.hide();
+        };
+    }])
     .factory('OndeRemar', ['$resource', function($resource) {
         return $resource(
             '{0}/api/onde-remar/:id'.format([urlBackEnd]),

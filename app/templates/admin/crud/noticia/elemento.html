@@ -1,5 +1,18 @@
 <div class="container-fluid">
-    <h3>Dados:</h3>
+    <h3>Notícia:</h3>
+    <div class="row" ng-show="modoEdicao">
+        <div class="col-md-4 campo">
+            <div class="form-group">
+                <label class="control-label">Thumbnail:</label>
+                <button class="btn btn-primary" type="file" ngf-select="enviaThumbnail($file, $invalidFiles)"
+                        accept="text/*.jpg" ngf-max-size="3MB">Escolha o arquivo
+                </button>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <img  ng-show="noticia.thumbnailUrl" src="{{noticia.thumbnailUrl}}" />
+        </div>
+    </div>
 
     <form novalidate name="formEdicao" class="form-edicao" role="form">
         <div class="row">
@@ -47,7 +60,7 @@
         </div>
         <div class="row">
             <div class="col-md-8"></div>
-            <div class="col-md-2"><button ng-show="exibePublicar" class="btn btn-primary" ng-class="{'btn-warning': !noticia.publicado, 'btn-danger': noticia.publicado}" type="button" ng-click="publicar(noticia.publicado)">{{ labelPublicar }}</button></div>
+            <div class="col-md-2"><button ng-show="modoEdicao" class="btn btn-primary" ng-class="{'btn-warning': !noticia.publicado, 'btn-danger': noticia.publicado}" type="button" ng-click="publicar(noticia.publicado)">{{ labelPublicar }}</button></div>
             <div class="col-md-2"><button class="btn btn-primary" type="button" ng-click="gravar()">Gravar</button></div>
         </div>
     </form>

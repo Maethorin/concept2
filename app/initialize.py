@@ -14,6 +14,7 @@ database.AppRepository.db = SQLAlchemy(web_app)
 app_directory = os.path.join(os.getcwd(), 'app')
 template_directory = os.path.join(app_directory, 'templates')
 donwload_directory = os.path.join(app_directory, 'downloads')
+media_directory = os.path.join(app_directory, 'media')
 template_admin_directory = os.path.join(template_directory, 'admin')
 
 import api, models
@@ -131,6 +132,12 @@ def cria_arquivos():
 def downloads(template_path):
     response = send_from_directory(donwload_directory, template_path)
     response.headers["Content-Disposition"] = "attachment; filename={}".format(template_path)
+    return response
+
+
+@web_app.route('/media/<path:media_path>', methods=['GET'])
+def media(media_path):
+    response = send_from_directory(media_directory, media_path)
     return response
 
 

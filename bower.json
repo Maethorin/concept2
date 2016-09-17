@@ -19,6 +19,7 @@
     "bootstrap-sass": "~>3.3.6",
     "fontawesome": "~4.5.0",
     "moment": null,
-    "angular-wysiwyg": "^1.2.4"
+    "angular-wysiwyg": "^1.2.4",
+    "bootstrap-waitingfor": "^1.2.4"
   }
 }

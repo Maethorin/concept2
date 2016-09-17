@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import re
 
 from flask import request, g
@@ -63,7 +64,11 @@ class ResourceBase(Resource):
 
     @property
     def payload(self):
-        return {camel_to_snake(key): value for key, value in request.json.iteritems()}
+        if request.json:
+            return {camel_to_snake(key): value for key, value in request.json.iteritems()}
+        if request.form:
+            return {camel_to_snake(key): value for key, value in request.form.iteritems()}
+        return {}
 
     def options(self, *args, **kwargs):
         return {'result': True}
@@ -106,9 +111,32 @@ class NoticiaAdmin(ResourceAdmin):
     model = models.Noticia
 
 
+class NoticiaImagemAdmin(ResourceAdmin):
+    model = models.Noticia
+
+    def post(self):
+        if not usuario_esta_logado(eh_admin=True):
+            return {'result': 'Não autorizado'}, 401
+        imagem = request.files.get('imagem', None)
+        app_directory = os.path.join(os.getcwd(), 'app')
+        media_directory = os.path.join(app_directory, 'media')
+        item_id = self.payload['noticia']
+        tipo = self.payload['tipo']
+        pasta = '{}/noticias/{}'.format(media_directory, item_id)
+        nome_arquivo = '{}.jpg'.format(tipo)
+        if not os.path.exists(pasta):
+            os.makedirs(pasta)
+        imagem.save(os.path.join(pasta, nome_arquivo))
+        if tipo == 'thumbnail':
+            self.model.atualizar_de_json(item_id, {'thumbnail_url': '/media/noticias/{}/{}'.format(item_id, nome_arquivo)})
+        return {'resultado': 'OK'}
+
+
 class ProvasAdmin(ResourceAdmin):
     model = models.Prova
     def put(self, item_id):
+        if not usuario_esta_logado(eh_admin=True):
+            return {'result': 'Não autorizado'}, 401
         if 'status' in request.json:
             return self.model.atualiza_status(item_id, request.json['status']).as_dict()
         return {}
@@ -118,6 +146,8 @@ class InscricoesAdmin(ResourceAdmin):
     model = models.Inscricao
 
     def put(self, item_id):
+        if not usuario_esta_logado(eh_admin=True):
+            return {'result': 'Não autorizado'}, 401
         if 'estahPago' in request.json:
             return self.model.define_pagamento(item_id, request.json['estahPago']).as_dict()
 
