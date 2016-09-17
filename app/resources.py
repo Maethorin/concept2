@@ -45,6 +45,10 @@ class ResourceBase(Resource):
             return self.obter_lista()
         return self.obter_item(item_id)
 
+    def delete(self, item_id):
+        self.model.remover(item_id)
+        return {'resultado': 'OK'}
+
     @property
     def payload(self):
         return {camel_to_snake(key): value for key, value in request.json.iteritems()}
@@ -62,6 +66,11 @@ class ResourceAdmin(ResourceBase):
             return {'result': 'Não autorizado'}, 401
         return super(ResourceAdmin, self).get(item_id)
 
+    def delete(self, item_id):
+        if not usuario_esta_logado(eh_admin=True):
+            return {'result': 'Não autorizado'}, 401
+        return super(ResourceAdmin, self).delete(item_id)
+
 
 class EventosAdmin(ResourceAdmin):
     model = models.Evento
@@ -70,9 +79,9 @@ class EventosAdmin(ResourceAdmin):
 class NewsletterAdmin(ResourceAdmin):
     model = models.Newsletter
 
-    def delete(self, item_id):
-        self.model.remover(item_id)
-        return {'resultado': 'OK'}
+
+class NoticiaAdmin(ResourceAdmin):
+    model = models.Noticia
 
 
 class ProvasAdmin(ResourceAdmin):
@@ -163,6 +172,10 @@ class Resultados(ResourceBase):
 
 class Eventos(ResourceBase):
     model = models.Evento
+
+
+class Noticia(ResourceBase):
+    model = models.Noticia
 
 
 class Newsletter(ResourceBase):

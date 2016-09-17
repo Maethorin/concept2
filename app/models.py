@@ -33,6 +33,12 @@ class QueryMixin(object):
         db.session.delete(item)
         db.session.commit()
 
+    @classmethod
+    def slugify(cls, value):
+        slug = unicodedata.normalize('NFKD', value)
+        slug = slug.encode('ascii', 'ignore').lower()
+        return slug
+
 
 class AutenticMixin(object):
     def hash_senha(self, password):
@@ -447,12 +453,6 @@ BRA
     DE_PARA_TAMANHO = {'I': 0, 'D': 2, 'Q': 4, '8': 8, 'R': 2}
 
     @classmethod
-    def slugify(cls, value):
-        slug = unicodedata.normalize('NFKD', value)
-        slug = slug.encode('ascii', 'ignore').lower()
-        return slug
-
-    @classmethod
     def gera_arquivo_texto(cls, total_barco=8):
         arquivos = {}
         for prova in Prova.query.all():
@@ -779,9 +779,56 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
 class Noticia(db.Model, QueryMixin):
     __tablename__ = 'noticias'
     id = db.Column(db.Integer, primary_key=True)
-    slug = db.Column(db.String(), nullable=False)
+    titulo = db.Column(db.String(), nullable=False)
+    slug = db.Column(db.String(), nullable=False, unique=True)
     resumo = db.Column(db.String(), nullable=False)
-    corpo = db.Column(db.String(), nullable=False)
+    corpo = db.Column(db.Text(), nullable=False)
+    publicado = db.Column(db.Boolean)
+    data_publicacao = db.Column(db.DateTime)
+
+    @classmethod
+    def criar_de_json(cls, json_data):
+        noticia = cls()
+        noticia.titulo = json_data['titulo']
+        noticia.slug = cls.slugify(json_data['titulo'])[:15]
+        noticia.resumo = json_data['resumo']
+        noticia.corpo = json_data['corpo']
+        noticia.publicado = False
+        db.session.add(noticia)
+        db.session.commit()
+        return noticia
+
+    @classmethod
+    def aterar_status_publicacao(cls, item_id, publicado):
+        noticia = cls.obter_item(item_id)
+        noticia.publicado = publicado
+        if publicado:
+            noticia.data_publicacao = datetime.now()
+        db.session.add(noticia)
+        db.session.commit()
+        return noticia
+
+    @classmethod
+    def editar_noticia(cls, item_id, json_data):
+        noticia = cls.obter_item(item_id)
+        noticia.titulo = json_data['titulo']
+        noticia.slug = cls.slugify(json_data['titulo'])[:15]
+        noticia.resumo = json_data['resumo']
+        noticia.corpo = json_data['corpo']
+        db.session.add(noticia)
+        db.session.commit()
+        return noticia
+
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'titulo': self.titulo,
+            'slug': self.slug,
+            'resumo': self.resumo,
+            'corpo': self.corpo,
+            'publicado': self.publicado,
+            'data_publicacao': self.data_publicacao.strftime('%d/%m/%Y %H:%M')
+        }
 
 
 class Newsletter(db.Model, QueryMixin):

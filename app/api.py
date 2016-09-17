@@ -11,6 +11,7 @@ def create_api(app):
     api.add_resource(resources.Eventos, '/api/eventos', '/api/eventos/<string:item_id>')
     api.add_resource(resources.Resultados, '/api/eventos/<string:item_id>/resultados')
     api.add_resource(resources.Newsletter, '/api/newsletter')
+    api.add_resource(resources.Noticia, '/api/noticia', '/api/noticia/<int:item_id>')
 
     api.add_resource(resources.LoginAtleta, '/api/login')
     api.add_resource(resources.Atletas, '/api/atletas', '/api/atletas/<int:item_id>', '/api/atletas/<int:item_id>/<string:evento_slug>')
@@ -21,3 +22,4 @@ def create_api(app):
     api.add_resource(resources.ProvasAdmin, '/admin/api/provas', '/admin/api/provas/<int:item_id>')
     api.add_resource(resources.InscricoesAdmin, '/admin/api/inscricoes', '/admin/api/inscricoes/<int:item_id>')
     api.add_resource(resources.NewsletterAdmin, '/admin/api/newsletter', '/admin/api/newsletter/<int:item_id>')
+    api.add_resource(resources.NoticiaAdmin, '/admin/api/noticia', '/api/noticia/<int:item_id>')
