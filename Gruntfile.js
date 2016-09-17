@@ -29,12 +29,14 @@ module.exports = function(grunt) {
                     "bower_components/moment/moment.js",
                     "bower_components/moment/locale/pt-br.js",
                     "bower_components/lodash/dist/lodash.js",
+                    "bower_components/jquery/dist/jquery.js",
+                    "bower_components/bootstrap-sass/assets/javascripts/bootstrap.js",
                     "bower_components/angular/angular.js",
                     "bower_components/angular-route/angular-route.js",
                     "bower_components/angular-resource/angular-resource.js",
                     "bower_components/ng-file-upload/ng-file-upload.js",
-                    "bower_components/jquery/dist/jquery.js",
-                    "bower_components/bootstrap-sass/assets/javascripts/bootstrap.js"
+                    "bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js",
+                    "bower_components/angular-wysiwyg/dist/angular-wysiwyg.js"
                 ],
                 dest: 'app/static/admin/js/componentes-admin.js'
             },

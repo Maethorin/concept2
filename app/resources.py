@@ -49,6 +49,18 @@ class ResourceBase(Resource):
         self.model.remover(item_id)
         return {'resultado': 'OK'}
 
+    def post(self):
+        try:
+            return self.response(self.model.criar_de_json(self.payload).as_dict())
+        except self.model.JaExiste:
+            return {'erro': 'ja-existe'}, 400
+
+    def put(self, item_id):
+        try:
+            return self.response(self.model.atualizar_de_json(item_id, self.payload).as_dict())
+        except self.model.JaExiste:
+            return {'erro': 'ja-existe'}, 400
+
     @property
     def payload(self):
         return {camel_to_snake(key): value for key, value in request.json.iteritems()}
@@ -65,6 +77,16 @@ class ResourceAdmin(ResourceBase):
         if not usuario_esta_logado(eh_admin=True):
             return {'result': 'Não autorizado'}, 401
         return super(ResourceAdmin, self).get(item_id)
+
+    def post(self):
+        if not usuario_esta_logado(eh_admin=True):
+            return {'result': 'Não autorizado'}, 401
+        return super(ResourceAdmin, self).post()
+
+    def put(self, item_id):
+        if not usuario_esta_logado(eh_admin=True):
+            return {'result': 'Não autorizado'}, 401
+        return super(ResourceAdmin, self).put(item_id)
 
     def delete(self, item_id):
         if not usuario_esta_logado(eh_admin=True):
@@ -180,12 +202,6 @@ class Noticia(ResourceBase):
 
 class Newsletter(ResourceBase):
     model = models.Newsletter
-
-    def post(self):
-        try:
-            return self.response(self.model.criar_de_json(self.payload).as_dict())
-        except models.EmailJaExisteNoNewsLetter as ex:
-            return {'erro': 'ja-existe'}, 400
 
 
 class OndeRemar(ResourceBase):

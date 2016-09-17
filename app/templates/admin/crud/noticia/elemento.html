@@ -1,0 +1,54 @@
+<div class="container-fluid">
+    <h3>Dados:</h3>
+
+    <form novalidate name="formEdicao" class="form-edicao" role="form">
+        <div class="row">
+            <div class="col-md-12 campo">
+                <div class="form-group has-feedback formInput"
+                     ng-class="{'has-success': campoEstaValido(formEdicao.titulo), 'has-error': campoEstaInvalido(formEdicao.titulo)}">
+                    <label class="control-label" for="titulo">Título: <i class="fa fa-asterisk"></i></label>
+                    <input type="text" class="form-control" id="titulo" name="titulo" ng-model="noticia.titulo"
+                           aria-describedby="helpTitulo" required/>
+                    <span class="fa form-control-feedback" aria-hidden="true"
+                          ng-class="{'fa-check': campoEstaValido(formEdicao.titulo), 'fa-close': campoEstaInvalido(formEdicao.titulo)} "></span>
+                    <span id="helpTitulo" class="help-block" ng-show="campoEstaInvalido(formEdicao.titulo)">* o campo é obrigatório *</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 campo">
+                <div class="form-group has-feedback formInput"
+                     ng-class="{'has-success': campoEstaValido(formEdicao.resumo), 'has-error': campoEstaInvalido(formEdicao.resumo)}">
+                    <label class="control-label" for="resumo">Resumo: <i class="fa fa-asterisk"></i></label>
+                    <input type="text" class="form-control" id="resumo" name="resumo" ng-model="noticia.resumo"
+                           aria-describedby="helpResumo" required/>
+                    <span class="fa form-control-feedback" aria-hidden="true"
+                          ng-class="{'fa-check': campoEstaValido(formEdicao.resumo), 'fa-close': campoEstaInvalido(formEdicao.resumo)} "></span>
+                    <span id="helpResumo" class="help-block" ng-show="campoEstaInvalido(formEdicao.resumo)">* o campo é obrigatório *</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 campo">
+                <div class="form-group has-feedback formInput"
+                     ng-class="{'has-success': campoEstaValido(formEdicao.corpo), 'has-error': campoEstaInvalido(formEdicao.corpo)}">
+                    <label class="control-label" for="corpo">Corpo: <i class="fa fa-asterisk"></i></label>
+                    <wysiwyg textarea-id="corpo" textarea-class="form-control" textarea-aria-describedby="helpCorpo" textarea-height="550px" textarea-name="corpo" textarea-required ng-model="noticia.corpo" enable-bootstrap-title="true"></wysiwyg>
+                    <span class="fa form-control-feedback" aria-hidden="true"
+                          ng-class="{'fa-check': campoEstaValido(formEdicao.corpo), 'fa-close': campoEstaInvalido(formEdicao.corpo)} "></span>
+                    <span id="helpCorpo" class="help-block" ng-show="campoEstaInvalido(formEdicao.corpo)">* o campo é obrigatório *</span>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="erro != null">
+            <div class="alert alert-danger">
+                <strong>{{ erro.codigo }}</strong> {{ error.conteudo }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-2"><button ng-show="exibePublicar" class="btn btn-primary" ng-class="{'btn-warning': !noticia.publicado, 'btn-danger': noticia.publicado}" type="button" ng-click="publicar(noticia.publicado)">{{ labelPublicar }}</button></div>
+            <div class="col-md-2"><button class="btn btn-primary" type="button" ng-click="gravar()">Gravar</button></div>
+        </div>
+    </form>
+</div>

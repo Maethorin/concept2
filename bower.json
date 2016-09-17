@@ -18,6 +18,7 @@
     "angular-recaptcha": "~2.2.3",
     "bootstrap-sass": "~>3.3.6",
     "fontawesome": "~4.5.0",
-    "moment": null
+    "moment": null,
+    "angular-wysiwyg": "^1.2.4"
   }
 }

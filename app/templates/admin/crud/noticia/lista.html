@@ -1,11 +1,16 @@
 <div class="container">
+    <div class="row">
+        <div class="col-md-10"></div>
+        <div class="col-md-2"><a href="/admin/#/noticias/nova" class="btn btn-primary">Adicionar Notícia</a></div>
+    </div>
+
     <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th>Titulo</th>
                 <th>Resumo</th>
                 <th>Publicado?</th>
-                <th>Data Publicação</th>
+                <th>Última Publicação</th>
                 <th></th>
             </tr>
         </thead>
@@ -15,7 +20,7 @@
                     <a href="/admin/#/noticias/{{item.id}}">{{item.titulo}}</a>
                 </td>
                 <td>{{item.resumo}}</td>
-                <td>{{item.publicado ? 'SIM' : 'NÃO'}}</td>
+                <td><span class="label" ng-class="{'label-success': item.publicado, 'label-danger': !item.publicado}">{{item.publicado ? 'SIM' : 'NÃO'}}</span></td>
                 <td>{{item.dataPublicacao}}</td>
                 <td>
                     <button type="button" class="btn btn-sm btn-danger" ng-click="selecionaItem(item)" data-toggle="modal" data-target="#modalDelete"><i class="fa fa-remove"></i></button>

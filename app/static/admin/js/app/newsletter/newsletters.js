@@ -4,7 +4,7 @@ angular.module('concept2Admin.newsletters', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/newsletters', {
-                templateUrl: '{0}/angular/crud/newsletters-lista.html'.format([urlBackEnd]),
+                templateUrl: '{0}/angular/crud/newsletter/lista.html'.format([urlBackEnd]),
                 controller: 'NewslettersController'
             })
     }])

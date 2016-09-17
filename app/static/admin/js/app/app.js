@@ -8,6 +8,7 @@ angular.module(
         'ngRoute',
         'ngResource',
         'ngFileUpload',
+        'wysiwyg.module',
         'concept2Admin.services',
         'concept2Admin.login',
         'concept2Admin.home',
@@ -23,6 +24,7 @@ angular.module(
     }])
     .run(['$rootScope', 'Autentic', function($rootScope, Autentic) {
         baseRun($rootScope, Autentic);
+        $rootScope.adminLogado = Autentic.estaLogado();
 
         $rootScope.itensMenu = [
             {slug: 'eventos', label: 'eventos', url: '/admin/#/eventos', subItens: []},

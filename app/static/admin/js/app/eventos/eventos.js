@@ -4,11 +4,11 @@ angular.module('concept2Admin.eventos', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/eventos', {
-                templateUrl: '{0}/angular/crud/eventos-lista.html'.format([urlBackEnd]),
+                templateUrl: '{0}/angular/crud/evento/lista.html'.format([urlBackEnd]),
                 controller: 'EventosController'
             })
             .when('/eventos/:slug', {
-                templateUrl: '{0}/angular/crud/eventos-elemento.html'.format([urlBackEnd]),
+                templateUrl: '{0}/angular/crud/evento/elemento.html'.format([urlBackEnd]),
                 controller: 'EventoController'
             });
     }])

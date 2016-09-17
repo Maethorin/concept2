@@ -4,11 +4,15 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/noticias', {
-                templateUrl: '{0}/angular/crud/noticias-lista.html'.format([urlBackEnd]),
+                templateUrl: '{0}/angular/crud/noticia/lista.html'.format([urlBackEnd]),
                 controller: 'NoticiasController'
             })
+            .when('/noticias/nova', {
+                templateUrl: '{0}/angular/crud/noticia/elemento.html'.format([urlBackEnd]),
+                controller: 'NoticiaNovaController'
+            })
             .when('/noticias/:id', {
-                templateUrl: '{0}/angular/crud/noticias-elemento.html'.format([urlBackEnd]),
+                templateUrl: '{0}/angular/crud/noticia/elemento.html'.format([urlBackEnd]),
                 controller: 'NoticiaController'
             });
     }])
@@ -32,11 +36,56 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
             );
         };
     }])
-    .controller("NoticiaController", ['$rootScope', '$routeParams', '$scope', 'Noticia', function($rootScope, $routeParams, $scope, Noticia) {
-        $scope.noticiaId = $routeParams.noticiaId;
+    .controller("NoticiaController", ['$rootScope', '$routeParams', '$scope', '$location', 'Noticia', function($rootScope, $routeParams, $scope, $location, Noticia) {
+        $scope.noticiaId = $routeParams.id;
         $rootScope.pagina = "noticia";
         $rootScope.titulo = "Noticia";
-        $scope.noticia = Noticia.get({id: $scope.noticiaId});
+        $scope.exibePublicar = true;
+        $scope.noticia = Noticia.get(
+            {id: $scope.noticiaId},
+            function() {
+                $scope.labelPublicar = $scope.noticia.publicado ? 'Despublicar' : 'Publicar';
+            }
+        );
+        $scope.erro = null;
+        $scope.publicar = function(status) {
+            $scope.noticia.publicado = !status;
+            $scope.gravar();
+        };
+        $scope.gravar = function() {
+            $scope.erro = null;
+            $scope.noticia.$update({id: $scope.noticiaId}).then(
+                function() {
+                    $location.path('/noticias');
+                },
+                function(response) {
+                    $scope.erro = {
+                        codigo: response.status,
+                        conteudo: response
+                    }
+                }
+            );
+        };
+    }])
+    .controller("NoticiaNovaController", ['$rootScope', '$scope', '$location', 'Noticia', function($rootScope, $scope, $location, Noticia) {
+        $rootScope.pagina = "noticia";
+        $rootScope.titulo = "Nova Noticia";
+        $scope.noticia = new Noticia();
+        $scope.erro = null;
+        $scope.gravar = function() {
+            $scope.erro = null;
+            $scope.noticia.$save().then(
+                function(response) {
+                    $location.path('/noticias/{0}'.format([response.id]));
+                },
+                function(response) {
+                    $scope.erro = {
+                        codigo: response.status,
+                        conteudo: response
+                    }
+                }
+            );
+        }
     }]);
 
 

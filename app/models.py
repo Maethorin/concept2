@@ -19,6 +19,9 @@ db = database.AppRepository.db
 
 class QueryMixin(object):
 
+    class JaExiste(Exception):
+        pass
+
     @classmethod
     def obter_lista(cls, *args, **kwargs):
         return cls.query.all()
@@ -36,6 +39,7 @@ class QueryMixin(object):
     @classmethod
     def slugify(cls, value):
         slug = unicodedata.normalize('NFKD', value)
+        slug = slug.replace(' ', '-')
         slug = slug.encode('ascii', 'ignore').lower()
         return slug
 
@@ -787,34 +791,27 @@ class Noticia(db.Model, QueryMixin):
     data_publicacao = db.Column(db.DateTime)
 
     @classmethod
+    def atribui_valores(cls, noticia, json_data, publicado=False):
+        noticia.titulo = json_data['titulo']
+        noticia.slug = cls.slugify(json_data['titulo'])[:30]
+        noticia.resumo = json_data['resumo']
+        noticia.corpo = json_data['corpo']
+        noticia.publicado = publicado
+
+    @classmethod
     def criar_de_json(cls, json_data):
         noticia = cls()
-        noticia.titulo = json_data['titulo']
-        noticia.slug = cls.slugify(json_data['titulo'])[:15]
-        noticia.resumo = json_data['resumo']
-        noticia.corpo = json_data['corpo']
-        noticia.publicado = False
+        cls.atribui_valores(noticia, json_data)
         db.session.add(noticia)
         db.session.commit()
         return noticia
 
     @classmethod
-    def aterar_status_publicacao(cls, item_id, publicado):
+    def atualizar_de_json(cls, item_id, json_data):
         noticia = cls.obter_item(item_id)
-        noticia.publicado = publicado
-        if publicado:
+        cls.atribui_valores(noticia, json_data, json_data['publicado'])
+        if json_data['publicado']:
             noticia.data_publicacao = datetime.now()
-        db.session.add(noticia)
-        db.session.commit()
-        return noticia
-
-    @classmethod
-    def editar_noticia(cls, item_id, json_data):
-        noticia = cls.obter_item(item_id)
-        noticia.titulo = json_data['titulo']
-        noticia.slug = cls.slugify(json_data['titulo'])[:15]
-        noticia.resumo = json_data['resumo']
-        noticia.corpo = json_data['corpo']
         db.session.add(noticia)
         db.session.commit()
         return noticia
@@ -827,7 +824,7 @@ class Noticia(db.Model, QueryMixin):
             'resumo': self.resumo,
             'corpo': self.corpo,
             'publicado': self.publicado,
-            'data_publicacao': self.data_publicacao.strftime('%d/%m/%Y %H:%M')
+            'data_publicacao': self.data_publicacao.strftime('%d/%m/%Y %H:%M') if self.data_publicacao else None
         }
 
 
@@ -847,7 +844,7 @@ class Newsletter(db.Model, QueryMixin):
             db.session.commit()
             return newsletter
         except IntegrityError:
-            raise EmailJaExisteNoNewsLetter('Email já cadstrado')
+            raise cls.JaExiste('Email já cadstrado')
 
     def as_dict(self):
         return {
