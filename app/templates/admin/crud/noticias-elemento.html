@@ -1,0 +1,26 @@
+<div class="container-fluid">
+    <h3>Dados:</h3>
+
+    <form novalidate name="formEdicao" class="form-edicao" role="form" ng-submit="enviandoEdicao()">
+        <div class="row">
+            <div class="col-md-4 campo">
+                <div class="form-group has-feedback formInput"
+                     ng-class="{'has-success': campoEstaValido(formEdicao.titulo), 'has-error': campoEstaInvalido(formEdicao.titulo)}">
+                    <label class="control-label" for="titulo">Título: <i class="fa fa-asterisk"></i></label>
+                    <input type="text" class="form-control" id="titulo" name="titulo" ng-model="noticia.titulo"
+                           aria-describedby="helpTitulo" required/>
+                    <span class="fa form-control-feedback" aria-hidden="true"
+                          ng-class="{'fa-check': campoEstaValido(formEdicao.titulo), 'fa-close': campoEstaInvalido(formEdicao.titulo)} "></span>
+                    <span id="helpTitulo" class="help-block" ng-show="campoEstaInvalido(formEdicao.titulo)">* o campo é obrigatório *</span>
+                </div>
+            </div>
+            <div class="col-md-4 campo">
+                <div class="form-group has-feedback formInput">
+                    <label class="control-label" for="subTitulo">Resumo:</label>
+                    <input type="text" class="form-control" id="subTitulo" name="subTitulo" ng-model="noticia.resumo"
+                           aria-describedby="helpSubTitulo"/>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

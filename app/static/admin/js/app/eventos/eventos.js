@@ -8,9 +8,9 @@ angular.module('concept2Admin.eventos', ['ngRoute'])
                 controller: 'EventosController'
             })
             .when('/eventos/:slug', {
-                templateUrl: '{0}/angular/crud/elemento.html'.format([urlBackEnd]),
+                templateUrl: '{0}/angular/crud/eventos-elemento.html'.format([urlBackEnd]),
                 controller: 'EventoController'
-            })
+            });
     }])
     .controller("EventosController", ['$rootScope', '$scope', 'Evento', function($rootScope, $scope, Evento) {
         $rootScope.pagina = "eventos";

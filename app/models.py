@@ -47,7 +47,7 @@ class AutenticMixin(object):
     def verifica_senha(self, password):
         return custom_app_context.verify(password, self.senha_hash)
 
-    def gera_token_aut(self, expiration=600):
+    def gera_token_aut(self, expiration=3600):
         return jwt.encode({'id': self.id, 'exp': datetime.utcnow() + timedelta(seconds=expiration)}, database.config.SECRET_KEY, algorithm='HS256')
 
     @classmethod
