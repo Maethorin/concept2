@@ -81,6 +81,7 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
             );
         };
         $scope.enviaThumbnail = function(file, errFiles) {
+            $scope.noticia.thumbnailUrl = null;
             Carregando.show();
             if (file) {
                 file.upload = Upload.upload({
@@ -88,11 +89,13 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
                     data: {imagem: file, noticia: $scope.noticia.id, tipo: 'thumbnail'}
                 });
                 file.upload.then(
-                    function() {
-                        $route.reload();
+                    function(response) {
+                        $scope.noticia.thumbnailUrl = response.data.thumbnailUrl;
+                        Carregando.hide();
                     },
-                    function() {
-                        alert('Erro');
+                    function(response) {
+                        console.log(response);
+                        Carregando.erro('Ocorreu um erro. Está no console log do browser. Me avise para que eu possa ver p que é');
                     }
                 );
             }
@@ -105,17 +108,20 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
                     data: {imagem: file, noticia: $scope.noticia.id, tipo: file.name}
                 });
                 file.upload.then(
-                    function() {
-                        $route.reload();
+                    function(response) {
+                        $scope.noticia.imagensUrls.push(response.data.imagemUrl);
+                        Carregando.hide();
                     },
-                    function() {
-                        alert('Erro');
+                    function(response) {
+                        console.log(response);
+                        Carregando.erro('Ocorreu um erro. Está no console log do browser. Me avise para que eu possa ver p que é');
                     }
                 );
             }
         };
 
         $scope.removeImagem = function(imagemUrl) {
+            Carregando.show();
             var fileName = _.last(imagemUrl.split('/'));
             NoticiaImagem.delete(
                 {id: $scope.noticia.id, fileName: fileName},
@@ -124,10 +130,11 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
                         return noticiaImagemUrl == imagemUrl;
                     });
                     $scope.noticia.imagensUrls.splice(index, 1);
+                    Carregando.hide();
                 },
                 function(response) {
-                    alert('Erro');
                     console.log(response);
+                    Carregando.erro('Ocorreu um erro. Está no console log do browser. Me avise para que eu possa ver p que é');
                 }
             );
         }
@@ -153,10 +160,3 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
             );
         }
     }]);
-
-// $(function() {
-//     $('.grid').masonry({
-//       itemSelector: '.grid-item',
-//       columnWidth: 200
-//     });
-// });

@@ -133,8 +133,9 @@ class NoticiaImagemAdmin(ResourceAdmin):
             tipo = 'thumbnail.jpg'
         imagem = request.files.get('imagem', None)
         imagem.save(os.path.join(pasta, tipo))
-        self.model.atualizar_de_json(item_id, {chave: '/media/noticias/{}/{}'.format(item_id, tipo)})
-        return {'resultado': 'OK'}
+        imagem_url = '/media/noticias/{}/{}'.format(item_id, tipo)
+        self.model.atualizar_de_json(item_id, {chave: imagem_url})
+        return self.response({chave: imagem_url})
 
     def delete(self, item_id, file_name):
         if not usuario_esta_logado(eh_admin=True):

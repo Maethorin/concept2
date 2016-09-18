@@ -22,7 +22,7 @@ angular.module('concept2Admin.services', [])
             this.atualizaValores();
         };
     }])
-    .service('Carregando', [function() {
+    .service('Carregando', ['$timeout', '$q', function($timeout, $q) {
         this.carregando = false;
         this.show = function() {
             if (!this.carregando) {
@@ -30,9 +30,22 @@ angular.module('concept2Admin.services', [])
                 waitingDialog.show('Carregando...');
             }
         };
+        this.erro = function(messagem) {
+            var _this = this;
+            this.hide().then(function() {
+                _this.carregando = true;
+                waitingDialog.show(messagem, {progressType: 'danger'});
+                $timeout(_this.hide, 3000);
+            });
+        };
         this.hide = function() {
+            var deferred = $q.defer();
             this.carregando = false;
             waitingDialog.hide();
+            $timeout(function() {
+                deferred.resolve('OK');
+            }, 300);
+            return deferred.promise;
         };
     }])
     .factory('OndeRemar', ['$resource', function($resource) {
