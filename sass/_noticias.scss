@@ -1,24 +1,66 @@
-
-.camponot {
-    min-height: 164px;
-    color: white;
-    background: rgba(75, 82, 90, 0.8);
+.linha {
+    &.par {
+        .noticia {
+            &:first-child {
+                background: rgba(75, 82, 90, 0.35);
+            }
+        }
+    }
+    &.impar {
+        .noticia {
+            &:last-child {
+                background: rgba(75, 82, 90, 0.35);
+            }
+        }
+    }
+    .noticia {
+        min-height: 164px;
+        background: rgba(75, 82, 90, 0.1);
+        cursor: pointer;
+        a {
+            color: #FFF;
+            img {
+                cursor: pointer;
+            }
+            .conteudo {
+                cursor: pointer;
+                width: 300px;
+                height: 100px;
+                float: right;
+                padding: 5px;
+                h4 {
+                    cursor: pointer;
+                    font-size: 22px
+                }
+                h5 {
+                    cursor: pointer;
+                    color: #EEE;
+                    font-weight: normal;
+                    font-size: 10px;
+                    text-align: right;
+                }
+            }
+        }
+    }
 }
 
- .conteudo {
-    width: 300px;
-    height: 100px;
-    float: right;
-    padding: 5px;
-}
-
- .mais ul li a {
-    background-color: #3d414a;
-    color: white;
-    border-color: darkgray;
-    &:hover {
-    background-color: gray;
-    color: white;
-    border-color: darkgray;
-}
+.pagina-noticia {
+    .row {
+        margin-bottom: 10px;
+        color: #000;
+        .lista-caixa {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            color: #000;
+        }
+        .data-publicacao {
+            font-weight: normal;
+            font-size: 11px;
+            text-align: right;
+            color: #888;
+        }
+    }
 }

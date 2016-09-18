@@ -1,0 +1,16 @@
+<div class="container pagina-noticia">
+    <div class="row titulo">
+        <div class="col-md-1"></div>
+        <div class="col-md-10 lista-caixa">
+            <h2>{{ noticia.titulo }}</h2>
+            <h3 class="data-publicacao">{{ noticia.dataPublicacao }}</h3>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row corpo">
+        <div class="col-md-1"></div>
+        <div class="col-md-10 lista-caixa" ng-bind-html="noticia.corpo">
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+</div>

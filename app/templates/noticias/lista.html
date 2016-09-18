@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="row lista-caixa linha" ng-repeat="linha in linhas" ng-class="{'par': $index % 2 == 0, 'impar': $index % 2 != 0}">
+        <div ng-repeat="noticia in linha" class="col-md-6 noticia">
+            <a href="#/noticias/{{ noticia.slug }}">
+                <div class="conteudo">
+                    <h4>{{noticia.titulo}}</h4>
+                    <h5>{{noticia.dataPublicacao}}</h5>
+                    <p style="font-size: 1.1em">{{noticia.resumo}}</p>
+                </div>
+                <img style="padding: 5px; margin-left: -12px; margin-bottom: -10px" ng-src="{{noticia.thumbnailUrl}}" />
+            </a>
+        </div>
+    </div>
+</div>
+
+

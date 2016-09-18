@@ -23,6 +23,10 @@ class QueryMixin(object):
         pass
 
     @classmethod
+    def filtrar(cls, **kwargs):
+        return cls.query.filter_by(**kwargs)
+
+    @classmethod
     def obter_lista(cls, *args, **kwargs):
         return cls.query.all()
 
@@ -796,6 +800,12 @@ class Noticia(db.Model, QueryMixin):
         noticia.corpo = json_data.get('corpo', noticia.corpo)
         noticia.publicado = json_data.get('publicado', noticia.publicado)
         noticia.thumbnail_url = json_data.get('thumbnail_url', None)
+
+    @classmethod
+    def obter_item(cls, item_id):
+        if isinstance(item_id, int):
+            return super(Noticia, cls).obter_item(item_id)
+        return cls.filtrar(slug=item_id)[0]
 
     @classmethod
     def criar_de_json(cls, json_data):

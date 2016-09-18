@@ -35,6 +35,9 @@ def snake_to_camel(name):
 class ResourceBase(Resource):
     model = None
 
+    def filtrar(self, **kwargs):
+        return [self.response(item.as_dict()) for item in self.model.filtrar(**kwargs)]
+
     def obter_lista(self, *args, **kwargs):
         return [self.response(item.as_dict()) for item in self.model.obter_lista(*args, **kwargs)]
 
@@ -228,6 +231,11 @@ class Eventos(ResourceBase):
 
 class Noticia(ResourceBase):
     model = models.Noticia
+
+    def get(self, item_id=None):
+        if not item_id:
+            return self.filtrar(publicado=True)
+        return self.obter_item(item_id)
 
 
 class Newsletter(ResourceBase):
