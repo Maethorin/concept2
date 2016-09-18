@@ -84,7 +84,7 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
             Carregando.show();
             if (file) {
                 file.upload = Upload.upload({
-                    url: '{0}/api/noticias/imagem'.format([urlBackEnd]),
+                    url: '{0}/api/noticias/imagens'.format([urlBackEnd]),
                     data: {imagem: file, noticia: $scope.noticia.id, tipo: 'thumbnail'}
                 });
                 file.upload.then(
@@ -97,7 +97,6 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
                 );
             }
         };
-
         $scope.enviaImagem = function(file, errFiles) {
             Carregando.show();
             if (file) {
