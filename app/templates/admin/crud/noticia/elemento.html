@@ -14,6 +14,30 @@
         </div>
     </div>
 
+    <div class="row" ng-show="modoEdicao">
+        <div class="col-md-12 campo">
+            <div class="form-group">
+                <label class="control-label">Adicionar imagem:</label>
+                <button class="btn btn-primary" type="file" ngf-select="enviaImagem($file, $invalidFiles)"
+                        accept="text/*.jpg" ngf-max-size="3MB">Escolha o arquivo
+                </button>
+            </div>
+        </div>
+    </div>
+    <div masonry class="row imagens-noticia" ng-show="modoEdicao">
+        <div class="col-md-3 masonry-brick" ng-repeat="imagemUrl in noticia.imagensUrls">
+            <div class="imagem-noticia">
+                <button class="btn btn-sm btn-danger remover" ng-click="removeImagem(imagemUrl)"><i class="fa fa-remove"></i></button>
+                <div class="url">
+                    {{ imagemUrl }}
+                </div>
+                <div class="imagem">
+                    <img ng-src="{{ imagemUrl }}" />
+                </div>
+            </div>
+        </div>
+    </div>
+
     <form novalidate name="formEdicao" class="form-edicao" role="form">
         <div class="row">
             <div class="col-md-12 campo">

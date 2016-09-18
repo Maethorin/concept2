@@ -46,7 +46,7 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
             );
         };
     }])
-    .controller("NoticiaController", ['$rootScope', '$routeParams', '$scope', '$location', '$route', 'Upload', 'Noticia', 'Carregando', function($rootScope, $routeParams, $scope, $location, $route, Upload, Noticia, Carregando) {
+    .controller("NoticiaController", ['$rootScope', '$routeParams', '$scope', '$location', '$route', 'Upload', 'Noticia', 'NoticiaImagem', 'Carregando', function($rootScope, $routeParams, $scope, $location, $route, Upload, Noticia, NoticiaImagem, Carregando) {
         $scope.noticiaId = $routeParams.id;
         $rootScope.pagina = "noticia";
         $rootScope.titulo = "Noticia";
@@ -97,6 +97,41 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
                 );
             }
         };
+
+        $scope.enviaImagem = function(file, errFiles) {
+            Carregando.show();
+            if (file) {
+                file.upload = Upload.upload({
+                    url: '{0}/api/noticias/imagens'.format([urlBackEnd]),
+                    data: {imagem: file, noticia: $scope.noticia.id, tipo: file.name}
+                });
+                file.upload.then(
+                    function() {
+                        $route.reload();
+                    },
+                    function() {
+                        alert('Erro');
+                    }
+                );
+            }
+        };
+
+        $scope.removeImagem = function(imagemUrl) {
+            var fileName = _.last(imagemUrl.split('/'));
+            NoticiaImagem.delete(
+                {id: $scope.noticia.id, fileName: fileName},
+                function() {
+                    var index = _.findIndex($scope.noticia.imagensUrls, function(noticiaImagemUrl) {
+                        return noticiaImagemUrl == imagemUrl;
+                    });
+                    $scope.noticia.imagensUrls.splice(index, 1);
+                },
+                function(response) {
+                    alert('Erro');
+                    console.log(response);
+                }
+            );
+        }
     }])
     .controller("NoticiaNovaController", ['$rootScope', '$scope', '$location', 'Noticia', 'Carregando', function($rootScope, $scope, $location, Noticia, Carregando) {
         $rootScope.pagina = "noticia";
@@ -120,4 +155,9 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
         }
     }]);
 
-
+// $(function() {
+//     $('.grid').masonry({
+//       itemSelector: '.grid-item',
+//       columnWidth: 200
+//     });
+// });

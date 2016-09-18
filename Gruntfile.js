@@ -30,6 +30,15 @@ module.exports = function(grunt) {
                     "bower_components/moment/locale/pt-br.js",
                     "bower_components/lodash/dist/lodash.js",
                     "bower_components/jquery/dist/jquery.js",
+                    "bower_components/jquery-bridget/jquery.bridget.js",
+                    "bower_components/ev-emitter/ev-emitter.js",
+                    "bower_components/desandro-matches-selector/matches-selector.js",
+                    "bower_components/fizzy-ui-utils/utils.js",
+                    "bower_components/get-size/get-size.js",
+                    "bower_components/outlayer/item.js",
+                    "bower_components/outlayer/outlayer.js",
+                    "bower_components/masonry/dist/masonry.pkgd.js",
+                    "bower_components/imagesloaded/imagesloaded.js",
                     "bower_components/bootstrap-sass/assets/javascripts/bootstrap.js",
                     "bower_components/bootstrap-waitingfor/build/bootstrap-waitingfor.js",
                     "bower_components/angular/angular.js",
@@ -37,7 +46,8 @@ module.exports = function(grunt) {
                     "bower_components/angular-resource/angular-resource.js",
                     "bower_components/ng-file-upload/ng-file-upload.js",
                     "bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js",
-                    "bower_components/angular-wysiwyg/dist/angular-wysiwyg.js"
+                    "bower_components/angular-wysiwyg/dist/angular-wysiwyg.js",
+                    "bower_components/angular-masonry/angular-masonry.js"
                 ],
                 dest: 'app/static/admin/js/componentes-admin.js'
             },

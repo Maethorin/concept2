@@ -788,6 +788,7 @@ class Noticia(db.Model, QueryMixin):
     slug = db.Column(db.String(), nullable=False, unique=True)
     resumo = db.Column(db.String(), nullable=False)
     thumbnail_url = db.Column(db.String())
+    imagens_urls = db.Column(db.Text())
     corpo = db.Column(db.Text(), nullable=False)
     publicado = db.Column(db.Boolean)
     data_publicacao = db.Column(db.DateTime)
@@ -799,13 +800,21 @@ class Noticia(db.Model, QueryMixin):
         noticia.resumo = json_data.get('resumo', noticia.resumo)
         noticia.corpo = json_data.get('corpo', noticia.corpo)
         noticia.publicado = json_data.get('publicado', noticia.publicado)
-        noticia.thumbnail_url = json_data.get('thumbnail_url', None)
+        noticia.thumbnail_url = json_data.get('thumbnail_url', noticia.thumbnail_url)
+        imagem_url = json_data.get('imagem_url', None)
+        if imagem_url:
+            imagens_urls = noticia.imagens_urls.split('|') if noticia.imagens_urls else []
+            if imagem_url not in imagens_urls:
+                imagens_urls.append(imagem_url)
+            noticia.imagens_urls = '|'.join(imagens_urls)
 
     @classmethod
     def obter_item(cls, item_id):
-        if isinstance(item_id, int):
+        try:
+            item_id = int(item_id)
             return super(Noticia, cls).obter_item(item_id)
-        return cls.filtrar(slug=item_id)[0]
+        except ValueError:
+            return cls.filtrar(slug=item_id)[0]
 
     @classmethod
     def criar_de_json(cls, json_data):
@@ -823,6 +832,16 @@ class Noticia(db.Model, QueryMixin):
         noticia.save_db()
         return noticia
 
+    @classmethod
+    def remover_imagem(cls, item_id, url):
+        url = '/media/noticias/{}/{}'.format(item_id, url)
+        noticia = cls.obter_item(item_id)
+        imagens_urls = noticia.imagens_urls.split('|') if noticia.imagens_urls else []
+        if imagens_urls and url in imagens_urls:
+            imagens_urls.remove(url)
+            noticia.imagens_urls = '|'.join(imagens_urls)
+            noticia.save_db()
+
     def as_dict(self):
         return {
             'id': self.id,
@@ -832,6 +851,7 @@ class Noticia(db.Model, QueryMixin):
             'corpo': self.corpo,
             'publicado': self.publicado,
             'thumbnail_url': self.thumbnail_url,
+            'imagens_urls': self.imagens_urls.split('|') if self.imagens_urls else [],
             'data_publicacao': self.data_publicacao.strftime('%d/%m/%Y %H:%M') if self.data_publicacao else None
         }
 

@@ -9,6 +9,7 @@ angular.module(
         'ngResource',
         'ngFileUpload',
         'wysiwyg.module',
+        'wu.masonry',
         'concept2Admin.services',
         'concept2Admin.login',
         'concept2Admin.home',

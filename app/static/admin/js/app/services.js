@@ -86,4 +86,7 @@ angular.module('concept2Admin.services', [])
             null,
             {'update': {method: 'PUT'}}
         );
+    }])
+    .factory('NoticiaImagem', ['$resource', function($resource) {
+        return $resource('{0}/api/noticias/:id/imagens/:fileName'.format([urlBackEnd]));
     }]);

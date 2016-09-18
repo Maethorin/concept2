@@ -6,20 +6,26 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "angular": "~1.4.0",
-    "angular-route": "~1.4.0",
-    "angular-resource": "~1.4.0",
-    "angular-loader": "~1.4.0",
-    "angular-mocks": "~1.4.0",
-    "angular-cookies": "~1.4.0",
-    "angular-google-maps": "~2.3.1",
-    "angular-ui-mask": "~1.7.2",
-    "ng-file-upload": "~12.0.1",
-    "angular-recaptcha": "~2.2.3",
+    "moment": "^2.15.0",
+    "lodash": "^4.15.0",
+    "jquery": "^2.1.4",
     "bootstrap-sass": "~>3.3.6",
     "fontawesome": "~4.5.0",
-    "moment": null,
+    "bootstrap-waitingfor": "^1.2.4",
+    "angular": "~1.5.0",
+    "angular-route": "~1.5.0",
+    "angular-resource": "~1.5.0",
+    "angular-loader": "~1.5.0",
+    "angular-mocks": "~1.5.0",
+    "angular-cookies": "~1.5.0",
+    "angular-google-maps": "^2.3.4",
+    "angular-ui-mask": "^1.8.7",
+    "ng-file-upload": "^12.2.9",
+    "angular-recaptcha": "^3.0.4",
     "angular-wysiwyg": "^1.2.4",
-    "bootstrap-waitingfor": "^1.2.4"
+    "angular-masonry": "^0.16.0"
+  },
+  "resolutions": {
+    "angular": "1.5.8"
   }
 }

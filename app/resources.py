@@ -120,18 +120,28 @@ class NoticiaImagemAdmin(ResourceAdmin):
     def post(self):
         if not usuario_esta_logado(eh_admin=True):
             return {'result': 'Não autorizado'}, 401
-        imagem = request.files.get('imagem', None)
         app_directory = os.path.join(os.getcwd(), 'app')
         media_directory = os.path.join(app_directory, 'media')
         item_id = self.payload['noticia']
-        tipo = self.payload['tipo']
         pasta = '{}/noticias/{}'.format(media_directory, item_id)
-        nome_arquivo = '{}.jpg'.format(tipo)
         if not os.path.exists(pasta):
             os.makedirs(pasta)
-        imagem.save(os.path.join(pasta, nome_arquivo))
+        chave = 'imagem_url'
+        tipo = self.payload['tipo']
         if tipo == 'thumbnail':
-            self.model.atualizar_de_json(item_id, {'thumbnail_url': '/media/noticias/{}/{}'.format(item_id, nome_arquivo)})
+            chave = 'thumbnail_url'
+            tipo = 'thumbnail.jpg'
+        imagem = request.files.get('imagem', None)
+        imagem.save(os.path.join(pasta, tipo))
+        self.model.atualizar_de_json(item_id, {chave: '/media/noticias/{}/{}'.format(item_id, tipo)})
+        return {'resultado': 'OK'}
+
+    def delete(self, item_id, file_name):
+        if not usuario_esta_logado(eh_admin=True):
+            return {'result': 'Não autorizado'}, 401
+        self.model.remover_imagem(item_id, file_name)
+        arquivo = os.path.join(os.getcwd(), 'app', 'media/noticias', str(item_id), file_name)
+        os.remove(arquivo)
         return {'resultado': 'OK'}
 
 
