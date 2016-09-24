@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 
 import googlemaps
 import jwt
+from sqlalchemy import desc
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects import postgresql
@@ -783,6 +784,7 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
 
 class Noticia(db.Model, QueryMixin):
     __tablename__ = 'noticias'
+
     id = db.Column(db.Integer, primary_key=True)
     titulo = db.Column(db.String(), nullable=False)
     slug = db.Column(db.String(), nullable=False, unique=True)
@@ -792,6 +794,10 @@ class Noticia(db.Model, QueryMixin):
     corpo = db.Column(db.Text(), nullable=False)
     publicado = db.Column(db.Boolean)
     data_publicacao = db.Column(db.DateTime)
+
+    __mapper_args__ = {
+        "order_by": desc(data_publicacao)
+    }
 
     @classmethod
     def atribui_valores(cls, noticia, json_data):
@@ -804,7 +810,8 @@ class Noticia(db.Model, QueryMixin):
         imagem_url = json_data.get('imagem_url', None)
         if imagem_url:
             imagens_urls = noticia.imagens_urls.split('|') if noticia.imagens_urls else []
-            if imagem_url not in imagens_urls:
+            last_part = imagem_url.split('/')[-1]
+            if last_part not in [_imagem.split('/')[-1] for _imagem in imagens_urls]:
                 imagens_urls.append(imagem_url)
             noticia.imagens_urls = '|'.join(imagens_urls)
 
@@ -833,14 +840,17 @@ class Noticia(db.Model, QueryMixin):
         return noticia
 
     @classmethod
-    def remover_imagem(cls, item_id, url):
-        url = '/media/noticias/{}/{}'.format(item_id, url)
+    def remover_imagem(cls, item_id, nome):
+        # url = '/media/noticias/{}/{}'.format(item_id, url)
         noticia = cls.obter_item(item_id)
         imagens_urls = noticia.imagens_urls.split('|') if noticia.imagens_urls else []
-        if imagens_urls and url in imagens_urls:
-            imagens_urls.remove(url)
+        imagem_url = [_imagem for _imagem in imagens_urls if _imagem.split('/')[-1] == nome]
+        imagem_url = imagem_url[0] if len(imagem_url) > 0 else None
+        if imagem_url:
+            imagens_urls.remove(imagem_url)
             noticia.imagens_urls = '|'.join(imagens_urls)
             noticia.save_db()
+        return imagem_url
 
     def as_dict(self):
         return {

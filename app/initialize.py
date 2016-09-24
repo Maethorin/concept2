@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime, timedelta
 import json
 import os
 
+import requests
 from flask import Flask, send_from_directory, g, request, Response
 from flask.ext.sqlalchemy import SQLAlchemy
 
-import database
+from app import database, config as config_module
+
+config = config_module.get_config()
 
 web_app = Flask(__name__)
 web_app.config.from_object(os.environ['APP_SETTINGS'])
@@ -14,7 +16,6 @@ database.AppRepository.db = SQLAlchemy(web_app)
 app_directory = os.path.join(os.getcwd(), 'app')
 template_directory = os.path.join(app_directory, 'templates')
 donwload_directory = os.path.join(app_directory, 'downloads')
-media_directory = os.path.join(app_directory, 'media')
 template_admin_directory = os.path.join(template_directory, 'admin')
 
 import api, models
@@ -135,10 +136,9 @@ def downloads(template_path):
     return response
 
 
-@web_app.route('/media/<path:media_path>', methods=['GET'])
-def media(media_path):
-    response = send_from_directory(media_directory, media_path)
-    return response
+@web_app.route('/image/<path:image_path>', methods=['GET'])
+def image(image_path):
+    return requests.get('{}/image/{}'.format(config.THUMBOR_URL, image_path)).content
 
 
 @web_app.before_request

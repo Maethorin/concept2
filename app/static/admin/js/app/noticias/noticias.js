@@ -120,6 +120,15 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
             }
         };
 
+        $scope.encurtarUrl = function(url) {
+            url = url.split('/');
+            return _.last(url);
+        };
+
+        $scope.copyUrl = function(url) {
+            window.prompt("Copie a URL para colar no corpo", url);
+        };
+
         $scope.removeImagem = function(imagemUrl) {
             Carregando.show();
             var fileName = _.last(imagemUrl.split('/'));

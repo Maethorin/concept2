@@ -5,7 +5,7 @@ import re
 from flask import request, g
 from flask_restful import Resource
 
-import models
+from app import imagem, models
 
 
 def usuario_esta_logado(eh_admin=False):
@@ -120,29 +120,31 @@ class NoticiaImagemAdmin(ResourceAdmin):
     def post(self):
         if not usuario_esta_logado(eh_admin=True):
             return {'result': 'Não autorizado'}, 401
-        app_directory = os.path.join(os.getcwd(), 'app')
-        media_directory = os.path.join(app_directory, 'media')
+        # app_directory = os.path.join(os.getcwd(), 'app')
+        # media_directory = os.path.join(app_directory, 'media')
         item_id = self.payload['noticia']
-        pasta = '{}/noticias/{}'.format(media_directory, item_id)
-        if not os.path.exists(pasta):
-            os.makedirs(pasta)
+        # pasta = '{}/noticias/{}'.format(media_directory, item_id)
+        # if not os.path.exists(pasta):
+        #     os.makedirs(pasta)
         chave = 'imagem_url'
         tipo = self.payload['tipo']
         if tipo == 'thumbnail':
             chave = 'thumbnail_url'
             tipo = 'thumbnail.jpg'
-        imagem = request.files.get('imagem', None)
-        imagem.save(os.path.join(pasta, tipo))
-        imagem_url = '/media/noticias/{}/{}'.format(item_id, tipo)
+        arquivo_imagem = request.files.get('imagem', None)
+        imagem_url = imagem.Uploader.save(arquivo_imagem, 'noticias-{}-{}'.format(item_id, tipo))
+        # arquivo_imagem.save(os.path.join(pasta, tipo))
+        # imagem_url = '/media/noticias/{}/{}'.format(item_id, tipo)
         self.model.atualizar_de_json(item_id, {chave: imagem_url})
         return self.response({chave: imagem_url})
 
     def delete(self, item_id, file_name):
         if not usuario_esta_logado(eh_admin=True):
             return {'result': 'Não autorizado'}, 401
-        self.model.remover_imagem(item_id, file_name)
-        arquivo = os.path.join(os.getcwd(), 'app', 'media/noticias', str(item_id), file_name)
-        os.remove(arquivo)
+        imagem_url = self.model.remover_imagem(item_id, file_name)
+        # arquivo = os.path.join(os.getcwd(), 'app', 'media/noticias', str(item_id), file_name)
+        # os.remove(arquivo)
+        imagem.Uploader.delete(imagem_url)
         return {'resultado': 'OK'}
 
 

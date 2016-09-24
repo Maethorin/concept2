@@ -17,7 +17,7 @@
                 float: right;
             }
             .imagem {
-                margin-top: 26px;
+                margin-top: 30px;
                 img {
                     width: 100%;
                 }
@@ -29,6 +29,11 @@
                 border: 1px solid #CCC;
                 border-radius: 3px;
                 background-color: #FFF;
+                .btn-copy {
+                    background-color: #00b3ee;
+                    padding: 0 4px;
+                    color: #FFF;
+                }
             }
         }
     }

@@ -29,7 +29,7 @@
             <div class="imagem-noticia">
                 <button class="btn btn-sm btn-danger remover" ng-click="removeImagem(imagemUrl)"><i class="fa fa-remove"></i></button>
                 <div class="url">
-                    {{ imagemUrl }}
+                    {{ encurtarUrl(imagemUrl) }} <button class="btn btn-sm btn-copy" type="button" ng-click="copyUrl(imagemUrl)"><i class="fa fa-copy"></i></button>
                 </div>
                 <div class="imagem">
                     <img ng-src="{{ imagemUrl }}" />
