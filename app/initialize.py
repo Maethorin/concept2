@@ -2,7 +2,6 @@
 import json
 import os
 
-import requests
 from flask import Flask, send_from_directory, g, request, Response
 from flask.ext.sqlalchemy import SQLAlchemy
 
@@ -134,11 +133,6 @@ def downloads(template_path):
     response = send_from_directory(donwload_directory, template_path)
     response.headers["Content-Disposition"] = "attachment; filename={}".format(template_path)
     return response
-
-
-@web_app.route('/image/<path:image_path>', methods=['GET'])
-def image(image_path):
-    return requests.get('{}/image/{}'.format(config.THUMBOR_URL, image_path)).content
 
 
 @web_app.before_request

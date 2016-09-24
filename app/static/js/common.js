@@ -84,9 +84,12 @@ var configApp = function($sceDelegateProvider, $httpProvider) {
     $httpProvider.interceptors.push('atualizaToken');
 };
 
-var baseRun = function($rootScope, Autentic) {
+var baseRun = function($rootScope, Autentic, appConfig) {
     $rootScope.pagina = "";
     $rootScope.titulo = "";
+    $rootScope.getThumborUrl = function(imageUrl) {
+        return '{0}{1}'.format([appConfig.thumborURL, imageUrl]);
+    };
     $rootScope.$on('$locationChangeSuccess', function(evt, absNewUrl, absOldUrl) {
         $rootScope.referrer = absOldUrl;
     });

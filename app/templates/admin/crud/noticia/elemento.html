@@ -10,7 +10,7 @@
             </div>
         </div>
         <div class="col-md-4">
-            <img  ng-show="noticia.thumbnailUrl" ng-src="{{ noticia.thumbnailUrl }}" />
+            <img  ng-show="noticia.thumbnailUrl" ng-src="{{ getThumborUrl(noticia.thumbnailUrl) }}" />
         </div>
     </div>
 
@@ -32,7 +32,7 @@
                     {{ encurtarUrl(imagemUrl) }} <button class="btn btn-sm btn-copy" type="button" ng-click="copyUrl(imagemUrl)"><i class="fa fa-copy"></i></button>
                 </div>
                 <div class="imagem">
-                    <img ng-src="{{ imagemUrl }}" />
+                    <img ng-src="{{ getThumborUrl(imagemUrl) }}" />
                 </div>
             </div>
         </div>

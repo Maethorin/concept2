@@ -16,7 +16,6 @@
                 <th></th>
                 <th>Titulo</th>
                 <th>Resumo</th>
-                <th>Data Criação</th>
                 <th>Publicado?</th>
                 <th>Última Publicação</th>
                 <th></th>
@@ -25,13 +24,12 @@
         <tbody>
             <tr ng-repeat="item in lista | filter:pesquisar">
                 <td>
-                    <img src="{{ item.thumbnailUrl }}" width="100" alt="Sem Thumbnail" />
+                    <img ng-src="{{ getThumborUrl(item.thumbnailUrl) }}" width="100" alt="Sem Thumbnail" />
                 </td>
                 <td>
-                    <a href="/admin/#/noticias/{{item.id}}">{{item.titulo}}</a>
+                    <a ng-href="/admin/#/noticias/{{item.id}}">{{item.titulo}}</a>
                 </td>
                 <td>{{item.resumo}}</td>
-                <td>{{item.dataC}}</td>
                 <td><span class="label" ng-class="{'label-success': item.publicado, 'label-danger': !item.publicado}">{{item.publicado ? 'SIM' : 'NÃO'}}</span></td>
                 <td>{{item.dataPublicacao}}</td>
                 <td>
