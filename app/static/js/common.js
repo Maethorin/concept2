@@ -90,8 +90,24 @@ var configApp = function($sceDelegateProvider, $httpProvider) {
 var baseRun = function($rootScope, Autentic) {
     $rootScope.pagina = "";
     $rootScope.titulo = "";
+    $rootScope.thumborUrl = thumborUrl;
     $rootScope.getThumborUrl = function(imageUrl) {
-        return '{0}{1}'.format([thumborUrl, imageUrl]);
+        if (!imageUrl) {
+            return null;
+        }
+        return '{0}/image/{1}'.format([thumborUrl, imageUrl]);
+    };
+    $rootScope.getImageUrl = function(imageUrl, size) {
+        if (!imageUrl) {
+            return null;
+        }
+        if (size) {
+            size += '/';
+        }
+        else {
+            size = '';
+        }
+        return '{0}/unsafe/{1}{2}'.format([thumborUrl, size, imageUrl]);
     };
     $rootScope.$on('$locationChangeSuccess', function(evt, absNewUrl, absOldUrl) {
         $rootScope.referrer = absOldUrl;

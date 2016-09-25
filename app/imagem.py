@@ -19,7 +19,7 @@ class Uploader(object):
             verify=False,
             headers=cls.headers
         )
-        return result.headers['location']
+        return result.headers['location'].replace('/image/', '')
 
     @classmethod
     def update(cls, file, name):
@@ -34,7 +34,6 @@ class Uploader(object):
 
     @classmethod
     def delete(cls, name):
-        name = name.replace('/image/', '')
         return requests.delete('{}/{}'.format(
             cls.upload_image_url,
             name

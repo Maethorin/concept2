@@ -7,7 +7,7 @@
                     <h5>{{noticia.dataPublicacao}}</h5>
                     <p style="font-size: 1.1em">{{noticia.resumo}}</p>
                 </div>
-                <img ng-show="noticia.thumbnailUrl" style="padding: 5px; margin-left: -12px; margin-bottom: -10px" ng-src="{{ getThumborUrl(noticia.thumbnailUrl) }}" />
+                <img ng-show="noticia.thumbnailUrl" style="padding: 5px; margin-left: -12px; margin-bottom: -10px" ng-src="{{ getImageUrl(noticia.thumbnailUrl) }}" />
             </a>
         </div>
     </div>

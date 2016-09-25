@@ -126,7 +126,7 @@ angular.module('concept2Admin.noticias', ['ngRoute'])
         };
 
         $scope.copyUrl = function(url) {
-            window.prompt("Copie a URL para colar no corpo", $rootScope.getThumborUrl(url));
+            window.prompt("Copie a URL para colar no corpo", $rootScope.getImageUrl(url));
         };
 
         $scope.removeImagem = function(imagemUrl) {
