@@ -68,11 +68,14 @@ function calculaIdadeAtleta(nascimento) {
 }
 
 var urlBackEnd = '//concept2-staging.herokuapp.com';
+var thumborUrl = '//concept2-thumbor.herokuapp.com';
 if (window.location.hostname == 'localhost' && window.location.port == '5000') {
     urlBackEnd = 'http://localhost:5000';
+    thumborUrl = 'http://localhost:8888';
 }
 if (window.location.hostname == '127.0.0.1') {
     urlBackEnd = 'http://localhost:5000';
+    thumborUrl = 'http://localhost:8888';
 }
 
 var configApp = function($sceDelegateProvider, $httpProvider) {
@@ -84,11 +87,11 @@ var configApp = function($sceDelegateProvider, $httpProvider) {
     $httpProvider.interceptors.push('atualizaToken');
 };
 
-var baseRun = function($rootScope, Autentic, appConfig) {
+var baseRun = function($rootScope, Autentic) {
     $rootScope.pagina = "";
     $rootScope.titulo = "";
     $rootScope.getThumborUrl = function(imageUrl) {
-        return '{0}{1}'.format([appConfig.thumborURL, imageUrl]);
+        return '{0}{1}'.format([thumborUrl, imageUrl]);
     };
     $rootScope.$on('$locationChangeSuccess', function(evt, absNewUrl, absOldUrl) {
         $rootScope.referrer = absOldUrl;

@@ -20,17 +20,14 @@ angular.module(
         'concept2.suporte',
         'concept2.contato'
     ])
-    .constant('appConfig', {
-        thumborURL: 'https://concept2-thumbor.herokuapp.com'
-    })
     .factory('atualizaToken', ['Autentic', '$rootScope', '$q', function(Autentic, $rootScope, $q) {
         return atualizaTokenFactory(Autentic, $rootScope, $q);
     }])
     .config(['$sceDelegateProvider', '$httpProvider', function($sceDelegateProvider, $httpProvider) {
         configApp($sceDelegateProvider, $httpProvider);
     }])
-    .run(['$rootScope', '$timeout', 'Autentic', 'Newsletter', 'appConfig', function($rootScope, $timeout, Autentic, Newsletter, appConfig) {
-        baseRun($rootScope, Autentic, appConfig);
+    .run(['$rootScope', '$timeout', 'Autentic', 'Newsletter', function($rootScope, $timeout, Autentic, Newsletter) {
+        baseRun($rootScope, Autentic);
         $rootScope.atletaLogado = Autentic.estaLogado();
         $rootScope.labelNewsletter = 'ASSINAR';
         $rootScope.emailNewsletter = null;

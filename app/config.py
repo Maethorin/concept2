@@ -9,6 +9,7 @@ class Config(object):
     DEVELOPMENT = False
     CSRF_ENABLED = True
     THUMBOR_URL = os.environ['THUMBOR_URL']
+    THUMBOR_SECURITY_KEY = os.environ['THUMBOR_SECURITY_KEY']
     SECRET_KEY = os.environ['SECRET_KEY']
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
     GOOGLE_API_KEY = 'AIzaSyDzcLVVah4PjogAqerQdBcYowwzJcsKjv0'
