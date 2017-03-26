@@ -17,7 +17,7 @@ angular.module('concept2Admin.eventos', ['ngRoute'])
     $rootScope.titulo = "Eventos";
     $scope.lista = Evento.query();
   }])
-  .controller("EventoController", ['$rootScope', '$routeParams', '$scope', '$route', 'Upload', 'Evento', 'Inscricao', 'Prova', 'SweetAlert', function($rootScope, $routeParams, $scope, $route, Upload, Evento, Inscricao, Prova, SweetAlert) {
+  .controller("EventoController", ['$rootScope', '$routeParams', '$scope', '$route', 'Upload', 'Evento', 'Inscricao', 'Prova', 'Atleta', 'SweetAlert', function($rootScope, $routeParams, $scope, $route, Upload, Evento, Inscricao, Prova, Atleta, SweetAlert) {
     $scope.slug = $routeParams.slug;
     $rootScope.pagina = "evento";
     $rootScope.titulo = "Evento";
@@ -26,12 +26,41 @@ angular.module('concept2Admin.eventos', ['ngRoute'])
     $scope.activateTab = function(tab) {
       $scope.currentTab = tab;
     };
+    $scope.novaIncricao = {
+      evento: null,
+      atleta: null,
+      provas: [],
+      afiliacao: null,
+      tipoAfiliacao: null,
+      nomeTime: null,
+      pedidoNumero: null,
+      nomeConvidado: null,
+      nomeSegundoConvidado: null
+    };
+    $scope.provas = [];
+    $scope.curso = [];
+    $scope.atletas = [];
     Evento.get({id: $scope.slug}, function(evento) {
       $scope.evento = evento;
       $scope.evento.dataFimCompleta = new Date($scope.evento.dataFimCompleta);
       $scope.evento.dataInicioCompleta = new Date($scope.evento.dataInicioCompleta);
+      $scope.novaIncricao.evento = $scope.evento.id;
+      $scope.provas = _.filter($scope.evento.provas, function(prova) {
+        return !prova.eh_intervalo && !prova.eh_curso;
+      });
+      $scope.cursos = _.filter($scope.evento.provas, function(curso) {
+        if (curso.eh_curso) {
+          curso.label = curso.observacao;
+          return true;
+        }
+        return false;
+      });
+      Atleta.query(
+        function(response) {
+          $scope.atletas = response;
+        }
+      );
     });
-    
     $scope.statusProva = [
       {codigo: 'NA', nome: 'Não Aconteceu'},
       {codigo: 'CA', nome: 'Cancelada'},
@@ -105,10 +134,9 @@ angular.module('concept2Admin.eventos', ['ngRoute'])
     };
     $scope.enviandoEdicao = function(formEdicao) {
       if (!formEdicao.$valid) {
-        SweetAlert.swal('Dados inválidos', 'Dados invpalidos ou faltando. Verifique os campos obrigatórios *', 'error');
+        SweetAlert.swal('Dados inválidos', 'Dados inválidos ou faltando. Verifique os campos obrigatórios *', 'error');
         return false;
       }
-      console.log($scope.evento.dataInicioCompleta);
       Evento.update(
         {id: $scope.slug},
         $scope.evento,
@@ -119,6 +147,22 @@ angular.module('concept2Admin.eventos', ['ngRoute'])
           SweetAlert.swal('Erro', 'Erro ao gravar os dados. Por favor, tente de novo', 'error');
         }
       )
-    }
+    };
+    $scope.gravaInscricao = function(formInscricao) {
+      if (!formInscricao.$valid) {
+        SweetAlert.swal('Dados inválidos', 'Dados inválidos ou faltando. Verifique os campos obrigatórios *', 'error');
+        return false;
+      }
+      
+      Inscricao.save(
+        $scope.novaIncricao,
+        function(response) {
+          SweetAlert.swal('Sucesso', 'Inscrição criada com sucesso', 'success');
+        },
+        function(response) {
+          SweetAlert.swal('Erro', 'Erro ao gravar a inscrição. Por favor, tente de novo', 'error');
+        }
+      )
+    };
   }]);
 

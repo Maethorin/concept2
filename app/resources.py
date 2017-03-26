@@ -105,6 +105,9 @@ class ResourceAdmin(ResourceBase):
 class AtletasAdmin(ResourceAdmin):
     model = models.Atleta
 
+    def obter_lista(self, *args, **kwargs):
+        return [self.response(item.as_dict(soh_atleta=True)) for item in self.model.obter_lista(*args, **kwargs)]
+
 
 class EventosAdmin(ResourceAdmin):
     model = models.Evento

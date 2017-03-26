@@ -138,7 +138,80 @@
         <div class="tab-content">
             <div role="tabpanel" class="tab-pane" id="tabInscricoes" ng-class="{'active': currentTab == 'inscricoes'}">
                 <div class="row">
-                    <button class="btn btn-primary" type="button" ng-click="adicionarIncricao()">Adicionar inscrição</button>
+                    <form id="formInscricao" name="formInscricao" novalidate ng-submit="gravaInscricao(formInscricao)">
+                        <div class="row">
+                            <div class="col-md-2 campo">
+                                <div class="form-group has-feedback formInput">
+                                    <label class="control-label" for="atleta">Atleta: <i class="fa fa-asterisk"></i></label>
+                                    <select class="form-control" id="atleta" name="atleta" ng-model="novaIncricao.atleta" required>
+                                        <option value="{{::atleta.id}}" ng-repeat="atleta in atletas">{{::atleta.nomeCompleto}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2 campo">
+                                <div class="form-group has-feedback formInput">
+                                    <label class="control-label" for="prova">Prova: <i class="fa fa-asterisk"></i></label>
+                                    <select class="form-control" id="prova" name="prova" multiple ng-model="novaIncricao.provas" required>
+                                        <option value="{{::prova.id}}" ng-repeat="prova in provas">{{::prova.label}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2 campo">
+                                <div class="form-group has-feedback formInput">
+                                    <label class="control-label" for="curso">Curso: <i class="fa fa-asterisk"></i></label>
+                                    <select class="form-control" id="curso" name="curso" multiple ng-model="novaIncricao.cursos" required>
+                                        <option value="{{::curso.id}}" ng-repeat="curso in cursos">{{::curso.label}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2 campo">
+                                <div class="form-group has-feedback formInput">
+                                    <label class="control-label" for="afiliacao">Afiliação:</label>
+                                    <input type="text" class="form-control" id="afiliacao" name="afiliacao" ng-model="novaIncricao.afiliacao" />
+                                </div>
+                            </div>
+                            <div class="col-md-2 campo">
+                                <div class="form-group has-feedback formInput">
+                                    <label class="control-label" for="tipoAfiliacao">Tipo Afiliação:</label>
+                                    <select class="form-control" id="tipoAfiliacao" name="tipoAfiliacao" ng-model="novaIncricao.tipoAfiliacao">
+                                        <option value="clube">Clube</option>
+                                        <option value="academia">Academia</option>
+                                        <option value="box-cf">BOX CF</option>
+                                        <option value="independente">Independente</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2 campo">
+                                <div class="form-group has-feedback formInput">
+                                    <label class="control-label" for="nomeTime">Nome do Time:</label>
+                                    <input type="text" class="form-control" id="nomeTime" name="nomeTime" ng-model="novaIncricao.nomeTime" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 campo">
+                                <div class="form-group has-feedback formInput">
+                                    <label class="control-label" for="pedidoNumero">Número do Pedido:</label>
+                                    <input type="text" class="form-control" id="pedidoNumero" name="pedidoNumero" ng-model="novaIncricao.pedidoNumero" />
+                                </div>
+                            </div>
+                            <div class="col-md-3 campo">
+                                <div class="form-group has-feedback formInput">
+                                    <label class="control-label" for="nomeConvidado">Nome do Convidado:</label>
+                                    <input type="text" class="form-control" id="nomeConvidado" name="nomeConvidado" ng-model="novaIncricao.nomeConvidado" />
+                                </div>
+                            </div>
+                            <div class="col-md-3 campo">
+                                <div class="form-group has-feedback formInput">
+                                    <label class="control-label" for="nomeSegundoConvidado">Nome do Segundo Convidado:</label>
+                                    <input type="text" class="form-control" id="nomeSegundoConvidado" name="nomeSegundoConvidado" ng-model="novaIncricao.nomeSegundoConvidado" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-center">
+                            <button class="btn btn-primary" type="submit">Adicionar inscrição</button>
+                        </div>
+                    </form>
                 </div>
                 <div class="row inscricoes">
                     <div class="col-md-12">
@@ -159,7 +232,7 @@
                             </thead>
                             <tbody>
                             <tr ng-repeat="inscricao in evento.inscricoes">
-                                <td>{{inscricao.atleta.nomeCompleto}}</td>
+                                <td>{{inscricao.atleta.nome_completo}}</td>
                                 <td>{{inscricao.nomeTime || 'Não Definido'}}</td>
                                 <td>{{inscricao.atleta.email}}</td>
                                 <td>{{formataData(inscricao.atleta.nascimento)}}</td>
@@ -172,7 +245,7 @@
                                             {{curso.dia}} {{curso.hora}} - {{curso.nome}}
                                         </li>
                                         <li ng-repeat="prova in inscricao.provas">
-                                            {{prova.dia}} {{prova.hora}} - {{prova.label}} - {{prova.subCategoria.label}}
+                                            {{prova.label}}{{prova.observacao}}
                                         </li>
                                     </ul>
                                 </td>

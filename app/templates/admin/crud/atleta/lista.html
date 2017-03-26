@@ -25,7 +25,7 @@
                 <td>{{::item.nomeCompleto}}</td>
                 <td>{{::item.email}}</td>
                 <td>{{::formataTelefone(item.celular)}}</td>
-                <td>{{::item.nascimento}}</td>
+                <td>{{::formataData(item.nascimento)}}</td>
                 <td>
                     <a href="/admin/#/atletas/{{::item.id}}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
                     <a ng-click="removeAtleta(item, $index)" class="btn btn-sm btn-danger"><i class="fa fa-remove"></i></a>

@@ -556,7 +556,9 @@ BRA
         distancia = '{}m '.format(self.distancia) if self.distancia and self.distancia > 0 else ''
         tipo = '{} '.format(self.tipo.value[:4]) if self.tipo else ''
         sexo = '{} '.format(self.sexo.value) if self.sexo else ''
-        return '{}{}{}'.format(
+        return '{} {}: {}{}{}'.format(
+            self.data_inicio.strftime('%d/%m'),
+            self.data_inicio.strftime('%H:%M'),
             distancia,
             tipo,
             sexo
@@ -573,6 +575,7 @@ BRA
         return {
             'id': self.id,
             'codigo': self.codigo,
+            'evento': self.evento_id,
             'label': self.label,
             'dia': self.data_inicio.strftime('%d/%m'),
             'hora': self.data_inicio.strftime('%H:%M'),
@@ -583,6 +586,8 @@ BRA
             'codigoStatus': codigo_status,
             'subCategoria': sub_categoria,
             'observacao': observacao,
+            'eh_intervalo': observacao == 'Intervalo',
+            'eh_curso': observacao != 'Intervalo' and self.codigo == ''
         }
 
 
@@ -620,13 +625,13 @@ class Inscricao(db.Model, QueryMixin):
         inscricao.evento_id = inscricao_dict.get('eventoId')
         for prova in inscricao_dict['provas']:
             if 'id' in prova:
-                inscricao.provas.append(Prova.query.get(prova['id']))
+                inscricao.provas.append(Prova.query.get(int(prova['id'])))
             else:
                 for prova_banco in Prova.query.all():
                     if prova_banco.codigo == prova['codigo']:
                         inscricao.provas.append(prova_banco)
         for curso in inscricao_dict['cursos']:
-            inscricao.cursos.append(Curso.query.get(curso['id']))
+            inscricao.cursos.append(Curso.query.get(int(curso['id'])))
         return inscricao
 
     @classmethod
@@ -638,6 +643,18 @@ class Inscricao(db.Model, QueryMixin):
         db.session.add(inscricao)
         if commit:
             db.session.commit()
+        return inscricao
+
+    @classmethod
+    def criar_de_json(cls, json_data):
+        atleta = Atleta.obter_atleta(int(json_data['atleta']))
+        json_data['provas'] = [{'id': prova} for prova in json_data['provas']]
+        json_data['provas'].extend([{'id': prova} for prova in json_data['cursos']])
+        json_data['eventoId'] = int(json_data['evento'])
+        json_data['cursos'] = []
+        inscricao = cls.cria_de_dicionario(json_data, atleta)
+        db.session.add(inscricao)
+        db.session.commit()
         return inscricao
 
     @classmethod
@@ -709,7 +726,7 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
             'telefone': self.telefone,
             'celular': self.celular,
             'tecnico': self.tecnico,
-            'nascimento': self.nascimento.strftime('%d/%m/%Y'),
+            'nascimento': self.nascimento.strftime('%d%m%Y'),
             'data_nascimento': self.nascimento.strftime('%Y-%m-%dT%H:%M:%S-03:00')
         }
         if not soh_atleta:
