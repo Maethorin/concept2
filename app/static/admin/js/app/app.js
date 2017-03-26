@@ -11,6 +11,8 @@ angular.module(
         'wysiwyg.module',
         'wu.masonry',
         'oitozero.ngSweetAlert',
+        'ui.toggle',
+        'ui.utils.masks',
         'concept2Admin.services',
         'concept2Admin.login',
         'concept2Admin.home',

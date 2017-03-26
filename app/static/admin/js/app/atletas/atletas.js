@@ -7,11 +7,7 @@ angular.module('concept2Admin.atletas', ['ngRoute'])
         templateUrl: '{0}/angular/crud/atleta/lista.html'.format([urlBackEnd]),
         controller: 'AtletasController'
       })
-      .when('/atletas/new', {
-        templateUrl: '{0}/angular/crud/atleta/elemento.html'.format([urlBackEnd]),
-        controller: 'NovoAtletaController'
-      })
-      .when('/atletas/:slug', {
+      .when('/atletas/:id', {
         templateUrl: '{0}/angular/crud/atleta/elemento.html'.format([urlBackEnd]),
         controller: 'AtletaController'
       });
@@ -46,108 +42,79 @@ angular.module('concept2Admin.atletas', ['ngRoute'])
       );
     }
   }])
-  .controller("AtletaController", ['$rootScope', '$routeParams', '$scope', '$route', 'Upload', 'Atleta', 'Inscricao', 'Prova', function($rootScope, $routeParams, $scope, $route, Upload, Atleta, Inscricao, Prova) {
-    $scope.slug = $routeParams.slug;
+  .controller("AtletaController", ['$rootScope', '$routeParams', '$scope', '$location', 'Atleta', 'SweetAlert', function($rootScope, $routeParams, $scope, $location, Atleta, SweetAlert) {
+    $scope.id = $routeParams.id;
     $rootScope.pagina = "atleta";
     $rootScope.titulo = "Atleta";
-    $scope.currentTab = 'inscricoes';
-    $scope.colocacoes = [1, 2, 3, 4, 5, 6, 7, 8];
-    $scope.activateTab = function(tab) {
-      $scope.currentTab = tab;
+    $scope.masculinoSelecionado = true;
+    var criando = $scope.id == 'new';
+    if (criando) {
+      $scope.atleta = {
+        nome: null,
+        sobrenome: null,
+        email: null,
+        cpf: null,
+        dataNascimento: null,
+        celular: null,
+        telefone: null,
+        sexo: "MA",
+        tecnico: null
+      };
+    }
+    else {
+      Atleta.get({id: $scope.id}, function(atleta) {
+        $scope.atleta = atleta;
+        $scope.atleta.dataNascimento = new Date($scope.atleta.dataNascimento);
+        $scope.masculinoSelecionado = $scope.atleta.sexo == 'MA';
+        console.log($scope.atleta);
+      });
+    }
+    $scope.trocaSexo = function() {
+      $scope.atleta.sexo = $scope.masculinoSelecionado ? 'MA' : 'FE';
     };
-    Atleta.get({id: $scope.slug}, function(atleta) {
-      $scope.atleta = atleta;
-      $scope.atleta.dataFimCompleta = new Date($scope.atleta.dataFimCompleta);
-      $scope.atleta.dataInicioCompleta = new Date($scope.atleta.dataInicioCompleta);
-    });
-    
-    $scope.statusProva = [
-      {codigo: 'NA', nome: 'Não Aconteceu'},
-      {codigo: 'CA', nome: 'Cancelada'},
-      {codigo: 'EA', nome: 'Em Andamento'},
-      {codigo: 'EP', nome: 'Em Apuração'},
-      {codigo: 'FN', nome: 'Finalizada'},
-      {codigo: 'PP', nome: 'Prova Prevista'}
-    ];
-    $scope.trocaStatusProva = function(prova, status) {
-      Prova.update(
-        {'id': prova.id},
-        new Prova({'status': status.codigo}),
-        function(response) {
-          prova.status = response.status;
-        },
-        function(response) {
-          alert('Erro')
-        }
-      );
-      
+    $scope.salvarAdicionar = function(formEdicao) {
+      $scope.enviandoEdicao(formEdicao, true);
     };
-    $scope.marcarPago = function(inscricaoId) {
-      var inscricao = new Inscricao({estahPago: true});
-      Inscricao.update(
-        {'id': inscricaoId},
-        inscricao,
-        function() {
-          $route.reload();
-        },
-        function(response) {
-          console.log(response);
-          alert(response);
-        }
-      );
-    };
-    $scope.enviaArquivoResultado = function(file, errFiles) {
-      if (file) {
-        file.upload = Upload.upload({
-          url: '{0}/resultado/{1}'.format([urlBackEnd, $scope.slug]),
-          data: {resultado: file}
-        });
-        file.upload.then(
+    $scope.enviandoEdicao = function(formEdicao, novo) {
+      if (!formEdicao.$valid) {
+        SweetAlert.swal('Dados inválidos', 'Dados inválidos ou faltando. Verifique os campos obrigatórios *', 'error');
+        return false;
+      }
+      if (criando) {
+        Atleta.save(
+          $scope.atleta,
           function(response) {
-            alert('Enviado com sucesso');
+            SweetAlert.swal('Sucesso', 'Dados gravados com sucesso', 'success');
+            if (novo) {
+              $location.path('/atletas/new');
+            }
+            else {
+              $location.path('/atletas');
+            }
           },
           function(response) {
-            alert('Erro');
+            SweetAlert.swal('Erro', 'Erro ao gravar os dados. Por favor, tente de novo', 'error');
           }
         );
       }
-    };
-    $scope.adicionaProvaNaPontuacao = function() {
-      $scope.atleta.pontuacao.push(
-        {
-          "nome": null,
-          "pontuacao": [
-            {"colocacao": 1, "pontos": null},
-            {"colocacao": 2, "pontos": null},
-            {"colocacao": 3, "pontos": null},
-            {"colocacao": 4, "pontos": null},
-            {"colocacao": 5, "pontos": null},
-            {"colocacao": 6, "pontos": null},
-            {"colocacao": 7, "pontos": null},
-            {"colocacao": 8, "pontos": null}
-          ]
-        }
-      )
-    };
-    $scope.removerProvaDaPontuacao = function(indice) {
-      $scope.atleta.pontuacao.splice(indice, 1);
-    };
-    $scope.enviandoEdicao = function(formEdicao) {
-      if (!formEdicao.$valid) {
-        alert('Dados invpalidos ou faltando. Verifique os campos obrigatórios *');
-        return false;
+      else {
+        Atleta.update(
+          {id: $scope.id},
+          $scope.atleta,
+          function(response) {
+            SweetAlert.swal('Sucesso', 'Dados gravados com sucesso', 'success');
+            if (novo) {
+              $location.path('/atletas/new');
+            }
+            else {
+              $location.path('/atletas');
+            }
+          },
+          function(response) {
+            SweetAlert.swal('Erro', 'Erro ao gravar os dados. Por favor, tente de novo', 'error');
+          }
+        );
       }
-      console.log($scope.atleta.dataInicioCompleta);
-      Atleta.update(
-        {id: $scope.slug},
-        $scope.atleta,
-        function(response) {
-          alert('Dados gravados com sucesso');
-        },
-        function(response) {
-          alert('Erro ao gravar, por favor tente de novo.');
-        }
-      )
     }
   }]);
 

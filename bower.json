@@ -24,7 +24,9 @@
     "angular-recaptcha": "^3.0.4",
     "angular-wysiwyg": "^1.2.4",
     "angular-masonry": "^0.16.0",
-    "angular-sweetalert": "latest"
+    "angular-sweetalert": "latest",
+    "angular-bootstrap-toggle": "^0.1.2",
+    "angular-input-masks": "^2.5.0"
   },
   "resolutions": {
     "angular": "1.6.1"

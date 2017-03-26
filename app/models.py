@@ -240,8 +240,8 @@ class Evento(db.Model, QueryMixin):
             'sub_titulo': self.subtitulo,
             'data_inicio': {'ano': self.data_inicio.year, 'mes': self.data_inicio.month, 'dia': self.data_inicio.day},
             'data_fim': {'ano': self.data_fim.year, 'mes': self.data_fim.month, 'dia': self.data_fim.day},
-            'data_inicio_completa': self.data_inicio.strftime('%Y-%m-%dT%H:%M:%S'),
-            'data_fim_completa': self.data_fim.strftime('%Y-%m-%dT%H:%M:%S'),
+            'data_inicio_completa': self.data_inicio.strftime('%Y-%m-%dT%H:%M:%S-03:00'),
+            'data_fim_completa': self.data_fim.strftime('%Y-%m-%dT%H:%M:%S-03:00'),
             'imagem_lista': self.imagem_lista,
             'imagem_destaque': self.imagem_destaque,
             'imagem_logo': self.imagem_logo,
@@ -263,11 +263,11 @@ class Evento(db.Model, QueryMixin):
         evento.slug = cls.slugify(evento.titulo)
         evento.subtitulo = json_data.get('sub_titulo', evento.subtitulo)
         evento.descricao = json_data.get('descricao', evento.descricao)
-        data_inicio_str = json_data.get('data_inicio_completa', evento.data_fim.strftime('%Y-%m-%dT%H:%M:%S.%fZ'))
+        data_inicio_str = json_data.get('data_inicio_completa', evento.data_fim.strftime('%Y-%m-%dT%H:%M:%S-03:00'))
         data_inicio_str = data_inicio_str.split('T')[0]
         data_inicio = datetime.strptime(data_inicio_str, '%Y-%m-%d')
         evento.data_inicio = data_inicio
-        data_fim_str = json_data.get('data_fim_completa', evento.data_fim.strftime('%Y-%m-%dT%H:%M:%S.%fZ'))
+        data_fim_str = json_data.get('data_fim_completa', evento.data_fim.strftime('%Y-%m-%dT%H:%M:%S-03:00'))
         data_fim_str = data_fim_str.split('T')[0]
         data_fim = datetime.strptime(data_fim_str, '%Y-%m-%d')
         evento.data_fim = data_fim
@@ -473,8 +473,8 @@ class Prova(db.Model, QueryMixin):
     evento = relationship('Evento', back_populates='provas')
     sub_categoria_id = db.Column(db.Integer, db.ForeignKey('sub_categorias.id'))
     sub_categoria = relationship('SubCategoria', back_populates='provas')
-    inscricoes = db.relationship('Inscricao', secondary=prova_inscricao, backref='provas')
-    resultados = relationship('Resultado', back_populates='prova')
+    inscricoes = db.relationship('Inscricao', secondary=prova_inscricao, backref='provas', cascade="all,delete")
+    resultados = relationship('Resultado', back_populates='prova', cascade="all,delete")
     MODELO_TIME = """{nomeInscricao}
 {atletaId}
 {label}"""
@@ -694,8 +694,8 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
     telefone = db.Column(db.String(10))
     celular = db.Column(db.String(11), nullable=False)
     nascimento = db.Column(db.Date(), nullable=False)
-    inscricoes = relationship('Inscricao', back_populates='atleta')
-    resultados = relationship('Resultado', back_populates='atleta')
+    inscricoes = relationship('Inscricao', back_populates='atleta', cascade="all,delete")
+    resultados = relationship('Resultado', back_populates='atleta', cascade="all,delete")
 
     def as_dict(self, soh_atleta=False):
         atleta_dict = {
@@ -708,7 +708,9 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
             'cpf': self.cpf,
             'telefone': self.telefone,
             'celular': self.celular,
-            'nascimento': self.nascimento.strftime('%d/%m/%Y')
+            'tecnico': self.tecnico,
+            'nascimento': self.nascimento.strftime('%d/%m/%Y'),
+            'data_nascimento': self.nascimento.strftime('%Y-%m-%dT%H:%M:%S-03:00')
         }
         if not soh_atleta:
             if hasattr(self, 'inscricao'):
@@ -726,7 +728,7 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
         return cls.query.get(atleta_id)
 
     @classmethod
-    def define_dados_de_dicionario(cls, dados_dict, atleta=None):
+    def define_dados_de_dicionario(cls, dados_dict, atleta=None, usaData=False):
         if not atleta:
             atleta = cls()
         atleta.email = dados_dict['email']
@@ -734,9 +736,27 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
         atleta.sobrenome = dados_dict['sobrenome']
         atleta.sexo = dados_dict['sexo']
         atleta.cpf = dados_dict['cpf']
-        atleta.telefone = dados_dict.get('telefone', None)
+        atleta.telefone = dados_dict.get('telefone')
         atleta.celular = dados_dict['celular']
-        atleta.nascimento = '{}-{}-{}'.format(dados_dict['nascimento'][4:], dados_dict['nascimento'][2:4], dados_dict['nascimento'][:2])
+        atleta.tecnico = dados_dict.get('tecnico')
+        if usaData:
+            atleta.nascimento = dados_dict['data_nascimento']
+        else:
+            atleta.nascimento = '{}-{}-{}'.format(dados_dict['nascimento'][4:], dados_dict['nascimento'][2:4], dados_dict['nascimento'][:2])
+        return atleta
+
+    @classmethod
+    def criar_de_json(cls, json_data):
+        atleta = cls.define_dados_de_dicionario(json_data, usaData=True)
+        atleta.hash_senha('1q2w3e!Q@W#E')
+        atleta.save_db()
+        return atleta
+
+    @classmethod
+    def atualizar_de_json(cls, item_id, json_data):
+        atleta = cls.obter_item(item_id)
+        cls.define_dados_de_dicionario(json_data, atleta, True)
+        atleta.save_db()
         return atleta
 
     @classmethod
