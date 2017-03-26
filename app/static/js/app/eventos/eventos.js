@@ -10,8 +10,6 @@ angular.module('concept2.eventos', ['ngRoute'])
                 templateUrl: '{0}/angular/evento/evento.html'.format([urlBackEnd]),
                 controller: 'EventoController'
             })
-            //TODO: remover isso depois que acabar o cabra-ri
-            .when('/eventos/cabra-ri/inscricao', {redirectTo: '/eventos/cabra-ri/provas'})
             .when('/eventos/:slug/:itemMenu', {
                 templateUrl: '{0}/angular/evento/evento.html'.format([urlBackEnd]),
                 controller: 'EventoController'
