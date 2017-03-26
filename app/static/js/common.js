@@ -78,13 +78,15 @@ if (window.location.hostname == '127.0.0.1') {
     thumborUrl = 'http://localhost:8888';
 }
 
-var configApp = function($sceDelegateProvider, $httpProvider) {
+var configApp = function($sceDelegateProvider, $httpProvider, $locationProvider) {
     $sceDelegateProvider.resourceUrlWhitelist([
         'self',
         '{0}/**'.format([urlBackEnd])
     ]);
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.interceptors.push('atualizaToken');
+    $locationProvider.hashPrefix('');
+
 };
 
 var baseRun = function($rootScope, Autentic) {

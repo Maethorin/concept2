@@ -23,8 +23,8 @@ angular.module(
     .factory('atualizaToken', ['Autentic', '$rootScope', '$q', function(Autentic, $rootScope, $q) {
         return atualizaTokenFactory(Autentic, $rootScope, $q);
     }])
-    .config(['$sceDelegateProvider', '$httpProvider', function($sceDelegateProvider, $httpProvider) {
-        configApp($sceDelegateProvider, $httpProvider);
+    .config(['$sceDelegateProvider', '$httpProvider', '$locationProvider', function($sceDelegateProvider, $httpProvider, $locationProvider) {
+        configApp($sceDelegateProvider, $httpProvider, $locationProvider);
     }])
     .run(['$rootScope', '$timeout', 'Autentic', 'Newsletter', function($rootScope, $timeout, Autentic, Newsletter) {
         baseRun($rootScope, Autentic);

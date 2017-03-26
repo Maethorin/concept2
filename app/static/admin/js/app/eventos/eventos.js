@@ -21,7 +21,15 @@ angular.module('concept2Admin.eventos', ['ngRoute'])
         $scope.slug = $routeParams.slug;
         $rootScope.pagina = "evento";
         $rootScope.titulo = "Evento";
-        $scope.evento = Evento.get({id: $scope.slug});
+        $scope.currentTab = 'inscricoes';
+        $scope.activateTab = function(tab) {
+            $scope.currentTab = tab;
+        };
+        Evento.get({id: $scope.slug}, function(evento) {
+            $scope.evento = evento;
+            $scope.evento.dataFimCompleta = new Date($scope.evento.dataFimCompleta);
+            $scope.evento.dataInicioCompleta = new Date($scope.evento.dataInicioCompleta);
+        });
         $scope.statusProva = [
             {codigo: 'NA', nome: 'Não Aconteceu'},
             {codigo: 'CA', nome: 'Cancelada'},
