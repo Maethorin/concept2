@@ -15,7 +15,7 @@
             <tr>
                 <th>Nome</th>
                 <th>Email</th>
-                <th>Telefone / Celular</th>
+                <th>Celular</th>
                 <th>Data Nascimento</th>
                 <th>Ações</th>
             </tr>
@@ -24,7 +24,7 @@
             <tr ng-repeat="item in lista | filter:{nomeCompleto: buscaAtleta}">
                 <td>{{::item.nomeCompleto}}</td>
                 <td>{{::item.email}}</td>
-                <td>{{::item.telefone}} / {{::item.celular}}</td>
+                <td>{{::formataTelefone(item.celular)}}</td>
                 <td>{{::item.nascimento}}</td>
                 <td>
                     <a href="/admin/#/atletas/{{::item.id}}" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>
