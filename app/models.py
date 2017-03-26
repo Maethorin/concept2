@@ -238,7 +238,7 @@ class Evento(db.Model, QueryMixin):
             'slug': self.slug,
             'titulo': self.titulo,
             'sub_titulo': self.subtitulo,
-            'data_nicio': {'ano': self.data_inicio.year, 'mes': self.data_inicio.month, 'dia': self.data_inicio.day},
+            'data_inicio': {'ano': self.data_inicio.year, 'mes': self.data_inicio.month, 'dia': self.data_inicio.day},
             'data_fim': {'ano': self.data_fim.year, 'mes': self.data_fim.month, 'dia': self.data_fim.day},
             'data_inicio_completa': self.data_inicio.strftime('%Y-%m-%dT%H:%M:%S'),
             'data_fim_completa': self.data_fim.strftime('%Y-%m-%dT%H:%M:%S'),
