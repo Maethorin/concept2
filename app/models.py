@@ -257,6 +257,39 @@ class Evento(db.Model, QueryMixin):
             'inscricoes': [inscricao.as_dict() for inscricao in self.inscricoes]
         }
 
+    @classmethod
+    def atribui_valores(cls, evento, json_data):
+        evento.titulo = json_data.get('titulo', evento.titulo)
+        evento.slug = cls.slugify(evento.titulo)
+        evento.subtitulo = json_data.get('sub_titulo', evento.subtitulo)
+        evento.descricao = json_data.get('descricao', evento.descricao)
+        data_inicio_str = json_data.get('data_inicio_completa', evento.data_fim.strftime('%Y-%m-%dT%H:%M:%S.%fZ'))
+        data_inicio_str = data_inicio_str.split('T')[0]
+        data_inicio = datetime.strptime(data_inicio_str, '%Y-%m-%d')
+        evento.data_inicio = data_inicio
+        data_fim_str = json_data.get('data_fim_completa', evento.data_fim.strftime('%Y-%m-%dT%H:%M:%S.%fZ'))
+        data_fim_str = data_fim_str.split('T')[0]
+        data_fim = datetime.strptime(data_fim_str, '%Y-%m-%d')
+        evento.data_fim = data_fim
+        evento.resumo = json_data.get('resumo', evento.resumo)
+        evento.pontuacao = json_data.get('pontuacao', evento.pontuacao)
+        imagem_url = json_data.get('imagem_url', None)
+        if imagem_url:
+            imagens_urls = evento.imagens_urls.split('|') if evento.imagens_urls else []
+            last_part = imagem_url.split('/')[-1]
+            if last_part not in [_imagem.split('/')[-1] for _imagem in imagens_urls]:
+                imagens_urls.append(imagem_url)
+            evento.imagens_urls = '|'.join(imagens_urls)
+
+    @classmethod
+    def atualizar_de_json(cls, item_id, json_data):
+        evento = cls.obter_item(item_id)
+        cls.atribui_valores(evento, json_data)
+        if json_data.get('publicado', False):
+            evento.data_publicacao = datetime.now()
+        evento.save_db()
+        return evento
+
 
 class Categoria(db.Model, QueryMixin):
     __tablename__ = 'categorias'

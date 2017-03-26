@@ -13,6 +13,7 @@ angular.module(
         'concept2Admin.services',
         'concept2Admin.login',
         'concept2Admin.home',
+        'concept2Admin.atletas',
         'concept2Admin.eventos',
         'concept2Admin.newsletters',
         'concept2Admin.noticias'
@@ -27,6 +28,7 @@ angular.module(
         baseRun($rootScope, Autentic);
         $rootScope.adminLogado = Autentic.estaLogado();
         $rootScope.itensMenu = [
+            {slug: 'atletas', label: 'atletas', url: '/admin/#/atletas', subItens: []},
             {slug: 'eventos', label: 'eventos', url: '/admin/#/eventos', subItens: []},
             {slug: 'newsletters', label: 'newsletters', url: '/admin/#/newsletters', subItens: []},
             {slug: 'noticias', label: 'noticias', url: '/admin/#/noticias', subItens: []}

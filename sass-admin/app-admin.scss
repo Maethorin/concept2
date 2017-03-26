@@ -8,6 +8,10 @@ $imageUrl: "/admin/static/img/";
     background-image: url($imageUrl + $imageFile);
 }
 
+textarea {
+    width: 100%;
+}
+
 @import "login";
 @import "evento";
 @import "evento";

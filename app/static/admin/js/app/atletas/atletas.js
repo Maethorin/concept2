@@ -1,35 +1,35 @@
 'use strict';
 
-angular.module('concept2Admin.eventos', ['ngRoute'])
+angular.module('concept2Admin.atletas', ['ngRoute'])
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
-            .when('/eventos', {
-                templateUrl: '{0}/angular/crud/evento/lista.html'.format([urlBackEnd]),
-                controller: 'EventosController'
+            .when('/atletas', {
+                templateUrl: '{0}/angular/crud/atleta/lista.html'.format([urlBackEnd]),
+                controller: 'AtletasController'
             })
-            .when('/eventos/:slug', {
-                templateUrl: '{0}/angular/crud/evento/elemento.html'.format([urlBackEnd]),
-                controller: 'EventoController'
+            .when('/atletas/:slug', {
+                templateUrl: '{0}/angular/crud/atleta/elemento.html'.format([urlBackEnd]),
+                controller: 'AtletaController'
             });
     }])
-    .controller("EventosController", ['$rootScope', '$scope', 'Evento', function($rootScope, $scope, Evento) {
-        $rootScope.pagina = "eventos";
-        $rootScope.titulo = "Eventos";
-        $scope.lista = Evento.query();
+    .controller("AtletasController", ['$rootScope', '$scope', 'Atleta', function($rootScope, $scope, Atleta) {
+        $rootScope.pagina = "atletas";
+        $rootScope.titulo = "Atletas";
+        $scope.lista = Atleta.query();
     }])
-    .controller("EventoController", ['$rootScope', '$routeParams', '$scope', '$route', 'Upload', 'Evento', 'Inscricao', 'Prova', function($rootScope, $routeParams, $scope, $route, Upload, Evento, Inscricao, Prova) {
+    .controller("AtletaController", ['$rootScope', '$routeParams', '$scope', '$route', 'Upload', 'Atleta', 'Inscricao', 'Prova', function($rootScope, $routeParams, $scope, $route, Upload, Atleta, Inscricao, Prova) {
         $scope.slug = $routeParams.slug;
-        $rootScope.pagina = "evento";
-        $rootScope.titulo = "Evento";
+        $rootScope.pagina = "atleta";
+        $rootScope.titulo = "Atleta";
         $scope.currentTab = 'inscricoes';
         $scope.colocacoes = [1, 2, 3, 4, 5, 6, 7, 8];
         $scope.activateTab = function(tab) {
             $scope.currentTab = tab;
         };
-        Evento.get({id: $scope.slug}, function(evento) {
-            $scope.evento = evento;
-            $scope.evento.dataFimCompleta = new Date($scope.evento.dataFimCompleta);
-            $scope.evento.dataInicioCompleta = new Date($scope.evento.dataInicioCompleta);
+        Atleta.get({id: $scope.slug}, function(atleta) {
+            $scope.atleta = atleta;
+            $scope.atleta.dataFimCompleta = new Date($scope.atleta.dataFimCompleta);
+            $scope.atleta.dataInicioCompleta = new Date($scope.atleta.dataInicioCompleta);
         });
         
         $scope.statusProva = [
@@ -84,7 +84,7 @@ angular.module('concept2Admin.eventos', ['ngRoute'])
             }
         };
         $scope.adicionaProvaNaPontuacao = function() {
-          $scope.evento.pontuacao.push(
+          $scope.atleta.pontuacao.push(
             {
                 "nome": null,
                 "pontuacao": [
@@ -101,17 +101,17 @@ angular.module('concept2Admin.eventos', ['ngRoute'])
           )
         };
         $scope.removerProvaDaPontuacao = function(indice) {
-          $scope.evento.pontuacao.splice(indice, 1);
+          $scope.atleta.pontuacao.splice(indice, 1);
         };
         $scope.enviandoEdicao = function(formEdicao) {
           if (!formEdicao.$valid) {
               alert('Dados invpalidos ou faltando. Verifique os campos obrigatórios *');
               return false;
           }
-          console.log($scope.evento.dataInicioCompleta);
-          Evento.update(
+          console.log($scope.atleta.dataInicioCompleta);
+          Atleta.update(
             {id: $scope.slug},
-            $scope.evento,
+            $scope.atleta,
             function(response) {
                 alert('Dados gravados com sucesso');
             },
