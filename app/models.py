@@ -701,14 +701,14 @@ class Atleta(db.Model, QueryMixin, AutenticMixin):
         atleta_dict = {
             'id': self.id,
             'email': self.email,
-            'nomeCompleto': self.nome_completo,
+            'nome_completo': self.nome_completo,
             'nome': self.nome,
             'sobrenome': self.sobrenome,
             'sexo': self.sexo,
             'cpf': self.cpf,
             'telefone': self.telefone,
             'celular': self.celular,
-            'nascimento': self.nascimento.strftime('%d%m%Y')
+            'nascimento': self.nascimento.strftime('%d/%m/%Y')
         }
         if not soh_atleta:
             if hasattr(self, 'inscricao'):

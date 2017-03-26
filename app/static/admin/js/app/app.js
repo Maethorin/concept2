@@ -10,6 +10,7 @@ angular.module(
         'ngFileUpload',
         'wysiwyg.module',
         'wu.masonry',
+        'oitozero.ngSweetAlert',
         'concept2Admin.services',
         'concept2Admin.login',
         'concept2Admin.home',

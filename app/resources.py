@@ -102,6 +102,10 @@ class ResourceAdmin(ResourceBase):
         return super(ResourceAdmin, self).delete(item_id)
 
 
+class AtletasAdmin(ResourceAdmin):
+    model = models.Atleta
+
+
 class EventosAdmin(ResourceAdmin):
     model = models.Evento
 

@@ -29,6 +29,7 @@ module.exports = function(grunt) {
                     "bower_components/moment/moment.js",
                     "bower_components/moment/locale/pt-br.js",
                     "bower_components/lodash/dist/lodash.js",
+                    "bower_components/sweetalert/dist/sweetalert.min.js",
                     "bower_components/jquery/dist/jquery.js",
                     "bower_components/jquery-bridget/jquery.bridget.js",
                     "bower_components/ev-emitter/ev-emitter.js",
@@ -47,7 +48,8 @@ module.exports = function(grunt) {
                     "bower_components/ng-file-upload/ng-file-upload.js",
                     "bower_components/angular-bootstrap-colorpicker/js/bootstrap-colorpicker-module.js",
                     "bower_components/angular-wysiwyg/dist/angular-wysiwyg.js",
-                    "bower_components/angular-masonry/angular-masonry.js"
+                    "bower_components/angular-masonry/angular-masonry.js",
+                    "bower_components/angular-sweetalert/SweetAlert.js"
                 ],
                 dest: 'app/static/admin/js/componentes-admin.js'
             },
